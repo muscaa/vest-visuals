@@ -61,6 +61,7 @@
     --royal-blue-web-color: hsla(224, 50%, 55%, 1);
     --antiflash-white: hsla(228, 11%, 91%, 1);
     --seasalt: hsla(220, 27%, 98%, 1);
+    --poppy: hsla(0, 72%, 53%, 1);
 
     --radius: 0.625rem;
 
@@ -85,7 +86,7 @@
     --accent: var(--antiflash-white);
     --accent-foreground: var(--royal-blue-web-color);
 
-    --destructive: oklch(0.577 0.245 27.325);
+    --destructive: var(--poppy);
 
     --border: var(--antiflash-white);
     --input: var(--antiflash-white);
@@ -129,7 +130,7 @@
     --accent: var(--jet);
     --accent-foreground: var(--royal-blue-web-color);
 
-    --destructive: oklch(0.704 0.191 22.216);
+    --destructive: var(--poppy);
 
     --border: var(--jet);
     --input: var(--jet);
