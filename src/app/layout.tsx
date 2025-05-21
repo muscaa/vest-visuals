@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/theme/theme-provider";
+import { Navbar } from "@/components/navbar";
 
 const figtree = Figtree({
     subsets: ["latin"],
@@ -20,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${figtree.className} antialiased`}
+                className={`${figtree.className} antialiased flex flex-col w-screen h-screen`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -28,7 +29,12 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {children}
+                    <Navbar />
+                    <div className="flex flex-col h-full max-h-full overflow-y-auto">
+                        <main className="flex-grow">
+                            {children}
+                        </main>
+                    </div>
                 </ThemeProvider>
             </body>
         </html>
