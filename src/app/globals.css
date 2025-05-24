@@ -58,10 +58,11 @@
 :root {
     --raisin-black: hsla(228, 6%, 15%, 1);
     --jet: hsla(220, 6%, 20%, 1);
-    --royal-blue-web-color: hsla(224, 50%, 55%, 1);
+    --royal-blue-web-color: hsla(224, 64%, 57%, 1);
+    --keppel: hsla(170, 64%, 46%, 1);
     --antiflash-white: hsla(228, 11%, 91%, 1);
     --seasalt: hsla(220, 27%, 98%, 1);
-    --poppy: hsla(0, 72%, 53%, 1);
+    --imperial-red: hsla(356, 86%, 60%, 1);
 
     --radius: 0.625rem;
 
@@ -86,7 +87,7 @@
     --accent: var(--antiflash-white);
     --accent-foreground: var(--royal-blue-web-color);
 
-    --destructive: var(--poppy);
+    --destructive: var(--imperial-red);
 
     --border: var(--antiflash-white);
     --input: var(--antiflash-white);
@@ -130,7 +131,7 @@
     --accent: var(--jet);
     --accent-foreground: var(--royal-blue-web-color);
 
-    --destructive: var(--poppy);
+    --destructive: var(--imperial-red);
 
     --border: var(--jet);
     --input: var(--jet);
