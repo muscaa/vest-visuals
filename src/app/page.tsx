@@ -1,4 +1,4 @@
-import ThemeToggle from "@/theme/theme-toggle";
+import ThemeToggle from "@/components/theme/theme-toggle";
 import { TestCard } from "@/components/test-card";
 
 export default function Home() {
