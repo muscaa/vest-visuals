@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
-import "./globals.css";
+import "@/styles/main.css";
 import ThemeProvider from "@/theme/theme-provider";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 const figtree = Figtree({
     subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
                         <main className="flex-grow">
                             {children}
                         </main>
+                        <Footer />
                     </div>
                 </ThemeProvider>
             </body>
