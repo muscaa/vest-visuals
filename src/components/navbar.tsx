@@ -12,11 +12,11 @@ import {
     X
 } from "lucide-react";
 
-function NavbarLinkButton({ href, text }: { href: string, text: string }) {
+function NavbarLinkButton(props: { href: string, text: string }) {
     return (
-        <Link href={href}>
+        <Link href={props.href}>
             <Button variant="navbar">
-                {text}
+                {props.text}
             </Button>
         </Link>
     );
