@@ -55,16 +55,19 @@
 :root {
     --raisin-black: hsla(228, 6%, 15%, 1);
     --jet: hsla(220, 6%, 20%, 1);
+    --onyx: hsla(220, 5%, 24%, 1);
+    --taupe-gray: hsla(225, 2%, 58%, 1);
+    --platinum: hsla(220, 10%, 88%, 1);
+    --antiflash-white: hsla(225, 14%, 95%, 1);
+    --seasalt: hsla(220, 27%, 98%, 1);
     --royal-blue-web-color: hsla(224, 64%, 57%, 1);
     --keppel: hsla(170, 64%, 46%, 1);
-    --antiflash-white: hsla(228, 11%, 91%, 1);
-    --seasalt: hsla(220, 27%, 98%, 1);
     --imperial-red: hsla(356, 86%, 60%, 1);
 
     --radius: 0.625rem;
 
-    --background: var(--seasalt);
-    --foreground: var(--raisin-black);
+    --background: var(--antiflash-white);
+    --foreground: var(--jet);
 
     --card: var(--background);
     --card-foreground: var(--foreground);
@@ -73,22 +76,22 @@
     --popover-foreground: var(--foreground);
 
     --primary: var(--royal-blue-web-color);
-    --primary-foreground: var(--seasalt);
+    --primary-foreground: var(--antiflash-white);
 
-    --secondary: var(--antiflash-white);
-    --secondary-foreground: var(--raisin-black);
+    --secondary: var(--platinum);
+    --secondary-foreground: var(--jet);
 
-    --muted: var(--antiflash-white);
-    --muted-foreground: var(--jet);
+    --muted: var(--platinum);
+    --muted-foreground: var(--taupe-gray);
 
-    --accent: var(--antiflash-white);
-    --accent-foreground: var(--royal-blue-web-color);
+    --accent: var(--platinum);
+    --accent-foreground: var(--primary);
 
     --destructive: var(--imperial-red);
 
-    --border: var(--antiflash-white);
-    --input: var(--antiflash-white);
-    --ring: var(--raisin-black);
+    --border: var(--muted);
+    --input: var(--muted);
+    --ring: var(--primary);
 
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
@@ -107,8 +110,8 @@
 }
 
 .dark {
-    --background: var(--raisin-black);
-    --foreground: var(--seasalt);
+    --background: var(--jet);
+    --foreground: var(--antiflash-white);
 
     --card: var(--background);
     --card-foreground: var(--foreground);
@@ -117,22 +120,22 @@
     --popover-foreground: var(--foreground);
 
     --primary: var(--royal-blue-web-color);
-    --primary-foreground: var(--seasalt);
+    --primary-foreground: var(--antiflash-white);
 
-    --secondary: var(--jet);
-    --secondary-foreground: var(--seasalt);
+    --secondary: var(--onyx);
+    --secondary-foreground: var(--antiflash-white);
 
-    --muted: var(--jet);
-    --muted-foreground: var(--antiflash-white);
+    --muted: var(--onyx);
+    --muted-foreground: var(--taupe-gray);
 
-    --accent: var(--jet);
-    --accent-foreground: var(--royal-blue-web-color);
+    --accent: var(--onyx);
+    --accent-foreground: var(--primary);
 
     --destructive: var(--imperial-red);
 
-    --border: var(--jet);
-    --input: var(--jet);
-    --ring: var(--seasalt);
+    --border: var(--muted);
+    --input: var(--muted);
+    --ring: var(--primary);
 
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
