@@ -117,7 +117,7 @@ function ContactOther() {
 
 export default function Contact() {
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-2 py-8">
+        <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
             <ContactForm />
             <h4>sau</h4>
             <ContactOther />
