@@ -18,7 +18,7 @@ function Category(props: { name: string, selected: boolean, onSelect?: () => voi
                 className={`${props.selected ? "" : "blur-xs saturate-0"}
                     relative size-full transition-all ease-in-out duration-700`}
             >
-                <Image src="/image0.png" alt="Image" width={1024} height={684} className="absolute inset-0 w-full h-full object-cover object-center" />
+                <Image src="/image0.png" alt="Image" width={1024} height={684} className="absolute size-full object-cover object-center" />
             </div>
         </div>
     );
@@ -42,7 +42,7 @@ export default function Home() {
     return (
         <Main>
             <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
-                <div className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] max-w-8xl gap-1">
+                <div className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1">
                     <Category name="1" selected={category == 0} onSelect={() => setCategory(0)} className="bg-red-400" />
                     <Category name="2" selected={category == 1} onSelect={() => setCategory(1)} className="bg-purple-400" />
                     <Category name="3" selected={category == 2} onSelect={() => setCategory(2)} className="bg-green-400" />

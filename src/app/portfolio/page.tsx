@@ -52,7 +52,6 @@ export default function Portfolio() {
                     render={(item, idx) => (
                         <Image key={idx} src={item.src} alt={item.alt} width={item.width} height={item.height} className="w-full h-auto" />
                     )}
-                    className="max-w-8xl"
                 />
             </div>
         </Main>
