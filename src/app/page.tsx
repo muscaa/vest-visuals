@@ -18,7 +18,7 @@ function Category(props: { name: string, selected: boolean, onSelect?: () => voi
                 className={`${props.selected ? "" : "blur-xs saturate-0"}
                     relative size-full transition-all ease-in-out duration-700`}
             >
-                <Image src="https://i.imgur.com/UAmygLk.jpeg" alt="Image" width={1200} height={800} className="absolute inset-0 w-full h-full object-cover object-center" />
+                <Image src="/image0.png" alt="Image" width={1024} height={684} className="absolute inset-0 w-full h-full object-cover object-center" />
             </div>
         </div>
     );
