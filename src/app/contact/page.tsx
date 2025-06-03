@@ -61,7 +61,7 @@ function ContactForm() {
 function CardLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }>, title: string, text: string }) {
     return (
         <Link href={props.href} target="_blank">
-            <Button variant="outline" size="none" className="p-4 w-full justify-start text-start">
+            <Button variant="card" size="none">
                 <div className="flex gap-4 items-center">
                     <props.icon size={32} strokeWidth={1.5} className="size-8" />
                     <div className="flex flex-col">
