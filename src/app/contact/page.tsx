@@ -1,3 +1,4 @@
+import { Main } from "@/components/main";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -117,10 +118,12 @@ function ContactOther() {
 
 export default function Contact() {
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
-            <ContactForm />
-            <h4>SAU</h4>
-            <ContactOther />
-        </div>
+        <Main>
+            <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
+                <ContactForm />
+                <h4>SAU</h4>
+                <ContactOther />
+            </div>
+        </Main>
     );
 }

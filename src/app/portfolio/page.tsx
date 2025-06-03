@@ -1,5 +1,6 @@
 "use client";
 
+import { Main } from "@/components/main";
 import { Masonry } from "react-plock";
 import Image from "next/image";
 
@@ -39,19 +40,21 @@ export default function Portfolio() {
     }
 
     return (
-        <div className="flex items-center justify-center size-full p-2">
-            <Masonry
-                items={items}
-                config={{
-                    columns: [1, 2, 3],
-                    gap: [8, 8, 8],
-                    media: [640, 1024, 1408],
-                }}
-                render={(item, idx) => (
-                    <Image key={idx} src={item.src} alt={item.alt} width={item.width} height={item.height} className="w-full h-auto" />
-                )}
-                className="max-w-8xl"
-            />
-        </div>
+        <Main>
+            <div className="flex items-center justify-center size-full p-2">
+                <Masonry
+                    items={items}
+                    config={{
+                        columns: [1, 2, 3],
+                        gap: [8, 8, 8],
+                        media: [640, 1024, 1408],
+                    }}
+                    render={(item, idx) => (
+                        <Image key={idx} src={item.src} alt={item.alt} width={item.width} height={item.height} className="w-full h-auto" />
+                    )}
+                    className="max-w-8xl"
+                />
+            </div>
+        </Main>
     );
 }
