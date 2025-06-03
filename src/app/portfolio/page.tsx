@@ -46,7 +46,7 @@ export default function Portfolio() {
                     items={items}
                     config={{
                         columns: [1, 2, 3],
-                        gap: [8, 8, 8],
+                        gap: [4, 4, 4],
                         media: [640, 1024, 1408],
                     }}
                     render={(item, idx) => (
