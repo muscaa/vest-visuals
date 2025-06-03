@@ -72,7 +72,7 @@ export function Navbar() {
             </div>
             {
                 isMobile == true && menuOpen &&
-                <div className="absolute top-full flex flex-col gap-2 w-full max-w-6xl justify-center items-center p-2 bg-secondary border-t border-primary shadow-sm">
+                <div className="absolute z-50 top-full flex flex-col gap-2 w-full max-w-6xl justify-center items-center p-2 bg-secondary border-t border-primary shadow-sm">
                     <MenuButtons />
                 </div>
             }

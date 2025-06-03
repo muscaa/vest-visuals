@@ -3,17 +3,23 @@
 import { Main } from "@/components/main";
 import {
     useState,
-    useEffect
+    //useEffect
 } from "react";
+import Image from "next/image";
 
 function Category(props: { name: string, selected: boolean, onSelect?: () => void, className?: string }) {
     return (
         <div
             onMouseEnter={props.onSelect}
             className={`${props.selected ? "sm:w-[400%] not-sm:h-[400%]" : "sm:w-full not-sm:h-full"}
-                transition-all ease-in-out duration-700 sm:h-full not-sm:w-full ${props.className}`}
+                sm:h-full not-sm:w-full transition-all ease-out duration-700 overflow-hidden`}
         >
-
+            <div
+                className={`${props.selected ? "" : "blur-xs saturate-0"}
+                    relative size-full transition-all ease-in-out duration-700`}
+            >
+                <Image src="https://i.imgur.com/UAmygLk.jpeg" alt="Image" width={1200} height={800} className="absolute inset-0 w-full h-full object-cover object-center" />
+            </div>
         </div>
     );
 }
@@ -21,7 +27,7 @@ function Category(props: { name: string, selected: boolean, onSelect?: () => voi
 export default function Home() {
     const [category, setCategory] = useState(0);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const interval = setInterval(() => {
             setCategory((prev) => {
                 return (prev + 1) % 6;
@@ -31,7 +37,7 @@ export default function Home() {
         return () => {
             clearInterval(interval);
         };
-    }, []);
+    }, []);*/
 
     return (
         <Main>
