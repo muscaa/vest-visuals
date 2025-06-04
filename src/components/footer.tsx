@@ -47,7 +47,7 @@ function CardLink(props: { href: string, icon: React.ComponentType<{ size?: numb
 export function FooterLarge() {
     return (
         <footer className="flex flex-col bg-muted">
-            <div className="flex justify-between px-32 py-16">
+            <div className="flex not-lg:flex-col justify-between px-8 lg:px-32 py-16 not-lg:gap-12">
                 <div className="flex flex-col gap-2">
                     <h4 className="mb-6">UNDE NE GASESTI</h4>
                     <CardLink
@@ -80,7 +80,7 @@ export function FooterLarge() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between px-32 py-8 bg-keppel">
+            <div className="flex not-lg:flex-col justify-between px-8 lg:px-32 py-8 not-lg:gap-4 bg-keppel">
                 <div className="flex items-center justify-center gap-4">
                     <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
                     <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
