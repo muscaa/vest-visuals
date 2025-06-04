@@ -52,6 +52,17 @@
     --radius-xl: calc(var(--radius) + 4px);
 
     --container-8xl: 88rem;
+
+    --color-raisin-black: var(--raisin-black);
+    --color-jet: var(--jet);
+    --color-onyx: var(--onyx);
+    --color-taupe-gray: var(--taupe-gray);
+    --color-platinum: var(--platinum);
+    --color-antiflash-white: var(--antiflash-white);
+    --color-seasalt: var(--seasalt);
+    --color-royal-blue-web-color: var(--royal-blue-web-color);
+    --color-keppel: var(--keppel);
+    --color-imperial-red: var(--imperial-red);
 }
 
 :root {
