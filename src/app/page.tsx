@@ -116,8 +116,8 @@ function Member(props: { name: string }) {
     ];
 
     return (
-        <div className="flex flex-col w-128 py-8 justify-center items-center gap-4">
-            <div className="size-96 bg-blue-400">
+        <div className="flex flex-col w-84 lg:w-112 py-8 justify-center items-center gap-4">
+            <div className="size-63 lg:size-84 bg-blue-400">
 
             </div>
             <div className="flex flex-col justify-center items-center gap-1">
