@@ -6,6 +6,15 @@ import {
     useEffect
 } from "react";
 import Image from "next/image";
+import {
+    SiYoutube,
+    SiFacebook,
+    SiInstagram,
+    SiTiktok,
+    SiX,
+} from "@icons-pack/react-simple-icons";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 function Category(props: { name: string, selected: boolean, hovered: boolean, onEnter?: () => void, onLeave?: () => void }) {
     return (
@@ -95,6 +104,68 @@ function SectionCategories() {
     );
 }
 
+
+function IconLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }> }) {
+    return (
+        <Link href={props.href} target="_blank" className="hover:text-primary transition-all">
+            <props.icon size={24} strokeWidth={1.5} />
+        </Link>
+    );
+}
+
+function Member(props: { name: string }) {
+    const roles = [
+        "fotograf",
+        "videograf",
+        "editor foto",
+        "editor video",
+        "portocale",
+        "mere",
+        "pere"
+    ];
+
+    return (
+        <div className="flex flex-col w-128 py-8 justify-center items-center gap-4">
+            <div className="size-96 bg-blue-400">
+
+            </div>
+            <div className="flex flex-col justify-center items-center gap-1">
+                <h2>{props.name}</h2>
+                <div className="flex flex-wrap justify-center items-center gap-2">
+                    {
+                        roles.map((role, index) => (
+                            <div key={index} className="flex h-6 items-center gap-2">
+                                <h4 className="text-muted-foreground">{role}</h4>
+                                {
+                                    index < roles.length - 1 && (
+                                        <Separator orientation="vertical" />
+                                    )
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+            <div className="flex items-center justify-center gap-4">
+                <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
+                <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
+                <IconLink href="https://instagram.com/vest.visuals" icon={SiInstagram} />
+                <IconLink href="https://tiktok.com/@vest_visuals" icon={SiTiktok} />
+                <IconLink href="https://x.com/VestVisual" icon={SiX} />
+            </div>
+        </div>
+    );
+}
+
+function SectionMembers() {
+    return (
+        <section className="flex flex-wrap w-full max-w-6xl justify-center gap-2">
+            <Member name="David" />
+            <Member name="Mihail" />
+        </section>
+    );
+}
+
 export default function Home() {
     return (
         <Main>
@@ -103,6 +174,7 @@ export default function Home() {
                 <div className="w-full h-128 bg-green-400">
 
                 </div>
+                <SectionMembers />
             </div>
         </Main>
     );
