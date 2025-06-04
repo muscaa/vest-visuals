@@ -13,7 +13,7 @@ import {
     SiTiktok,
     SiX,
 } from "@icons-pack/react-simple-icons";
-import Link from "next/link";
+import { IconLink } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 
 function Category(props: { name: string, selected: boolean, hovered: boolean, onEnter?: () => void, onLeave?: () => void }) {
@@ -101,15 +101,6 @@ function SectionCategories() {
                 }}
             />
         </section>
-    );
-}
-
-
-function IconLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }> }) {
-    return (
-        <Link href={props.href} target="_blank" className="hover:text-primary transition-all">
-            <props.icon size={24} strokeWidth={1.5} />
-        </Link>
     );
 }
 

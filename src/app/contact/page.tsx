@@ -25,6 +25,7 @@ import {
     SiX,
 } from "@icons-pack/react-simple-icons";
 import { Separator } from "@/components/ui/separator";
+import { IconLink } from "@/components/snippets";
 
 function ContactForm() {
     return (
@@ -71,14 +72,6 @@ function CardLink(props: { href: string, icon: React.ComponentType<{ size?: numb
                     </div>
                 </div>
             </Button>
-        </Link>
-    );
-}
-
-function IconLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }> }) {
-    return (
-        <Link href={props.href} target="_blank" className="hover:text-primary transition-all">
-            <props.icon size={24} strokeWidth={1.5} />
         </Link>
     );
 }
