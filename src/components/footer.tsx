@@ -15,3 +15,11 @@ export function Footer() {
         </footer>
     );
 }
+
+export function FooterLarge() {
+    return (
+        <footer>
+            
+        </footer>
+    );
+}

@@ -11,14 +11,18 @@ export function Main(props: MainProps) {
     return (
         <>
             {
-                props.header ?? <Navbar />
+                props.header ?? (
+                    <Navbar />
+                )
             }
             <div className="flex flex-col h-full max-h-full overflow-y-auto">
                 <main className="flex-grow">
                     {props.children}
                 </main>
                 {
-                    props.footer ?? <Footer />
+                    props.footer ?? (
+                        <Footer />
+                    )
                 }
             </div>
         </>

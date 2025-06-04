@@ -15,6 +15,7 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { IconLink } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
+import { FooterLarge } from "@/components/footer";
 
 function Category(props: { name: string, selected: boolean, hovered: boolean, onEnter?: () => void, onLeave?: () => void }) {
     return (
@@ -159,7 +160,11 @@ function SectionMembers() {
 
 export default function Home() {
     return (
-        <Main>
+        <Main
+            footer={(
+                <FooterLarge />
+            )}
+        >
             <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
                 <SectionCategories />
                 <div className="w-full h-128 bg-green-400">
