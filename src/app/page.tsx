@@ -17,6 +17,14 @@ import { IconLink } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 import { FooterLarge } from "@/components/footer";
 
+function SectionAbout() {
+    return (
+        <section id="about" className="flex w-full h-[calc(100vh-5rem)]">
+
+        </section>
+    );
+}
+
 function Category(props: { name: string, selected: boolean, hovered: boolean, onEnter?: () => void, onLeave?: () => void }) {
     return (
         <div
@@ -52,7 +60,7 @@ function SectionCategories() {
     }, [hovered]);
 
     return (
-        <section className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1">
+        <section id="categories" className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1">
             <Category
                 name="Evenimente"
                 selected={category == 0}
@@ -149,9 +157,9 @@ function Member(props: { name: string }) {
     );
 }
 
-function SectionMembers() {
+function SectionTeam() {
     return (
-        <section className="flex flex-wrap w-full max-w-6xl justify-center gap-2">
+        <section id="team" className="flex flex-wrap w-full max-w-6xl justify-center gap-2">
             <Member name="David" />
             <Member name="Mihail" />
         </section>
@@ -166,11 +174,12 @@ export default function Home() {
             )}
         >
             <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
+                <SectionAbout />
                 <SectionCategories />
                 <div className="w-full h-128 bg-green-400">
 
                 </div>
-                <SectionMembers />
+                <SectionTeam />
             </div>
         </Main>
     );

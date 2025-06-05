@@ -7,6 +7,10 @@
         @apply bg-background text-foreground;
     }
 
+    div {
+        @apply scroll-smooth;
+    }
+
     h1 {
         @apply h1;
     }
