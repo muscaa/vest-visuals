@@ -1,8 +1,20 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+    --color-background0: var(--background0);
+    --color-foreground0: var(--foreground0);
+
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+
+    --color-background2: var(--background2);
+    --color-foreground2: var(--foreground2);
+
+    --color-background3: var(--background3);
+    --color-foreground3: var(--foreground3);
+
+    --color-background4: var(--background4);
+    --color-foreground4: var(--foreground4);
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
@@ -53,34 +65,58 @@
 
     --container-8xl: 88rem;
 
+    --color-royal-blue-web-color: var(--royal-blue-web-color);
+    --color-keppel: var(--keppel);
+    --color-taupe-gray: var(--taupe-gray);
+    --color-imperial-red: var(--imperial-red);
+
+    --color-seasalt: var(--seasalt);
+    --color-antiflash-white: var(--antiflash-white);
+    --color-antiflash-white-2: var(--antiflash-white-2);
+    --color-platinum: var(--platinum);
+    --color-timberwolf: var(--timberwolf);
+
     --color-raisin-black: var(--raisin-black);
     --color-jet: var(--jet);
     --color-onyx: var(--onyx);
-    --color-taupe-gray: var(--taupe-gray);
-    --color-platinum: var(--platinum);
-    --color-antiflash-white: var(--antiflash-white);
-    --color-seasalt: var(--seasalt);
-    --color-royal-blue-web-color: var(--royal-blue-web-color);
-    --color-keppel: var(--keppel);
-    --color-imperial-red: var(--imperial-red);
+    --color-onyx-2: var(--onyx-2);
+    --color-outer-space: var(--outer-space);
 }
 
 :root {
-    --raisin-black: hsla(228, 6%, 15%, 1);
-    --jet: hsla(220, 6%, 20%, 1);
-    --onyx: hsla(220, 5%, 24%, 1);
-    --taupe-gray: hsla(225, 2%, 58%, 1);
-    --platinum: hsla(220, 10%, 88%, 1);
-    --antiflash-white: hsla(225, 14%, 95%, 1);
-    --seasalt: hsla(220, 27%, 98%, 1);
-    --royal-blue-web-color: hsla(224, 64%, 57%, 1);
-    --keppel: hsla(170, 64%, 46%, 1);
-    --imperial-red: hsla(356, 86%, 60%, 1);
+    --royal-blue-web-color: #4b71d8ff;
+    --keppel: #2ac1a8ff;
+    --taupe-gray: #919295ff;
+    --imperial-red: #f1414dff;
+
+    --seasalt: #f8f9fbff;
+    --antiflash-white: #f1f2f4ff;
+    --antiflash-white-2: #e9eaedff;
+    --platinum: #dddfe3ff;
+    --timberwolf: #d1d3d6ff;
+
+    --raisin-black: #242529ff;
+    --jet: #303236ff;
+    --onyx: #35373bff;
+    --onyx-2: #3a3c40ff;
+    --outer-space: #414449ff;
 
     --radius: 0.625rem;
 
+    --background0: var(--seasalt);
+    --foreground0: var(--raisin-black);
+
     --background: var(--antiflash-white);
     --foreground: var(--jet);
+
+    --background2: var(--antiflash-white-2);
+    --foreground2: var(--onyx);
+
+    --background3: var(--platinum);
+    --foreground3: var(--onyx-2);
+
+    --background4: var(--timberwolf);
+    --foreground4: var(--outer-space);
 
     --card: var(--background);
     --card-foreground: var(--foreground);
@@ -91,13 +127,13 @@
     --primary: var(--royal-blue-web-color);
     --primary-foreground: var(--antiflash-white);
 
-    --secondary: var(--platinum);
+    --secondary: var(--timberwolf);
     --secondary-foreground: var(--jet);
 
-    --muted: var(--platinum);
+    --muted: var(--timberwolf);
     --muted-foreground: var(--taupe-gray);
 
-    --accent: var(--platinum);
+    --accent: var(--timberwolf);
     --accent-foreground: var(--primary);
 
     --destructive: var(--imperial-red);
@@ -123,8 +159,20 @@
 }
 
 .dark {
+    --background0: var(--raisin-black);
+    --foreground0: var(--seasalt);
+
     --background: var(--jet);
     --foreground: var(--antiflash-white);
+
+    --background2: var(--onyx);
+    --foreground2: var(--antiflash-white-2);
+
+    --background3: var(--onyx-2);
+    --foreground3: var(--platinum);
+
+    --background4: var(--outer-space);
+    --foreground4: var(--timberwolf);
 
     --card: var(--background);
     --card-foreground: var(--foreground);
@@ -135,13 +183,13 @@
     --primary: var(--royal-blue-web-color);
     --primary-foreground: var(--antiflash-white);
 
-    --secondary: var(--onyx);
+    --secondary: var(--outer-space);
     --secondary-foreground: var(--antiflash-white);
 
-    --muted: var(--onyx);
+    --muted: var(--outer-space);
     --muted-foreground: var(--taupe-gray);
 
-    --accent: var(--onyx);
+    --accent: var(--outer-space);
     --accent-foreground: var(--primary);
 
     --destructive: var(--imperial-red);

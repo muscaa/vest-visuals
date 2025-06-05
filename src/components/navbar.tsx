@@ -40,7 +40,7 @@ export function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <nav className="flex flex-col w-full h-16 justify-center items-center bg-secondary relative shadow-sm">
+        <nav className="flex flex-col w-full h-16 justify-center items-center bg-background4 relative shadow-sm">
             <div className="flex size-full max-w-6xl justify-between items-center p-2">
                 <Link href="/">
                     <Image

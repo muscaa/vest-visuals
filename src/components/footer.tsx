@@ -17,7 +17,7 @@ import { IconLink } from "@/components/snippets";
 
 export function Footer() {
     return (
-        <footer className="flex flex-col justify-center items-center min-h-20 bg-secondary">
+        <footer className="flex flex-col justify-center items-center min-h-20 bg-background2">
             <h5>© {new Date().getFullYear()} Vest Visuals</h5>
             <h5>
                 by <Link href="https://github.com/muscaa" target="_blank">
@@ -46,7 +46,7 @@ function CardLink(props: { href: string, icon: React.ComponentType<{ size?: numb
 
 export function FooterLarge() {
     return (
-        <footer className="flex flex-col bg-muted">
+        <footer className="flex flex-col bg-background2">
             <div className="flex not-lg:flex-col justify-between px-8 lg:px-32 py-16 not-lg:gap-12">
                 <div className="flex flex-col gap-2">
                     <h4 className="mb-6">UNDE NE GASESTI</h4>
