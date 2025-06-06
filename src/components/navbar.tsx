@@ -11,25 +11,16 @@ import {
     Menu,
     X
 } from "lucide-react";
-
-function NavbarLinkButton(props: { href: string, text: string }) {
-    return (
-        <Link href={props.href}>
-            <Button variant="navbar">
-                {props.text}
-            </Button>
-        </Link>
-    );
-}
+import { ButtonLink } from "@/components/snippets";
 
 function MenuButtons() {
     return (
         <>
-            <NavbarLinkButton href="/" text="ACASA" />
-            <NavbarLinkButton href="/portfolio" text="PORTOFOLIU" />
-            <NavbarLinkButton href="/services" text="SERVICII" />
-            <NavbarLinkButton href="/faq" text="FAQ" />
-            <NavbarLinkButton href="/contact" text="CONTACT" />
+            <ButtonLink href="/" variant="navbar">ACASA</ButtonLink>
+            <ButtonLink href="/portfolio" variant="navbar">PORTOFOLIU</ButtonLink>
+            <ButtonLink href="/services" variant="navbar">SERVICII</ButtonLink>
+            <ButtonLink href="/faq" variant="navbar">FAQ</ButtonLink>
+            <ButtonLink href="/contact" variant="navbar">CONTACT</ButtonLink>
             <ThemeToggle />
         </>
     );
