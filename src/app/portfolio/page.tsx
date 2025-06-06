@@ -45,9 +45,9 @@ export default function Portfolio() {
                 <Masonry
                     items={items}
                     config={{
-                        columns: [1, 2, 3],
-                        gap: [4, 4, 4],
-                        media: [640, 1024, 1408],
+                        columns: [2, 3, 4, 5],
+                        gap: [4, 4, 4, 4, 4],
+                        media: [640, 768, 1024, 1408],
                     }}
                     render={(item, idx) => (
                         <Image key={idx} src={item.src} alt={item.alt} width={item.width} height={item.height} className="w-full h-auto" />
