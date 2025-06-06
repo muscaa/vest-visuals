@@ -125,8 +125,8 @@ function Member(props: { name: string }) {
     ];
 
     return (
-        <div className="flex flex-col w-84 lg:w-112 py-8 justify-center items-center gap-4">
-            <div className="size-63 lg:size-84 bg-blue-400">
+        <div className="flex flex-col w-64 md:w-96 xl:w-128 p-8 justify-center items-center gap-4">
+            <div className="size-64 md:size-96 xl:size-128 bg-blue-400">
 
             </div>
             <div className="flex flex-col justify-center items-center gap-1">
@@ -159,7 +159,7 @@ function Member(props: { name: string }) {
 
 function SectionTeam() {
     return (
-        <section id="team" className="flex flex-wrap w-full max-w-6xl justify-center gap-2">
+        <section id="team" className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8">
             <Member name="David" />
             <Member name="Mihail" />
         </section>
