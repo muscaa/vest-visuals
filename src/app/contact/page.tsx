@@ -18,14 +18,7 @@ import {
 } from "lucide-react";
 import {
     SiWhatsapp,
-    SiYoutube,
-    SiFacebook,
-    SiInstagram,
-    SiTiktok,
-    SiX,
 } from "@icons-pack/react-simple-icons";
-import { Separator } from "@/components/ui/separator";
-import { IconLink } from "@/components/snippets";
 
 function ContactForm() {
     return (
