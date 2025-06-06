@@ -83,26 +83,7 @@
     --color-outer-space: var(--outer-space);
 }
 
-:root {
-    --royal-blue-web-color: #4b71d8ff;
-    --keppel: #2ac1a8ff;
-    --taupe-gray: #919295ff;
-    --imperial-red: #f1414dff;
-
-    --seasalt: #f8f9fbff;
-    --antiflash-white: #f1f2f4ff;
-    --antiflash-white-2: #e9eaedff;
-    --platinum: #dddfe3ff;
-    --timberwolf: #d1d3d6ff;
-
-    --raisin-black: #242529ff;
-    --jet: #303236ff;
-    --onyx: #35373bff;
-    --onyx-2: #3a3c40ff;
-    --outer-space: #414449ff;
-
-    --radius: 0.625rem;
-
+@utility theme-light {
     --background0: var(--seasalt);
     --foreground0: var(--raisin-black);
 
@@ -158,7 +139,11 @@
     --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-.dark {
+.theme-light {
+    @apply scheme-light theme-light text-foreground;
+}
+
+@utility theme-dark {
     --background0: var(--raisin-black);
     --foreground0: var(--seasalt);
 
@@ -212,4 +197,35 @@
     --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+.theme-dark {
+    @apply scheme-dark theme-dark text-foreground;
+}
+
+:root {
+    --royal-blue-web-color: #4b71d8ff;
+    --keppel: #2ac1a8ff;
+    --taupe-gray: #919295ff;
+    --imperial-red: #f1414dff;
+
+    --seasalt: #f8f9fbff;
+    --antiflash-white: #f1f2f4ff;
+    --antiflash-white-2: #e9eaedff;
+    --platinum: #dddfe3ff;
+    --timberwolf: #d1d3d6ff;
+
+    --raisin-black: #242529ff;
+    --jet: #303236ff;
+    --onyx: #35373bff;
+    --onyx-2: #3a3c40ff;
+    --outer-space: #414449ff;
+
+    --radius: 0.625rem;
+
+    @apply theme-light;
+}
+
+.dark {
+    @apply theme-dark;
 }

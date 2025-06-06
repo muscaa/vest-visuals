@@ -13,14 +13,27 @@ import {
     SiTiktok,
     SiX,
 } from "@icons-pack/react-simple-icons";
-import { IconLink } from "@/components/snippets";
+import {
+    IconLink,
+    ButtonLink
+} from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 import { FooterLarge } from "@/components/footer";
 
-function SectionAbout() {
+function SectionMain() {
     return (
-        <section id="about" className="flex w-full h-[calc(100vh-5rem)]">
-
+        <section id="main" className="relative w-full h-[calc(100vh-4rem)]">
+            <Image
+                src="/image0.png"
+                alt="Image"
+                width={1024}
+                height={684}
+                className="absolute size-full saturate-50 brightness-75 object-cover object-center"
+            />
+            <div className="absolute flex flex-col size-full justify-center items-center gap-8 theme-light">
+                <h1>hello</h1>
+                <ButtonLink href="#categories" variant="outline" size="lg">AFLA MAI MULTE</ButtonLink>
+            </div>
         </section>
     );
 }
@@ -173,13 +186,15 @@ export default function Home() {
                 <FooterLarge />
             )}
         >
-            <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
-                <SectionAbout />
-                <SectionCategories />
-                <div className="w-full h-128 bg-green-400">
+            <div className="flex flex-col">
+                <SectionMain />
+                <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
+                    <SectionCategories />
+                    <div className="w-full h-128 bg-green-400">
 
+                    </div>
+                    <SectionTeam />
                 </div>
-                <SectionTeam />
             </div>
         </Main>
     );
