@@ -19,6 +19,13 @@ import {
 } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 import { FooterLarge } from "@/components/footer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 function SectionMain() {
     return (
@@ -32,8 +39,57 @@ function SectionMain() {
             />
             <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
                 <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
-                <ButtonLink href="#categories" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
+                <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
             </div>
+        </section>
+    );
+}
+
+function SectionAbout() {
+    return (
+        <section id="about" className="flex flex-col justify-center items-center p-2">
+            <h1>Cine suntem noi?</h1>
+            <Carousel
+                opts={{
+                    loop: true,
+                }}
+                className="w-full"
+            >
+                <CarouselContent>
+                    <CarouselItem>
+                        <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
+                            <Image
+                                src="/image0.png"
+                                alt="Image"
+                                width={1024}
+                                height={684}
+                                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
+                            />
+                            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
+                                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
+                                <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
+                            </div>
+                        </section>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
+                            <Image
+                                src="/image0.png"
+                                alt="Image"
+                                width={1024}
+                                height={684}
+                                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
+                            />
+                            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
+                                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
+                                <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
+                            </div>
+                        </section>
+                    </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious variant="secondary" className="left-4" />
+                <CarouselNext variant="secondary" className="right-4" />
+            </Carousel>
         </section>
     );
 }
@@ -188,6 +244,7 @@ export default function Home() {
         >
             <div className="flex flex-col size-full">
                 <SectionMain />
+                <SectionAbout />
                 <SectionCategories />
                 <div className="w-full h-128 bg-green-400">
 
