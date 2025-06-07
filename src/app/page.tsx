@@ -22,17 +22,17 @@ import { FooterLarge } from "@/components/footer";
 
 function SectionMain() {
     return (
-        <section id="main" className="relative w-full h-[calc(100vh-4rem)]">
+        <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
             <Image
                 src="/image0.png"
                 alt="Image"
                 width={1024}
                 height={684}
-                className="absolute size-full saturate-50 brightness-75 object-cover object-center"
+                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
             />
-            <div className="absolute flex flex-col size-full justify-center items-center gap-8 theme-light">
-                <h1>hello</h1>
-                <ButtonLink href="#categories" variant="outline" size="lg">AFLA MAI MULTE</ButtonLink>
+            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
+                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
+                <ButtonLink href="#categories" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
             </div>
         </section>
     );
@@ -73,7 +73,7 @@ function SectionCategories() {
     }, [hovered]);
 
     return (
-        <section id="categories" className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1">
+        <section id="categories" className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1 p-2">
             <Category
                 name="Evenimente"
                 selected={category == 0}
@@ -172,7 +172,7 @@ function Member(props: { name: string }) {
 
 function SectionTeam() {
     return (
-        <section id="team" className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8">
+        <section id="team" className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8 p-2">
             <Member name="David" />
             <Member name="Mihail" />
         </section>
@@ -186,15 +186,13 @@ export default function Home() {
                 <FooterLarge />
             )}
         >
-            <div className="flex flex-col">
+            <div className="flex flex-col size-full">
                 <SectionMain />
-                <div className="flex flex-col items-center justify-center size-full gap-2 p-2">
-                    <SectionCategories />
-                    <div className="w-full h-128 bg-green-400">
+                <SectionCategories />
+                <div className="w-full h-128 bg-green-400">
 
-                    </div>
-                    <SectionTeam />
                 </div>
+                <SectionTeam />
             </div>
         </Main>
     );
