@@ -58,7 +58,7 @@ export function FooterLarge() {
 
     return (
         <footer className="flex flex-col relative">
-            <div className="flex justify-center items-center mt-4.5 bg-background2">
+            <div className="flex justify-center items-center bg-background2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
                         <h4 className="font-medium">PAGINI UTILE</h4>
@@ -100,7 +100,7 @@ export function FooterLarge() {
             <div className="flex justify-center items-center bg-keppel">
                 <FooterBase />
             </div>
-            <div className="absolute flex justify-center items-center w-full">
+            <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
                 <ButtonLink href="#main" variant="secondary" size="icon">
                     <ChevronsUp size={32} strokeWidth={1.5} className="size-8" />
                 </ButtonLink>
