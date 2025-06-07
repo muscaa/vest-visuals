@@ -23,6 +23,7 @@ const buttonVariants = cva(
                 navbar: "underline-offset-4 hover:text-primary",
                 card: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 p-4 w-full justify-start text-start",
                 neutral: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
+                transparent: "bg-secondary/60 text-secondary-foreground shadow-xs hover:bg-secondary/80",
             },
             size: {
                 default: "h-9 px-4 py-2 has-[>svg]:px-3",

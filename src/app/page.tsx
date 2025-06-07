@@ -3,7 +3,8 @@
 import { Main } from "@/components/main";
 import {
     useState,
-    useEffect
+    useEffect,
+    useRef
 } from "react";
 import Image from "next/image";
 import {
@@ -20,25 +21,42 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { FooterLarge } from "@/components/footer";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+    type CarouselApi,
 } from "@/components/ui/carousel";
 
 function SectionMain() {
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    useEffect(() => {
+        if (!imageRef.current) {
+            return;
+        }
+
+        imageRef.current.classList.add("scale-110");
+    }, []);
+
     return (
         <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
-            <Image
-                src="/image0.png"
-                alt="Image"
-                width={1024}
-                height={684}
-                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
-            />
-            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
-                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
+            <div className="absolute size-[calc(100%-1rem)] brightness-75 overflow-hidden">
+                <Image
+                    ref={imageRef}
+                    src="/image0.png"
+                    alt="Image"
+                    width={1024}
+                    height={684}
+                    className="size-full object-cover object-center transition-all duration-5000 ease-linear"
+                />
+            </div>
+            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-32 theme-dark">
+                <div className="flex flex-col justify-center items-center gap-4">
+                    <h1 className="font-medium text-center">FOTO | VIDEO</h1>
+                    <h2 className="font-light text-center italic text-foreground3">TIMISOARA | ARAD | ORADEA</h2>
+                </div>
                 <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
             </div>
         </section>
@@ -46,138 +64,72 @@ function SectionMain() {
 }
 
 function SectionAbout() {
-    return (
-        <section id="about" className="flex flex-col justify-center items-center p-2">
-            <h1>Cine suntem noi?</h1>
-            <Carousel
-                opts={{
-                    loop: true,
-                }}
-                className="w-full"
-            >
-                <CarouselContent>
-                    <CarouselItem>
-                        <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
-                            <Image
-                                src="/image0.png"
-                                alt="Image"
-                                width={1024}
-                                height={684}
-                                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
-                            />
-                            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
-                                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
-                                <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
-                            </div>
-                        </section>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
-                            <Image
-                                src="/image0.png"
-                                alt="Image"
-                                width={1024}
-                                height={684}
-                                className="absolute size-[calc(100%-1rem)] brightness-75 object-cover object-center"
-                            />
-                            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-8 theme-dark">
-                                <h1 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h1>
-                                <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
-                            </div>
-                        </section>
-                    </CarouselItem>
-                </CarouselContent>
-                <CarouselPrevious variant="secondary" className="left-4" />
-                <CarouselNext variant="secondary" className="right-4" />
-            </Carousel>
-        </section>
-    );
-}
-
-function Category(props: { name: string, selected: boolean, hovered: boolean, onEnter?: () => void, onLeave?: () => void }) {
-    return (
-        <div
-            onMouseEnter={props.onEnter}
-            onMouseLeave={props.onLeave}
-            className={`${props.selected ? "sm:w-[400%] not-sm:h-[400%]" : "sm:w-full not-sm:h-full"}
-                sm:h-full not-sm:w-full transition-all ${props.hovered ? "ease-out" : "ease-in-out"} duration-700 overflow-hidden`}
-        >
-            <div
-                className={`${props.selected ? "" : "blur-xs saturate-0"}
-                    relative size-full transition-all ease-in-out duration-700`}
-            >
-                <Image src="/image0.png" alt="Image" width={1024} height={684} className="absolute size-full object-cover object-center" />
-            </div>
-        </div>
-    );
-}
-
-function SectionCategories() {
-    const [category, setCategory] = useState(0);
+    const [api, setApi] = useState<CarouselApi>();
+    const [current, setCurrent] = useState(0);
     const [hovered, setHovered] = useState(false);
 
     useEffect(() => {
-        const interval = hovered ? undefined : setInterval(() => {
-            setCategory((prev) => {
-                return (prev + 1) % 4;
-            });
-        }, 3000);
+        if (!api) {
+            return;
+        }
+        
+        setCurrent(api.selectedScrollSnap() + 1);
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1);
+        });
+    }, [api]);
+
+    useEffect(() => {
+        const interval = hovered || !api ? undefined : setInterval(() => {
+            api.scrollNext();
+        }, 5000);
 
         return () => {
             clearInterval(interval);
         };
-    }, [hovered]);
+    }, [hovered, api]);
 
     return (
-        <section id="categories" className="flex not-sm:flex-col w-full h-[calc(100vh-5rem)] gap-1 p-2">
-            <Category
-                name="Evenimente"
-                selected={category == 0}
-                hovered={hovered}
-                onEnter={() => {
-                    setHovered(true);
-                    setCategory(0);
+        <section id="about" className="flex flex-col justify-center items-center gap-4 p-2">
+            <h1>Cine suntem noi?</h1>
+            <div className="flex flex-col justify-center items-center gap-2">
+                <h4>multe</h4>
+            </div>
+            <h1>Cu ce ne ocupam?</h1>
+            <Carousel 
+                setApi={setApi}
+                opts={{
+                    loop: true,
                 }}
-                onLeave={() => {
-                    setHovered(false);
-                }}
-            />
-            <Category
-                name="Studio"
-                selected={category == 1}
-                hovered={hovered}
-                onEnter={() => {
-                    setHovered(true);
-                    setCategory(1);
-                }}
-                onLeave={() => {
-                    setHovered(false);
-                }}
-            />
-            <Category
-                name="Automotive"
-                selected={category == 2}
-                hovered={hovered}
-                onEnter={() => {
-                    setHovered(true);
-                    setCategory(2);
-                }}
-                onLeave={() => {
-                    setHovered(false);
-                }}
-            />
-            <Category
-                name="Corporate & Commercial"
-                selected={category == 3}
-                hovered={hovered}
-                onEnter={() => {
-                    setHovered(true);
-                    setCategory(3);
-                }}
-                onLeave={() => {
-                    setHovered(false);
-                }}
-            />
+                className="w-full"
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <CarouselContent>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                        <CarouselItem key={index} className="md:basis-3/5">
+                            <div className="relative w-full h-112">
+                                <Image
+                                    src="/image0.png"
+                                    alt="Image"
+                                    width={1024}
+                                    height={684}
+                                    className={`absolute size-full brightness-75 object-cover object-center
+                                        transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75" : ""}`}
+                                />
+                                <div
+                                    className={`absolute flex flex-col size-full justify-center items-center p-12 md:p-4 gap-32 theme-dark
+                                        transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}`}
+                                >
+                                    <h2 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h2>
+                                </div>
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious variant="transparent" className="left-2" />
+                <CarouselNext variant="transparent" className="right-2" />
+            </Carousel>
         </section>
     );
 }
@@ -228,9 +180,12 @@ function Member(props: { name: string }) {
 
 function SectionTeam() {
     return (
-        <section id="team" className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8 p-2">
-            <Member name="David" />
-            <Member name="Mihail" />
+        <section id="team" className="flex flex-col justify-center items-center px-2 py-8">
+            <h1>Cunoaste echipa</h1>
+            <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8">
+                <Member name="David" />
+                <Member name="Mihail" />
+            </div>
         </section>
     );
 }
@@ -245,10 +200,6 @@ export default function Home() {
             <div className="flex flex-col size-full">
                 <SectionMain />
                 <SectionAbout />
-                <SectionCategories />
-                <div className="w-full h-128 bg-green-400">
-
-                </div>
                 <SectionTeam />
             </div>
         </Main>
