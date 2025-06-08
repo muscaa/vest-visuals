@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export function IconLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }> }) {
+export interface IconProps {
+    size?: number;
+    strokeWidth?: number;
+    className?: string;
+}
+export type Icon = React.ComponentType<IconProps>;
+
+export function IconLink(props: { href: string, icon: Icon }) {
     return (
         <Link href={props.href} target="_blank" className="hover:text-primary transition-all">
             <props.icon size={24} strokeWidth={1.5} />

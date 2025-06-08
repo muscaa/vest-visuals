@@ -8,15 +8,14 @@ import {
 } from "react";
 import Image from "next/image";
 import {
-    SiYoutube,
     SiFacebook,
     SiInstagram,
-    SiTiktok,
-    SiX,
 } from "@icons-pack/react-simple-icons";
+import Linkedin from "@/components/svg/linkedin";
 import {
     IconLink,
-    ButtonLink
+    ButtonLink,
+    Icon
 } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 import { FooterLarge } from "@/components/footer";
@@ -33,12 +32,14 @@ function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
-        if (!imageRef.current) {
-            return;
-        }
+        const timeout = setTimeout(() => {
+            imageRef.current?.classList.add("scale-110");
+        });
 
-        imageRef.current.classList.add("scale-110");
-    }, []);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [imageRef]);
 
     return (
         <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
@@ -89,6 +90,37 @@ function SectionAbout() {
         };
     }, [hovered, api]);
 
+    const items = [
+        {
+            image: "/categories/wedding/0.png",
+            size: [6016, 4016],
+            content: (
+                <h1 className="font-extrabold text-center">NUNTI</h1>
+            )
+        },
+        {
+            image: "/categories/automotive/0.jpg",
+            size: [2160, 1440],
+            content: (
+                <h1 className="font-extrabold text-center">AUTOMOTIVE</h1>
+            )
+        },
+        {
+            image: "/categories/wedding/0.png",
+            size: [6016, 4016],
+            content: (
+                <h2 className="font-extrabold text-center">NUNTI</h2>
+            )
+        },
+        {
+            image: "/categories/automotive/0.jpg",
+            size: [2160, 1440],
+            content: (
+                <h2 className="font-extrabold text-center">AUTOMOTIVE</h2>
+            )
+        },
+    ];
+
     return (
         <section id="about" className="flex flex-col justify-center items-center gap-4 p-2">
             <h1>Cine suntem noi?</h1>
@@ -106,26 +138,31 @@ function SectionAbout() {
                 onMouseLeave={() => setHovered(false)}
             >
                 <CarouselContent>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index} className="md:basis-3/5">
-                            <div className="relative w-full h-112">
-                                <Image
-                                    src="/image0.png"
-                                    alt="Image"
-                                    width={1024}
-                                    height={684}
-                                    className={`absolute size-full brightness-75 object-cover object-center
-                                        transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}`}
-                                />
+                    {
+                        items.map((item, index) => (
+                            <CarouselItem key={index} className="md:basis-3/5">
                                 <div
-                                    className={`absolute flex flex-col size-full justify-center items-center p-12 md:p-4 gap-32 theme-dark
-                                        transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}`}
+                                    onClick={() => api?.scrollTo(index)}
+                                    className="relative w-full h-112"
                                 >
-                                    <h2 className="font-medium text-center">SERVICII FOTO VIDEO TIMISOARA</h2>
+                                    <Image
+                                        src={item.image}
+                                        alt="Image"
+                                        width={item.size[0]}
+                                        height={item.size[1]}
+                                        className={`absolute size-full brightness-75 object-cover object-center
+                                            transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}`}
+                                    />
+                                    <div
+                                        className={`absolute flex flex-col size-full justify-center items-center p-12 md:p-4 gap-32 theme-dark
+                                            transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}`}
+                                    >
+                                        {item.content}
+                                    </div>
                                 </div>
-                            </div>
-                        </CarouselItem>
-                    ))}
+                            </CarouselItem>
+                        ))
+                    }
                 </CarouselContent>
                 <CarouselPrevious variant="transparent" className="left-2" />
                 <CarouselNext variant="transparent" className="right-2" />
@@ -134,17 +171,7 @@ function SectionAbout() {
     );
 }
 
-function Member(props: { name: string }) {
-    const roles = [
-        "fotograf",
-        "videograf",
-        "editor foto",
-        "editor video",
-        "portocale",
-        "mere",
-        "pere"
-    ];
-
+function Member(props: { name: string, roles: string[], socials: { [key: string]: Icon } }) {
     return (
         <div className="flex flex-col w-64 md:w-96 xl:w-128 p-8 justify-center items-center gap-4">
             <div className="size-64 md:size-96 xl:size-128 bg-blue-400">
@@ -154,11 +181,11 @@ function Member(props: { name: string }) {
                 <h2>{props.name}</h2>
                 <div className="flex flex-wrap justify-center items-center gap-2">
                     {
-                        roles.map((role, index) => (
+                        props.roles.map((role, index) => (
                             <div key={index} className="flex h-6 items-center gap-2">
                                 <h4 className="text-muted-foreground">{role}</h4>
                                 {
-                                    index < roles.length - 1 && (
+                                    index < props.roles.length - 1 && (
                                         <Separator orientation="vertical" />
                                     )
                                 }
@@ -168,11 +195,11 @@ function Member(props: { name: string }) {
                 </div>
             </div>
             <div className="flex items-center justify-center gap-4">
-                <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
-                <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
-                <IconLink href="https://instagram.com/vest.visuals" icon={SiInstagram} />
-                <IconLink href="https://tiktok.com/@vest_visuals" icon={SiTiktok} />
-                <IconLink href="https://x.com/VestVisual" icon={SiX} />
+                {
+                    Object.entries(props.socials).map(([key, icon], index) => (
+                        <IconLink key={index} href={key} icon={icon} />
+                    ))
+                }
             </div>
         </div>
     );
@@ -183,8 +210,31 @@ function SectionTeam() {
         <section id="team" className="flex flex-col justify-center items-center px-2 py-8">
             <h1>Cunoaste echipa</h1>
             <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8">
-                <Member name="David" />
-                <Member name="Mihail" />
+                <Member
+                    name="David"
+                    roles={[
+                        "videograf",
+                        "fotograf",
+                        "editor video"
+                    ]}
+                    socials={{
+                        "https://www.instagram.com/davidbostina/": SiInstagram,
+                        "https://www.facebook.com/david.bostina": SiFacebook,
+                    }}
+                />
+                <Member
+                    name="Mihail"
+                    roles={[
+                        "fotograf",
+                        "editor foto",
+                        "editor video"
+                    ]}
+                    socials={{
+                        "https://www.instagram.com/musca.mihail/": SiInstagram,
+                        "https://www.facebook.com/mihailmusca": SiFacebook,
+                        "https://www.linkedin.com/in/muscaa/": Linkedin,
+                    }}
+                />
             </div>
         </section>
     );

@@ -6,6 +6,7 @@ import {
     SiInstagram,
     SiTiktok,
     SiX,
+    SiGithub,
 } from "@icons-pack/react-simple-icons";
 import {
     IconLink,
@@ -28,7 +29,12 @@ function FooterBase() {
             </div>
             <div className="flex flex-col items-center sm:items-end text-center">
                 <p>© {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
-                <p>Made by <Link href="https://github.com/muscaa" target="_blank">muscaa</Link> ❤️</p>
+                <p>
+                    Made by <Link href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
+                        <SiGithub size={16} className="size-4 translate-y-1" />
+                        muscaa
+                    </Link> ❤️
+                </p>
             </div>
         </div>
     );
