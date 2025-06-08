@@ -115,7 +115,7 @@ function SectionAbout() {
                                     width={1024}
                                     height={684}
                                     className={`absolute size-full brightness-75 object-cover object-center
-                                        transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75" : ""}`}
+                                        transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}`}
                                 />
                                 <div
                                     className={`absolute flex flex-col size-full justify-center items-center p-12 md:p-4 gap-32 theme-dark
