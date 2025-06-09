@@ -55,7 +55,7 @@ function SectionMain() {
             </div>
             <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-32 theme-dark">
                 <div className="flex flex-col justify-center items-center gap-4">
-                    <h1 className="font-medium text-center">FOTO | VIDEO</h1>
+                    <h1 className="font-medium text-center">FOTO & VIDEO</h1>
                     <h2 className="font-light text-center italic text-foreground3">TIMISOARA | ARAD | ORADEA</h2>
                 </div>
                 <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
