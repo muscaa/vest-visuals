@@ -68,7 +68,7 @@ export function FooterLarge() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
                         <h4 className="font-medium">PAGINI UTILE</h4>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col items-center lg:items-start gap-1">
                             {
                                 pages.map((page, index) => (
                                     <Link key={index} href={page.href} variant="ghost">
@@ -80,7 +80,7 @@ export function FooterLarge() {
                     </div>
                     <div className="flex flex-col text-center gap-6">
                         <h4 className="font-medium">LOCATII</h4>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col items-center gap-1">
                             {
                                 locations.map((location, index) => (
                                     <Link key={index} href={location.href} variant="ghost">
