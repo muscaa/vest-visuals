@@ -33,7 +33,7 @@ function SectionMain() {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            imageRef.current?.classList.add("scale-110");
+            imageRef.current?.classList.add("scale-120");
         });
 
         return () => {
@@ -50,7 +50,7 @@ function SectionMain() {
                     alt="Image"
                     width={1024}
                     height={684}
-                    className="size-full object-cover object-center transition-all duration-5000 ease-linear"
+                    className="size-full object-cover object-center transition-all duration-10000 ease-linear"
                 />
             </div>
             <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-32 theme-dark">
