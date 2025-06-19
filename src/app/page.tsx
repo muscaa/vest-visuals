@@ -124,12 +124,13 @@ function SectionAbout() {
                                 >
                                     <Image
                                         src={category.coverImage.src}
-                                        alt="Cover Image"
+                                        alt={category.coverImage.alt}
                                         width={category.coverImage.w}
                                         height={category.coverImage.h}
                                         className={`
                                             absolute size-full object-cover object-center
-                                            transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}
+                                            transition-all duration-500
+                                            ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:contrast-50 md:scale-95" : ""}
                                         `}
                                     />
                                     <div
@@ -140,7 +141,7 @@ function SectionAbout() {
                                             transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}
                                         `}
                                     >
-                                        <h2 className="text-center">{category.name.toUpperCase()}</h2>
+                                        <h2 className="not-md:text-center">{category.name.toUpperCase()}</h2>
                                         <ButtonLink href={category.portfolioUrl} variant="neutral" className="theme-light">
                                             PORTOFOLIU
                                         </ButtonLink>

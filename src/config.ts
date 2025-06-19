@@ -2,6 +2,7 @@ export interface Category {
     name: string;
     coverImage: {
         src: string;
+        alt: string;
         w: number;
         h: number;
     };
@@ -13,6 +14,7 @@ export const categories: Category[] = [
         name: "Nunti",
         coverImage: {
             src: "/categories/wedding/0.png",
+            alt: "Wedding Cover Image",
             w: 6016,
             h: 4016,
         },
@@ -22,6 +24,7 @@ export const categories: Category[] = [
         name: "Automotive",
         coverImage: {
             src: "/categories/automotive/0/00.jpg",
+            alt: "Automotive Cover Image",
             w: 1920,
             h: 1280,
         },
@@ -31,6 +34,7 @@ export const categories: Category[] = [
         name: "Fotografie de produs",
         coverImage: {
             src: "/categories/product/0/0.jpg",
+            alt: "Product Photography Cover Image",
             w: 1920,
             h: 1280,
         },
