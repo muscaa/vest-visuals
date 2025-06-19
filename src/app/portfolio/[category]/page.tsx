@@ -16,7 +16,7 @@ interface Item {
     height: number;
 }
 
-export default function Portfolio() {
+export default function Page() {
     const { category } = useParams<{ category: string; }>();
     const [items, setItems] = useState<Item[]>([]);
 

@@ -94,7 +94,7 @@ function ContactOther() {
     );
 }
 
-export default function Contact() {
+export default function Page() {
     return (
         <Main>
             <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">

@@ -1,6 +1,6 @@
 import { Main } from "@/components/main";
 
-export default function NotFound() {
+export default function Page() {
     return (
         <Main>
             <div className="flex flex-col justify-center items-center h-full gap-4">
