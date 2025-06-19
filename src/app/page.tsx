@@ -27,6 +27,7 @@ import {
     CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
+import * as config from "@/config";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
@@ -97,45 +98,6 @@ function SectionAbout() {
         };
     }, [hovered, api]);
 
-    const items = [
-        {
-            image: "/categories/wedding/0.png",
-            size: [6016, 4016],
-            content: (
-                <>
-                    <h2 className="text-center">NUNTI</h2>
-                    <ButtonLink href="/portfolio/wedding" variant="neutral" className="theme-light">
-                        PORTOFOLIU
-                    </ButtonLink>
-                </>
-            )
-        },
-        {
-            image: "/categories/automotive/0/0.jpg",
-            size: [1920, 1280],
-            content: (
-                <>
-                    <h2 className="text-center">AUTOMOTIVE</h2>
-                    <ButtonLink href="/portfolio/automotive" variant="neutral" className="theme-light">
-                        PORTOFOLIU
-                    </ButtonLink>
-                </>
-            )
-        },
-        {
-            image: "/categories/product/0/0.jpg",
-            size: [1920, 1280],
-            content: (
-                <>
-                    <h2 className="text-center">FOTOGRAFIE DE PRODUS</h2>
-                    <ButtonLink href="/portfolio/product" variant="neutral" className="theme-light">
-                        PORTOFOLIU
-                    </ButtonLink>
-                </>
-            )
-        },
-    ];
-
     return (
         <section id="about" className="flex flex-col justify-center items-center gap-4 p-2">
             <h1>Cine suntem noi?</h1>
@@ -154,17 +116,17 @@ function SectionAbout() {
             >
                 <CarouselContent>
                     {
-                        items.map((item, index) => (
+                        config.categories.map((category, index) => (
                             <CarouselItem key={index} className="md:basis-3/5">
                                 <div
                                     onClick={() => api?.scrollTo(index)}
                                     className="relative w-full h-112"
                                 >
                                     <Image
-                                        src={item.image}
-                                        alt="Image"
-                                        width={item.size[0]}
-                                        height={item.size[1]}
+                                        src={category.coverImage.src}
+                                        alt="Cover Image"
+                                        width={category.coverImage.w}
+                                        height={category.coverImage.h}
                                         className={`
                                             absolute size-full object-cover object-center
                                             transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}
@@ -178,7 +140,10 @@ function SectionAbout() {
                                             transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}
                                         `}
                                     >
-                                        {item.content}
+                                        <h2 className="text-center">{category.name.toUpperCase()}</h2>
+                                        <ButtonLink href={category.portfolioUrl} variant="neutral" className="theme-light">
+                                            PORTOFOLIU
+                                        </ButtonLink>
                                     </div>
                                 </div>
                             </CarouselItem>
