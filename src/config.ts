@@ -21,7 +21,7 @@ export const categories: Category[] = [
     {
         name: "Automotive",
         coverImage: {
-            src: "/categories/automotive/0/0.jpg",
+            src: "/categories/automotive/0/00.jpg",
             w: 1920,
             h: 1280,
         },
