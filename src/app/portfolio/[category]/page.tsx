@@ -40,7 +40,7 @@ export default function Portfolio() {
 
     return (
         <Main>
-            <div className="flex items-center justify-center size-full p-2">
+            <div className="flex justify-center size-full p-2">
                 <Masonry
                     items={items}
                     config={{

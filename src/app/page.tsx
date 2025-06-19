@@ -43,7 +43,7 @@ function SectionMain() {
 
     return (
         <section id="main" className="relative w-full h-[calc(100vh-4rem)] p-2">
-            <div className="absolute size-[calc(100%-1rem)] brightness-75 overflow-hidden">
+            <div className="absolute size-[calc(100%-1rem)] overflow-hidden">
                 <Image
                     ref={imageRef}
                     src="/image0.png"
@@ -53,7 +53,14 @@ function SectionMain() {
                     className="size-full object-cover object-center transition-all duration-10000 ease-linear"
                 />
             </div>
-            <div className="absolute flex flex-col size-[calc(100%-1rem)] justify-center items-center p-2 gap-32 theme-dark">
+            <div
+                className="
+                    absolute flex flex-col size-[calc(100%-1rem)]
+                    justify-evenly items-center p-2 theme-dark
+                    bg-gradient-to-b from-transparent to-black/30
+                "
+            >
+                <div></div>
                 <div className="flex flex-col justify-center items-center gap-4">
                     <h1 className="font-medium text-center">FOTO & VIDEO</h1>
                     <h2 className="font-light text-center italic text-foreground3">TIMISOARA | ARAD | ORADEA</h2>
@@ -95,28 +102,36 @@ function SectionAbout() {
             image: "/categories/wedding/0.png",
             size: [6016, 4016],
             content: (
-                <h1 className="font-extrabold text-center">NUNTI</h1>
+                <>
+                    <h2 className="text-center">NUNTI</h2>
+                    <ButtonLink href="/portfolio/wedding" variant="neutral" className="theme-light">
+                        PORTOFOLIU
+                    </ButtonLink>
+                </>
             )
         },
         {
-            image: "/categories/automotive/0.jpg",
-            size: [2160, 1440],
+            image: "/categories/automotive/0/0.jpg",
+            size: [1920, 1280],
             content: (
-                <h1 className="font-extrabold text-center">AUTOMOTIVE</h1>
+                <>
+                    <h2 className="text-center">AUTOMOTIVE</h2>
+                    <ButtonLink href="/portfolio/automotive" variant="neutral" className="theme-light">
+                        PORTOFOLIU
+                    </ButtonLink>
+                </>
             )
         },
         {
-            image: "/categories/wedding/0.png",
-            size: [6016, 4016],
+            image: "/categories/product/0/0.jpg",
+            size: [1920, 1280],
             content: (
-                <h2 className="font-extrabold text-center">NUNTI</h2>
-            )
-        },
-        {
-            image: "/categories/automotive/0.jpg",
-            size: [2160, 1440],
-            content: (
-                <h2 className="font-extrabold text-center">AUTOMOTIVE</h2>
+                <>
+                    <h2 className="text-center">FOTOGRAFIE DE PRODUS</h2>
+                    <ButtonLink href="/portfolio/product" variant="neutral" className="theme-light">
+                        PORTOFOLIU
+                    </ButtonLink>
+                </>
             )
         },
     ];
@@ -150,12 +165,18 @@ function SectionAbout() {
                                         alt="Image"
                                         width={item.size[0]}
                                         height={item.size[1]}
-                                        className={`absolute size-full brightness-75 object-cover object-center
-                                            transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}`}
+                                        className={`
+                                            absolute size-full object-cover object-center
+                                            transition-all duration-500 ${index != current - 1 ? "md:saturate-0 md:opacity-75 md:scale-95" : ""}
+                                        `}
                                     />
                                     <div
-                                        className={`absolute flex flex-col size-full justify-center items-center p-12 md:p-4 gap-32 theme-dark
-                                            transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}`}
+                                        className={`
+                                            absolute flex not-md:flex-col size-full
+                                            justify-end items-center md:justify-between md:items-end
+                                            p-4 gap-2 theme-dark bg-gradient-to-b from-transparent to-black/30
+                                            transition-all duration-500 ${index != current - 1 ? "md:opacity-0" : "md:opacity-100"}
+                                        `}
                                     >
                                         {item.content}
                                     </div>
