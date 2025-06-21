@@ -27,7 +27,7 @@ import {
     CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
-import * as config from "@/config";
+import * as config from "@/config/public";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);

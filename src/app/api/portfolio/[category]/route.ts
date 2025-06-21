@@ -2,25 +2,23 @@ import {
     NextRequest,
     NextResponse
 } from "next/server";
+import {
+    GetProps,
+    GetResponse,
+} from "@/shared/api/portfolio/category";
 import path from "path";
 import fs from "fs";
 
-interface GetProps {
-    params: Promise<{
-        category: string;
-    }>;
-}
-
 export async function GET(request: NextRequest, props: GetProps) {
-    const { category } = await props.params;
+    const params = await props.params;
 
-    const categoryDir = path.join(process.cwd(), "public", "categories", category);
+    const categoryDir = path.join(process.cwd(), "public", "categories", params.category);
     const images: string[] = [];
 
     if (!fs.existsSync(categoryDir) || !fs.lstatSync(categoryDir).isDirectory()) {
-        return NextResponse.json(
+        return NextResponse.json<GetResponse>({
             images
-        );
+        });
     }
 
     for (const setName of fs.readdirSync(categoryDir)) {
@@ -37,11 +35,11 @@ export async function GET(request: NextRequest, props: GetProps) {
                 continue;
             }
 
-            images.push(`/categories/${category}/${setName}/${fileName}`);
+            images.push(`/categories/${params.category}/${setName}/${fileName}`);
         }
     }
 
-    return NextResponse.json(
+    return NextResponse.json<GetResponse>({
         images
-    );
+    });
 }

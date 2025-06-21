@@ -38,4 +38,8 @@
     p {
         @apply p;
     }
+    
+    .grecaptcha-badge {
+        visibility: hidden;
+    }
 }

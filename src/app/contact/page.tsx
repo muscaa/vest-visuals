@@ -1,3 +1,5 @@
+"use client";
+
 import { Main } from "@/components/main";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +17,59 @@ import Link from "next/link";
 import {
     Phone,
     Mail,
+    ShieldCheck,
 } from "lucide-react";
 import {
     SiWhatsapp,
 } from "@icons-pack/react-simple-icons";
+import {
+    GoogleReCaptchaProvider,
+    useGoogleReCaptcha
+} from "react-google-recaptcha-v3";
+import { useState } from "react";
+import * as config from "@/config/public";
+import {
+    PostRequest,
+    PostResponse,
+} from "@/shared/api/contact";
+
+type ContactStatus = "sending" | "success" | "error";
 
 function ContactForm() {
+    const { executeRecaptcha } = useGoogleReCaptcha();
+    const [status, setStatus] = useState<ContactStatus>();
+    const [errorMessage, setErrorMessage] = useState<string>();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (!executeRecaptcha) return;
+
+        setStatus("sending");
+        setErrorMessage(undefined);
+
+        const token = await executeRecaptcha("contact_form");
+
+        const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token,
+                name,
+                email,
+                message,
+            } as PostRequest),
+        });
+        const json: PostResponse = await res.json();
+
+        setStatus(json.success ? "success" : "error");
+        setErrorMessage(json.message);
+    };
+
     return (
         <Card className="w-xs lg:w-md">
             <CardHeader>
@@ -28,26 +77,63 @@ function ContactForm() {
                 <CardDescription>Completeaza formularul de mai jos si vom raspunde cat de repede putem.</CardDescription>
             </CardHeader>
             <CardContent>
-                <form>
+                <form onSubmit={handleSubmit} autoComplete="on">
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-1">
                             <Label htmlFor="name">Nume</Label>
-                            <Input id="name" placeholder="Numele Tau" />
+                            <Input
+                                id="name"
+                                placeholder="Numele Tau"
+                                maxLength={50}
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </div>
                         <div className="flex flex-col gap-1">
                             <Label htmlFor="email">E-mail</Label>
-                            <Input id="email" placeholder="nume@gmail.com" />
+                            <Input
+                                id="email"
+                                placeholder="nume@gmail.com"
+                                maxLength={100}
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
                         <div className="flex flex-col gap-1">
                             <Label htmlFor="message">Mesaj</Label>
-                            <Textarea id="message" placeholder="..." className="h-36" maxLength={1000} />
+                            <Textarea
+                                id="message"
+                                placeholder="..."
+                                className="h-36"
+                                maxLength={1000}
+                                required
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
                         </div>
                     </div>
                 </form>
             </CardContent>
-            <CardFooter className="flex gap-2">
-                <div className="flex-grow"></div>
-                <Button variant="default">Trimite</Button>
+            <CardFooter className="flex flex-col gap-2">
+                {
+                    errorMessage && (
+                        <p className="text-destructive">{errorMessage}</p>
+                    )
+                }
+                <div className="flex items-center gap-2 w-full">
+                    <div className="flex grow justify-center items-center gap-1">
+                        <ShieldCheck size={24} strokeWidth={1.5} className="size-6" />
+                        <p className="max-w-24 lg:max-w-full">Protected by reCAPTCHA</p>
+                    </div>
+                    <Button
+                        type="submit"
+                        variant="default"
+                        size="lg"
+                        disabled={status == "sending" || status == "success" || name.length == 0 || email.length == 0 || message.length == 0}
+                        onClick={handleSubmit}
+                    >
+                        {status == "success" ? "Trimis!" : "Trimite"}
+                    </Button>
+                </div>
             </CardFooter>
         </Card>
     );
@@ -96,12 +182,16 @@ function ContactOther() {
 
 export default function Page() {
     return (
-        <Main>
-            <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
-                <ContactForm />
-                <h4>SAU</h4>
-                <ContactOther />
-            </div>
-        </Main>
+        <GoogleReCaptchaProvider
+            reCaptchaKey={config.env.RECAPTCHA_KEY_SITE}
+        >
+            <Main>
+                <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
+                    <ContactForm />
+                    <h4>SAU</h4>
+                    <ContactOther />
+                </div>
+            </Main>
+        </GoogleReCaptchaProvider>
     );
 }

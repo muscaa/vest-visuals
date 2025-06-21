@@ -3,7 +3,7 @@
 import { Main } from "@/components/main";
 import Image from "next/image";
 import Link from "next/link";
-import * as config from "@/config";
+import * as config from "@/config/public";
 
 export default function Page() {
     return (

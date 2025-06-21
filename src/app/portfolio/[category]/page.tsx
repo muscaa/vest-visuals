@@ -8,6 +8,7 @@ import {
     useState,
     useEffect
 } from "react";
+import { GetResponse } from "@/shared/api/portfolio/category";
 
 interface Item {
     src: string;
@@ -23,9 +24,9 @@ export default function Page() {
     useEffect(() => {
         const fetchImages = async () => {
             const response = await fetch(`/api/portfolio/${category}`);
-            const images: string[] = await response.json();
+            const json: GetResponse = await response.json();
 
-            setItems(images.map((file) => {
+            setItems(json.images.map((file) => {
                 return {
                     src: file,
                     alt: "",

@@ -1,13 +1,10 @@
-export interface Category {
-    name: string;
-    coverImage: {
-        src: string;
-        alt: string;
-        w: number;
-        h: number;
-    };
-    portfolioUrl: string;
-}
+import {
+    Category,
+} from "@/shared/config";
+
+export const env = {
+    RECAPTCHA_KEY_SITE: process.env.NEXT_PUBLIC_RECAPTCHA_KEY_SITE!,
+} as const;
 
 export const categories: Category[] = [
     {
