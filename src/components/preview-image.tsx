@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { Reveal } from "@/components/animations/reveal";
 
 export interface PreviewItem {
     src: string;
@@ -14,6 +15,7 @@ export interface PreviewItem {
 
 interface PreviewImageProps {
     item: PreviewItem;
+    index: number;
     className?: string;
 }
 
@@ -22,39 +24,43 @@ export function PreviewImage(props: PreviewImageProps) {
 
     return (
         <>
-            <Image
-                src={props.item.src}
-                alt={props.item.alt}
-                width={props.item.width}
-                height={props.item.height}
-                onClick={() => setOpen(true)}
-                className={`transition-all ease-out hover:opacity-70 ${props.className}`}
-            />
+            <Reveal delay={props.index * 100}>
+                <Image
+                    src={props.item.src}
+                    alt={props.item.alt}
+                    width={props.item.width}
+                    height={props.item.height}
+                    onClick={() => setOpen(true)}
+                    className={`transition-all ease-out hover:opacity-70 ${props.className}`}
+                />
+            </Reveal>
             {
                 open && (
-                    <div
-                        onClick={() => setOpen(false)}
-                        className="
-                            fixed inset-0 z-50 flex justify-center items-center bg-raisin-black/95
-                            transition-all opacity-100
-                        "
-                    >
-                        <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
-                            <Image
-                                src={props.item.src}
-                                alt={props.item.alt}
-                                width={props.item.width}
-                                height={props.item.height}
-                                onClick={(e) => e.stopPropagation()}
-                                className="object-contain w-auto h-auto max-w-full max-h-full"
-                            />
+                    <Reveal direction="none" duration={200} className="fixed inset-0 z-50">
+                        <div
+                            onClick={() => setOpen(false)}
+                            className="
+                                fixed inset-0 z-50 flex justify-center items-center bg-raisin-black/95
+                                transition-all opacity-100
+                            "
+                        >
+                            <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
+                                <Image
+                                    src={props.item.src}
+                                    alt={props.item.alt}
+                                    width={props.item.width}
+                                    height={props.item.height}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="object-contain w-auto h-auto max-w-full max-h-full"
+                                />
+                            </div>
+                            <div className="absolute top-3.5 right-3.5 theme-dark">
+                                <Button variant="navbar" size="icon" onClick={() => setOpen(false)}>
+                                    <X strokeWidth={1.5} className="size-6" />
+                                </Button>
+                            </div>
                         </div>
-                        <div className="absolute top-3.5 right-3.5 theme-dark">
-                            <Button variant="navbar" size="icon" onClick={() => setOpen(false)}>
-                                <X strokeWidth={1.5} className="size-6" />
-                            </Button>
-                        </div>
-                    </div>
+                    </Reveal>
                 )
             }
         </>

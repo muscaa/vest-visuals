@@ -47,6 +47,7 @@ export default function Page() {
                         <PreviewImage
                             key={index}
                             item={item}
+                            index={index}
                             className="w-full h-auto"
                         />
                     )}
