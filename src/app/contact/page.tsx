@@ -32,6 +32,7 @@ import {
     PostRequest,
     PostResponse,
 } from "@/shared/api/contact";
+import { Reveal } from "@/components/animations/reveal";
 
 type ContactStatus = "sending" | "success" | "error";
 
@@ -139,7 +140,14 @@ function ContactForm() {
     );
 }
 
-function CardLink(props: { href: string, icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }>, title: string, text: string }) {
+interface CardLinkProps {
+    href: string;
+    icon: React.ComponentType<{ size?: number, strokeWidth?: number, className?: string }>;
+    title: string;
+    text: string;
+}
+
+function CardLink(props: CardLinkProps) {
     return (
         <Link href={props.href} target="_blank">
             <Button variant="card" size="none" className="cursor-pointer">
@@ -158,24 +166,30 @@ function CardLink(props: { href: string, icon: React.ComponentType<{ size?: numb
 function ContactOther() {
     return (
         <div className="w-xs lg:w-md flex flex-col gap-2">
-            <CardLink
-                href="tel:+40723971618"
-                icon={Phone}
-                title="Telefon"
-                text="+40 723 971 618"
-            />
-            <CardLink
-                href="https://api.whatsapp.com/send?phone=40723971618&text"
-                icon={SiWhatsapp}
-                title="WhatsApp"
-                text="+40 723 971 618"
-            />
-            <CardLink
-                href="mailto:contact@vestvisuals.ro"
-                icon={Mail}
-                title="E-mail"
-                text="contact@vestvisuals.ro"
-            />
+            <Reveal delay={100}>
+                <CardLink
+                    href="tel:+40723971618"
+                    icon={Phone}
+                    title="Telefon"
+                    text="+40 723 971 618"
+                />
+            </Reveal>
+            <Reveal delay={200}>
+                <CardLink
+                    href="https://api.whatsapp.com/send?phone=40723971618&text"
+                    icon={SiWhatsapp}
+                    title="WhatsApp"
+                    text="+40 723 971 618"
+                />
+            </Reveal>
+            <Reveal delay={300}>
+                <CardLink
+                    href="mailto:contact@vestvisuals.ro"
+                    icon={Mail}
+                    title="E-mail"
+                    text="contact@vestvisuals.ro"
+                />
+            </Reveal>
         </div>
     );
 }
@@ -187,8 +201,12 @@ export default function Page() {
         >
             <Main>
                 <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
-                    <ContactForm />
-                    <h4>SAU</h4>
+                    <Reveal>
+                        <ContactForm />
+                    </Reveal>
+                    <Reveal direction="none">
+                        <h4>SAU</h4>
+                    </Reveal>
                     <ContactOther />
                 </div>
             </Main>
