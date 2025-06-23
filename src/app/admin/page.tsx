@@ -3,6 +3,7 @@
 import { Main } from "@/components/main";
 import * as AWS from "@aws-sdk/client-s3";
 import * as config from "@/config/server";
+import * as jwt from "jsonwebtoken";
 
 export default async function Page() {
     const client = new AWS.S3Client({
@@ -25,11 +26,24 @@ export default async function Page() {
         Key: "categories/automotive/0/00.jpg",
     }));
 
+    const token = jwt.sign({
+        foo: "bar",
+    }, "secret", {
+        expiresIn: "1d"
+    });
+    let decoded;
+    try {
+        decoded = jwt.verify(token, "secret");
+    } catch (error) {
+        decoded = "Invalid token";
+    }
+
     return (
         <Main>
             <div className="flex flex-col h-full gap-32 whitespace-pre-wrap">
                 <p>{JSON.stringify(data1, null, 4)}</p>
                 <p>{JSON.stringify(data2, null, 4)}</p>
+                <p>Decoded JWT: {JSON.stringify(decoded, null, 4)}</p>
             </div>
         </Main>
     );
