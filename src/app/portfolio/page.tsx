@@ -18,7 +18,7 @@ function CategoryLink(props: CategoryLinkProps) {
             <Link
                 href={props.category.portfolioUrl}
                 className="
-                    relative rounded-xl overflow-hidden
+                    relative rounded-xl shadow-sm overflow-hidden
                     w-full h-full group
                 "
             >
@@ -29,7 +29,7 @@ function CategoryLink(props: CategoryLinkProps) {
                         width={props.category.coverImage.w}
                         height={props.category.coverImage.h}
                         className="
-                            size-full object-cover object-center transition-all
+                            size-full object-cover object-center transition-all ease-out
                             not-group-hover:opacity-75 contrast-50 not-group-hover:saturate-0 group-hover:scale-105
                         "
                     />

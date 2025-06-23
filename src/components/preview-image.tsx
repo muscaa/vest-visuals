@@ -24,14 +24,14 @@ export function PreviewImage(props: PreviewImageProps) {
 
     return (
         <>
-            <Reveal delay={props.index * 100}>
+            <Reveal delay={props.index * 100} className="overflow-hidden">
                 <Image
                     src={props.item.src}
                     alt={props.item.alt}
                     width={props.item.width}
                     height={props.item.height}
                     onClick={() => setOpen(true)}
-                    className={`transition-all ease-out hover:opacity-70 ${props.className}`}
+                    className={`transition-all ease-out hover:opacity-75 hover:scale-105 ${props.className}`}
                 />
             </Reveal>
             {
