@@ -69,11 +69,11 @@ function SectionMain() {
                     <Reveal delay={500} duration={1000}>
                         <h1 className="font-medium text-center">FOTO & VIDEO</h1>
                     </Reveal>
-                    <Reveal delay={800} duration={1000}>
+                    <Reveal delay={800} duration={1000} direction="left">
                         <h2 className="font-light text-center italic text-foreground32">TIMISOARA | ARAD | ORADEA</h2>
                     </Reveal>
                 </div>
-                <Reveal delay={1800} duration={1000}>
+                <Reveal delay={1800} duration={1000} direction="up">
                     <ButtonLink href="#about" variant="neutral" size="lg" className="theme-light">AFLA MAI MULTE</ButtonLink>
                 </Reveal>
             </div>
