@@ -1,11 +1,11 @@
 import {
-    RootLayout,
+    Layout,
     createMetadata,
 } from "@/components/layout";
 
 export const metadata = createMetadata({
-    route: "/",
-    routeName: "Acasă",
+    route: "/contact",
+    routeName: "Contact",
 });
 
-export default RootLayout;
+export default Layout;
