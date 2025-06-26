@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     return response;
