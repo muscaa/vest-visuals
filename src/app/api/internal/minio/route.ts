@@ -7,10 +7,18 @@ import { headers } from "next/headers";
 
 export async function GET(request: NextRequest) {
     const headersList = await headers();
+    const host = headersList.get("host");
+
+    const url = new URL(request.url);
+    if (host != null) {
+        url.hostname = host;
+    }
 
     return NextResponse.json({
         url: config.env.S3_CONSOLE_URL,
         request_url: request.url,
-        host: headersList.get("host"),
+        host: host,
+        host_url: url,
+        host_url_string: url.toString(),
     });
 }
