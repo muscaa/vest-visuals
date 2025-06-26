@@ -14,20 +14,16 @@ export async function GET(request: NextRequest) {
     }
 
     const url = new URL(xRealUrl);
-    const token = url.searchParams.get("token");
+    const cookies: string[] = JSON.parse(decodeURIComponent(url.searchParams.get("cookies") || "[]"));
 
-    if (token == null) {
+    if (cookies.length == 0) {
         return NextResponse.redirect(config.env.S3_CONSOLE_URL);
     }
 
     const response = NextResponse.redirect(config.env.S3_CONSOLE_URL);
-    response.cookies.set("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    });
+    for (const cookie of cookies) {
+        response.headers.append("Set-Cookie", cookie);
+    }
 
     return response;
 }
