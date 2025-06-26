@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     const url = new URL(request.url);
     if (host != null) {
-        url.hostname = host;
+        url.host = host;
     }
 
     return NextResponse.json({
