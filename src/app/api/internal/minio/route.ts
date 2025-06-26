@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         url: config.env.S3_CONSOLE_URL,
         request_url: request.url,
         host: host,
-        host_url: url,
+        host_url: JSON.stringify(url),
         host_url_string: url.toString(),
     });
 }
