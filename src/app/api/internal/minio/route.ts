@@ -11,14 +11,15 @@ export async function GET(request: NextRequest) {
 
     const url = new URL(request.url);
     if (host != null) {
-        url.host = host;
+        url.hostname = host;
+        url.port = "";
     }
 
     return NextResponse.json({
         url: config.env.S3_CONSOLE_URL,
         request_url: request.url,
         host: host,
-        host_url: JSON.stringify(url),
+        host_url: url.toJSON(),
         host_url_string: url.toString(),
     });
 }
