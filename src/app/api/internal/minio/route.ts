@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
     const headersList = await headers();
     const host = headersList.get("host");
     const xRealUrl = headersList.get("x-real-url");
+    const xForwardedFor = headersList.get("x-forwarded-for");
 
     const url = new URL(request.url);
     if (host != null) {
@@ -22,5 +23,6 @@ export async function GET(request: NextRequest) {
         host_url: url.toJSON(),
         host_url_string: url.toString(),
         x_real_url: xRealUrl,
+        x_forwarded_for: xForwardedFor,
     });
 }
