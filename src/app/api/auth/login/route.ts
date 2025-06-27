@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     try {
         const json: PostRequest = await request.json();
 
-        if (/*!json.token ||*/ !json.email || !json.password) {
+        if (!json.token || !json.email || !json.password) {
             return NextResponse.json<PostResponse>({
                 success: false,
                 message: "Missing fields",
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        /*const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             }, {
                 status: 403,
             });
-        }*/
+        }
 
         const pb = await createClient();
 
@@ -51,8 +51,10 @@ export async function POST(request: NextRequest) {
             });
             res.cookies.set("session_token", authData.token, {
                 httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
                 sameSite: "lax",
                 path: "/",
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             });
 
             return res;
