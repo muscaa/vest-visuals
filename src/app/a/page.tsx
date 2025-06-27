@@ -26,10 +26,10 @@ export default async function Page() {
             <div className="flex flex-col justify-center items-center gap-2 whitespace-pre-wrap">
                 <p>Logged in as: {JSON.stringify(user, null, 4)}</p>
                 <p>{cookies}</p>
-                <ButtonLink href="/api/auth/logout">
+                <ButtonLink href="/api/auth/logout" prefetch={false}>
                     logout
                 </ButtonLink>
-                <ButtonLink href={`${config.env.S3_CONSOLE_URL}/internal/login?cookies=${cookies}`} target="_blank">
+                <ButtonLink href={`${config.env.S3_CONSOLE_URL}/internal/login?cookies=${cookies}`} target="_blank" prefetch={false}>
                     minio
                 </ButtonLink>
             </div>

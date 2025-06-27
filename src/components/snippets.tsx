@@ -16,9 +16,9 @@ export function IconLink(props: { href: string, icon: Icon }) {
     );
 }
 
-export function ButtonLink({ href, target, children, ...props } : { href: string, target?: string, children?: React.ReactNode } & React.ComponentProps<typeof Button>) {
+export function ButtonLink({ href, target, prefetch, children, ...props } : { href: string, target?: string, prefetch?: boolean, children?: React.ReactNode } & React.ComponentProps<typeof Button>) {
     return (
-        <Link href={href} target={target}>
+        <Link href={href} target={target} prefetch={prefetch}>
             <Button {...props} className={`cursor-pointer ${props.className}`}>
                 {children}
             </Button>
