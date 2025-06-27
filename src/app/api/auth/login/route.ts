@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     try {
         const json: PostRequest = await request.json();
 
-        if (!json.token || !json.email || !json.password) {
+        if (/*!json.token ||*/ !json.email || !json.password) {
             return NextResponse.json<PostResponse>({
                 success: false,
                 message: "Missing fields",
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        /*const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             }, {
                 status: 403,
             });
-        }
+        }*/
 
         const pb = await createClient();
 
