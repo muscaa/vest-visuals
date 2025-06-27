@@ -7,7 +7,7 @@ import {
     PostResponse,
 } from "@/shared/api/auth/login";
 import * as config from "@/config/server";
-import PocketBase from "pocketbase";
+import { createClient } from "@/utils/server/auth";
 
 export async function POST(request: NextRequest) {
     try {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        const pb = new PocketBase(config.env.POCKETBASE_URL);
+        const pb = await createClient();
 
         try {
             const authData = await pb.collection("users").authWithPassword(json.email, json.password);
@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
             });
             res.cookies.set("session_token", authData.token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
                 sameSite: "lax",
                 path: "/",
             });

@@ -2,8 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import PocketBase from "pocketbase";
-import * as server_config from "@/config/server";
+import { getUser } from "@/utils/server/auth";
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
@@ -13,22 +12,13 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const session_token = request.cookies.get("session_token")?.value;
+    const user = await getUser(false);
 
-    if (!session_token) {
+    if (user == null) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    const pb = new PocketBase(server_config.env.POCKETBASE_URL);
-    pb.authStore.save(session_token, null);
-
-    try {
-        await pb.collection("users").authRefresh();
-        
-        return NextResponse.next();
-    } catch {
-        return NextResponse.redirect(new URL("/login", request.url));
-    }
+    return NextResponse.next();
 }
 
 export const config = {
