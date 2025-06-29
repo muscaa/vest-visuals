@@ -3,6 +3,7 @@ import {
     NextResponse,
 } from "next/server";
 import { getUser } from "@/utils/server/auth";
+import { getUrl } from "@/utils/server/request";
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
@@ -16,6 +17,8 @@ export async function middleware(request: NextRequest) {
 
     console.log("middleware -------------");
     console.log(request.url);
+    console.log(getUrl(request).toString());
+    console.log(getUrl(request, "/login").toString());
     console.log("--------------------");
 
     if (user == null) {
