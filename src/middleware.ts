@@ -14,6 +14,10 @@ export async function middleware(request: NextRequest) {
 
     const user = await getUser(false);
 
+    console.log("middleware -------------");
+    console.log(request.url);
+    console.log("--------------------");
+
     if (user == null) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
