@@ -3,7 +3,7 @@ import {
     NextResponse,
 } from "next/server";
 import { getUser } from "@/utils/server/auth";
-import { getUrl } from "@/utils/server/request";
+import { getUrlString } from "@/utils/server/request";
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
@@ -15,14 +15,8 @@ export async function middleware(request: NextRequest) {
 
     const user = await getUser(false);
 
-    console.log("middleware -------------");
-    console.log(request.url);
-    console.log(getUrl(request).toString());
-    console.log(getUrl(request, "/login").toString());
-    console.log("--------------------");
-
     if (user == null) {
-        return NextResponse.redirect(new URL("/login", request.url));
+        return NextResponse.redirect(getUrlString(request, "/login"));
     }
 
     return NextResponse.next();
