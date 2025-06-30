@@ -31,6 +31,8 @@ import * as config from "@/config/public";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
+import { ParallaxLayers } from "@/components/parallax";
+import { IconProps } from "@/components/snippets";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
@@ -256,6 +258,30 @@ function SectionTeam() {
     );
 }
 
+function ImageBackground(props: IconProps) {
+    return (
+        <Image
+            src="/background.png"
+            alt="Background"
+            width={6000}
+            height={4000}
+            className={props.className}
+        />
+    );
+}
+
+function ImageCar(props: IconProps) {
+    return (
+        <Image
+            src="/car.png"
+            alt="Car"
+            width={6000}
+            height={4000}
+            className={props.className}
+        />
+    );
+}
+
 export default function Page() {
     const [more, setMore] = useState(false);
 
@@ -267,10 +293,29 @@ export default function Page() {
                 )}
                 header={(
                     <>
-                        <div className="flex flex-col min-h-[100vh] bg-red-400">
-                            <Button onClick={() => setMore(true)}>
-                                More
-                            </Button>
+                        <div className="relative flex flex-col min-h-screen w-screen h-screen">
+                            <ParallaxLayers
+                                interact={true}
+                                options={{
+                                    yFactor: 0,
+                                }}
+                                layers={[
+                                    {
+                                        icon: ImageBackground,
+                                        offset: 15,
+                                        width: 6000,
+                                        height: 4000,
+                                        scale: 105,
+                                    },
+                                    {
+                                        icon: ImageCar,
+                                        offset: 25,
+                                        width: 6000,
+                                        height: 4000,
+                                        scale: 105,
+                                    },
+                                ]}
+                            />
                         </div>
                         <Navbar />
                     </>
