@@ -1,10 +1,12 @@
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { cn } from "@/lib/utils";
 
 interface MainProps {
     children: React.ReactNode;
     header?: React.ReactNode;
     footer?: React.ReactNode;
+    className?: string;
 }
 
 export function Main(props: MainProps) {
@@ -15,8 +17,8 @@ export function Main(props: MainProps) {
                     <Navbar />
                 )
             }
-            <div className="flex flex-col h-full max-h-full overflow-y-auto">
-                <main className="flex-grow">
+            <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
+                <main className="grow">
                     {props.children}
                 </main>
                 {

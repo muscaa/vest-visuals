@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/carousel";
 import * as config from "@/config/public";
 import { Reveal } from "@/components/animations/reveal";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
@@ -255,17 +257,32 @@ function SectionTeam() {
 }
 
 export default function Page() {
+    const [more, setMore] = useState(false);
+
     return (
-        <Main
-            footer={(
-                <FooterLarge />
-            )}
-        >
-            <div className="flex flex-col size-full">
-                <SectionMain />
-                <SectionAbout />
-                <SectionTeam />
-            </div>
-        </Main>
+        <div className={`fixed w-screen h-screen transition-all duration-500 ${more ? "-top-[100vh]" : "top-0"}`}>
+            <Main
+                footer={(
+                    <FooterLarge />
+                )}
+                header={(
+                    <>
+                        <div className="flex flex-col min-h-[100vh] bg-red-400">
+                            <Button onClick={() => setMore(true)}>
+                                More
+                            </Button>
+                        </div>
+                        <Navbar />
+                    </>
+                )}
+                className="min-h-[calc(100%-4rem)] max-h-[calc(100%-4rem)] h-[calc(100%-4rem)]"
+            >
+                <div className="flex flex-col">
+                    <SectionMain />
+                    <SectionAbout />
+                    <SectionTeam />
+                </div>
+            </Main>
+        </div>
     );
 }
