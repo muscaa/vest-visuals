@@ -12,7 +12,7 @@ import {
     IconLink,
     ButtonLink
 } from "@/components/snippets";
-import { Link } from "@/components/ui/link";
+import { TextLink } from "@/components/ui/text-link";
 import {
     ChevronsUp
 } from "lucide-react";
@@ -30,10 +30,10 @@ function FooterBase() {
             <div className="flex flex-col items-center sm:items-end text-center">
                 <p>© {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
                 <p>
-                    Made by <Link href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
+                    Made by <TextLink href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
                         <SiGithub size={16} className="size-4 translate-y-1" />
                         muscaa
-                    </Link> ❤️
+                    </TextLink> ❤️
                 </p>
             </div>
         </div>
@@ -71,9 +71,9 @@ export function FooterLarge() {
                         <div className="flex flex-col items-center lg:items-start gap-1">
                             {
                                 pages.map((page, index) => (
-                                    <Link key={index} href={page.href} variant="ghost">
+                                    <TextLink key={index} href={page.href} variant="ghost">
                                         {page.name}
-                                    </Link>
+                                    </TextLink>
                                 ))
                             }
                         </div>
@@ -83,9 +83,9 @@ export function FooterLarge() {
                         <div className="flex flex-col items-center gap-1">
                             {
                                 locations.map((location, index) => (
-                                    <Link key={index} href={location.href} variant="ghost">
+                                    <TextLink key={index} href={location.href} variant="ghost">
                                         {location.name}
-                                    </Link>
+                                    </TextLink>
                                 ))
                             }
                         </div>

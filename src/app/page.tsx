@@ -33,6 +33,7 @@ import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { ParallaxLayers } from "@/components/parallax";
 import { IconProps } from "@/components/snippets";
+import { TextLink } from "@/components/ui/text-link";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
@@ -179,7 +180,7 @@ function SectionAbout() {
     );
 }
 
-function Member(props: { name: string, roles: string[], socials: { [key: string]: Icon } }) {
+function Member(props: { name: string, roles: string[], email: string, socials: { [key: string]: Icon } }) {
     return (
         <div className="flex flex-col w-64 md:w-96 xl:w-128 p-8 justify-center items-center gap-4">
             <Reveal duration={1000}>
@@ -207,8 +208,13 @@ function Member(props: { name: string, roles: string[], socials: { [key: string]
                         }
                     </div>
                 </Reveal>
+                <Reveal delay={700}>
+                    <TextLink href={`mailto:${props.email}`} className="h4">
+                        {props.email}
+                    </TextLink>
+                </Reveal>
             </div>
-            <Reveal delay={700}>
+            <Reveal delay={900}>
                 <div className="flex items-center justify-center gap-4">
                     {
                         Object.entries(props.socials).map(([key, icon], index) => (
@@ -235,6 +241,7 @@ function SectionTeam() {
                         "fotograf",
                         "editor video"
                     ]}
+                    email="david@vestvisuals.ro"
                     socials={{
                         "https://www.instagram.com/davidbostina/": SiInstagram,
                         "https://www.facebook.com/david.bostina": SiFacebook,
@@ -247,6 +254,7 @@ function SectionTeam() {
                         "editor foto",
                         "editor video"
                     ]}
+                    email="mihail@vestvisuals.ro"
                     socials={{
                         "https://www.instagram.com/musca.mihail/": SiInstagram,
                         "https://www.facebook.com/mihailmusca": SiFacebook,
@@ -293,7 +301,7 @@ export default function Page() {
                 )}
                 header={(
                     <>
-                        <div className="relative flex flex-col min-h-screen w-screen h-screen">
+                        <div className="relative min-h-screen w-screen h-screen">
                             <ParallaxLayers
                                 interact={true}
                                 options={{
@@ -316,6 +324,11 @@ export default function Page() {
                                     },
                                 ]}
                             />
+                            <div className="absolute inset-0 flex flex-col justify-center items-center gap-4 p-2">
+                                <Button onClick={() => setMore(true)}>
+                                    More
+                                </Button>
+                            </div>
                         </div>
                         <Navbar />
                     </>
