@@ -185,7 +185,13 @@ function Member(props: { name: string, image: string, roles: string[], email: st
     return (
         <div className="flex flex-col p-8 justify-center items-center gap-4">
             <Reveal duration={1000}>
-                <Image src={props.image} alt={props.name} width={512} height={512} className="size-64 sm:size-96 xl:size-128" />
+                <Image
+                    src={props.image}
+                    alt={props.name}
+                    width={512}
+                    height={512}
+                    className="size-64 sm:size-96 xl:size-128 rounded-full"
+                />
             </Reveal>
             <div className="flex flex-col justify-center items-center gap-1">
                 <Reveal delay={300}>
