@@ -328,7 +328,7 @@ function SuspensePage() {
                             />
                             <div
                                 className="
-                                    absolute flex flex-col size-[calc(100%-1rem)]
+                                    absolute flex flex-col size-full
                                     justify-evenly items-center p-2 theme-dark
                                     bg-gradient-to-b from-transparent to-black/30
                                 "
