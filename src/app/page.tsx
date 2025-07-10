@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { ParallaxLayers } from "@/components/parallax";
 import { IconProps } from "@/components/snippets";
 import { TextLink } from "@/components/ui/text-link";
+import { useSearchParams } from "next/navigation";
 
 function SectionMain() {
     const imageRef = useRef<HTMLImageElement>(null);
@@ -291,7 +292,8 @@ function ImageCar(props: IconProps) {
 }
 
 export default function Page() {
-    const [more, setMore] = useState(false);
+    const searchParams = useSearchParams();
+    const [more, setMore] = useState(searchParams.has("more"));
 
     return (
         <div className={`fixed w-screen h-screen transition-all duration-500 ${more ? "-top-[100vh]" : "top-0"}`}>
@@ -324,10 +326,32 @@ export default function Page() {
                                     },
                                 ]}
                             />
-                            <div className="absolute inset-0 flex flex-col justify-center items-center gap-4 p-2">
-                                <Button onClick={() => setMore(true)}>
-                                    More
-                                </Button>
+                            <div
+                                className="
+                                    absolute flex flex-col size-[calc(100%-1rem)]
+                                    justify-evenly items-center p-2 theme-dark
+                                    bg-gradient-to-b from-transparent to-black/30
+                                "
+                            >
+                                <div className="flex flex-col justify-center items-center gap-4">
+                                    <Reveal delay={500} duration={1000}>
+                                        <h1 className="font-medium text-center">FOTO & VIDEO</h1>
+                                    </Reveal>
+                                    <Reveal delay={800} duration={1000} direction="left">
+                                        <h2 className="font-light text-center italic text-foreground32">TIMISOARA | ARAD | ORADEA</h2>
+                                    </Reveal>
+                                </div>
+                                <Reveal delay={1800} duration={1000} direction="up">
+                                    <ButtonLink
+                                    href="/?more"
+                                        variant="neutral"
+                                        size="lg"
+                                        className="theme-light"
+                                        onClick={() => setMore(true)}
+                                    >
+                                        AFLA MAI MULTE
+                                    </ButtonLink>
+                                </Reveal>
                             </div>
                         </div>
                         <Navbar />
@@ -336,7 +360,7 @@ export default function Page() {
                 className="min-h-[calc(100%-4rem)] max-h-[calc(100%-4rem)] h-[calc(100%-4rem)]"
             >
                 <div className="flex flex-col">
-                    <SectionMain />
+                    {/*<SectionMain />*/}
                     <SectionAbout />
                     <SectionTeam />
                 </div>

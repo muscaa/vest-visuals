@@ -107,7 +107,7 @@ export function FooterLarge() {
                 <FooterBase />
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-                <ButtonLink href="#main" variant="secondary" size="icon">
+                <ButtonLink href="#about" variant="secondary" size="icon">
                     <ChevronsUp size={32} strokeWidth={1.5} className="size-8" />
                 </ButtonLink>
             </div>

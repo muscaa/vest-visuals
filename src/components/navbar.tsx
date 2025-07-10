@@ -16,7 +16,7 @@ import { ButtonLink } from "@/components/snippets";
 function MenuButtons() {
     return (
         <>
-            <ButtonLink href="/" variant="navbar">ACASA</ButtonLink>
+            <ButtonLink href="/?more" variant="navbar">ACASA</ButtonLink>
             <ButtonLink href="/portfolio" variant="navbar">PORTOFOLIU</ButtonLink>
             <ButtonLink href="/services" variant="navbar">SERVICII</ButtonLink>
             <ButtonLink href="/faq" variant="navbar">FAQ</ButtonLink>
@@ -33,7 +33,7 @@ export function Navbar() {
     return (
         <nav className="flex flex-col w-full h-16 justify-center items-center bg-background4 relative shadow-sm">
             <div className="flex size-full max-w-6xl justify-between items-center p-2">
-                <Link href="/">
+                <Link href="/?more">
                     <Image
                         src={logo}
                         alt="Logo"
