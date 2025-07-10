@@ -181,13 +181,11 @@ function SectionAbout() {
     );
 }
 
-function Member(props: { name: string, roles: string[], email: string, socials: { [key: string]: Icon } }) {
+function Member(props: { name: string, image: string, roles: string[], email: string, socials: { [key: string]: Icon } }) {
     return (
-        <div className="flex flex-col w-64 md:w-96 xl:w-128 p-8 justify-center items-center gap-4">
+        <div className="flex flex-col p-8 justify-center items-center gap-4">
             <Reveal duration={1000}>
-                <div className="size-64 md:size-96 xl:size-128 bg-blue-400">
-
-                </div>
+                <Image src={props.image} alt={props.name} width={512} height={512} className="size-64 sm:size-96 xl:size-128" />
             </Reveal>
             <div className="flex flex-col justify-center items-center gap-1">
                 <Reveal delay={300}>
@@ -234,9 +232,10 @@ function SectionTeam() {
             <Reveal delay={200}>
                 <h1>Cunoaste echipa</h1>
             </Reveal>
-            <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-x-8">
+            <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
                 <Member
                     name="David"
+                    image="/members/david.jpg"
                     roles={[
                         "videograf",
                         "fotograf",
@@ -250,6 +249,7 @@ function SectionTeam() {
                 />
                 <Member
                     name="Mihail"
+                    image="/members/mihail.jpg"
                     roles={[
                         "fotograf",
                         "editor foto",
