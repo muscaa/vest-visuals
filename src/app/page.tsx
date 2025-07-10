@@ -4,7 +4,8 @@ import { Main } from "@/components/main";
 import {
     useState,
     useEffect,
-    useRef
+    useRef,
+    Suspense,
 } from "react";
 import Image from "next/image";
 import {
@@ -30,7 +31,6 @@ import {
 import * as config from "@/config/public";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
-import { Button } from "@/components/ui/button";
 import { ParallaxLayers } from "@/components/parallax";
 import { IconProps } from "@/components/snippets";
 import { TextLink } from "@/components/ui/text-link";
@@ -291,7 +291,7 @@ function ImageCar(props: IconProps) {
     );
 }
 
-export default function Page() {
+function SuspensePage() {
     const searchParams = useSearchParams();
     const [more, setMore] = useState(searchParams.has("more"));
 
@@ -366,5 +366,13 @@ export default function Page() {
                 </div>
             </Main>
         </div>
+    );
+}
+
+export default function Page() {
+    return (
+        <Suspense>
+            <SuspensePage />
+        </Suspense>
     );
 }
