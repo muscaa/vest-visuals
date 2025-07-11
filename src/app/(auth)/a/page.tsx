@@ -32,6 +32,9 @@ export default async function Page() {
                 <ButtonLink href={`${config.env.S3_CONSOLE_URL}/internal/login?cookies=${cookies}`} target="_blank" prefetch={false}>
                     minio
                 </ButtonLink>
+                <ButtonLink href="/a/upload" prefetch={false}>
+                    upload
+                </ButtonLink>
             </div>
         </Main>
     );
