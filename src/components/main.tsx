@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/shadcn/lib/utils";
 
 interface MainProps {
     children: React.ReactNode;
