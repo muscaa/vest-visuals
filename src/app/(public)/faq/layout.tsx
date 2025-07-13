@@ -1,5 +1,5 @@
 import {
-    Layout,
+    ThemeLayout,
     createMetadata,
 } from "@/components/layout";
 
@@ -8,4 +8,4 @@ export const metadata = createMetadata({
     routeName: "FAQ",
 });
 
-export default Layout;
+export default ThemeLayout;

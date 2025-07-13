@@ -60,7 +60,7 @@ export interface LayoutProps {
     children: React.ReactNode;
 }
 
-export function Layout(props: LayoutProps) {
+export function ThemeLayout(props: LayoutProps) {
     return (
         <ThemeProvider
             attribute="class"
@@ -79,7 +79,7 @@ export function RootLayout(props: LayoutProps) {
             <body
                 className={`${figtree.className} antialiased flex flex-col w-screen h-screen`}
             >
-                <Layout {...props} />
+                <ThemeLayout {...props} />
             </body>
         </html>
     );
