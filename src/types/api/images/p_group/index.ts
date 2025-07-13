@@ -8,6 +8,8 @@ interface Request {
 }
 
 interface Response {
+    success: boolean;
+    record?: any;
 }
 
 // GET
