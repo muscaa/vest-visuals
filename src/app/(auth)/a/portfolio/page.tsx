@@ -19,6 +19,7 @@ export default function Page() {
                             >
                                 <CategoryLink
                                     category={category}
+                                    href={`/a${category.portfolioUrl}`}
                                 />
                             </Reveal>
                         ))
