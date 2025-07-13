@@ -6,7 +6,7 @@ import {
     PostRequest,
     PostResponse,
 } from "@/shared/api/auth/login";
-import * as config from "@/config/server";
+import { server_config } from "@/utils/server/config";
 import { createClient } from "@/utils/server/auth";
 
 export async function POST(request: NextRequest) {
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: `secret=${config.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
+            body: `secret=${server_config.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
         });
 
         const recaptchaData = await recaptchaRes.json();

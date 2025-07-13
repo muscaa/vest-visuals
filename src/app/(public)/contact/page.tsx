@@ -27,7 +27,7 @@ import {
     useGoogleReCaptcha
 } from "react-google-recaptcha-v3";
 import { useState } from "react";
-import * as config from "@/config/public";
+import { client_config } from "@/utils/client/config";
 import {
     PostRequest,
     PostResponse,
@@ -197,7 +197,7 @@ function ContactOther() {
 export default function Page() {
     return (
         <GoogleReCaptchaProvider
-            reCaptchaKey={config.env.RECAPTCHA_KEY_SITE}
+            reCaptchaKey={client_config.env.RECAPTCHA_KEY_SITE}
         >
             <Main>
                 <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">

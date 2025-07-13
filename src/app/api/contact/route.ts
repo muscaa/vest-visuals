@@ -6,7 +6,7 @@ import {
     PostRequest,
     PostResponse,
 } from "@/shared/api/contact";
-import * as config from "@/config/server";
+import { server_config } from "@/utils/server/config";
 
 export async function POST(request: NextRequest) {
     try {
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: `secret=${config.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
+            body: `secret=${server_config.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
         });
 
         const recaptchaData = await recaptchaRes.json();
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        const discordRes = await fetch(config.env.DISCORD_WEBHOOK_CONTACT, {
+        const discordRes = await fetch(server_config.env.DISCORD_WEBHOOK_CONTACT, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

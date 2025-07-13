@@ -24,7 +24,7 @@ import {
     PostRequest,
     PostResponse,
 } from "@/shared/api/auth/login";
-import * as config from "@/config/public";
+import { client_config } from "@/utils/client/config";
 import { redirect } from "next/navigation";
 
 type LoginStatus = "login" | "success" | "error";
@@ -131,7 +131,7 @@ function LoginForm() {
 export default function Page() {
     return (
         <GoogleReCaptchaProvider
-            reCaptchaKey={config.env.RECAPTCHA_KEY_SITE}
+            reCaptchaKey={client_config.env.RECAPTCHA_KEY_SITE}
         >
             <Main>
                 <div className="flex flex-col justify-center items-center size-full p-8">

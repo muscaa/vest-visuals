@@ -28,7 +28,7 @@ import {
     CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
-import * as config from "@/config/public";
+import { client_config } from "@/utils/client/config";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { ParallaxLayers } from "@/components/parallax";
@@ -138,7 +138,7 @@ function SectionAbout() {
                 >
                     <CarouselContent>
                         {
-                            config.categories.map((category, index) => (
+                            client_config.categories.map((category, index) => (
                                 <CarouselItem key={index} className="md:basis-3/5">
                                     <div
                                         onClick={() => api?.scrollTo(index)}

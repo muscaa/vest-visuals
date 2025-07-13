@@ -2,11 +2,11 @@ import {
     Category,
 } from "@/shared/config";
 
-export const env = {
+const env = {
     RECAPTCHA_KEY_SITE: process.env.NEXT_PUBLIC_RECAPTCHA_KEY_SITE!,
 } as const;
 
-export const categories: Category[] = [
+const categories: Category[] = [
     {
         name: "Nunti",
         coverImage: {
@@ -38,3 +38,8 @@ export const categories: Category[] = [
         portfolioUrl: "/portfolio/product",
     },
 ] as const;
+
+export const client_config = {
+    env,
+    categories,
+};
