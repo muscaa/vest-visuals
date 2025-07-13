@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import PocketBase from "pocketbase";
 import { RecordModel } from "pocketbase";
-import * as config from "@/config/server";
+import { server_config } from "@/utils/server/config";
 import { headers } from "next/headers";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
@@ -10,7 +10,7 @@ import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 export async function createClient() {
     const headersList = await headers();
 
-    const pb = new PocketBase(config.env.POCKETBASE_URL);
+    const pb = new PocketBase(server_config.env.POCKETBASE_URL);
     pb.beforeSend = (url, options) => {
         options.headers = {
             ...options.headers,
