@@ -5,7 +5,7 @@ import logo from "@/../public/logos/vest-visuals-slim.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { useIsMobile } from "@/utils/hooks";
+import { useIsMobile } from "@/utils/client/hooks";
 import { useState } from "react";
 import {
     Menu,
