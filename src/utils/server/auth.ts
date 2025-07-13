@@ -4,6 +4,7 @@ import PocketBase from "pocketbase";
 import { RecordModel } from "pocketbase";
 import * as config from "@/config/server";
 import { headers } from "next/headers";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export async function createClient() {
     const headersList = await headers();
@@ -31,8 +32,8 @@ export interface User extends RecordModel {
     verified: boolean;
 }
 
-export async function getUser(redirectToLogin = true) {
-    const cookieStore = await cookies();
+export async function getUser(redirectToLogin = true, cookieStore?: ReadonlyRequestCookies, pb?: PocketBase) {
+    cookieStore ||= await cookies();
     const session_token = cookieStore.get("session_token")?.value;
 
     if (!session_token) {
@@ -41,7 +42,7 @@ export async function getUser(redirectToLogin = true) {
         redirect("/login");
     }
 
-    const pb = await createClient();
+    pb ||= await createClient();
     pb.authStore.save(session_token, null);
 
     try {
