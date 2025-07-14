@@ -3,10 +3,8 @@ import {
     NextResponse,
 } from "next/server";
 import * as types from "@/types/api/images/p_group";
-import {
-    createClient,
-    getUser,
-} from "@/utils/server/auth";
+import { createClient } from "@/utils/server/db";
+import { getUser } from "@/utils/server/db/users";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
     /*
@@ -14,7 +12,11 @@ export async function GET(request: NextRequest, props: types.GetProps) {
     */
 
     const pb = await createClient();
-    const user = await getUser(false, request.cookies, pb);
+    const user = await getUser({
+        pb,
+        cookies: request.cookies,
+        redirect: false,
+    });
 
     const records = await pb.collection("images").getFullList();
 
@@ -29,7 +31,11 @@ export async function POST(request: NextRequest, props: types.PostProps) {
     */
     
     const pb = await createClient();
-    const user = await getUser(false, request.cookies, pb);
+    const user = await getUser({
+        pb,
+        cookies: request.cookies,
+        redirect: false,
+    });
 
     /*if (!user) {
         return NextResponse.json<types.PostResponse>({

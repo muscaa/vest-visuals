@@ -1,7 +1,7 @@
 "use server";
 
 import { Main } from "@/components/main";
-import { getUser } from "@/utils/server/auth";
+import { getUser } from "@/utils/server/db/users";
 import { server_config } from "@/utils/server/config";
 import { ButtonLink } from "@/components/snippets";
 

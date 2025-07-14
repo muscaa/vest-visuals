@@ -7,7 +7,7 @@ import {
     PostResponse,
 } from "@/types/api/auth/login";
 import { server_config } from "@/utils/server/config";
-import { createClient } from "@/utils/server/auth";
+import { createClient } from "@/utils/server/db";
 
 export async function POST(request: NextRequest) {
     try {
