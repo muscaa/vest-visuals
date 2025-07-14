@@ -10,10 +10,6 @@ import {
 } from "@/utils/server/db";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
-    /*
-    get group info
-    */
-
     const pb = await createClient();
     const user = await users.get({
         pb,
@@ -21,19 +17,38 @@ export async function GET(request: NextRequest, props: types.GetProps) {
         redirect: false,
     });
 
-    const result = await images.get();
+    /*if (!user) {
+        return NextResponse.json<types.GetResponse>({
+            success: false,
+        }, {
+            status: 401,
+        });
+    }*/
 
-    return NextResponse.json({
-        loggedIn: user != null,
-        result,
+    const params = await props.params;
+    const result = await images.get({
+        pb,
+        options: {
+            filter: `group = "${params.group}"`,
+            skipTotal: true,
+        },
+    });
+
+    if (result == null || result.items.length == 0) {
+        return NextResponse.json<types.GetResponse>({
+            success: false,
+        }, {
+            status: 404,
+        });
+    }
+
+    return NextResponse.json<types.GetResponse>({
+        success: true,
+        value: result.items[0],
     });
 }
 
 export async function POST(request: NextRequest, props: types.PostProps) {
-    /*
-    create group
-    */
-    
     const pb = await createClient();
     const user = await users.get({
         pb,
@@ -49,15 +64,46 @@ export async function POST(request: NextRequest, props: types.PostProps) {
         });
     }*/
 
-    const value = await images.create({
-        value: {
-            type: "automotive",
-        } as any,
+    const params = await props.params;
+    const getResult = await images.get({
+        pb,
+        options: {
+            filter: `group = "${params.group}"`,
+            skipTotal: true,
+        },
     });
 
-    return NextResponse.json({
+    if (getResult == null || getResult.items.length == 0) {
+        return NextResponse.json<types.PostResponse>({
+            success: false,
+        }, {
+            status: 404,
+        });
+    }
+
+    const value = getResult.items[0];
+    const json: types.PostRequest = await request.json();
+
+    const updateResult = await images.update({
+        pb,
+        id: value.id,
+        value: {
+            group: json.group,
+            type: json.type,
+            items: JSON.stringify(json.items),
+        },
+    });
+
+    if (updateResult == null) {
+        return NextResponse.json<types.PostResponse>({
+            success: false,
+        }, {
+            status: 500,
+        });
+    }
+
+    return NextResponse.json<types.PostResponse>({
         success: true,
-        value,
     });
 }
 

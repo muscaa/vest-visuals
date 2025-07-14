@@ -4,10 +4,7 @@ import { redirect } from "next/navigation";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { createClient } from "@/utils/server/db";
-import {
-    UsersRecord,
-    toUsersValue,
-} from "@/types/db/users";
+import { UsersRecord } from "@/types/db/users";
 
 interface GetProps {
     pb?: PocketBase;
@@ -31,7 +28,7 @@ export async function get(props: GetProps = { redirect: true }) {
     try {
         const authData = await props.pb.collection("users").authRefresh();
 
-        return toUsersValue(authData.record as UsersRecord);
+        return authData.record as UsersRecord;
     } catch {
         if (!props.redirect) return null;
 

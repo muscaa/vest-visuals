@@ -17,31 +17,10 @@ export interface ImagesItem {
     };
 }
 
-// DB
-
-interface ImagesBase {
-    id: string;
+export interface ImagesRecord extends RecordModel {
     group: string;
     type: string;
-}
-
-export interface ImagesRecord extends RecordModel, ImagesBase {
-    items: string;
-    created: string;
-    updated: string;
-}
-
-export interface ImagesValue extends ImagesBase {
-    items: ImagesItem[];
-    created: Date;
-    updated: Date;
-}
-
-export function toImagesValue(record: ImagesRecord): ImagesValue {
-    return {
-        ...record,
-        items: JSON.parse(record.items),
-        created: new Date(record.created),
-        updated: new Date(record.updated),
-    };
+    items: string; // ImagesItem[]
+    created: string; // Date
+    updated: string; // Date
 }
