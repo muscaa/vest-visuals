@@ -1,3 +1,5 @@
+// POST
+
 export interface PostRequest {
     token: string;
     email: string;
