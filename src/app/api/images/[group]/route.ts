@@ -3,8 +3,10 @@ import {
     NextResponse,
 } from "next/server";
 import * as types from "@/types/api/images/p_group";
-import { createClient } from "@/utils/server/db";
-import { getUser } from "@/utils/server/db/users";
+import {
+    createClient,
+    users,
+} from "@/utils/server/db";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
     /*
@@ -12,7 +14,7 @@ export async function GET(request: NextRequest, props: types.GetProps) {
     */
 
     const pb = await createClient();
-    const user = await getUser({
+    const user = await users.get({
         pb,
         cookies: request.cookies,
         redirect: false,
@@ -31,7 +33,7 @@ export async function POST(request: NextRequest, props: types.PostProps) {
     */
     
     const pb = await createClient();
-    const user = await getUser({
+    const user = await users.get({
         pb,
         cookies: request.cookies,
         redirect: false,

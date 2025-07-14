@@ -1,12 +1,12 @@
 "use server";
 
 import { Main } from "@/components/main";
-import { getUser } from "@/utils/server/db/users";
+import { users } from "@/utils/server/db";
 import { server_config } from "@/utils/server/config";
 import { ButtonLink } from "@/components/snippets";
 
 export default async function Page() {
-    const user = await getUser();
+    const user = await users.get();
     
     const loginResponse = await fetch(`${server_config.env.S3_CONSOLE_URL}/api/v1/login`, {
         method: "POST",

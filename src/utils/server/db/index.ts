@@ -3,6 +3,9 @@ import { server_config } from "@/utils/server/config";
 import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import { headers } from "next/headers";
 
+export * as users from "@/utils/server/db/users";
+export * as images from "@/utils/server/db/images";
+
 interface CreateClientProps {
     headers?: ReadonlyHeaders | Headers;
 }

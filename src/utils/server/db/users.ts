@@ -9,13 +9,13 @@ import {
     toUsersValue,
 } from "@/types/db/users";
 
-interface GetUserProps {
+interface GetProps {
     pb?: PocketBase;
     redirect?: boolean;
     cookies?: ReadonlyRequestCookies | RequestCookies;
 }
 
-export async function getUser(props: GetUserProps = { redirect: true }) {
+export async function get(props: GetProps = { redirect: true }) {
     props.cookies ||= await cookies();
     const session_token = props.cookies.get("session_token")?.value;
 
