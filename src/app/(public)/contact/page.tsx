@@ -31,7 +31,7 @@ import { client_config } from "@/utils/client/config";
 import {
     PostRequest,
     PostResponse,
-} from "@/shared/api/contact";
+} from "@/types/api/contact";
 import { Reveal } from "@/components/animations/reveal";
 
 type ContactStatus = "sending" | "success" | "error";
