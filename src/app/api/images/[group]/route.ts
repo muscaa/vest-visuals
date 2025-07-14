@@ -6,6 +6,7 @@ import * as types from "@/types/api/images/p_group";
 import {
     createClient,
     users,
+    images,
 } from "@/utils/server/db";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
@@ -20,10 +21,11 @@ export async function GET(request: NextRequest, props: types.GetProps) {
         redirect: false,
     });
 
-    const records = await pb.collection("images").getFullList();
+    const result = await images.get();
 
     return NextResponse.json({
-        records,
+        loggedIn: user != null,
+        result,
     });
 }
 
@@ -47,13 +49,15 @@ export async function POST(request: NextRequest, props: types.PostProps) {
         });
     }*/
 
-    const record = await pb.collection("images").create({
-        "type": "product",
+    const value = await images.create({
+        value: {
+            type: "automotive",
+        } as any,
     });
 
-    return NextResponse.json<types.PostResponse>({
+    return NextResponse.json({
         success: true,
-        record,
+        value,
     });
 }
 
