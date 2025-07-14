@@ -1,0 +1,40 @@
+import PocketBase from "pocketbase";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { createClient } from "@/utils/server/db";
+import {
+    UsersRecord,
+    toUsersValue,
+} from "@/types/db/users";
+
+interface GetUserProps {
+    pb?: PocketBase;
+    redirect?: boolean;
+    cookies?: ReadonlyRequestCookies | RequestCookies;
+}
+
+export async function getUser(props: GetUserProps = { redirect: true }) {
+    props.cookies ||= await cookies();
+    const session_token = props.cookies.get("session_token")?.value;
+
+    if (!session_token) {
+        if (!props.redirect) return null;
+
+        redirect("/login");
+    }
+
+    props.pb ||= await createClient();
+    props.pb.authStore.save(session_token, null);
+
+    try {
+        const authData = await props.pb.collection("users").authRefresh();
+
+        return toUsersValue(authData.record as UsersRecord);
+    } catch {
+        if (!props.redirect) return null;
+
+        redirect("/login");
+    }
+}
