@@ -52,5 +52,15 @@ export async function POST(request: NextRequest, props: types.PostProps) {
 export async function PUT(request: NextRequest, props: types.PutProps) {
     /*
     upload images
+
+    const user = await getUser(false);
+
+    const formData = await request.formData();
+    const files = formData.getAll("files") as File[];
+
+    return NextResponse.json<PostResponse>({
+        loggedIn: user != null,
+        files: files.map(file => file.name),
+    });
     */
 }
