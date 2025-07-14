@@ -23,7 +23,7 @@ import { useState } from "react";
 import {
     PostRequest,
     PostResponse,
-} from "@/shared/api/auth/login";
+} from "@/types/api/auth/login";
 import { client_config } from "@/utils/client/config";
 import { redirect } from "next/navigation";
 

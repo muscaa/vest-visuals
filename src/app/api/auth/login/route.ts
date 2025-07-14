@@ -5,7 +5,7 @@ import {
 import {
     PostRequest,
     PostResponse,
-} from "@/shared/api/auth/login";
+} from "@/types/api/auth/login";
 import { server_config } from "@/utils/server/config";
 import { createClient } from "@/utils/server/auth";
 
