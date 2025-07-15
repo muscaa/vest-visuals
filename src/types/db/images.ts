@@ -12,8 +12,9 @@ export interface ImagesItem {
         [key: string]: ImagesItemSize | undefined;
 
         original?: ImagesItemSize;
+        large?: ImagesItemSize;
         medium?: ImagesItemSize;
-        preview?: ImagesItemSize;
+        small?: ImagesItemSize;
     };
 }
 

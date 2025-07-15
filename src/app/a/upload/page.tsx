@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ImagesItem } from "@/types/db/images";
+import * as types from "@/types/api/images/p_group/index";
 
 /*
 const files = e.target.files;
@@ -30,22 +31,28 @@ export default function Page() {
         setMessage(null);
 
         const formData = new FormData();
-        const json: ImagesItem[] = [];
         for (const file of files) {
-            formData.append("files", file);
-
-            json.push({
-                src: file.name,
-                alt: file.name,
+            const data: types.PutRequest = {
+                //alt: file.name,
                 sizes: {
-                    original: {
-                        w: 0,
-                        h: 0,
+                    //original: {},
+                    large: {
+                        quality: 90,
+                    },
+                    medium: {
+                        percent: 50,
+                        quality: 80,
+                    },
+                    small: {
+                        percent: 25,
+                        quality: 70,
                     },
                 },
-            });
+            };
+
+            formData.append("files", file);
+            formData.append("data", JSON.stringify(data));
         }
-        formData.append("data", JSON.stringify(json));
 
         try {
             const response = await fetch("/api/images/eph6m9", {

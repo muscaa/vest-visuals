@@ -1,6 +1,7 @@
 import {
     ImagesRecord,
     ImagesItem,
+    ImagesItemSize,
 } from "@/types/db/images";
 
 interface Props {
@@ -44,7 +45,21 @@ export interface PostResponse extends Response {
 export interface PutProps extends Props {
 }
 
+interface ImagesItemSizeExt extends Partial<ImagesItemSize> {
+    percent?: number;
+    quality?: number;
+}
+
 export interface PutRequest extends Request {
+    alt?: string;
+    sizes: {
+        [key: string]: ImagesItemSizeExt | undefined;
+    
+        original?: ImagesItemSizeExt;
+        large?: ImagesItemSizeExt;
+        medium?: ImagesItemSizeExt;
+        small?: ImagesItemSizeExt;
+    };
 }
 
 export interface PutResponse extends Response {
