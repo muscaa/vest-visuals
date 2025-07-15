@@ -35,6 +35,9 @@ export default async function Page() {
                 <ButtonLink href="/a/upload" prefetch={false}>
                     upload
                 </ButtonLink>
+                <ButtonLink href="/a/images">
+                    images
+                </ButtonLink>
             </div>
         </Main>
     );
