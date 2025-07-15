@@ -4,14 +4,14 @@ import {
 
 // POST
 
-export interface PostRequest extends Request {
+export interface PostRequest {
     filter?: string;
     sort?: string;
     
     // TODO: add pagination
 }
 
-export interface PostResponse extends Response {
+export interface PostResponse {
     success: boolean;
     value?: ImagesRecord[];
 }
