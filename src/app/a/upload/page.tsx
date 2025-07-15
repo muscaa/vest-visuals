@@ -4,21 +4,7 @@ import { Main } from "@/components/main";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import * as types from "@/types/api/images/p_group";
-
-/*
-const files = e.target.files;
-if (files) {
-    const formData = new FormData();
-    for (const file of files) {
-        formData.append("files", file);
-    }
-    await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-    });
-}
-*/
+import * as types from "@/types/api/images/upload";
 
 export default function Page() {
     const [files, setFiles] = useState<File[]>([]);
@@ -31,7 +17,7 @@ export default function Page() {
 
         const formData = new FormData();
         for (const file of files) {
-            const data: types.PutRequest = {
+            const filedata: types.FileData = {
                 //alt: file.name,
                 sizes: {
                     //original: {},
@@ -50,12 +36,17 @@ export default function Page() {
             };
 
             formData.append("files", file);
-            formData.append("data", JSON.stringify(data));
+            formData.append("filedatas", JSON.stringify(filedata));
         }
 
+        const json: types.PostRequest = {
+            group: "abcdefgh", // TODO get group from input
+        };
+        formData.append("json", JSON.stringify(json));
+
         try {
-            const response = await fetch("/api/images/eph6m9", {
-                method: "PUT",
+            const response = await fetch("/api/images/upload", {
+                method: "POST",
                 body: formData,
             });
 

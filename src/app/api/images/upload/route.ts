@@ -2,7 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import * as types from "@/types/api/images/p_group";
+import * as types from "@/types/api/images/upload";
 import {
     createClientDB,
     usersDB,
@@ -13,8 +13,9 @@ import { createClientS3 } from "@/utils/server/s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import sharp from "sharp";
+import { safeJSON } from "@/utils/server/request";
 
-export async function GET(request: NextRequest, props: types.GetProps) {
+export async function POST(request: NextRequest) {
     const pb = await createClientDB();
     const user = await usersDB.get({
         pb,
@@ -29,129 +30,40 @@ export async function GET(request: NextRequest, props: types.GetProps) {
             status: 401,
         });
     }*/
-
-    const params = await props.params;
-    const result = await imagesDB.get({
-        pb,
-        options: {
-            filter: `group = "${params.group}"`,
-            skipTotal: true,
-        },
-    });
-
-    if (result == null || result.items.length == 0) {
-        return NextResponse.json<types.GetResponse>({
-            success: false,
-        }, {
-            status: 404,
-        });
-    }
-
-    return NextResponse.json<types.GetResponse>({
-        success: true,
-        value: result.items[0],
-    });
-}
-
-export async function POST(request: NextRequest, props: types.PostProps) {
-    const pb = await createClientDB();
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
-        redirect: false,
-    });
-
-    /*if (!user) {
-        return NextResponse.json<types.PostResponse>({
-            success: false,
-        }, {
-            status: 401,
-        });
-    }*/
-
-    const params = await props.params;
-    const getResult = await imagesDB.get({
-        pb,
-        options: {
-            filter: `group = "${params.group}"`,
-            skipTotal: true,
-        },
-    });
-
-    if (getResult == null || getResult.items.length == 0) {
-        return NextResponse.json<types.PostResponse>({
-            success: false,
-        }, {
-            status: 404,
-        });
-    }
-
-    const value = getResult.items[0];
-    const json: types.PostRequest = await request.json();
-
-    const updateResult = await imagesDB.update({
-        pb,
-        id: value.id,
-        value: {
-            group: json.group,
-            type: json.type,
-            items: json.items,
-        },
-    });
-
-    if (updateResult == null) {
-        return NextResponse.json<types.PostResponse>({
-            success: false,
-        }, {
-            status: 500,
-        });
-    }
-
-    return NextResponse.json<types.PostResponse>({
-        success: true,
-    });
-}
-
-export async function PUT(request: NextRequest, props: types.PutProps) {
-    const pb = await createClientDB();
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
-        redirect: false,
-    });
-
-    /*if (!user) {
-        return NextResponse.json<types.PutResponse>({
-            success: false,
-        }, {
-            status: 401,
-        });
-    }*/
-
-    const params = await props.params;
-    const getResult = await imagesDB.get({
-        pb,
-        options: {
-            filter: `group = "${params.group}"`,
-            skipTotal: true,
-        },
-    });
-
-    if (getResult == null || getResult.items.length == 0) {
-        return NextResponse.json<types.PutResponse>({
-            success: false,
-        }, {
-            status: 404,
-        });
-    }
 
     const formData = await request.formData();
-    const files = formData.getAll("files") as File[];
-    const datas = (formData.getAll("data") as string[])
-            .map((data) => JSON.parse(data) as types.PutRequest);
 
-    if (files.length == 0 || files.length != datas.length) {
-        return NextResponse.json<types.PutResponse>({
+    const json = await safeJSON<types.PostRequest>(formData.get("json") as string, (json) => json.group);
+    if (json == null) {
+        return NextResponse.json<types.PostResponse>({
+            success: false,
+        }, {
+            status: 400,
+        });
+    }
+
+    const getResult = await imagesDB.get({
+        pb,
+        options: {
+            filter: `group = "${json.group}"`,
+            skipTotal: true,
+        },
+    });
+
+    if (getResult == null || getResult.items.length == 0) {
+        return NextResponse.json<types.PostResponse>({
+            success: false,
+        }, {
+            status: 404,
+        });
+    }
+
+    const files = formData.getAll("files") as File[];
+    const filedatas = (formData.getAll("filedatas") as string[])
+            .map((data) => JSON.parse(data) as types.FileData);
+
+    if (files.length == 0 || files.length != filedatas.length) {
+        return NextResponse.json<types.PostResponse>({
             success: false,
         }, {
             status: 400,
@@ -167,12 +79,12 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const data = datas[i];
+            const filedata = filedatas[i];
             const uuid = uuidv4();
 
             const item: ImagesItem = {
-                src: `${params.group}/${uuid}`,
-                alt: data.alt ?? uuid,
+                src: `${json.group}/${uuid}`,
+                alt: filedata.alt ?? uuid,
                 sizes: {},
             };
 
@@ -180,7 +92,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
             const original = sharp(buffer);
             const metadata = await original.metadata();
 
-            for (const [key, size] of Object.entries(data.sizes)) {
+            for (const [key, size] of Object.entries(filedata.sizes)) {
                 if (!size) continue;
 
                 let width: number;
@@ -207,7 +119,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
                 await s3.send(new PutObjectCommand({
                     Body: processed,
                     Bucket: "public",
-                    Key: `images/${params.group}/${uuid}_${key}.jpg`,
+                    Key: `images/${json.group}/${uuid}_${key}.jpg`,
                 }));
 
                 item.sizes[key] = {
@@ -239,7 +151,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
         });
     }
 
-    return NextResponse.json<types.PutResponse>({
+    return NextResponse.json<types.PostResponse>({
         success: true,
     });
 }
