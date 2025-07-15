@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import ThemeProvider from "@/components/theme/theme-provider";
+
 import "@/styles/main.css";
 
 export interface MetadataProps {
@@ -60,7 +61,7 @@ export interface LayoutProps {
     children: React.ReactNode;
 }
 
-export function ThemeLayout(props: LayoutProps) {
+export function BaseLayout(props: LayoutProps) {
     return (
         <ThemeProvider
             attribute="class"
@@ -79,7 +80,7 @@ export function RootLayout(props: LayoutProps) {
             <body
                 className={`${figtree.className} antialiased flex flex-col w-screen h-screen`}
             >
-                <ThemeLayout {...props} />
+                <BaseLayout {...props} />
             </body>
         </html>
     );

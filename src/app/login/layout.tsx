@@ -1,5 +1,5 @@
 import {
-    ThemeLayout,
+    BaseLayout,
     createMetadata,
 } from "@/components/layout";
 
@@ -8,4 +8,4 @@ export const metadata = createMetadata({
     routeName: "Login",
 });
 
-export default ThemeLayout;
+export default BaseLayout;
