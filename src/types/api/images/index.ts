@@ -9,15 +9,15 @@ interface Response {
     success: boolean;
 }
 
-// GET
+// POST
 
-export interface GetRequest extends Request {
+export interface PostRequest extends Request {
     filter?: string;
     sort?: string;
     
     // TODO: add pagination
 }
 
-export interface GetResponse extends Response {
+export interface PostResponse extends Response {
     value?: ImagesRecord[];
 }

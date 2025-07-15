@@ -7,10 +7,17 @@ import { X } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 
 export interface PreviewItem {
-    src: string;
     alt: string;
-    width: number;
-    height: number;
+    preview: {
+        src: string;
+        width: number;
+        height: number;
+    };
+    display: {
+        src: string;
+        width: number;
+        height: number;
+    };
 }
 
 interface PreviewImageProps {
@@ -25,13 +32,16 @@ export function PreviewImage(props: PreviewImageProps) {
     return (
         <>
             <Reveal delay={props.index * 100} className="overflow-hidden">
-                <Image
-                    src={props.item.src}
+                <img
+                    src={props.item.preview.src}
                     alt={props.item.alt}
-                    width={props.item.width}
-                    height={props.item.height}
+                    width={props.item.preview.width}
+                    height={props.item.preview.height}
                     onClick={() => setOpen(true)}
                     className={`transition-all ease-out hover:opacity-75 hover:scale-105 ${props.className}`}
+                    fetchPriority="low"
+                    loading="lazy"
+                    decoding="async"
                 />
             </Reveal>
             {
@@ -45,13 +55,16 @@ export function PreviewImage(props: PreviewImageProps) {
                             "
                         >
                             <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
-                                <Image
-                                    src={props.item.src}
+                                <img
+                                    src={props.item.display.src}
                                     alt={props.item.alt}
-                                    width={props.item.width}
-                                    height={props.item.height}
+                                    width={props.item.display.width}
+                                    height={props.item.display.height}
                                     onClick={(e) => e.stopPropagation()}
                                     className="object-contain w-auto h-auto max-w-full max-h-full"
+                                    fetchPriority="low"
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                             </div>
                             <div className="absolute top-3.5 right-3.5 theme-dark">

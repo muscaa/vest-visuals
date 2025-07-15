@@ -8,9 +8,9 @@ import {
     imagesDB,
 } from "@/utils/server/db";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
     const pb = await createClientDB();
-    let json: types.GetRequest = {};
+    let json: types.PostRequest = {};
     try {
         json = await request.json();
     } catch (error) {}
@@ -26,14 +26,14 @@ export async function GET(request: NextRequest) {
     });
 
     if (result == null || result.items.length == 0) {
-        return NextResponse.json<types.GetResponse>({
+        return NextResponse.json<types.PostResponse>({
             success: false,
         }, {
             status: 404,
         });
     }
 
-    return NextResponse.json<types.GetResponse>({
+    return NextResponse.json<types.PostResponse>({
         success: true,
         value: result.items,
     });

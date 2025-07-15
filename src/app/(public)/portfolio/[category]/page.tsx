@@ -7,11 +7,11 @@ import {
     useState,
     useEffect
 } from "react";
-import { GetResponse } from "@/shared/api/portfolio/category";
 import {
     PreviewImage,
     PreviewItem
 } from "@/components/preview-image";
+import * as types from "@/types/api/images";
 
 export default function Page() {
     const { category } = useParams<{ category: string; }>();
@@ -19,15 +19,42 @@ export default function Page() {
 
     useEffect(() => {
         const fetchImages = async () => {
-            const response = await fetch(`/api/portfolio/${category}`);
-            const json: GetResponse = await response.json();
+            const response = await fetch("/api/images", {
+                method: "POST",
+                body: JSON.stringify({
+                    filter: `type = "${category}"`,
+                } as types.PostRequest),
+            });
+            const json: types.PostResponse = await response.json();
 
-            setItems(json.images.map((file) => ({
+            if (json.success) {
+                setItems(json.value
+                    ?.map((record) => record.items)
+                    .flatMap((items) => items.map((item) => ({
+                        alt: item.alt,
+                        preview: {
+                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_small.jpg`,
+                            width: item.sizes.small?.w,
+                            height: item.sizes.small?.h,
+                        },
+                        display: {
+                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_large.jpg`,
+                            width: item.sizes.large?.w,
+                            height: item.sizes.large?.h,
+                        },
+                    } as PreviewItem))) || []
+                );
+            }
+
+            /*const response = await fetch(`/api/portfolio/${category}`);
+            const json = await response.json();
+
+            setItems(json.images.map((file: string) => ({
                 src: file,
                 alt: "",
                 width: 1920,
                 height: 1280,
-            })));
+            })));*/
         };
 
         fetchImages();

@@ -4,8 +4,7 @@ import { Main } from "@/components/main";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ImagesItem } from "@/types/db/images";
-import * as types from "@/types/api/images/p_group/index";
+import * as types from "@/types/api/images/p_group";
 
 /*
 const files = e.target.files;
