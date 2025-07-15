@@ -7,7 +7,7 @@ import {
     PostResponse,
 } from "@/types/api/auth/login";
 import { server_config } from "@/utils/server/config";
-import { createClient } from "@/utils/server/db";
+import { createClientDB } from "@/utils/server/db";
 
 export async function POST(request: NextRequest) {
     try {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        const pb = await createClient();
+        const pb = await createClientDB();
 
         try {
             const authData = await pb.collection("users").authWithPassword(json.email, json.password);

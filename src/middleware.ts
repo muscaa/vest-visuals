@@ -2,7 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import { users } from "@/utils/server/db";
+import { usersDB } from "@/utils/server/db";
 import { getUrlString } from "@/utils/server/request";
 
 export async function middleware(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const user = await users.get({
+    const user = await usersDB.get({
         redirect: false,
         cookies: request.cookies,
     });

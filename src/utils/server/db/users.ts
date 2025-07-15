@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { createClient } from "@/utils/server/db";
+import { createClientDB } from "@/utils/server/db";
 import { UsersRecord } from "@/types/db/users";
 
 interface GetProps {
@@ -22,7 +22,7 @@ export async function get(props: GetProps = { redirect: true }) {
         redirect("/login");
     }
 
-    props.pb ||= await createClient();
+    props.pb ||= await createClientDB();
     props.pb.authStore.save(session_token, null);
 
     try {

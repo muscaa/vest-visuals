@@ -1,11 +1,11 @@
 "use server";
 
-import { users } from "@/utils/server/db";
+import { usersDB } from "@/utils/server/db";
 import { redirect } from "next/navigation";
 import LoginPage from "./login-page";
 
 export default async function Page() {
-    const user = await users.get({ redirect: false });
+    const user = await usersDB.get({ redirect: false });
     
     if (user) {
         redirect("/a");

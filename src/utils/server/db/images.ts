@@ -1,6 +1,6 @@
 import PocketBase from "pocketbase";
 import { RecordListOptions } from "pocketbase";
-import { createClient } from "@/utils/server/db";
+import { createClientDB } from "@/utils/server/db";
 import { ImagesRecord } from "@/types/db/images";
 
 interface CreateProps {
@@ -9,7 +9,7 @@ interface CreateProps {
 }
 
 export async function create(props: CreateProps = {}) {
-    props.pb ||= await createClient();
+    props.pb ||= await createClientDB();
 
     try {
         return await props.pb.collection("images").create<ImagesRecord>(props.value);
@@ -26,7 +26,7 @@ interface GetProps {
 }
 
 export async function get(props: GetProps = {}) {
-    props.pb ||= await createClient();
+    props.pb ||= await createClientDB();
 
     try {
         return await props.pb.collection("images").getList<ImagesRecord>(props.page, props.perPage, props.options);
@@ -42,7 +42,7 @@ interface UpdateProps {
 }
 
 export async function update(props: UpdateProps) {
-    props.pb ||= await createClient();
+    props.pb ||= await createClientDB();
 
     try {
         return await props.pb.collection("images").update<ImagesRecord>(props.id, props.value);

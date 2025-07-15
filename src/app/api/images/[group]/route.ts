@@ -4,15 +4,15 @@ import {
 } from "next/server";
 import * as types from "@/types/api/images/p_group";
 import {
-    createClient,
-    users,
-    images,
+    createClientDB,
+    usersDB,
+    imagesDB,
 } from "@/utils/server/db";
 import { ImagesItem } from "@/types/db/images";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
-    const pb = await createClient();
-    const user = await users.get({
+    const pb = await createClientDB();
+    const user = await usersDB.get({
         pb,
         cookies: request.cookies,
         redirect: false,
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, props: types.GetProps) {
     }*/
 
     const params = await props.params;
-    const result = await images.get({
+    const result = await imagesDB.get({
         pb,
         options: {
             filter: `group = "${params.group}"`,
@@ -50,8 +50,8 @@ export async function GET(request: NextRequest, props: types.GetProps) {
 }
 
 export async function POST(request: NextRequest, props: types.PostProps) {
-    const pb = await createClient();
-    const user = await users.get({
+    const pb = await createClientDB();
+    const user = await usersDB.get({
         pb,
         cookies: request.cookies,
         redirect: false,
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest, props: types.PostProps) {
     }*/
 
     const params = await props.params;
-    const getResult = await images.get({
+    const getResult = await imagesDB.get({
         pb,
         options: {
             filter: `group = "${params.group}"`,
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest, props: types.PostProps) {
     const value = getResult.items[0];
     const json: types.PostRequest = await request.json();
 
-    const updateResult = await images.update({
+    const updateResult = await imagesDB.update({
         pb,
         id: value.id,
         value: {
@@ -124,8 +124,8 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
     });
     */
 
-    const pb = await createClient();
-    const user = await users.get({
+    const pb = await createClientDB();
+    const user = await usersDB.get({
         pb,
         cookies: request.cookies,
         redirect: false,
@@ -140,7 +140,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
     }*/
 
     const params = await props.params;
-    const getResult = await images.get({
+    const getResult = await imagesDB.get({
         pb,
         options: {
             filter: `group = "${params.group}"`,
@@ -163,7 +163,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
     const files = formData.getAll("files") as File[];
     const data = JSON.parse(formData.get("data") as string) as ImagesItem[];
 
-    const updateResult = await images.update({
+    const updateResult = await imagesDB.update({
         pb,
         id: value.id,
         value: {
