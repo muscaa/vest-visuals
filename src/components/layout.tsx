@@ -63,14 +63,9 @@ export interface LayoutProps {
 
 export function BaseLayout(props: LayoutProps) {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
+        <>
             {props.children}
-        </ThemeProvider>
+        </>
     );
 }
 
@@ -80,7 +75,14 @@ export function RootLayout(props: LayoutProps) {
             <body
                 className={`${figtree.className} antialiased flex flex-col w-screen h-screen`}
             >
-                <BaseLayout {...props} />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <BaseLayout {...props} />
+                </ThemeProvider>
             </body>
         </html>
     );
