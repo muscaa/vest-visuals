@@ -200,9 +200,9 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
                 }
 
                 const processed = await original
-                    .resize({ width, height })
-                    .jpeg({ quality })
-                    .toBuffer();
+                        .resize({ width, height })
+                        .jpeg({ quality })
+                        .toBuffer();
 
                 await s3.send(new PutObjectCommand({
                     Body: processed,
