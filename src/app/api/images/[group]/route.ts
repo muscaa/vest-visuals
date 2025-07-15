@@ -9,6 +9,8 @@ import {
     imagesDB,
 } from "@/utils/server/db";
 import { ImagesItem } from "@/types/db/images";
+import { createClientS3 } from "@/utils/server/s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
     const pb = await createClientDB();
@@ -109,21 +111,6 @@ export async function POST(request: NextRequest, props: types.PostProps) {
 }
 
 export async function PUT(request: NextRequest, props: types.PutProps) {
-    /*
-    upload images
-
-    const user = await getUser(false);
-
-    const formData = await request.formData();
-    const files = formData.getAll("files") as File[];
-    const data = JSON.parse(formData.get("data"));
-
-    return NextResponse.json<PostResponse>({
-        loggedIn: user != null,
-        files: files.map(file => file.name),
-    });
-    */
-
     const pb = await createClientDB();
     const user = await usersDB.get({
         pb,
@@ -182,7 +169,24 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
         });
     }
 
+    // process images with sharp
 
+    // upload images to s3
+
+    const s3 = createClientS3();
+
+    for (const file of files) {
+        const output = await s3.send(new PutObjectCommand({
+            Body: file,
+            Bucket: "public",
+            Key: "something",
+        }));
+
+        console.log("-----------");
+        console.log(output);
+    }
+
+    s3.destroy();
 
     return NextResponse.json<types.PostResponse>({
         success: true,
