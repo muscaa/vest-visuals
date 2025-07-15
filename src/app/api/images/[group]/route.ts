@@ -11,6 +11,7 @@ import {
 import { ImagesItem } from "@/types/db/images";
 import { createClientS3 } from "@/utils/server/s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request: NextRequest, props: types.GetProps) {
     const pb = await createClientDB();
@@ -93,7 +94,7 @@ export async function POST(request: NextRequest, props: types.PostProps) {
         value: {
             group: json.group,
             type: json.type,
-            items: JSON.stringify(json.items),
+            items: json.items,
         },
     });
 
@@ -144,20 +145,26 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
     }
 
     const value = getResult.items[0];
-    const items: ImagesItem[] = JSON.parse(value.items);
+    const items: ImagesItem[] = value.items || [];
 
     const formData = await request.formData();
     const files = formData.getAll("files") as File[];
+
+    // needs to process sizes <= 0 (original), names to uuids,
+    // maybe even combine it with File[] so i dont have to keep track of the file names
+    // aka, it needs a new separate structure
     const data = JSON.parse(formData.get("data") as string) as ImagesItem[];
 
-    const updateResult = await imagesDB.update({
+
+    // move update after images are processed and uploaded
+    /*const updateResult = await imagesDB.update({
         pb,
         id: value.id,
         value: {
-            items: JSON.stringify([
+            items: [
                 ...items,
                 ...data,
-            ]),
+            ],
         },
     });
 
@@ -167,7 +174,7 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
         }, {
             status: 500,
         });
-    }
+    }*/
 
     // process images with sharp
 
@@ -176,17 +183,19 @@ export async function PUT(request: NextRequest, props: types.PutProps) {
     const s3 = createClientS3();
 
     for (const file of files) {
+        const uuid = uuidv4();
+
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        // process images using sharp
+
         const output = await s3.send(new PutObjectCommand({
-            Body: file,
+            Body: buffer,
             Bucket: "public",
-            Key: "something",
+            Key: `images/${params.group}/${uuid}.jpg`,
         }));
-
-        console.log("-----------");
-        console.log(output);
     }
-
-    s3.destroy();
 
     return NextResponse.json<types.PostResponse>({
         success: true,

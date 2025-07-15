@@ -4,7 +4,7 @@ import { Main } from "@/components/main";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { PostResponse } from "@/shared/api/upload";
+import { ImagesItem } from "@/types/db/images";
 
 /*
 const files = e.target.files;
@@ -30,18 +30,31 @@ export default function Page() {
         setMessage(null);
 
         const formData = new FormData();
+        const json: ImagesItem[] = [];
         for (const file of files) {
             formData.append("files", file);
+
+            json.push({
+                src: file.name,
+                alt: file.name,
+                sizes: {
+                    original: {
+                        w: 0,
+                        h: 0,
+                    },
+                },
+            });
         }
+        formData.append("data", JSON.stringify(json));
 
         try {
-            const response = await fetch("/api/upload", {
-                method: "POST",
+            const response = await fetch("/api/images/eph6m9", {
+                method: "PUT",
                 body: formData,
             });
 
-            const data: PostResponse = await response.json();
-            setMessage(data.loggedIn ? data.files.join(", ") : "Not logged in, not uploaded.");
+            const data = await response.json();
+            setMessage(JSON.stringify(data));
         } catch (error) {
             setMessage("An error occurred.");
         } finally {

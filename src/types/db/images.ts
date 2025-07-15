@@ -20,7 +20,7 @@ export interface ImagesItem {
 export interface ImagesRecord extends RecordModel {
     group: string;
     type: string;
-    items: string; // ImagesItem[]
+    items: ImagesItem[]
     created: string; // Date
     updated: string; // Date
 }
