@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import ThemeProvider from "@/components/theme/theme-provider";
+import { ClientLayout } from "@/components/layout-client";
 
 import "@/styles/main.css";
 
@@ -81,7 +82,9 @@ export function RootLayout(props: LayoutProps) {
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <BaseLayout {...props} />
+                    <ClientLayout>
+                        <BaseLayout {...props} />
+                    </ClientLayout>
                 </ThemeProvider>
             </body>
         </html>
