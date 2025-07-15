@@ -2,13 +2,6 @@ import {
     ImagesRecord,
 } from "@/types/db/images";
 
-interface Request {
-}
-
-interface Response {
-    success: boolean;
-}
-
 // POST
 
 export interface PostRequest extends Request {
@@ -19,5 +12,6 @@ export interface PostRequest extends Request {
 }
 
 export interface PostResponse extends Response {
+    success: boolean;
     value?: ImagesRecord[];
 }

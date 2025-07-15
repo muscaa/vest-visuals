@@ -2,6 +2,7 @@ import {
     ImagesRecord,
     ImagesItem,
     ImagesItemSize,
+    ImagesSizeMap,
 } from "@/types/db/images";
 
 interface Props {
@@ -10,57 +11,41 @@ interface Props {
     }>;
 }
 
-interface Request {
-}
-
-interface Response {
-    success: boolean;
-}
-
 // GET
 
-export interface GetProps extends Props {
-}
+export type GetProps = Props;
 
-export interface GetResponse extends Response {
+export interface GetResponse {
+    success: boolean;
     value?: ImagesRecord;
 }
 
 // POST
 
-export interface PostProps extends Props {
-}
+export type PostProps = Props;
 
-export interface PostRequest extends Request {
+export interface PostRequest {
     group?: string;
     type?: string;
     items?: ImagesItem[];
 }
 
-export interface PostResponse extends Response {
+export interface PostResponse {
+    success: boolean;
 }
 
 // PUT
 
-export interface PutProps extends Props {
-}
+export type PutProps = Props;
 
-interface ImagesItemSizeExt extends Partial<ImagesItemSize> {
-    percent?: number;
-    quality?: number;
-}
-
-export interface PutRequest extends Request {
+export interface PutRequest {
     alt?: string;
-    sizes: {
-        [key: string]: ImagesItemSizeExt | undefined;
-    
-        original?: ImagesItemSizeExt;
-        large?: ImagesItemSizeExt;
-        medium?: ImagesItemSizeExt;
-        small?: ImagesItemSizeExt;
-    };
+    sizes: ImagesSizeMap<Partial<ImagesItemSize> & {
+        percent?: number;
+        quality?: number;
+    }>;
 }
 
-export interface PutResponse extends Response {
+export interface PutResponse {
+    success: boolean;
 }

@@ -5,17 +5,19 @@ export interface ImagesItemSize {
     h: number;
 }
 
+export interface ImagesSizeMap<T> {
+    [key: string]: T | undefined;
+
+    original?: T;
+    large?: T;
+    medium?: T;
+    small?: T;
+}
+
 export interface ImagesItem {
     src: string;
     alt: string;
-    sizes: {
-        [key: string]: ImagesItemSize | undefined;
-
-        original?: ImagesItemSize;
-        large?: ImagesItemSize;
-        medium?: ImagesItemSize;
-        small?: ImagesItemSize;
-    };
+    sizes: ImagesSizeMap<ImagesItemSize>;
 }
 
 export interface ImagesRecord extends RecordModel {
