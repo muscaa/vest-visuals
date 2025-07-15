@@ -249,7 +249,7 @@ function SectionTeam() {
                     ]}
                     email="david@vestvisuals.ro"
                     socials={{
-                        "https://www.instagram.com/davidbostina/": SiInstagram,
+                        "https://www.instagram.com/david.bostina/": SiInstagram,
                         "https://www.facebook.com/david.bostina": SiFacebook,
                     }}
                 />
