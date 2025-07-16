@@ -1,6 +1,6 @@
 "use client";
 
-import { Main } from "@/components/main";
+import { MainAdmin } from "@/components/admin/main";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -60,7 +60,7 @@ export default function Page() {
     };
 
     return (
-        <Main>
+        <MainAdmin>
             <div className="flex justify-center items-center size-full">
                 <div className="flex flex-col max-w-md w-full gap-2 p-2">
                     <Input
@@ -78,6 +78,6 @@ export default function Page() {
                     <p>{message}</p>
                 </div>
             </div>
-        </Main>
+        </MainAdmin>
     );
 }

@@ -1,9 +1,23 @@
 "use client";
 
-import { Main } from "@/components/main";
+import { MainAdmin } from "@/components/admin/main";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import * as types from "@/types/api/images";
+import { ImagesItem } from "@/types/db/images";
+
+interface ImagesItemEntryProps {
+    item: ImagesItem;
+}
+
+function ImagesItemEntry(props: ImagesItemEntryProps) {
+    return (
+        <div className="flex flex-col">
+            <h4>{props.item.alt}</h4>
+            <p>{props.item.src}</p>
+        </div>
+    );
+}
 
 export default function Page() {
     const [filter, setFilter] = useState<string>();
@@ -34,21 +48,23 @@ export default function Page() {
     });
 
     return (
-        <Main>
-            <div className="flex justify-center items-center size-full">
-                <div className="flex flex-col max-w-md w-full gap-2 p-2">
+        <MainAdmin>
+            <div className="flex justify-center items-center size-full bg-red-400">
+
+
+                {/*<div className="flex flex-col max-w-md w-full gap-2 p-2">
                     {
                         data && (
                             data.map((item, index) => (
-                                <div key={index} className="flex flex-col">
-                                    <h4>{item.alt}</h4>
-                                    <p>{item.src}</p>
-                                </div>
+                                <ImagesItemEntry
+                                    key={index}
+                                    item={item}
+                                />
                             ))
                         )
                     }
-                </div>
+                </div>*/}
             </div>
-        </Main>
+        </MainAdmin>
     );
 }

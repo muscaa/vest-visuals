@@ -1,6 +1,6 @@
 "use server";
 
-import { Main } from "@/components/main";
+import { MainAdmin } from "@/components/admin/main";
 import { usersDB } from "@/utils/server/db";
 import { server_config } from "@/utils/server/config";
 import { ButtonLink } from "@/components/snippets";
@@ -22,7 +22,7 @@ export default async function Page() {
     const cookies = encodeURIComponent(JSON.stringify(loginResponse.headers.getSetCookie()));
 
     return (
-        <Main>
+        <MainAdmin>
             <div className="flex flex-col justify-center items-center gap-2 whitespace-pre-wrap">
                 <p>Logged in as: {JSON.stringify(user, null, 4)}</p>
                 <p>{cookies}</p>
@@ -39,6 +39,6 @@ export default async function Page() {
                     images
                 </ButtonLink>
             </div>
-        </Main>
+        </MainAdmin>
     );
 }
