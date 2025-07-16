@@ -4,10 +4,6 @@ import { Main } from "@/components/main";
 import { Masonry } from "react-plock";
 import { useParams } from "next/navigation";
 import {
-    useState,
-    useEffect
-} from "react";
-import {
     PreviewImage,
     PreviewItem
 } from "@/components/preview-image";
@@ -17,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function Page() {
     const { category } = useParams<{ category: string; }>();
     const { data } = useQuery({
-        queryKey: ["images", category],
+        queryKey: ["portfolio", category],
         queryFn: async () => {
             const response = await fetch("/api/images", {
                 method: "POST",
