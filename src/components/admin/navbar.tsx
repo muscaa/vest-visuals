@@ -16,7 +16,7 @@ export function LogoSegment() {
                 alt="Logo"
                 className="size-16"
             />
-            <h6 className="absolute bottom-2.5 -right-5">ADMIN</h6>
+            <h6 className="absolute bottom-2 -right-5">ADMIN</h6>
         </Link>
     );
 }
