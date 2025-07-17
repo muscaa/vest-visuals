@@ -28,11 +28,9 @@ import {
 } from "react-google-recaptcha-v3";
 import { useState } from "react";
 import { client_config } from "@/utils/client/config";
-import {
-    PostRequest,
-    PostResponse,
-} from "@/types/api/contact";
+import * as types from "@/types/api/contact";
 import { Reveal } from "@/components/animations/reveal";
+import { api_client } from "@/utils/client/axios";
 
 type ContactStatus = "sending" | "success" | "error";
 
@@ -53,22 +51,15 @@ function ContactForm() {
 
         const token = await executeRecaptcha("contact_form");
 
-        const res = await fetch("/api/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                token,
-                name,
-                email,
-                message,
-            } as PostRequest),
+        const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/contact", {
+            token,
+            name,
+            email,
+            message,
         });
-        const json: PostResponse = await res.json();
 
-        setStatus(json.success ? "success" : "error");
-        setErrorMessage(json.message);
+        setStatus(data.success ? "success" : "error");
+        setErrorMessage(data.message);
     };
 
     return (

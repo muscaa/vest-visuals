@@ -20,12 +20,10 @@ import {
     useGoogleReCaptcha
 } from "react-google-recaptcha-v3";
 import { useState } from "react";
-import {
-    PostRequest,
-    PostResponse,
-} from "@/types/api/auth/login";
+import * as types from "@/types/api/auth/login";
 import { client_config } from "@/utils/client/config";
 import { redirect } from "next/navigation";
+import { api_client } from "@/utils/client/axios";
 
 type LoginStatus = "login" | "success" | "error";
 
@@ -45,23 +43,16 @@ function LoginForm() {
 
         const token = await executeRecaptcha("login_form");
 
-        const res = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                token,
-                email,
-                password,
-            } as PostRequest),
+        const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/auth/login", {
+            token,
+            email,
+            password,
         });
-        const json: PostResponse = await res.json();
 
-        setStatus(json.success ? "success" : "error");
-        setErrorMessage(json.message);
+        setStatus(data.success ? "success" : "error");
+        setErrorMessage(data.message);
 
-        if (json.success) {
+        if (data.success) {
             redirect("/a");
         }
     };

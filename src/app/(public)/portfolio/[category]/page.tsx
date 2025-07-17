@@ -9,86 +9,36 @@ import {
 } from "@/components/preview-image";
 import * as types from "@/types/api/images";
 import { useQuery } from "@tanstack/react-query";
+import { api_client } from "@/utils/client/axios";
 
 export default function Page() {
     const { category } = useParams<{ category: string; }>();
     const { data } = useQuery({
         queryKey: ["portfolio", category],
         queryFn: async () => {
-            const response = await fetch("/api/images", {
-                method: "POST",
-                body: JSON.stringify({
-                    filter: `type = "${category}"`,
-                } as types.PostRequest),
+            const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/images", {
+                filter: `type = "${category}"`,
             });
-            const json: types.PostResponse = await response.json();
 
-            if (json.success) {
-                return json.value
-                    ?.map((record) => record.items)
-                    .flatMap((items) => items.map((item) => ({
-                        alt: item.alt,
-                        preview: {
-                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_small.jpg`,
-                            width: item.sizes.small?.w,
-                            height: item.sizes.small?.h,
-                        },
-                        display: {
-                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_large.jpg`,
-                            width: item.sizes.large?.w,
-                            height: item.sizes.large?.h,
-                        },
-                    } as PreviewItem))) || [];
-            }
+            if (!data.success) return [];
 
-            return [];
-
-            /*const response = await fetch(`/api/portfolio/${category}`);
-            const json = await response.json();
-
-            setItems(json.images.map((file: string) => ({
-                src: file,
-                alt: "",
-                width: 1920,
-                height: 1280,
-            })));*/
+            return data.value
+                ?.map((record) => record.items)
+                .flatMap((items) => items.map((item) => ({
+                    alt: item.alt,
+                    preview: {
+                        src: `https://s3.vestvisuals.ro/public/images/${item.src}_small.jpg`,
+                        width: item.sizes.small?.w,
+                        height: item.sizes.small?.h,
+                    },
+                    display: {
+                        src: `https://s3.vestvisuals.ro/public/images/${item.src}_large.jpg`,
+                        width: item.sizes.large?.w,
+                        height: item.sizes.large?.h,
+                    },
+                } as PreviewItem))) || [];
         },
     });
-
-    /*const [items, setItems] = useState<PreviewItem[]>([]);
-
-    useEffect(() => {
-        const fetchImages = async () => {
-            const response = await fetch("/api/images", {
-                method: "POST",
-                body: JSON.stringify({
-                    filter: `type = "${category}"`,
-                } as types.PostRequest),
-            });
-            const json: types.PostResponse = await response.json();
-
-            if (json.success) {
-                setItems(json.value
-                    ?.map((record) => record.items)
-                    .flatMap((items) => items.map((item) => ({
-                        alt: item.alt,
-                        preview: {
-                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_small.jpg`,
-                            width: item.sizes.small?.w,
-                            height: item.sizes.small?.h,
-                        },
-                        display: {
-                            src: `https://s3.vestvisuals.ro/public/images/${item.src}_large.jpg`,
-                            width: item.sizes.large?.w,
-                            height: item.sizes.large?.h,
-                        },
-                    } as PreviewItem))) || []
-                );
-            }
-        };
-
-        fetchImages();
-    }, [category]);*/
 
     return (
         <Main>

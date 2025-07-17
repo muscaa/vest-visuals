@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { api_client } from "@/utils/client/axios";
 
 interface ImagesItemEntryProps {
     item: ImagesItem;
@@ -39,24 +40,18 @@ export default function Page() {
     const { data } = useQuery({
         queryKey: ["images", filter, sort],
         queryFn: async () => {
-            const response = await fetch("/api/images", {
-                method: "POST",
-                body: JSON.stringify({
-                    filter,
-                    sort,
-                } as types.PostRequest),
+            const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/images", {
+                filter,
+                sort,
             });
-            const json: types.PostResponse = await response.json();
 
-            if (json.success) {
-                return json.value
-                    ?.map((record) => record.items)
-                    .flatMap((items) => items.map((item) => ({
-                        ...item,
-                    }))) || [];
-            }
+            if (!data.success) return [];
 
-            return [];
+            return data.value
+                ?.map((record) => record.items)
+                .flatMap((items) => items.map((item) => ({
+                    ...item,
+                }))) || [];
         },
     });
 

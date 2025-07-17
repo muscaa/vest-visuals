@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import * as types from "@/types/api/images/upload";
+import { api_client } from "@/utils/client/axios";
 
 export default function Page() {
     const [files, setFiles] = useState<File[]>([]);
@@ -45,12 +46,8 @@ export default function Page() {
         formData.append("json", JSON.stringify(json));
 
         try {
-            const response = await fetch("/api/images/upload", {
-                method: "POST",
-                body: formData,
-            });
+            const { data } = await api_client.postForm<types.PostResponse>("/images/upload", formData);
 
-            const data = await response.json();
             setMessage(JSON.stringify(data));
         } catch (error) {
             setMessage("An error occurred.");
