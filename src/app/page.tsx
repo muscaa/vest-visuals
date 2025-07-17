@@ -347,7 +347,7 @@ function SuspensePage() {
                                         <h2 className="font-light text-center italic text-foreground32">TIMISOARA | ARAD | ORADEA</h2>
                                     </Reveal>
                                 </div>
-                                <Reveal delay={1800} duration={1000} direction="up">
+                                <Reveal delay={1300} duration={1000} direction="up">
                                     <ButtonLink
                                     href="/?more"
                                         variant="neutral"
