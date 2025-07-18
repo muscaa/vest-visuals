@@ -7,6 +7,7 @@ export interface MainProps {
     header?: React.ReactNode;
     footer?: React.ReactNode;
     className?: string;
+    extraClassName?: string;
 }
 
 export function Main(props: MainProps) {
@@ -18,7 +19,7 @@ export function Main(props: MainProps) {
                 )
             }
             <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
-                <main className="grow">
+                <main className={cn("grow", props.extraClassName)}>
                     {props.children}
                 </main>
                 {

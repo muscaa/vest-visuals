@@ -4,40 +4,55 @@ import { MainAdmin } from "@/components/admin/main";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import * as types from "@/types/api/images";
-import { ImagesItem } from "@/types/db/images";
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { ImagesRecord } from "@/types/db/images";
 import { api_client } from "@/utils/client/axios";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { ImagesCreateDialog } from "@/components/dialogs/images-create";
+import Image from "next/image";
 
-interface ImagesItemEntryProps {
-    item: ImagesItem;
+interface ImagesRecordEntryProps {
+    record: ImagesRecord;
+    selected: boolean;
+    onSelect: (record: ImagesRecord) => void;
 }
 
-function ImagesItemEntry(props: ImagesItemEntryProps) {
+function ImagesRecordEntry(props: ImagesRecordEntryProps) {
     return (
-        <div className="flex flex-col">
-            <h4>{props.item.alt}</h4>
-            <p>{props.item.src}</p>
-        </div>
+        <Button
+            variant="card"
+            size="none"
+            onClick={() => props.onSelect(props.record)}
+            className={props.selected ? "border-accent-foreground dark:border-accent-foreground" : ""}
+        >
+            <div className="flex gap-4 size-full whitespace-normal">
+                <Image src="/placeholder0.png" alt="placeholder" width={128} height={128} className="w-32 object-contain" />
+                <div className="flex flex-col gap-1 grow">
+                    <h4>{props.record.group}</h4>
+                    <Separator />
+                    <div className="flex gap-2 text-muted-foreground">
+                        <div className="flex flex-col grow">
+                            <p>{props.record.type}</p>
+                            <h6>Updated: {new Date(props.record.updated).toLocaleString(undefined, { hour12: false })}</h6>
+                            <h6>Created: {new Date(props.record.created).toLocaleString(undefined, { hour12: false })}</h6>
+                        </div>
+                        <div className="flex flex-col justify-center items-center">
+                            <p>{props.record.items?.length || 0}</p>
+                            <h5>items</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Button>
     );
 }
 
 export default function Page() {
     const [filter, setFilter] = useState<string>();
     const [sort, setSort] = useState<string>();
+    const [selectedRecord, setSelectedRecord] = useState<ImagesRecord>();
 
-    const { data } = useQuery({
+    const { data, refetch } = useQuery({
         queryKey: ["images", filter, sort],
         queryFn: async () => {
             const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/images", {
@@ -47,62 +62,61 @@ export default function Page() {
 
             if (!data.success) return [];
 
-            return data.value
-                ?.map((record) => record.items)
-                .flatMap((items) => items.map((item) => ({
-                    ...item,
-                }))) || [];
+            return data.value || [];
         },
     });
 
-    return (
-        <MainAdmin>
-            <div className="flex justify-center items-center size-full">
-                <Dialog>
-                    <form>
-                        <DialogTrigger asChild>
-                            <Button variant="outline">Open Dialog</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                                <DialogTitle>Edit profile</DialogTitle>
-                                <DialogDescription>
-                                    Make changes to your profile here. Click save when you&apos;re
-                                    done.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="grid gap-4">
-                                <div className="grid gap-3">
-                                    <Label htmlFor="name-1">Name</Label>
-                                    <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="username-1">Username</Label>
-                                    <Input id="username-1" name="username" defaultValue="@peduarte" />
-                                </div>
-                            </div>
-                            <DialogFooter>
-                                <DialogClose asChild>
-                                    <Button variant="outline">Cancel</Button>
-                                </DialogClose>
-                                <Button type="submit">Save changes</Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </form>
-                </Dialog>
+    const handleSelect = (record: ImagesRecord) => {
+        setSelectedRecord(selectedRecord?.id == record.id ? undefined : record);
+    };
 
-                {/*<div className="flex flex-col max-w-md w-full gap-2 p-2">
-                    {
-                        data && (
-                            data.map((item, index) => (
-                                <ImagesItemEntry
-                                    key={index}
-                                    item={item}
-                                />
-                            ))
-                        )
-                    }
-                </div>*/}
+    return (
+        <MainAdmin extraClassName="overflow-hidden">
+            <div className="flex justify-center items-center size-full p-2">
+                <div className="flex flex-col size-full max-w-3xl max-h-144 gap-2">
+                    <div className="flex gap-2">
+                        <ImagesCreateDialog
+                            onCreate={refetch}
+                        >
+                            <Button
+                                className="grow"
+                            >
+                                New
+                            </Button>
+                        </ImagesCreateDialog>
+                        <Button
+                            variant="secondary"
+                            disabled={!selectedRecord}
+                            className="grow"
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            disabled={!selectedRecord}
+                            className="grow"
+                        >
+                            Delete
+                        </Button>
+                    </div>
+                    <Separator />
+                    <div className="flex flex-col max-h-full h-full overflow-y-auto">
+                        <div className="flex flex-col grow gap-2">
+                            {
+                                data && (
+                                    data.map((item, index) => (
+                                        <ImagesRecordEntry
+                                            key={index}
+                                            record={item}
+                                            selected={selectedRecord?.id == item.id}
+                                            onSelect={handleSelect}
+                                        />
+                                    ))
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </MainAdmin>
     );
