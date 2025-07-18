@@ -9,6 +9,8 @@ import {
     imagesDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
+import { createClientS3 } from "@/utils/server/s3";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function POST(request: NextRequest) {
     const pb = await createClientDB();
@@ -53,12 +55,27 @@ export async function POST(request: NextRequest) {
 
     const value = getResult.items[0];
 
-    const removeResult = await imagesDB.remove({
-        pb,
-        id: value.id,
-    });
+    try {
+        const s3 = createClientS3();
 
-    if (removeResult == null) {
+        for (const item of value.items) {
+            for (const [key, size] of Object.entries(item.sizes)) {
+                await s3.send(new DeleteObjectCommand({
+                    Bucket: "public",
+                    Key: `images/${item.src}_${key}.jpg`, // TODO fix this once upload is changed
+                }));
+            }
+        }
+
+        const removeResult = await imagesDB.remove({
+            pb,
+            id: value.id,
+        });
+
+        if (removeResult == null) {
+            throw new Error("Failed to remove image from database");
+        }
+    } catch (error) {
         return NextResponse.json<types.PostResponse>({
             success: false,
         }, {

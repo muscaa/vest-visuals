@@ -23,7 +23,7 @@ export default function Page() {
             if (!data.success) return [];
 
             return data.value
-                ?.map((record) => record.items)
+                ?.map((record) => record.items) // TODO when updating upload api, fix these
                 .flatMap((items) => items.map((item) => ({
                     alt: item.alt,
                     preview: {

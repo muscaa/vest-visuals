@@ -83,9 +83,9 @@ export async function POST(request: NextRequest) {
             const uuid = uuidv4();
 
             const item: ImagesItem = {
-                src: `${json.group}/${uuid}`,
+                src: `${json.group}/${uuid}`, // TODO remove group
                 alt: filedata.alt ?? uuid,
-                sizes: {},
+                sizes: {}, // TODO maybe rename to variants, maybe add suffix
             };
 
             const buffer = Buffer.from(await file.arrayBuffer());
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
                 await s3.send(new PutObjectCommand({
                     Body: processed,
                     Bucket: "public",
-                    Key: `images/${json.group}/${uuid}_${key}.jpg`,
+                    Key: `images/${json.group}/${uuid}_${key}.jpg`, // TODO remove group, maybe use src with suffix
                 }));
 
                 item.sizes[key] = {
