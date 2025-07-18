@@ -8,8 +8,9 @@ import { ImagesRecord } from "@/types/db/images";
 import { api_client } from "@/utils/client/axios";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ImagesCreateDialog } from "@/components/dialogs/images-create";
 import Image from "next/image";
+import { ImagesCreateDialog } from "@/components/dialogs/images-create";
+import { ImagesEditDialog } from "@/components/dialogs/images-edit";
 
 interface ImagesRecordEntryProps {
     record: ImagesRecord;
@@ -37,7 +38,7 @@ function ImagesRecordEntry(props: ImagesRecordEntryProps) {
                             <h6>Created: {new Date(props.record.created).toLocaleString(undefined, { hour12: false })}</h6>
                         </div>
                         <div className="flex flex-col justify-center items-center">
-                            <p>{props.record.items?.length || 0}</p>
+                            <p>{props.record.items?.length || "no"}</p>
                             <h5>items</h5>
                         </div>
                     </div>
@@ -70,13 +71,18 @@ export default function Page() {
         setSelectedRecord(selectedRecord?.id == record.id ? undefined : record);
     };
 
+    const handleUpdate = () => {
+        refetch();
+        setSelectedRecord(undefined);
+    };
+
     return (
         <MainAdmin extraClassName="overflow-hidden">
             <div className="flex justify-center items-center size-full p-2">
-                <div className="flex flex-col size-full max-w-3xl max-h-144 gap-2">
+                <div className="flex flex-col size-full max-w-4xl max-h-144 gap-2">
                     <div className="flex gap-2">
                         <ImagesCreateDialog
-                            onCreate={refetch}
+                            onCreate={handleUpdate}
                         >
                             <Button
                                 className="grow"
@@ -84,13 +90,18 @@ export default function Page() {
                                 New
                             </Button>
                         </ImagesCreateDialog>
-                        <Button
-                            variant="secondary"
-                            disabled={!selectedRecord}
-                            className="grow"
+                        <ImagesEditDialog
+                            record={selectedRecord}
+                            onEdit={handleUpdate}
                         >
-                            Edit
-                        </Button>
+                            <Button
+                                variant="secondary"
+                                disabled={!selectedRecord}
+                                className="grow"
+                            >
+                                Edit
+                            </Button>
+                        </ImagesEditDialog>
                         <Button
                             variant="secondary"
                             disabled={!selectedRecord}
