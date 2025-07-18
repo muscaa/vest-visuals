@@ -50,3 +50,18 @@ export async function update(props: UpdateProps) {
         return null;
     }
 }
+
+interface RemoveProps {
+    pb?: PocketBase;
+    id: string;
+}
+
+export async function remove(props: RemoveProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        return await props.pb.collection("images").delete(props.id);
+    } catch (error) {
+        return null;
+    }
+}

@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { ImagesCreateDialog } from "@/components/dialogs/images-create";
 import { ImagesEditDialog } from "@/components/dialogs/images-edit";
+import { ImagesDeleteDialog } from "@/components/dialogs/images-delete";
 
 interface ImagesRecordEntryProps {
     record: ImagesRecord;
@@ -72,8 +73,9 @@ export default function Page() {
     };
 
     const handleUpdate = () => {
-        refetch();
         setSelectedRecord(undefined);
+        
+        refetch();
     };
 
     return (
@@ -102,13 +104,18 @@ export default function Page() {
                                 Edit
                             </Button>
                         </ImagesEditDialog>
-                        <Button
-                            variant="secondary"
-                            disabled={!selectedRecord}
-                            className="grow"
+                        <ImagesDeleteDialog
+                            record={selectedRecord}
+                            onDelete={handleUpdate}
                         >
-                            Delete
-                        </Button>
+                            <Button
+                                variant="secondary"
+                                disabled={!selectedRecord}
+                                className="grow"
+                            >
+                                Delete
+                            </Button>
+                        </ImagesDeleteDialog>
                     </div>
                     <Separator />
                     <div className="flex flex-col max-h-full h-full overflow-y-auto">
