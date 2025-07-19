@@ -5,7 +5,7 @@ import {
 import * as types from "@/types/api/images";
 import {
     createClientDB,
-    imagesDB,
+    imagesOldDB,
 } from "@/utils/server/db";
 
 export async function POST(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     
     // TODO: add pagination
 
-    const result = await imagesDB.get({
+    const result = await imagesOldDB.get({
         pb,
         options: {
             filter: json.filter,

@@ -6,7 +6,7 @@ import * as types from "@/types/api/images/delete";
 import {
     createClientDB,
     usersDB,
-    imagesDB,
+    imagesOldDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { createClientS3 } from "@/utils/server/s3";
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const getResult = await imagesDB.get({
+    const getResult = await imagesOldDB.get({
         pb,
         options: {
             filter: `group = "${json.group}"`,
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        const removeResult = await imagesDB.remove({
+        const removeResult = await imagesOldDB.remove({
             pb,
             id: value.id,
         });

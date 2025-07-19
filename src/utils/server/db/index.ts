@@ -4,7 +4,7 @@ import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/he
 import { headers } from "next/headers";
 
 export * as usersDB from "@/utils/server/db/users";
-export * as imagesDB from "@/utils/server/db/images";
+export * as imagesOldDB from "@/utils/server/db/imagesOld";
 
 interface CreateClientProps {
     headers?: ReadonlyHeaders | Headers;

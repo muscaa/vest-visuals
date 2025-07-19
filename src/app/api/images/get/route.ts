@@ -6,7 +6,7 @@ import * as types from "@/types/api/images/get";
 import {
     createClientDB,
     usersDB,
-    imagesDB,
+    imagesOldDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await imagesDB.get({
+    const result = await imagesOldDB.get({
         pb,
         options: {
             filter: `group = "${json.group}"`,

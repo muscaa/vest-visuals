@@ -6,7 +6,7 @@ import * as types from "@/types/api/images/upload";
 import {
     createClientDB,
     usersDB,
-    imagesDB,
+    imagesOldDB,
 } from "@/utils/server/db";
 import { ImagesItem } from "@/types/db/images";
 import { createClientS3 } from "@/utils/server/s3";
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const getResult = await imagesDB.get({
+    const getResult = await imagesOldDB.get({
         pb,
         options: {
             filter: `group = "${json.group}"`,
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
         }
     } catch (error) {}
 
-    const updateResult = await imagesDB.update({
+    const updateResult = await imagesOldDB.update({
         pb,
         id: value.id,
         value: {
