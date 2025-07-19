@@ -9,6 +9,7 @@ import { api_client } from "@/utils/client/axios";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ImagesCreateDialog } from "@/components/dialogs/images-create";
 import { ImagesEditDialog } from "@/components/dialogs/images-edit";
 import { ImagesDeleteDialog } from "@/components/dialogs/images-delete";
@@ -50,6 +51,7 @@ function ImagesRecordEntry(props: ImagesRecordEntryProps) {
 }
 
 export default function Page() {
+    const router = useRouter();
     const [filter, setFilter] = useState<string>();
     const [sort, setSort] = useState<string>();
     const [selectedRecord, setSelectedRecord] = useState<ImagesRecord>();
@@ -95,6 +97,7 @@ export default function Page() {
                         <Button
                             variant="secondary"
                             disabled={!selectedRecord}
+                            onClick={() => router.push(`/a/images/${selectedRecord?.group}`)}
                             className="grow"
                         >
                             Open
