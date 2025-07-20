@@ -7,6 +7,7 @@ export * as usersDB from "@/utils/server/db/users";
 export * as imagesOldDB from "@/utils/server/db/imagesOld";
 export * as mediaDB from "@/utils/server/db/media";
 export * as mediaVariantsDB from "@/utils/server/db/mediaVariants";
+export * as mediaGroupsDB from "@/utils/server/db/mediaGroups";
 
 interface CreateClientProps {
     headers?: ReadonlyHeaders | Headers;
