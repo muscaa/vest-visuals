@@ -1,7 +1,4 @@
-import {
-    NextRequest,
-    NextResponse,
-} from "next/server";
+import { NextRequest } from "next/server";
 import * as types from "@/types/api/media";
 import {
     createClientDB,
@@ -10,16 +7,15 @@ import {
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { server_config } from "@/utils/server/config";
+import { responseJSON } from "@/utils/server/response";
 
 export async function POST(request: NextRequest) {
     const pb = await createClientDB();
 
     const json = await safeJSON<types.PostRequest>(request, (json) => json.category && json.variants);
     if (json == null) {
-        return NextResponse.json<types.PostResponse>({
+        return responseJSON<types.PostResponse>(400, {
             success: false,
-        }, {
-            status: 400,
         });
     }
 
@@ -35,10 +31,8 @@ export async function POST(request: NextRequest) {
     });
 
     if (getListResult == null || getListResult.items.length == 0) {
-        return NextResponse.json<types.PostResponse>({
+        return responseJSON<types.PostResponse>(404, {
             success: false,
-        }, {
-            status: 404,
         });
     }
 
@@ -77,7 +71,7 @@ export async function POST(request: NextRequest) {
         }
     }
 
-    return NextResponse.json<types.PostResponse>({
+    return responseJSON<types.PostResponse>(200, {
         success: true,
         values,
     });
