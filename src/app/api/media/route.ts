@@ -2,7 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import * as types from "@/types/api/media/groups";
+import * as types from "@/types/api/media";
 import {
     createClientDB,
     mediaDB,
