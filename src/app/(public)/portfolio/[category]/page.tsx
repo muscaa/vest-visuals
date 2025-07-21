@@ -38,21 +38,6 @@ export default function Page() {
                         height: 512,
                     },
                 } as PreviewItem))
-
-                /*?.map((record) => record.items) // TODO when updating upload api, fix these
-                .flatMap((items) => items.map((item) => ({
-                    alt: item.alt,
-                    preview: {
-                        src: `https://s3.vestvisuals.ro/public/images/${item.src}_small.jpg`,
-                        width: item.sizes.small?.w,
-                        height: item.sizes.small?.h,
-                    },
-                    display: {
-                        src: `https://s3.vestvisuals.ro/public/images/${item.src}_large.jpg`,
-                        width: item.sizes.large?.w,
-                        height: item.sizes.large?.h,
-                    },
-                } as PreviewItem))) || [];*/
         },
     });
 
