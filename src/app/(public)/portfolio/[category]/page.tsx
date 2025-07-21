@@ -18,26 +18,32 @@ export default function Page() {
         queryFn: async () => {
             const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/media", {
                 category,
-                variants: ["original"],
+                variants: ["small", "large"],
             });
 
             if (!data.success) return [];
 
             return data.values
-                ?.map((value) => value.original!)
-                .map((variant) => ({
-                    alt: variant.id,
-                    preview: {
-                        src: variant.file,
-                        width: 512,
-                        height: 512,
-                    },
-                    display: {
-                        src: variant.file,
-                        width: 512,
-                        height: 512,
-                    },
-                } as PreviewItem))
+                ?.map((value) => {
+                    const small = value.small!;
+                    const large = value.large!;
+
+                    const item: PreviewItem = {
+                        alt: small.info?.alt,
+                        preview: {
+                            src: small.file,
+                            width: small.info?.width,
+                            height: small.info?.height,
+                        },
+                        display: {
+                            src: large.file,
+                            width: large.info?.width,
+                            height: large.info?.height,
+                        },
+                    };
+
+                    return item;
+                });
         },
     });
 

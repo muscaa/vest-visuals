@@ -5,6 +5,7 @@ interface MediaInfo {
 }
 
 export interface ImageMediaInfo extends MediaInfo {
+    alt?: string;
     width?: number;
     height?: number;
 }

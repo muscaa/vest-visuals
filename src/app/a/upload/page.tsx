@@ -4,7 +4,7 @@ import { MainAdmin } from "@/components/admin/main";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import * as types from "@/types/api/images/upload";
+import * as types from "@/types/api/media/upload";
 import { api_client } from "@/utils/client/axios";
 
 export default function Page() {
@@ -17,38 +17,44 @@ export default function Page() {
         setMessage(null);
 
         const formData = new FormData();
+
         for (const file of files) {
-            const filedata: types.FileData = {
-                //alt: file.name,
-                sizes: {
-                    //original: {},
-                    large: {
-                        quality: 90,
-                    },
-                    medium: {
-                        percent: 50,
-                        quality: 80,
-                    },
-                    small: {
-                        percent: 25,
-                        quality: 70,
+            const json: types.FormDataJson = {
+                processorConfig: {
+                    id: "image-sharp-v1",
+                    //alt: file.name,
+                    variants: {
+                        //original: {},
+                        large: {
+                            qualityPercent: 90,
+                            size: {
+                                scaleUnit: 1080,
+                            },
+                        },
+                        medium: {
+                            qualityPercent: 80,
+                            size: {
+                                scaleUnit: 768,
+                            },
+                        },
+                        small: {
+                            qualityPercent: 70,
+                            size: {
+                                scaleUnit: 360,
+                            },
+                        },
                     },
                 },
             };
 
-            formData.append("files", file);
-            formData.append("filedatas", JSON.stringify(filedata));
+            formData.append(types.formDataEntries.fileArray, file);
+            formData.append(types.formDataEntries.jsonArray, JSON.stringify(json));
         }
 
-        const json: types.PostRequest = {
-            group: "abcdefgh", // TODO get group from input
-        };
-        formData.append("json", JSON.stringify(json));
-
         try {
-            const { data } = await api_client.postForm<types.PostResponse>("/images/upload", formData);
+            const { data } = await api_client.postForm<types.PostResponse>("/media/upload", formData);
 
-            setMessage(JSON.stringify(data));
+            setMessage(JSON.stringify(data, null, 2));
         } catch (error) {
             setMessage("An error occurred.");
         } finally {
