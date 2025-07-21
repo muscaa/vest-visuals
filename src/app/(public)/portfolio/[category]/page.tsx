@@ -7,7 +7,7 @@ import {
     PreviewImage,
     PreviewItem
 } from "@/components/preview-image";
-import * as types from "@/types/api/images";
+import * as types from "@/types/api/media";
 import { useQuery } from "@tanstack/react-query";
 import { api_client } from "@/utils/client/axios";
 
@@ -16,14 +16,30 @@ export default function Page() {
     const { data } = useQuery({
         queryKey: ["portfolio", category],
         queryFn: async () => {
-            const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/images", {
-                filter: `type = "${category}"`,
+            const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/media", {
+                category,
+                variants: ["original"],
             });
 
             if (!data.success) return [];
 
-            return data.value
-                ?.map((record) => record.items) // TODO when updating upload api, fix these
+            return data.values
+                ?.map((value) => value.original!)
+                .map((variant) => ({
+                    alt: variant.id,
+                    preview: {
+                        src: variant.file,
+                        width: 512,
+                        height: 512,
+                    },
+                    display: {
+                        src: variant.file,
+                        width: 512,
+                        height: 512,
+                    },
+                } as PreviewItem))
+
+                /*?.map((record) => record.items) // TODO when updating upload api, fix these
                 .flatMap((items) => items.map((item) => ({
                     alt: item.alt,
                     preview: {
@@ -36,7 +52,7 @@ export default function Page() {
                         width: item.sizes.large?.w,
                         height: item.sizes.large?.h,
                     },
-                } as PreviewItem))) || [];
+                } as PreviewItem))) || [];*/
         },
     });
 

@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
                     continue;
                 }
 
-                item.file = `${server_config.env.S3_URL}/${item.collectionId}/${item.id}/${item.file}`;
+                item.file = `${server_config.env.S3_URL}/public/${item.collectionId}/${item.id}/${item.file}`;
 
                 value[item.variant] = item;
             }
