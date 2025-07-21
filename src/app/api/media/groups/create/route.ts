@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await mediaGroupsDB.create({
+    const createResult = await mediaGroupsDB.create({
         pb,
         value: {
             id: json.id,
@@ -37,15 +37,14 @@ export async function POST(request: NextRequest) {
             mediaVariants: json.mediaVariants,
         },
     });
-
-    if (result == null) {
-        return responseJSON<types.PostResponse>(404, {
+    if (createResult == null) {
+        return responseJSON<types.PostResponse>(500, {
             success: false,
         });
     }
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        value: result,
+        value: createResult,
     });
 }

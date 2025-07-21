@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
             mediaVariants: json.mediaVariants?.replace, // TODO add support for append/remove
         },
     });
-
     if (updateResult == null) {
         return responseJSON<types.PostResponse>(500, {
             success: false,

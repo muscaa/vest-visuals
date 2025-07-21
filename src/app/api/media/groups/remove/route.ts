@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
         pb,
         id: json.id,
     });
-
     if (removeResult == null) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
