@@ -19,3 +19,14 @@ export function SectionAbout() {
         </section>
     );
 }
+
+/*
+De ce să ne alegi?
+
+Pentru că nu facem doar poze sau filmări, ci surprindem stări,
+conexiuni și povești reale. Punem suflet în fiecare proiect și
+lucrăm cu echipamente de top, adaptându-ne stilul la dorințele
+fiecărui client. Ne mândrim cu punctualitatea, comunicarea
+deschisă și calitatea materialelor livrate. Cu noi, ai siguranța
+unui rezultat care îți depășește așteptările.
+*/
