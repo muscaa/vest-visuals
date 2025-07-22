@@ -69,7 +69,7 @@ function ImagesDeleteDialogValid(props: ImagesDeleteDialogValidProps) {
                 <DialogHeader>
                     <DialogTitle>Delete Image Group</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete the image group <strong>"{props.record.group}"</strong>?
+                        Are you sure you want to delete the image group <strong>&quot;{props.record.group}&quot;</strong>?
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>

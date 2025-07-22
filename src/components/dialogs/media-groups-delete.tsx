@@ -69,7 +69,7 @@ function ValidMediaGroupsDeleteDialog(props: ValidProps) {
                 <DialogHeader>
                     <DialogTitle>Delete Media Group</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete the media group <strong>"{props.record.id}"</strong>?
+                        Are you sure you want to delete the media group <strong>&quot;{props.record.id}&quot;</strong>?
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
