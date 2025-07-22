@@ -1,18 +1,22 @@
 import PocketBase from "pocketbase";
-import { RecordListOptions } from "pocketbase";
+import {
+    RecordListOptions,
+    RecordOptions,
+} from "pocketbase";
 import { createClientDB } from "@/utils/server/db";
 import * as types from "@/types/db/mediaGroups";
 
 interface GetProps {
     pb?: PocketBase;
     id: string;
+    options?: RecordOptions;
 }
 
 export async function get(props: GetProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection("mediaGroups").getOne<types.MediaGroupsRecord>(props.id);
+        return await props.pb.collection("mediaGroups").getOne<types.MediaGroupsRecord>(props.id, props.options);
     } catch (error) {}
     
     return null;

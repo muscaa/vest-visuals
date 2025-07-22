@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api_client } from "@/utils/client/axios";
 import * as types_get from "@/types/api/media/groups/get";
 import * as types_update from "@/types/api/media/groups/update";
+import { MediaVariantsRecord } from "@/types/db/mediaVariants";
 import { Button } from "@/components/ui/button";
 import { Img } from "@/components/snippets";
 import {
@@ -15,25 +16,19 @@ import {
 } from "react";
 import { MediaUploadDialog } from "@/components/dialogs/media-upload";
 
-type Record = string;
-
 interface EntryProps {
-    record: Record;
+    record: MediaVariantsRecord;
     selected: boolean;
-    onSelect: (record: Record) => void;
+    onSelect: (record: MediaVariantsRecord) => void;
 }
 
 function Entry(props: EntryProps) {
     const image = useMemo(() => {
-        /*if (props.record.expand && props.record.expand.mediaVariants && props.record.expand.mediaVariants.length > 0) {
-            const mediaVariant = props.record.expand.mediaVariants[0];
+        if (props.record.expand && props.record.expand.media && props.record.expand.media.length > 0) {
+            const media = props.record.expand.media[0];
 
-            if (mediaVariant.expand && mediaVariant.expand.media && mediaVariant.expand.media.length > 0) {
-                const media = mediaVariant.expand.media[0];
-
-                return media.file;
-            }
-        }*/
+            return media.file;
+        }
 
         return "/placeholder0.png";
     }, [props.record]);
@@ -51,10 +46,10 @@ function Entry(props: EntryProps) {
                     alt="Preview"
                     width={128}
                     height={128}
-                    className="w-32 object-contain"
+                    className="size-32 object-contain"
                 />
                 <div className="flex flex-col gap-1 grow">
-                    <h4>{props.record}</h4>
+                    <h4>{props.record.id}</h4>
                     {/*<Separator />
                     <div className="flex gap-2 text-muted-foreground">
                         <div className="flex flex-col grow">
@@ -75,7 +70,7 @@ function Entry(props: EntryProps) {
 
 export default function Page() {
     const params = useParams<{ id: string }>();
-    const [selectedRecord, setSelectedRecord] = useState<Record>();
+    const [selectedRecord, setSelectedRecord] = useState<MediaVariantsRecord>();
 
     const { data, refetch } = useQuery({
         queryKey: ["media/groups/get", params.id],
@@ -88,8 +83,8 @@ export default function Page() {
         },
     });
 
-    const handleSelect = (record: Record) => {
-        setSelectedRecord(selectedRecord == record ? undefined : record);
+    const handleSelect = (record: MediaVariantsRecord) => {
+        setSelectedRecord(selectedRecord?.id == record.id ? undefined : record);
     };
 
     const handleUpdate = () => {
@@ -129,11 +124,11 @@ export default function Page() {
                         <div className="flex flex-col grow gap-2">
                             {
                                 data && (
-                                    data.mediaVariants?.map((item, index) => (
+                                    data.expand?.mediaVariants?.map((item, index) => (
                                         <Entry
                                             key={index}
                                             record={item}
-                                            selected={selectedRecord == item}
+                                            selected={selectedRecord?.id == item.id}
                                             onSelect={handleSelect}
                                         />
                                     ))

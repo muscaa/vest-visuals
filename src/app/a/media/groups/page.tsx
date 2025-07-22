@@ -48,7 +48,7 @@ function MediaGroupsRecordEntry(props: MediaGroupsRecordEntryProps) {
                     alt="Preview"
                     width={128}
                     height={128}
-                    className="w-32 object-contain"
+                    className="size-32 object-contain"
                 />
                 <div className="flex flex-col gap-1 grow">
                     <h4>{props.record.id}</h4>

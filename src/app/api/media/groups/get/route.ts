@@ -4,9 +4,11 @@ import {
     createClientDB,
     usersDB,
     mediaGroupsDB,
+    mediaDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
+import { server_config } from "@/utils/server/config";
 
 export async function POST(request: NextRequest) {
     const pb = await createClientDB();
@@ -32,11 +34,26 @@ export async function POST(request: NextRequest) {
     const getResult = await mediaGroupsDB.get({
         pb,
         id: json.id,
+        options: {
+            expand: "mediaVariants,mediaVariants.media",
+        },
     });
     if (getResult == null) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
         });
+    }
+
+    if (getResult.expand?.mediaVariants) {
+        for (const mediaVariant of getResult.expand?.mediaVariants) {
+            if (!mediaVariant.expand?.media) {
+                continue;
+            }
+
+            for (const media of mediaVariant.expand?.media) {
+                media.file = `${server_config.env.S3_URL}/public/${media.collectionId}/${media.id}/${media.file}`;
+            }
+        }
     }
 
     return responseJSON<types.PostResponse>(200, {
