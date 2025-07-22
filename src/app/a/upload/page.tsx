@@ -23,12 +23,11 @@ export default function Page() {
                 processorConfig: {
                     id: "image-sharp-v1",
                     //alt: file.name,
-                    variants: {
-                        //original: {},
-                        large: {
-                            qualityPercent: 90,
+                    variants: { // order kinda matters
+                        small: {
+                            qualityPercent: 70,
                             size: {
-                                scaleUnit: 1080,
+                                scaleUnit: 360,
                             },
                         },
                         medium: {
@@ -37,12 +36,13 @@ export default function Page() {
                                 scaleUnit: 768,
                             },
                         },
-                        small: {
-                            qualityPercent: 70,
+                        large: {
+                            qualityPercent: 90,
                             size: {
-                                scaleUnit: 360,
+                                scaleUnit: 1080,
                             },
                         },
+                        //original: {},
                     },
                 },
             };
