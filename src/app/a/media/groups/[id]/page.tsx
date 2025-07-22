@@ -18,6 +18,7 @@ import {
     useState,
 } from "react";
 import { MediaUploadDialog } from "@/components/dialogs/media-upload";
+import { MediaGroupsVariantDeleteDialog } from "@/components/dialogs/media-groups-variant-delete";
 import { TextLink } from "@/components/ui/text-link";
 import { cn } from "@/utils/shadcn/lib/utils";
 import {
@@ -25,7 +26,6 @@ import {
     ChevronDown,
 } from "lucide-react";
 import { myDate } from "@/utils/snippets";
-import { MediaGroupsRecord } from "@/types/db/mediaGroups";
 
 interface EntryProps {
     record: MediaVariantsRecord;
@@ -141,6 +141,10 @@ export default function Page() {
         refetch();
     };
 
+    const handleUpload = async () => {
+
+    };
+
     const handleMoveUp = async (record: MediaVariantsRecord) => {
         if (!data) return;
 
@@ -210,6 +214,22 @@ export default function Page() {
                                 Upload
                             </Button>
                         </MediaUploadDialog>
+
+                        {/* import dialog? */}
+                        
+                        <MediaGroupsVariantDeleteDialog
+                            from={data}
+                            record={selectedRecord}
+                            onDelete={handleUpdate}
+                        >
+                            <Button
+                                variant="secondary"
+                                disabled={!selectedRecord}
+                                className="grow"
+                            >
+                                Delete
+                            </Button>
+                        </MediaGroupsVariantDeleteDialog>
                     </div>
                     <Separator />
                     <div className="flex flex-col max-h-full h-full overflow-y-auto">

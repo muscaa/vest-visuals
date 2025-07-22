@@ -80,3 +80,24 @@ export async function remove(props: RemoveProps) {
     
     return null;
 }
+
+interface RemoveAllProps {
+    pb?: PocketBase;
+    ids: string[];
+}
+
+export async function removeAll(props: RemoveAllProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        const batch = props.pb.createBatch();
+
+        for (const id of props.ids) {
+            batch.collection("media").delete(id);
+        }
+
+        return await batch.send();
+    } catch (error) {}
+    
+    return null;
+}
