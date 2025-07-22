@@ -1,21 +1,22 @@
 import * as base from "@/utils/server/media/processor/base";
 import { V1SharpProcessorConfig } from "@/types/media/processor/image";
-import { FormDataJson } from "@/types/api/media/upload";
-import {
-    MediaRecord,
-    MediaValue,
-} from "@/types/db/media";
+import { MediaRecord } from "@/types/db/media";
+import { MediaVariantsRecord } from "@/types/db/mediaVariants";
 import sharp from "sharp";
+import {
+    mediaDB,
+    mediaVariantsDB,
+} from "@/utils/server/db";
 
 export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
 
-    async upload(buffer: Buffer, json: FormDataJson, config: V1SharpProcessorConfig, func: (value: MediaValue) => Promise<MediaRecord | null>): Promise<MediaRecord[]> {
-        const original = sharp(buffer);
+    async upload(props: base.UploadProps<V1SharpProcessorConfig>): Promise<MediaVariantsRecord | null> {
+        const original = sharp(props.buffer);
         const metadata = await original.metadata();
 
-        const records: MediaRecord[] = [];
+        const media: MediaRecord[] = [];
 
-        for (const [key, variant] of Object.entries(config.variants)) {
+        for (const [key, variant] of Object.entries(props.config.variants)) {
             if (!variant) continue;
 
             let width: number = metadata.width;
@@ -53,26 +54,43 @@ export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
                     width,
                     height,
                 })
-                .jpeg({
-                    quality: qualityPercent
+                .webp({
+                    quality: qualityPercent,
                 })
                 .toBuffer();
 
-            const record = await func({
-                variant: key,
-                file: new Blob([processed], { type: "image/jpeg" }),
-                type: "image",
-                info: {
-                    alt: config.alt,
-                    width: width,
-                    height: height,
+            const record = await mediaDB.create({
+                pb: props.pb,
+                value: {
+                    variant: key,
+                    file: new Blob([processed], { type: "image/webp" }),
+                    type: "image",
+                    info: {
+                        alt: props.config.alt || key,
+                        width: width,
+                        height: height,
+                    },
                 },
             });
             if (!record) continue;
 
-            records.push(record);
+            media.push(record);
         }
 
-        return records;
+        if (media.length == 0) return null;
+
+        const mediaVariant = await mediaVariantsDB.create({
+            pb: props.pb,
+            value: {
+                media: media.map((record) => record.id),
+            },
+        });
+        if (!mediaVariant) return null;
+
+        mediaVariant.expand = {
+            media,
+        };
+
+        return mediaVariant;
     }
 }

@@ -1,4 +1,4 @@
-import { MediaRecord } from "@/types/db/media";
+import { MediaVariantsRecord } from "@/types/db/mediaVariants";
 import { MediaProcessor } from "@/types/media/processor";
 
 // POST
@@ -16,5 +16,5 @@ export interface FormDataJson {
 
 export interface PostResponse {
     success: boolean;
-    values?: MediaRecord[];
+    values?: MediaVariantsRecord[];
 }

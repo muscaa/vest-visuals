@@ -3,12 +3,11 @@ import * as types from "@/types/api/media/upload";
 import {
     createClientDB,
     usersDB,
-    mediaDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
 import { mediaProcessors } from "@/utils/server/media/processor";
-import { MediaRecord } from "@/types/db/media";
+import { MediaVariantsRecord } from "@/types/db/mediaVariants";
 
 export async function POST(request: NextRequest) {
     const pb = await createClientDB();
@@ -41,7 +40,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const values: MediaRecord[] = [];
+    const values: MediaVariantsRecord[] = [];
 
     for (let i = 0; i < fileArray.length; i++) {
         const file = fileArray[i];
@@ -55,15 +54,17 @@ export async function POST(request: NextRequest) {
         const processor = new Processor();
         const buffer = Buffer.from(await file.arrayBuffer());
         
-        const uploaded = await processor.upload(buffer, json, json.processorConfig, (value) => mediaDB.create({
+        const uploaded = await processor.upload({
             pb,
-            value,
-        }));
+            buffer,
+            json,
+            config: json.processorConfig,
+        });
         if (!uploaded) {
             continue;
         }
 
-        values.push(...uploaded);
+        values.push(uploaded);
     }
 
     return responseJSON<types.PostResponse>(200, {
