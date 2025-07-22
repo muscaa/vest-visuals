@@ -24,7 +24,7 @@ export function LogoSegment() {
 export function MenuSegment() {
     return (
         <>
-            <ButtonLink href="/a/media-groups" variant="navbar">MEDIA</ButtonLink>
+            <ButtonLink href="/a/media" variant="navbar">MEDIA</ButtonLink>
             <ThemeToggle />
         </>
     );
