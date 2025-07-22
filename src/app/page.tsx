@@ -26,8 +26,9 @@ function SuspensePage() {
                 className="min-h-[calc(100%-4rem)] max-h-[calc(100%-4rem)] h-[calc(100%-4rem)]"
             >
                 <div className="flex flex-col">
-                    <SectionAbout />
+                    <section id="start"></section>
                     <SectionCarousel />
+                    <SectionAbout />
                     <SectionTeam />
                 </div>
             </Main>

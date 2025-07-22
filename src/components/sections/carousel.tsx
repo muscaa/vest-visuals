@@ -44,7 +44,7 @@ export function SectionCarousel() {
     }, [hovered, api]);
 
     return (
-        <section id="carousel" className="flex flex-col justify-center items-center px-2 py-8 bg-background2">
+        <section id="carousel" className="flex flex-col justify-center items-center px-2 py-8">
             <Reveal delay={200} duration={1000} direction="none" className="w-full">
                 <Carousel 
                     setApi={setApi}
