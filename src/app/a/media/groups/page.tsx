@@ -13,6 +13,7 @@ import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-creat
 import { MediaGroupsEditDialog } from "@/components/dialogs/media-groups-edit";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Img } from "@/components/snippets";
+import { myDate } from "@/utils/snippets";
 
 interface MediaGroupsRecordEntryProps {
     record: MediaGroupsRecord;
@@ -56,8 +57,8 @@ function MediaGroupsRecordEntry(props: MediaGroupsRecordEntryProps) {
                     <div className="flex gap-2 text-muted-foreground">
                         <div className="flex flex-col grow">
                             <p>{props.record.category}</p>
-                            <h6>Updated: {new Date(props.record.updated).toLocaleString(undefined, { hour12: false })}</h6>
-                            <h6>Created: {new Date(props.record.created).toLocaleString(undefined, { hour12: false })}</h6>
+                            <h6>Updated: {myDate(props.record.updated)}</h6>
+                            <h6>Created: {myDate(props.record.created)}</h6>
                         </div>
                         <div className="flex flex-col justify-center items-center">
                             <p>{props.record.mediaVariants?.length || "no"}</p>

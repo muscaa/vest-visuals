@@ -8,18 +8,31 @@ import { api_client } from "@/utils/client/axios";
 import * as types_get from "@/types/api/media/groups/get";
 import * as types_update from "@/types/api/media/groups/update";
 import { MediaVariantsRecord } from "@/types/db/mediaVariants";
-import { Button } from "@/components/ui/button";
+import {
+    Button,
+    buttonVariants,
+} from "@/components/ui/button";
 import { Img } from "@/components/snippets";
 import {
     useMemo,
     useState,
 } from "react";
 import { MediaUploadDialog } from "@/components/dialogs/media-upload";
+import { TextLink } from "@/components/ui/text-link";
+import { cn } from "@/utils/shadcn/lib/utils";
+import {
+    ChevronUp,
+    ChevronDown,
+} from "lucide-react";
+import { myDate } from "@/utils/snippets";
+import { MediaGroupsRecord } from "@/types/db/mediaGroups";
 
 interface EntryProps {
     record: MediaVariantsRecord;
     selected: boolean;
     onSelect: (record: MediaVariantsRecord) => void;
+    onMoveUp?: (record: MediaVariantsRecord) => void;
+    onMoveDown?: (record: MediaVariantsRecord) => void;
 }
 
 function Entry(props: EntryProps) {
@@ -34,37 +47,72 @@ function Entry(props: EntryProps) {
     }, [props.record]);
 
     return (
-        <Button
-            variant="card"
-            size="none"
+        <div
             onClick={() => props.onSelect(props.record)}
-            className={props.selected ? "border-accent-foreground dark:border-accent-foreground" : ""}
+            className={cn(buttonVariants({
+                variant: "card",
+                size: "none",
+                className: `${props.selected ? "border-accent-foreground dark:border-accent-foreground" : ""}`
+            }))}
         >
-            <div className="flex flex-wrap gap-4 size-full whitespace-normal">
-                <Img
-                    src={image}
-                    alt="Preview"
-                    width={128}
-                    height={128}
-                    className="size-32 object-contain"
-                />
-                <div className="flex flex-col gap-1 grow">
-                    <h4>{props.record.id}</h4>
-                    {/*<Separator />
-                    <div className="flex gap-2 text-muted-foreground">
-                        <div className="flex flex-col grow">
-                            <p>{props.record.category}</p>
-                            <h6>Updated: {new Date(props.record.updated).toLocaleString(undefined, { hour12: false })}</h6>
-                            <h6>Created: {new Date(props.record.created).toLocaleString(undefined, { hour12: false })}</h6>
+            <div className="flex gap-4 size-full">
+                <div className="flex flex-wrap gap-4 size-full">
+                    <Img
+                        src={image}
+                        alt="Preview"
+                        width={128}
+                        height={128}
+                        className="size-32 object-contain"
+                    />
+                    <div className="flex flex-col gap-1 grow">
+                        <h4>{props.record.id}</h4>
+                        <Separator />
+                        <div className="flex flex-col gap-2 text-muted-foreground">
+                            <div className="flex flex-wrap gap-2">
+                                {
+                                    props.record.expand?.media?.map((media, index) => (
+                                        <TextLink
+                                            key={index}
+                                            href={media.file}
+                                            target="_blank"
+                                            variant="ghost"
+                                        >
+                                            {media.variant || media.id}
+                                        </TextLink>
+                                    ))
+                                }
+                            </div>
+                            <div className="flex flex-col">
+                                <h6>Updated: {myDate(props.record.updated)}</h6>
+                                <h6>Created: {myDate(props.record.created)}</h6>
+                            </div>
                         </div>
-                        <div className="flex flex-col justify-center items-center">
-                            <p>{props.record.mediaVariants?.length || "no"}</p>
-                            <h5>items</h5>
-                        </div>
-                    </div>*/}
+                    </div>
+                </div>
+                <div className="flex flex-col grow justify-center gap-2">
+                    <Button
+                        variant="default"
+                        size="icon"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            props.onMoveUp?.(props.record);
+                        }}
+                    >
+                        <ChevronUp />
+                    </Button>
+                    <Button
+                        variant="default"
+                        size="icon"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            props.onMoveDown?.(props.record);
+                        }}
+                    >
+                        <ChevronDown />
+                    </Button>
                 </div>
             </div>
-        </Button>
+        </div>
     );
 }
 
@@ -91,6 +139,50 @@ export default function Page() {
         setSelectedRecord(undefined);
 
         refetch();
+    };
+
+    const handleMoveUp = async (record: MediaVariantsRecord) => {
+        if (!data) return;
+
+        const updated = [...data.mediaVariants!];
+        const index = updated.findIndex((id) => id == record.id);
+
+        if (index != undefined && index > 0) {
+            const temp = updated[index - 1];
+            updated[index - 1] = updated[index];
+            updated[index] = temp;
+
+            await api_client.post<types_update.PostResponse, types_update.PostRequest>("/media/groups/update", {
+                id: params.id,
+                mediaVariants: {
+                    replace: updated,
+                },
+            });
+
+            handleUpdate();
+        }
+    };
+
+    const handleMoveDown = async (record: MediaVariantsRecord) => {
+        if (!data) return;
+
+        const updated = [...data.mediaVariants!];
+        const index = updated.findIndex((id) => id == record.id);
+
+        if (index != undefined && index < updated.length - 1) {
+            const temp = updated[index + 1];
+            updated[index + 1] = updated[index];
+            updated[index] = temp;
+
+            await api_client.post<types_update.PostResponse, types_update.PostRequest>("/media/groups/update", {
+                id: params.id,
+                mediaVariants: {
+                    replace: updated,
+                },
+            });
+
+            handleUpdate();
+        }
     };
 
     return (
@@ -130,6 +222,8 @@ export default function Page() {
                                             record={item}
                                             selected={selectedRecord?.id == item.id}
                                             onSelect={handleSelect}
+                                            onMoveUp={handleMoveUp}
+                                            onMoveDown={handleMoveDown}
                                         />
                                     ))
                                 )
