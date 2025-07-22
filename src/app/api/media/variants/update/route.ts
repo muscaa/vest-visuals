@@ -33,7 +33,9 @@ export async function POST(request: NextRequest) {
         pb,
         id: json.id,
         value: {
-            media: json.media.replace, // TODO add support for append/remove
+            media: json.media.replace,
+            "media+": json.media.append,
+            "media-": json.media.remove,
         },
     });
     if (updateResult == null) {

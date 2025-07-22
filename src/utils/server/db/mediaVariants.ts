@@ -53,7 +53,10 @@ export async function create(props: CreateProps) {
 interface UpdateProps {
     pb?: PocketBase;
     id: string;
-    value: Partial<types.MediaVariantsValue>;
+    value: Partial<types.MediaVariantsValue> & {
+        "media+"?: string[];
+        "media-"?: string[];
+    };
 }
 
 export async function update(props: UpdateProps) {

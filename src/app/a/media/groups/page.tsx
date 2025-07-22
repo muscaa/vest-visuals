@@ -117,7 +117,7 @@ export default function Page() {
                         <Button
                             variant="secondary"
                             disabled={!selectedRecord}
-                            onClick={() => router.push(`/a/media-groups/${selectedRecord?.id}`)}
+                            onClick={() => router.push(`/a/media/groups/${selectedRecord?.id}`)}
                             className="grow"
                         >
                             Open

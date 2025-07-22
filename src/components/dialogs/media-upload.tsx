@@ -18,11 +18,11 @@ import { api_client } from "@/utils/client/axios";
 import * as types from "@/types/api/media/upload";
 
 interface Props {
-    onUpload?: (data: types.PostResponse) => void;
+    onUpload?: (data: types.PostResponse) => Promise<void>;
     children?: React.ReactNode;
 }
 
-export function MediaGroupsCreateDialog(props: Props) {
+export function MediaUploadDialog(props: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [status, setStatus] = useState<"uploading" | "success" | "error">();
     const [errorMessage, setErrorMessage] = useState<string>();
@@ -72,7 +72,7 @@ export function MediaGroupsCreateDialog(props: Props) {
         const response = await api_client.postForm<types.PostResponse>("/media/upload", formData);
 
         if (response.data.success) {
-            props.onUpload?.(response.data);
+            await props.onUpload?.(response.data);
 
             setStatus("success");
             setOpen(false);

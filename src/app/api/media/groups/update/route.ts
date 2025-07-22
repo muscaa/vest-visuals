@@ -34,7 +34,9 @@ export async function POST(request: NextRequest) {
         id: json.id,
         value: {
             category: json.category,
-            mediaVariants: json.mediaVariants?.replace, // TODO add support for append/remove
+            mediaVariants: json.mediaVariants?.replace,
+            "mediaVariants+": json.mediaVariants?.append,
+            "mediaVariants-": json.mediaVariants?.remove,
         },
     });
     if (updateResult == null) {
