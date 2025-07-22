@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ImgHTMLAttributes } from "react";
 
 export interface IconProps {
     size?: number;
@@ -16,7 +17,7 @@ export function IconLink(props: { href: string, icon: Icon }) {
     );
 }
 
-export function ButtonLink({ href, target, prefetch, children, ...props } : { href: string, target?: string, prefetch?: boolean, children?: React.ReactNode } & React.ComponentProps<typeof Button>) {
+export function ButtonLink({ href, target, prefetch, children, ...props }: { href: string, target?: string, prefetch?: boolean, children?: React.ReactNode } & React.ComponentProps<typeof Button>) {
     return (
         <Link href={href} target={target} prefetch={prefetch}>
             <Button {...props} className={`cursor-pointer ${props.className}`}>
@@ -24,4 +25,16 @@ export function ButtonLink({ href, target, prefetch, children, ...props } : { hr
             </Button>
         </Link>
     );
+}
+
+export function Img(props: ImgHTMLAttributes<HTMLImageElement>) {
+    return (
+        <img
+            fetchPriority="low"
+            loading="lazy"
+            decoding="async"
+            {...props}
+        />
+    );
+
 }

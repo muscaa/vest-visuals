@@ -4,9 +4,12 @@ import {
     createClientDB,
     usersDB,
     mediaGroupsDB,
+    mediaVariantsDB,
+    mediaDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
+import { server_config } from "@/utils/server/config";
 
 export async function POST(request: NextRequest) {
     const pb = await createClientDB();
@@ -36,7 +39,6 @@ export async function POST(request: NextRequest) {
         options: {
             filter: json.filter,
             sort: json.sort || "-created",
-            expand: "mediaVariants",
         },
     });
 
@@ -44,6 +46,37 @@ export async function POST(request: NextRequest) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
         });
+    }
+
+    for (const mediaGroup of getListResult.items) {
+        if (!mediaGroup.mediaVariants || mediaGroup.mediaVariants.length == 0) {
+            continue;
+        }
+
+        const mediaVariant = await mediaVariantsDB.get({
+            pb,
+            id: mediaGroup.mediaVariants[0],
+        });
+        if (mediaVariant == null) {
+            continue;
+        }
+
+        const media = await mediaDB.get({
+            pb,
+            id: mediaVariant.media[0],
+        });
+        if (media == null) {
+            continue;
+        }
+
+        media.file = `${server_config.env.S3_URL}/public/${media.collectionId}/${media.id}/${media.file}`;
+
+        mediaVariant.expand = {
+            media: [media],
+        };
+        mediaGroup.expand = {
+            mediaVariants: [mediaVariant],
+        };
     }
 
     return responseJSON<types.PostResponse>(200, {
