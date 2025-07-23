@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
     SiFacebook,
     SiInstagram,
@@ -11,12 +10,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Reveal } from "@/components/animations/reveal";
 import { TextLink } from "@/components/ui/text-link";
+import { Img } from "@/components/snippets";
 
 function Member(props: { name: string, image: string, roles: string[], email: string, socials: { [key: string]: Icon } }) {
     return (
         <div className="flex flex-col p-8 justify-center items-center gap-4">
             <Reveal duration={1000}>
-                <Image
+                <Img
                     src={props.image}
                     alt={props.name}
                     width={512}
@@ -72,7 +72,7 @@ export function SectionTeam() {
             <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
                 <Member
                     name="David"
-                    image="/members/david.jpg"
+                    image="https://s3.vestvisuals.ro/public/pbc_36079378282/bsmpx9pyfim7xfr/blob_r61tm6qqfa.webp"
                     roles={[
                         "videograf",
                         "fotograf",
@@ -86,7 +86,7 @@ export function SectionTeam() {
                 />
                 <Member
                     name="Mihail"
-                    image="/members/mihail.jpg"
+                    image="https://s3.vestvisuals.ro/public/pbc_36079378282/nbmypwcf9u071sd/blob_sfi3a6vb0x.webp"
                     roles={[
                         "fotograf",
                         "editor foto",
