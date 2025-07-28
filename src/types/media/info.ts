@@ -11,3 +11,11 @@ export interface ImageMediaInfo extends MediaInfo {
 export interface VideoMediaInfo extends MediaInfo {
     duration?: number;
 }
+
+export type MediaTypeInfo = {
+    type: "image";
+    info?: ImageMediaInfo;
+} | {
+    type: "video";
+    info?: VideoMediaInfo;
+};

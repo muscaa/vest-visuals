@@ -2,32 +2,17 @@ import PocketBase from "pocketbase";
 import { createClientDB } from "@/utils/server/db";
 import { server_config } from "@/utils/server/config";
 import { BaseRecord } from "@/types/db";
-import {
-    ImageMediaInfo,
-    VideoMediaInfo,
-} from "@/types/media/info";
+import { MediaTypeInfo } from "@/types/media/info";
 
 export type Record = BaseRecord & {
     variant: string;
     file: string;
-} & ({
-    type: "image";
-    info?: ImageMediaInfo;
-} | {
-    type: "video";
-    info?: VideoMediaInfo;
-});
+} & MediaTypeInfo;
 
 export type Value = {
     variant: string;
     file: string;
-} & ({
-    type: "image";
-    info?: ImageMediaInfo;
-} | {
-    type: "video";
-    info?: VideoMediaInfo;
-});
+} & MediaTypeInfo;
 
 const COLLECTION_NAME = "newMediaVariants";
 
