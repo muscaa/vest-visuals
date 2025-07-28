@@ -8,6 +8,11 @@ export * as mediaDB from "@/utils/server/db/old/media";
 export * as mediaVariantsDB from "@/utils/server/db/old/mediaVariants";
 export * as mediaGroupsDB from "@/utils/server/db/old/mediaGroups";
 
+export * as newMediaVariantsDB from "@/utils/server/db/new/mediaVariants";
+export * as newMediaDB from "@/utils/server/db/new/media";
+export * as newMediaGroupsDB from "@/utils/server/db/new/mediaGroups";
+export * as newMediaCategoriesDB from "@/utils/server/db/new/mediaCategories";
+
 interface CreateClientProps {
     headers?: ReadonlyHeaders | Headers;
 }
