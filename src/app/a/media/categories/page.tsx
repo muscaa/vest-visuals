@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
+import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 
 interface ListEntryProps {
     value: types.Value;
@@ -95,7 +96,7 @@ export default function Page() {
                 onSelect={handleSelect}
                 entry={(value) => <ListEntry value={value} />}
             >
-                {/* <MediaGroupsCreateDialog
+                <MediaCategoriesCreateDialog
                     onCreate={handleUpdate}
                 >
                     <Button
@@ -103,7 +104,7 @@ export default function Page() {
                     >
                         New
                     </Button>
-                </MediaGroupsCreateDialog> */}
+                </MediaCategoriesCreateDialog>
                 <Button
                     variant="secondary"
                     disabled={!selected}

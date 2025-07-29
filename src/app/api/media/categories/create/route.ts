@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/categories";
+import * as types from "@/types/api/media/categories/create";
 import {
     createClientDB,
     usersDB,
@@ -29,8 +29,12 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await newMediaCategoriesDB.getList({
+    const result = await newMediaCategoriesDB.create({
         pb,
+        value: {
+            category: json.category,
+            mediaGroups: json.mediaGroups,
+        },
     });
     if (result == null) {
         return responseJSON<types.PostResponse>(500, {
@@ -40,12 +44,12 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        values: result.map((value) => ({
-            id: value.id,
-            category: value.category,
-            mediaGroups: value.mediaGroups,
-            created: value.created,
-            updated: value.updated,
-        })),
+        value: {
+            id: result.id,
+            category: result.category,
+            mediaGroups: result.mediaGroups,
+            created: result.created,
+            updated: result.updated,
+        },
     });
 }

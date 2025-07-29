@@ -1,6 +1,7 @@
 export interface Value {
     id: string;
     category: string;
+    mediaGroups: string[];
     created: string;
     updated: string;
 }

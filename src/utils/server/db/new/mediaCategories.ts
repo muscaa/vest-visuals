@@ -15,10 +15,12 @@ export type Record = BaseRecord & {
 };
 
 export type Value = {
+    category: string;
     mediaGroups?: string[];
 };
 
 export type ValueUpdate = {
+    category?: string;
     mediaGroups?: {
         set?: string[];
         append?: string[];
@@ -76,6 +78,7 @@ export async function update(props: UpdateProps) {
 
     try {
         return await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
+            category: props.value.category,
             mediaGroups: props.value.mediaGroups?.set,
             "mediaGroups+": props.value.mediaGroups?.append,
             "mediaGroups-": props.value.mediaGroups?.remove,
