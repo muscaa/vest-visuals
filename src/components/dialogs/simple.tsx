@@ -17,7 +17,7 @@ import { AxiosResponse } from "axios";
 interface Props {
     submit: (event: React.FormEvent) => Promise<AxiosResponse>;
     title?: string;
-    description?: string;
+    description?: React.ReactNode;
     submitText: {
         default: string;
         sending?: string;

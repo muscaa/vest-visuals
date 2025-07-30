@@ -15,6 +15,7 @@ import { Img } from "@/components/snippets";
 import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
+import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
 
 interface ListEntryProps {
     value: types.Value;
@@ -124,9 +125,9 @@ export default function Page() {
                     >
                         Edit
                     </Button>
-                </MediaGroupsEditDialog>
-                <MediaGroupsDeleteDialog
-                    record={selected}
+                </MediaGroupsEditDialog> */}
+                <MediaCategoriesDeleteDialog
+                    id={selected?.id}
                     onDelete={handleUpdate}
                 >
                     <Button
@@ -136,7 +137,7 @@ export default function Page() {
                     >
                         Delete
                     </Button>
-                </MediaGroupsDeleteDialog> */}
+                </MediaCategoriesDeleteDialog>
             </List>
         </MainAdmin>
     );
