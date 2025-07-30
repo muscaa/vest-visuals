@@ -2,6 +2,7 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { api_routes } from "@/utils/client/axios";
+import * as types from "@/types/api/media/categories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -9,13 +10,13 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    id: string;
+    value: types.Value;
 }
 
 function ValidDialog(props: ValidProps) {
     const submit = async () => {
         return api_routes.media.categories.remove._.post({
-            id: props.id,
+            id: props.value.id,
         });
     };
 
@@ -25,13 +26,14 @@ function ValidDialog(props: ValidProps) {
             title="Remove Media Category"
             description={
                 <>
-                    Are you sure you want to delete the media category <strong>&quot;{props.id}&quot;</strong>?
+                    Are you sure you want to delete the media category <strong>&quot;{props.value.category}&quot;</strong>?
                 </>
             }
             submitText={{
                 default: "Delete",
                 sending: "Deleting...",
             }}
+            destructive={true}
             onSuccess={props.onDelete}
             trigger={props.children}
         />
@@ -39,11 +41,11 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    id?: string;
+    value?: types.Value;
 }
 
 export function MediaCategoriesDeleteDialog(props: Props) {
-    if (!props.id) return (
+    if (!props.value) return (
         <>
             {props.children}
         </>
@@ -51,7 +53,7 @@ export function MediaCategoriesDeleteDialog(props: Props) {
 
     return (
         <ValidDialog
-            id={props.id}
+            value={props.value}
             onDelete={props.onDelete}
         >
             {props.children}

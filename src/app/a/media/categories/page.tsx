@@ -128,7 +128,7 @@ export default function Page() {
                     </Button>
                 </MediaCategoriesEditDialog>
                 <MediaCategoriesDeleteDialog
-                    id={selected?.id}
+                    value={selected}
                     onDelete={handleUpdate}
                 >
                     <Button

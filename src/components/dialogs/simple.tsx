@@ -25,6 +25,7 @@ interface Props {
         error?: string;
     };
     submitDisabled?: boolean;
+    destructive?: boolean;
     onSuccess?: () => void;
     onError?: () => void;
     onReset?: () => void;
@@ -102,6 +103,7 @@ export function SimpleDialog(props: Props) {
                             </DialogClose>
                             <Button
                                 type="submit"
+                                variant={props.destructive ? "destructive" : "default"}
                                 disabled={status == "sending" || status == "success" || props.submitDisabled}
                                 onClick={handleSubmit}
                                 className="grow"
