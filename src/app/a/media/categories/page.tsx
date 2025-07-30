@@ -47,18 +47,18 @@ function ListEntry(props: ListEntryProps) {
                 className="size-32 object-contain"
             />
             <div className="flex flex-col gap-1 grow">
-                <h4>{props.value.id}</h4>
+                <h4>{props.value.category}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col grow">
-                        <p>{props.value.category}</p>
+                        <p>{props.value.id}</p>
                         <h6>Updated: {myDate(props.value.updated)}</h6>
                         <h6>Created: {myDate(props.value.created)}</h6>
                     </div>
-                    {/* <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.mediaVariants?.length || "no"}</p>
+                    <div className="flex flex-col justify-center items-center">
+                        <p>{props.value.mediaGroups?.length || "no"}</p>
                         <h5>items</h5>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@ export default function Page() {
                 <Button
                     variant="secondary"
                     disabled={!selected}
-                    onClick={() => router.push(`/a/media/groups/${selected?.id}`)}
+                    onClick={() => router.push(`/a/media/categories/${selected?.category}`)}
                     className="grow"
                 >
                     Open

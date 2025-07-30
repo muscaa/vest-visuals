@@ -5,6 +5,7 @@ import { ButtonLink } from "@/components/snippets";
 
 export default function Page() {
     const links: { [key: string]: string; } = {
+        "Media Categories": "/a/media/categories",
         "Media Groups": "/a/media/groups",
         "Media Variants": "/a/media/variants",
     };
