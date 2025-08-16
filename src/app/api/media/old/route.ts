@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media";
+import * as types from "@/types/api/media/old";
 import {
     createClientDB,
     mediaDB,
