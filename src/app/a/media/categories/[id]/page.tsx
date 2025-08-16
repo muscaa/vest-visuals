@@ -11,6 +11,8 @@ import {
 } from "next/navigation";
 import { List } from "@/components/list";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
+import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 
 export default function Page() {
     const router = useRouter();
@@ -37,11 +39,16 @@ export default function Page() {
                 onSelect={handleSelect}
                 entry={(value) => <p>{value}</p>}
             >
-                <Button
-                    className="grow"
+                <MediaGroupsCreateDialog
+                    onCreate={handleUpdate}
+                    category={data!}
                 >
-                    New
-                </Button>
+                    <Button
+                        className="grow"
+                    >
+                        New
+                    </Button>
+                </MediaGroupsCreateDialog>
                 <Button
                     variant="secondary"
                     disabled={!selected}
@@ -50,13 +57,18 @@ export default function Page() {
                 >
                     Open
                 </Button>
-                <Button
-                    variant="secondary"
-                    disabled={!selected}
-                    className="grow"
+                <MediaGroupsDeleteDialog
+                    value={{id: selected} as any}
+                    onDelete={handleUpdate}
                 >
-                    Delete
-                </Button>
+                    <Button
+                        variant="secondary"
+                        disabled={!selected}
+                        className="grow"
+                    >
+                        Delete
+                    </Button>
+                </MediaGroupsDeleteDialog>
             </List>
         </MainAdmin>
     );
