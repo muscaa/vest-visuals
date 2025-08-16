@@ -70,13 +70,6 @@ export default function Page() {
                     disabled={!selected}
                     className="grow"
                 >
-                    Edit
-                </Button>
-                <Button
-                    variant="secondary"
-                    disabled={!selected}
-                    className="grow"
-                >
                     Delete
                 </Button>
             </List>
