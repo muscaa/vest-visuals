@@ -57,12 +57,12 @@ export function useMediaCategories() {
         },
     });
 
-    const deleteMediaCategory = useMutation({
+    const removeMediaCategory = useMutation({
         mutationKey: [api_routes.media.categories.remove._.url],
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.categories.remove._.post(props);
 
-            if (!data.success) throw new Error("Failed to update media category");
+            if (!data.success) throw new Error("Failed to remove media category");
 
             return data.success;
         },
@@ -73,6 +73,6 @@ export function useMediaCategories() {
         getMediaCategory,
         createMediaCategory,
         updateMediaCategory,
-        deleteMediaCategory,
+        removeMediaCategory,
     };
 }
