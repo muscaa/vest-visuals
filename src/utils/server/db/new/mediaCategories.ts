@@ -38,6 +38,21 @@ export function format(record: Record) {
     }
 }
 
+interface GetProps {
+    pb?: PocketBase;
+    category: string;
+}
+
+export async function get(props: GetProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        return await props.pb.collection(COLLECTION_NAME).getFirstListItem<Record>(`category = "${props.category}"`);
+    } catch (error) {}
+
+    return null;
+}
+
 interface GetListProps {
     pb?: PocketBase;
 }
