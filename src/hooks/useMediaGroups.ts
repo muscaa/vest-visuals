@@ -9,7 +9,7 @@ import * as types_create from "@/types/api/media/groups/create";
 import * as types_update from "@/types/api/media/groups/update";
 import * as types_remove from "@/types/api/media/groups/remove";
 
-export function useMediaCategories() {
+export function useMediaGroups() {
     const getMediaGroups = () => useQuery({
         queryKey: [api_routes.media.groups._.url],
         queryFn: async () => {
