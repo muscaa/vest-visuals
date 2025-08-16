@@ -1,20 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { api_client } from "@/utils/client/axios";
-import * as types from "@/types/api/media/groups/remove";
-import { MediaGroupsRecord } from "@/types/db/mediaGroups";
+import { SimpleDialog } from "@/components/dialogs/simple";
+import { Value } from "@/types/api/media/groups";
+import { useMediaGroups } from "@/hooks/useMediaGroups";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -22,106 +10,55 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    record: MediaGroupsRecord;
+    value: Value;
 }
 
-function ValidMediaGroupsDeleteDialog(props: ValidProps) {
-    const [open, setOpen] = useState<boolean>(false);
-    const [status, setStatus] = useState<"deleting" | "success" | "error">();
-    const [errorMessage, setErrorMessage] = useState<string>();
+function ValidDialog(props: ValidProps) {
+    const { removeMediaGroup } = useMediaGroups();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        setStatus("deleting");
-        setErrorMessage(undefined);
-
-        const response = await api_client.post<types.PostResponse, types.PostRequest>("/media/groups/remove", {
-            id: props.record.id,
+    const submit = async () => {
+        return await removeMediaGroup.mutateAsync({
+            id: props.value.id,
         });
-
-        if (response.data.success) {
-            setStatus("success");
-            setOpen(false);
-
-            props.onDelete?.();
-        } else {
-            setStatus("error");
-            setErrorMessage(`An error occured: status code ${response.status}`);
-        }
-    };
-
-    const handleOpenChange = (open: boolean) => {
-        setOpen(open);
-
-        if (open) {
-            setStatus(undefined);
-            setErrorMessage(undefined);
-        }
     };
 
     return (
-        <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger asChild>
-                {props.children}
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                    <DialogTitle>Delete Media Group</DialogTitle>
-                    <DialogDescription>
-                        Are you sure you want to delete the media group <strong>&quot;{props.record.id}&quot;</strong>?
-                    </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                    <div className="flex flex-col size-full gap-2">
-                        {
-                            errorMessage && (
-                                <p className="text-destructive">{errorMessage}</p>
-                            )
-                        }
-                        <div className="flex gap-2">
-                            <DialogClose asChild>
-                                <Button
-                                    variant="outline"
-                                    className="grow"
-                                >
-                                    Cancel
-                                </Button>
-                            </DialogClose>
-                            <Button
-                                type="submit"
-                                variant="destructive"
-                                disabled={status == "deleting" || status == "success"}
-                                onClick={handleSubmit}
-                                className="grow"
-                            >
-                                {status == "deleting" ? "Deleting..." : "Delete"}
-                            </Button>
-                        </div>
-                    </div>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+        <SimpleDialog
+            submit={submit}
+            title="Remove Media Group"
+            description={
+                <>
+                    Are you sure you want to delete the media group <strong>&quot;{props.value.id}&quot;</strong>?
+                </>
+            }
+            submitText={{
+                default: "Delete",
+                sending: "Deleting...",
+            }}
+            destructive={true}
+            onSuccess={props.onDelete}
+            trigger={props.children}
+        />
     );
 }
 
 interface Props extends CommonProps {
-    record?: MediaGroupsRecord;
+    value?: Value;
 }
 
 export function MediaGroupsDeleteDialog(props: Props) {
-    if (!props.record) return (
+    if (!props.value) return (
         <>
             {props.children}
         </>
     );
 
     return (
-        <ValidMediaGroupsDeleteDialog
-            record={props.record}
+        <ValidDialog
+            value={props.value}
             onDelete={props.onDelete}
         >
             {props.children}
-        </ValidMediaGroupsDeleteDialog>
+        </ValidDialog>
     );
 }
