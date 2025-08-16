@@ -3,12 +3,12 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { Value } from "@/types/api/media/categories";
+import { MediaCategory } from "@/types/api/media/categories";
 
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
-    category?: Value;
+    parent?: MediaCategory;
 }
 
 export function MediaGroupsCreateDialog(props: Props) {
@@ -18,10 +18,10 @@ export function MediaGroupsCreateDialog(props: Props) {
     const submit = async () => {
         const result = await createMediaGroup.mutateAsync({});
 
-        if (props.category) {
+        if (props.parent) {
             try {
                 await updateMediaCategory.mutateAsync({
-                    id: props.category.id,
+                    id: props.parent.id,
                     mediaGroups: {
                         append: [result.id],
                     },

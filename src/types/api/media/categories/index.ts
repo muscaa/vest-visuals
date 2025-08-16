@@ -1,4 +1,4 @@
-export interface Value {
+export interface MediaCategory {
     id: string;
     category: string;
     mediaGroups: string[];
@@ -13,5 +13,5 @@ export type PostRequest = {
 
 export type PostResponse = {
     success: boolean;
-    values?: Value[];
+    values?: MediaCategory[];
 };

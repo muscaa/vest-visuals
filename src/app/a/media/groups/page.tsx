@@ -13,7 +13,7 @@ import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { Value } from "@/types/api/media/groups";
-import { Value as CategoryValue } from "@/types/api/media/categories";
+import { MediaCategory } from "@/types/api/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Loading } from "@/components/status";
@@ -68,7 +68,7 @@ function ListEntry(props: ListEntryProps) {
 interface MediaGroupsListProps {
     data: Value[];
     refetch?: () => void;
-    parent?: CategoryValue;
+    parent?: MediaCategory;
 }
 
 export function MediaGroupsList(props: MediaGroupsListProps) {
@@ -94,7 +94,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
         >
             <MediaGroupsCreateDialog
                 onCreate={handleUpdate}
-                category={props.parent}
+                parent={props.parent}
             >
                 <Button
                     className="grow"
