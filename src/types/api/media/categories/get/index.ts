@@ -3,7 +3,7 @@ import { Value } from "@/types/api/media/categories";
 // POST
 
 export type PostRequest = {
-    category: string;
+    id: string;
 };
 
 export type PostResponse = {

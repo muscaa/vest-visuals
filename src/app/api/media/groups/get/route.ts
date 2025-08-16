@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.id);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,

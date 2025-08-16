@@ -18,14 +18,14 @@ import { List } from "@/components/list";
 
 export default function Page() {
     const router = useRouter();
-    const params = useParams<{ category: string }>();
+    const params = useParams<{ id: string }>();
     const [selected, setSelected] = useState<string>();
 
     const { data, refetch } = useQuery({
         queryKey: [api_routes.media.categories.get._.url],
         queryFn: async () => {
             const { data } = await api_routes.media.categories.get._.post({
-                category: params.category,
+                id: params.id,
             });
 
             if (!data.success) return [];

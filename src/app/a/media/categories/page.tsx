@@ -110,7 +110,7 @@ export default function Page() {
                 <Button
                     variant="secondary"
                     disabled={!selected}
-                    onClick={() => router.push(`/a/media/categories/${selected?.category}`)}
+                    onClick={() => router.push(`/a/media/categories/${selected?.id}`)}
                     className="grow"
                 >
                     Open
