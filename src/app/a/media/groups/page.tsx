@@ -20,7 +20,7 @@ interface ListEntryProps {
     value: Value;
 }
 
-export function MediaGroupsListEntry(props: ListEntryProps) {
+function ListEntry(props: ListEntryProps) {
     const image = useMemo(() => {
         /*if (props.value.expand && props.value.expand.mediaVariants && props.value.expand.mediaVariants.length > 0) {
             const mediaVariant = props.value.expand.mediaVariants[0];
@@ -63,11 +63,14 @@ export function MediaGroupsListEntry(props: ListEntryProps) {
     );
 }
 
-export default function Page() {
+interface MediaGroupsListProps {
+    data?: Value[];
+    refetch?: () => void;
+}
+
+export function MediaGroupsList(props: MediaGroupsListProps) {
     const router = useRouter();
     const [selected, setSelected] = useState<Value>();
-    const { getMediaGroups } = useMediaGroups();
-    const { data, refetch } = getMediaGroups();
 
     const handleSelect = (value: Value) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -76,47 +79,59 @@ export default function Page() {
     const handleUpdate = () => {
         setSelected(undefined);
 
-        refetch();
+        props.refetch?.();
     };
 
     return (
-        <MainAdmin extraClassName="overflow-hidden">
-            <List
-                data={data}
-                isSelected={(value) => selected?.id == value.id}
-                onSelect={handleSelect}
-                entry={(value) => <MediaGroupsListEntry value={value} />}
+        <List
+            data={props.data}
+            isSelected={(value) => selected?.id == value.id}
+            onSelect={handleSelect}
+            entry={(value) => <ListEntry value={value} />}
+        >
+            <MediaGroupsCreateDialog
+                onCreate={handleUpdate}
             >
-                <MediaGroupsCreateDialog
-                    onCreate={handleUpdate}
+                <Button
+                    className="grow"
                 >
-                    <Button
-                        className="grow"
-                    >
-                        New
-                    </Button>
-                </MediaGroupsCreateDialog>
+                    New
+                </Button>
+            </MediaGroupsCreateDialog>
+            <Button
+                variant="secondary"
+                disabled={!selected}
+                onClick={() => router.push(`/a/media/groups/${selected?.id}`)}
+                className="grow"
+            >
+                Open
+            </Button>
+            <MediaGroupsDeleteDialog
+                value={selected}
+                onDelete={handleUpdate}
+            >
                 <Button
                     variant="secondary"
                     disabled={!selected}
-                    onClick={() => router.push(`/a/media/groups/${selected?.id}`)}
                     className="grow"
                 >
-                    Open
+                    Delete
                 </Button>
-                <MediaGroupsDeleteDialog
-                    value={selected}
-                    onDelete={handleUpdate}
-                >
-                    <Button
-                        variant="secondary"
-                        disabled={!selected}
-                        className="grow"
-                    >
-                        Delete
-                    </Button>
-                </MediaGroupsDeleteDialog>
-            </List>
+            </MediaGroupsDeleteDialog>
+        </List>
+    );
+}
+
+export default function Page() {
+    const { getMediaGroups } = useMediaGroups();
+    const { data, refetch } = getMediaGroups();
+
+    return (
+        <MainAdmin extraClassName="overflow-hidden">
+            <MediaGroupsList
+                data={data}
+                refetch={refetch}
+            />
         </MainAdmin>
     );
 }
