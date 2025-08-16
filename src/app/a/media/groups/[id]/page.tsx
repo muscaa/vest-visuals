@@ -31,33 +31,7 @@ export default function Page() {
 
     return (
         <MainAdmin extraClassName="overflow-hidden">
-            <List
-                data={data?.media}
-                isSelected={(value) => selected == value}
-                onSelect={handleSelect}
-                entry={(value) => <p>{value}</p>}
-            >
-                <Button
-                    className="grow"
-                >
-                    New
-                </Button>
-                <Button
-                    variant="secondary"
-                    disabled={!selected}
-                    onClick={() => router.push(`/a/media/groups/${selected}`)}
-                    className="grow"
-                >
-                    Open
-                </Button>
-                <Button
-                    variant="secondary"
-                    disabled={!selected}
-                    className="grow"
-                >
-                    Delete
-                </Button>
-            </List>
+            <p>{JSON.stringify(data, null, 2)}</p>
         </MainAdmin>
     );
 }

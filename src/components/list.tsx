@@ -4,10 +4,10 @@ import { cn } from "@/utils/shadcn/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 interface ListProps<V> {
-    data?: V[];
+    data: V[];
+    entry: (value: V) => React.ReactNode;
     isSelected?: (value: V) => boolean;
     onSelect?: (value: V) => void;
-    entry?: (value: V) => React.ReactNode;
     children?: React.ReactNode;
 }
 
@@ -32,7 +32,7 @@ export function List<V>(props: ListProps<V>) {
                 <div className="flex flex-col max-h-full h-full overflow-y-auto">
                     <div className="flex flex-col grow gap-2">
                         {
-                            props.data?.map((value, index) => (
+                            props.data.map((value, index) => (
                                 <div
                                     key={index}
                                     onClick={() => setSelected(value)}
@@ -42,7 +42,7 @@ export function List<V>(props: ListProps<V>) {
                                         className: `${isSelected(value) ? "border-accent-foreground dark:border-accent-foreground" : ""}`
                                     }))}
                                 >
-                                    {props.entry?.(value)}
+                                    {props.entry(value)}
                                 </div>
                             ))
                         }

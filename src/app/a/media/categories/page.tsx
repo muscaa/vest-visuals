@@ -16,6 +16,7 @@ import { Value } from "@/types/api/media/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
 import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
+import { Loading } from "@/components/status";
 
 interface ListEntryProps {
     value: Value;
@@ -64,11 +65,14 @@ function ListEntry(props: ListEntryProps) {
     );
 }
 
-export default function Page() {
+interface MediaGroupsListProps {
+    data: Value[];
+    refetch?: () => void;
+}
+
+export function MediaCategoriesList(props: MediaGroupsListProps) {
     const router = useRouter();
     const [selected, setSelected] = useState<Value>();
-    const { getMediaCategories } = useMediaCategories();
-    const { data, refetch } = getMediaCategories();
 
     const handleSelect = (value: Value) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -77,59 +81,77 @@ export default function Page() {
     const handleUpdate = () => {
         setSelected(undefined);
 
-        refetch();
+        props.refetch?.();
     };
 
     return (
-        <MainAdmin extraClassName="overflow-hidden">
-            <List
-                data={data}
-                isSelected={(value) => selected?.id == value.id}
-                onSelect={handleSelect}
-                entry={(value) => <ListEntry value={value} />}
+        <List
+            data={props.data}
+            isSelected={(value) => selected?.id == value.id}
+            onSelect={handleSelect}
+            entry={(value) => <ListEntry value={value} />}
+        >
+            <MediaCategoriesCreateDialog
+                onCreate={handleUpdate}
             >
-                <MediaCategoriesCreateDialog
-                    onCreate={handleUpdate}
+                <Button
+                    className="grow"
                 >
-                    <Button
-                        className="grow"
-                    >
-                        New
-                    </Button>
-                </MediaCategoriesCreateDialog>
+                    New
+                </Button>
+            </MediaCategoriesCreateDialog>
+            <Button
+                variant="secondary"
+                disabled={!selected}
+                onClick={() => router.push(`/a/media/categories/${selected?.id}`)}
+                className="grow"
+            >
+                Open
+            </Button>
+            <MediaCategoriesEditDialog
+                value={selected}
+                onEdit={handleUpdate}
+            >
                 <Button
                     variant="secondary"
                     disabled={!selected}
-                    onClick={() => router.push(`/a/media/categories/${selected?.id}`)}
                     className="grow"
                 >
-                    Open
+                    Edit
                 </Button>
-                <MediaCategoriesEditDialog
-                    value={selected}
-                    onEdit={handleUpdate}
+            </MediaCategoriesEditDialog>
+            <MediaCategoriesDeleteDialog
+                value={selected}
+                onDelete={handleUpdate}
+            >
+                <Button
+                    variant="secondary"
+                    disabled={!selected}
+                    className="grow"
                 >
-                    <Button
-                        variant="secondary"
-                        disabled={!selected}
-                        className="grow"
-                    >
-                        Edit
-                    </Button>
-                </MediaCategoriesEditDialog>
-                <MediaCategoriesDeleteDialog
-                    value={selected}
-                    onDelete={handleUpdate}
-                >
-                    <Button
-                        variant="secondary"
-                        disabled={!selected}
-                        className="grow"
-                    >
-                        Delete
-                    </Button>
-                </MediaCategoriesDeleteDialog>
-            </List>
+                    Delete
+                </Button>
+            </MediaCategoriesDeleteDialog>
+        </List>
+    );
+}
+
+export default function Page() {
+    const { getMediaCategories } = useMediaCategories();
+    const { data, refetch } = getMediaCategories();
+
+    return (
+        <MainAdmin extraClassName="overflow-hidden">
+            {
+                data && (
+                    <MediaCategoriesList
+                        data={data}
+                        refetch={refetch}
+                    />
+                ) || (
+                    <Loading />
+                )
+            }
         </MainAdmin>
     );
 }
