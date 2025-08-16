@@ -2,11 +2,11 @@ import { Value } from "@/types/api/media/categories";
 
 // POST
 
-export interface PostRequest {
+export type PostRequest = {
     category: string;
-}
+};
 
-export interface PostResponse {
+export type PostResponse = {
     success: boolean;
     value?: Value;
-}
+};

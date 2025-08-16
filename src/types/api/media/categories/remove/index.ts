@@ -1,9 +1,9 @@
 // POST
 
-export interface PostRequest {
+export type PostRequest = {
     id: string;
-}
+};
 
-export interface PostResponse {
+export type PostResponse = {
     success: boolean;
-}
+};

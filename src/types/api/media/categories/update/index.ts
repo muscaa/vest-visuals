@@ -1,6 +1,6 @@
 // POST
 
-export interface PostRequest {
+export type PostRequest = {
     id: string;
     category?: string;
     mediaGroups?: {
@@ -8,8 +8,8 @@ export interface PostRequest {
         append?: string[];
         remove?: string[];
     };
-}
+};
 
-export interface PostResponse {
+export type PostResponse = {
     success: boolean;
-}
+};
