@@ -1,25 +1,24 @@
 "use client";
 
 import { MainAdmin } from "@/components/admin/main";
-import { useQuery } from "@tanstack/react-query";
 import {
     useMemo,
     useState,
 } from "react";
-import * as types from "@/types/api/media/categories";
-import { api_routes } from "@/utils/client/axios";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
+import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { Value } from "@/types/api/media/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
 import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
 
 interface ListEntryProps {
-    value: types.Value;
+    value: Value;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -67,20 +66,11 @@ function ListEntry(props: ListEntryProps) {
 
 export default function Page() {
     const router = useRouter();
-    const [selected, setSelected] = useState<types.Value>();
+    const [selected, setSelected] = useState<Value>();
+    const { getMediaCategories } = useMediaCategories();
+    const { data, refetch } = getMediaCategories();
 
-    const { data, refetch } = useQuery({
-        queryKey: [api_routes.media.categories._.url],
-        queryFn: async () => {
-            const { data } = await api_routes.media.categories._.post({});
-
-            if (!data.success) return [];
-
-            return data.values || [];
-        },
-    });
-
-    const handleSelect = (value: types.Value) => {
+    const handleSelect = (value: Value) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
