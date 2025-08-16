@@ -1,4 +1,4 @@
-import { Value } from "@/types/api/media/groups";
+import { MediaGroup } from "@/types/api/media/groups";
 
 // POST
 
@@ -8,5 +8,5 @@ export type PostRequest = {
 
 export type PostResponse = {
     success: boolean;
-    value?: Value;
+    value?: MediaGroup;
 };

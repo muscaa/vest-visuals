@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { Value } from "@/types/api/media/groups";
+import { MediaGroup } from "@/types/api/media/groups";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 
 interface CommonProps {
@@ -10,7 +10,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: Value;
+    value: MediaGroup;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -43,7 +43,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: Value;
+    value?: MediaGroup;
 }
 
 export function MediaGroupsDeleteDialog(props: Props) {

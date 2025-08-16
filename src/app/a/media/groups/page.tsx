@@ -12,14 +12,14 @@ import { Img } from "@/components/snippets";
 import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { Value } from "@/types/api/media/groups";
+import { MediaGroup } from "@/types/api/media/groups";
 import { MediaCategory } from "@/types/api/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Loading } from "@/components/status";
 
 interface ListEntryProps {
-    value: Value;
+    value: MediaGroup;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -66,16 +66,16 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaGroupsListProps {
-    data: Value[];
+    data: MediaGroup[];
     refetch?: () => void;
     parent?: MediaCategory;
 }
 
 export function MediaGroupsList(props: MediaGroupsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<Value>();
+    const [selected, setSelected] = useState<MediaGroup>();
 
-    const handleSelect = (value: Value) => {
+    const handleSelect = (value: MediaGroup) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
