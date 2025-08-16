@@ -1,8 +1,8 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import * as types from "@/types/api/media/categories";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { Value } from "@/types/api/media/categories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -10,7 +10,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: types.Value;
+    value: Value;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -43,7 +43,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: types.Value;
+    value?: Value;
 }
 
 export function MediaCategoriesDeleteDialog(props: Props) {
