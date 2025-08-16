@@ -1,5 +1,9 @@
 import PocketBase from "pocketbase";
 import {
+    RecordOptions,
+    RecordFullListOptions,
+} from "pocketbase";
+import {
     createClientDB,
     newMediaGroupsDB,
 } from "@/utils/server/db";
@@ -40,14 +44,15 @@ export function format(record: Record) {
 
 interface GetProps {
     pb?: PocketBase;
-    category: string;
+    id: string;
+    options?: RecordOptions;
 }
 
 export async function get(props: GetProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).getFirstListItem<Record>(`category = "${props.category}"`);
+        return await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
     } catch (error) {}
 
     return null;
@@ -55,13 +60,14 @@ export async function get(props: GetProps) {
 
 interface GetListProps {
     pb?: PocketBase;
+    options?: RecordFullListOptions;
 }
 
 export async function getList(props: GetListProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).getFullList<Record>();
+        return await props.pb.collection(COLLECTION_NAME).getFullList<Record>(props.options);
     } catch (error) {}
 
     return null;
