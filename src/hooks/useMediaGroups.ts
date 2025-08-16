@@ -28,9 +28,9 @@ export function useMediaGroups() {
                 id,
             });
 
-            if (!data.success) return [];
+            if (!data.success) return null;
 
-            return data.value || [];
+            return data.value || null;
         },
     });
 
