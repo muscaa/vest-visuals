@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { api_routes } from "@/utils/client/axios";
+import { useMediaCategories } from "@/hooks/useMediaCategories";
 
 interface Props {
     onCreate?: () => void;
@@ -13,11 +13,10 @@ interface Props {
 
 export function MediaCategoriesCreateDialog(props: Props) {
     const [category, setCategory] = useState<string>("");
+    const { createMediaCategory } = useMediaCategories();
 
     const submit = async () => {
-        return api_routes.media.categories.create._.post({
-            category,
-        });
+        return await createMediaCategory.mutateAsync(category);
     };
 
     const handleReset = () => {

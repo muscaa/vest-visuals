@@ -12,10 +12,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { AxiosResponse } from "axios";
 
-interface Props {
-    submit: (event: React.FormEvent) => Promise<AxiosResponse>;
+interface Props<V> {
+    submit: (event: React.FormEvent) => Promise<V>;
     title?: string;
     description?: React.ReactNode;
     submitText: {
@@ -26,14 +25,14 @@ interface Props {
     };
     submitDisabled?: boolean;
     destructive?: boolean;
-    onSuccess?: () => void;
+    onSuccess?: (result: V) => void;
     onError?: () => void;
     onReset?: () => void;
     trigger?: React.ReactNode;
     children?: React.ReactNode;
 }
 
-export function SimpleDialog(props: Props) {
+export function SimpleDialog<V>(props: Props<V>) {
     const [open, setOpen] = useState<boolean>(false);
     const [status, setStatus] = useState<"sending" | "success" | "error">();
     const [errorMessage, setErrorMessage] = useState<string>();
@@ -44,18 +43,23 @@ export function SimpleDialog(props: Props) {
         setStatus("sending");
         setErrorMessage(undefined);
 
-        const response = await props.submit(event);
-
-        if (response.status == 200) {
-            props.onSuccess?.();
+        try {
+            const result = await props.submit(event);
+            
+            props.onSuccess?.(result);
 
             setStatus("success");
             setOpen(false);
-        } else {
+        } catch (error) {
             props.onError?.();
 
             setStatus("error");
-            setErrorMessage(`An error occured: status code ${response.status}`);
+
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An unexpected error occurred");
+            }
         }
     };
 
