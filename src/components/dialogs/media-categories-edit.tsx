@@ -4,8 +4,8 @@ import { useState } from "react";
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { api_routes } from "@/utils/client/axios";
 import * as types from "@/types/api/media/categories";
+import { useMediaCategories } from "@/hooks/useMediaCategories";
 
 interface CommonProps {
     onEdit?: () => void;
@@ -18,9 +18,10 @@ interface ValidProps extends CommonProps {
 
 function ValidDialog(props: ValidProps) {
     const [category, setCategory] = useState<string>(props.value.category);
+    const { updateMediaCategory } = useMediaCategories();
 
     const submit = async () => {
-        return api_routes.media.categories.update._.post({
+        return updateMediaCategory.mutateAsync({
             id: props.value.id,
             category,
         });

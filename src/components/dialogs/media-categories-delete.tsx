@@ -1,8 +1,8 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { api_routes } from "@/utils/client/axios";
 import * as types from "@/types/api/media/categories";
+import { useMediaCategories } from "@/hooks/useMediaCategories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -14,8 +14,10 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
+    const { removeMediaCategory } = useMediaCategories();
+
     const submit = async () => {
-        return api_routes.media.categories.remove._.post({
+        return await removeMediaCategory.mutateAsync({
             id: props.value.id,
         });
     };
