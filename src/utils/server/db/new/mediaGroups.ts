@@ -1,5 +1,9 @@
 import PocketBase from "pocketbase";
 import {
+    RecordOptions,
+    RecordFullListOptions,
+} from "pocketbase";
+import {
     createClientDB,
     newMediaDB,
 } from "@/utils/server/db";
@@ -33,6 +37,37 @@ export function format(record: Record) {
     for (const media of record.expand.media) {
         newMediaDB.format(media);
     }
+}
+
+interface GetProps {
+    pb?: PocketBase;
+    id: string;
+    options?: RecordOptions;
+}
+
+export async function get(props: GetProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        return await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
+    } catch (error) {}
+
+    return null;
+}
+
+interface GetListProps {
+    pb?: PocketBase;
+    options?: RecordFullListOptions;
+}
+
+export async function getList(props: GetListProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        return await props.pb.collection(COLLECTION_NAME).getFullList<Record>(props.options);
+    } catch (error) {}
+
+    return null;
 }
 
 interface CreateProps {
