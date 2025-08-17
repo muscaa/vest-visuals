@@ -1,5 +1,4 @@
 import { MediaProcessor } from "@/types/media/processor";
-import { MediaContent } from "@/types/api/media/contents";
 
 // POST
 
@@ -20,5 +19,4 @@ export type FileConfig = {
 
 export type PostResponse = {
     success: boolean;
-    values?: MediaContent[];
 };
