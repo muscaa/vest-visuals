@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && json.media);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && json.mediaContents);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -33,10 +33,10 @@ export async function POST(request: NextRequest) {
         pb,
         id: json.id,
         value: {
-            media: {
-                set: json.media?.set,
-                append: json.media?.append,
-                remove: json.media?.remove,
+            mediaContents: {
+                set: json.mediaContents?.set,
+                append: json.mediaContents?.append,
+                remove: json.mediaContents?.remove,
             },
         },
     });

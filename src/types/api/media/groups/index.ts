@@ -1,6 +1,6 @@
 export interface MediaGroup {
     id: string;
-    media: string[];
+    mediaContents: string[];
     created: string;
     updated: string;
 }

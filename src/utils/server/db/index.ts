@@ -9,7 +9,7 @@ export * as mediaVariantsDB from "@/utils/server/db/old/mediaVariants";
 export * as mediaGroupsDB from "@/utils/server/db/old/mediaGroups";
 
 export * as newMediaVariantsDB from "@/utils/server/db/new/mediaVariants";
-export * as newMediaDB from "@/utils/server/db/new/media";
+export * as newMediaContentsDB from "@/utils/server/db/new/mediaContents";
 export * as newMediaGroupsDB from "@/utils/server/db/new/mediaGroups";
 export * as newMediaCategoriesDB from "@/utils/server/db/new/mediaCategories";
 

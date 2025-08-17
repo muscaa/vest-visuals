@@ -2,7 +2,7 @@
 
 export type PostRequest = {
     id: string;
-    media?: {
+    mediaContents?: {
         set?: string[];
         append?: string[];
         remove?: string[];

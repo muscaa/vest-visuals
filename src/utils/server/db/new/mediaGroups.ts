@@ -5,24 +5,24 @@ import {
 } from "pocketbase";
 import {
     createClientDB,
-    newMediaDB,
+    newMediaContentsDB,
 } from "@/utils/server/db";
 import { BaseRecord } from "@/types/db";
 
 export type Record = BaseRecord & {
-    media: string[];
+    mediaContents: string[];
 
     expand?: {
-        media?: newMediaDB.Record[];
+        mediaContents?: newMediaContentsDB.Record[];
     };
 };
 
 export type Value = {
-    media?: string[];
+    mediaContents?: string[];
 };
 
 export type ValueUpdate = {
-    media?: {
+    mediaContents?: {
         set?: string[];
         append?: string[];
         remove?: string[];
@@ -32,10 +32,10 @@ export type ValueUpdate = {
 export const COLLECTION_NAME = "newMediaGroups";
 
 export function format(record: Record) {
-    if (!record.expand || !record.expand.media) return;
+    if (!record.expand || !record.expand.mediaContents) return;
 
-    for (const media of record.expand.media) {
-        newMediaDB.format(media);
+    for (const mediaContent of record.expand.mediaContents) {
+        newMediaContentsDB.format(mediaContent);
     }
 }
 
@@ -96,9 +96,9 @@ export async function update(props: UpdateProps) {
 
     try {
         return await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
-            media: props.value.media?.set,
-            "media+": props.value.media?.append,
-            "media-": props.value.media?.remove,
+            mediaContents: props.value.mediaContents?.set,
+            "mediaContents+": props.value.mediaContents?.append,
+            "mediaContents-": props.value.mediaContents?.remove,
         });
     } catch (error) {}
 

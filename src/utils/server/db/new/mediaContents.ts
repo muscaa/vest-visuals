@@ -17,7 +17,7 @@ export type Value = {
     mediaVariants: newMediaVariantsDB.Value[];
 };
 
-export const COLLECTION_NAME = "newMedia";
+export const COLLECTION_NAME = "newMediaContents";
 
 export function format(record: Record) {
     if (!record.expand || !record.expand.mediaVariants) return;

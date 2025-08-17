@@ -3,7 +3,7 @@ import { MediaGroup } from "@/types/api/media/groups";
 // POST
 
 export type PostRequest = {
-    media?: string[];
+    mediaContents?: string[];
 };
 
 export type PostResponse = {

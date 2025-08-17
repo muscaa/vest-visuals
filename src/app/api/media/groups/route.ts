@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         success: true,
         values: result.map((value) => ({
             id: value.id,
-            media: value.media,
+            mediaContents: value.mediaContents,
             created: value.created,
             updated: value.updated,
         })),

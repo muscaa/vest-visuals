@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            media: result.media,
+            mediaContents: result.mediaContents,
             created: result.created,
             updated: result.updated,
         },
