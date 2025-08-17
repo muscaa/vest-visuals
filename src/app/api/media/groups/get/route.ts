@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            mediaContents: result.expand!.mediaContents!.map((content) => ({
+            mediaContents: result.expand?.mediaContents ? result.expand.mediaContents.map((content) => ({
                 id: content.id,
-                mediaVariants: content.expand!.mediaVariants!.map((variant) => ({
+                mediaVariants: content.expand?.mediaVariants ? content.expand.mediaVariants.map((variant) => ({
                     id: variant.id,
                     variant: variant.variant,
                     file: variant.file,
@@ -56,10 +56,10 @@ export async function POST(request: NextRequest) {
                     info: variant.info,
                     created: variant.created,
                     updated: variant.updated,
-                })),
+                })) : [],
                 created: content.created,
                 updated: content.updated,
-            })),
+            })) : [],
             created: result.created,
             updated: result.updated,
         },

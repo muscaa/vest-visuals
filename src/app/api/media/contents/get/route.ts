@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            mediaVariants: result.expand!.mediaVariants!.map((variant) => ({
+            mediaVariants: result.expand?.mediaVariants ? result.expand.mediaVariants.map((variant) => ({
                 id: variant.id,
                 variant: variant.variant,
                 file: variant.file,
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
                 info: variant.info,
                 created: variant.created,
                 updated: variant.updated,
-            })),
+            })) : [],
             created: result.created,
             updated: result.updated,
         },

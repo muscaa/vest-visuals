@@ -47,12 +47,12 @@ export async function POST(request: NextRequest) {
         value: {
             id: result.id,
             category: result.category,
-            mediaGroups: result.expand!.mediaGroups!.map((group) => ({
+            mediaGroups: result.expand?.mediaGroups ? result.expand.mediaGroups.map((group) => ({
                 id: group.id,
                 mediaContents: group.mediaContents,
                 created: group.created,
                 updated: group.updated,
-            })),
+            })) : [],
             created: result.created,
             updated: result.updated,
         },
