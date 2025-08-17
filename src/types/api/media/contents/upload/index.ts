@@ -9,11 +9,16 @@ export const formData = {
 
 export namespace formData {
     export type files = File[];
-    export type configs = FileConfig[];
+    export type configs = string[];
 }
 
 export type FileConfig = {
     processor: MediaProcessor;
+};
+
+export type PostRequest = {
+    files: File[];
+    configs: FileConfig[];
 };
 
 export type PostResponse = {

@@ -26,23 +26,25 @@ export async function POST(request: NextRequest) {
 
     const formData = await request.formData();
 
-    const files: types.formData.files = formData.getAll(types.formData.files) as File[];
-    const configs: types.formData.configs = (await Promise.all((formData.getAll(types.formData.configs) as string[])
-        .flatMap(async (value) => {
-            const config = await safeJSON<types.FileConfig>(value, (json) => json.processor && json.processor.id);
+    const json: types.PostRequest = {
+        files: formData.getAll(types.formData.files) as File[],
+        configs: (await Promise.all((formData.getAll(types.formData.configs) as string[])
+            .flatMap(async (value) => {
+                const config = await safeJSON<types.FileConfig>(value, (json) => json.processor && json.processor.id);
 
-            return config ? [config] : [];
-        }))).flat();
+                return config ? [config] : [];
+            }))).flat(),
+    };
 
-    if (files.length > configs.length) {
+    if (json.files.length > json.configs.length) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
         });
     }
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const config = configs[i];
+    for (let i = 0; i < json.files.length; i++) {
+        const file = json.files[i];
+        const config = json.configs[i];
 
         const Processor = mediaProcessors[config.processor.id];
         if (!Processor) {

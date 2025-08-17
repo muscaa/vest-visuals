@@ -14,6 +14,10 @@ import * as api_media_groups_get from "@/types/api/media/groups/get";
 import * as api_media_groups_create from "@/types/api/media/groups/create";
 import * as api_media_groups_update from "@/types/api/media/groups/update";
 import * as api_media_groups_remove from "@/types/api/media/groups/remove";
+import * as api_media_contents from "@/types/api/media/contents";
+import * as api_media_contents_get from "@/types/api/media/contents/get";
+import * as api_media_contents_upload from "@/types/api/media/contents/upload";
+import * as api_media_contents_remove from "@/types/api/media/contents/remove";
 
 export const api_client = createClientAxios({
     baseURL: "/api",
@@ -49,6 +53,18 @@ export const api_routes = routes({
             }),
             remove: route("remove", {
                 _: endpoint<api_media_groups_remove.PostResponse, api_media_groups_remove.PostRequest>(api_client),
+            }),
+        }),
+        contents: route("contents", {
+            _: endpoint<api_media_contents.PostResponse, api_media_contents.PostRequest>(api_client),
+            get: route("get", {
+                _: endpoint<api_media_contents_get.PostResponse, api_media_contents_get.PostRequest>(api_client),
+            }),
+            upload: route("upload", {
+                _: endpoint<api_media_contents_upload.PostResponse, FormData>(api_client),
+            }),
+            remove: route("remove", {
+                _: endpoint<api_media_contents_remove.PostResponse, api_media_contents_remove.PostRequest>(api_client),
             }),
         }),
     }),
