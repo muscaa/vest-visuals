@@ -1,12 +1,19 @@
-interface BaseMediaContent<T extends "min" | "full"> {
+import { MediaTypeInfo } from "@/types/media/info";
+
+export type MediaVariant = MediaTypeInfo & {
     id: string;
-    mediaVariants: T extends "min" ? string[] : never[];
+    variant: string;
+    file: string;
     created: string;
     updated: string;
-}
+};
 
-export type MediaContent = BaseMediaContent<"min">;
-export type FullMediaContent = BaseMediaContent<"full">;
+export type MediaContent = {
+    id: string;
+    mediaVariants: MediaVariant[];
+    created: string;
+    updated: string;
+};
 
 // POST
 
