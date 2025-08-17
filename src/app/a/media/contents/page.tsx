@@ -12,12 +12,12 @@ import { Img } from "@/components/snippets";
 import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
 import { useMediaContents } from "@/hooks/useMediaContents";
-import { MediaContent } from "@/types/api/media/contents";
+import { FullMediaContent } from "@/types/api/media/contents";
 import { FullMediaGroup } from "@/types/api/media/groups";
 import { Loading } from "@/components/status";
 
 interface ListEntryProps {
-    value: MediaContent;
+    value: FullMediaContent;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -64,16 +64,16 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaContentsListProps {
-    data: MediaContent[];
+    data: FullMediaContent[];
     refetch?: () => void;
     parent?: FullMediaGroup;
 }
 
 export function MediaContentsList(props: MediaContentsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<MediaContent>();
+    const [selected, setSelected] = useState<FullMediaContent>();
 
-    const handleSelect = (value: MediaContent) => {
+    const handleSelect = (value: FullMediaContent) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 

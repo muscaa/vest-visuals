@@ -43,6 +43,9 @@ export function useMediaContents() {
             const { data } = await api_routes.media.contents.upload._.postForm(formData);
 
             if (!data.success) throw new Error("Failed to upload media contents");
+            if (!data.values) throw new Error("No media contents returned");
+
+            return data.values;
         },
     });
 

@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
+    const result: newMediaContentsDB.Record[] = [];
     for (let i = 0; i < json.files.length; i++) {
         const file = json.files[i];
         const config = json.configs[i];
@@ -55,7 +56,6 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(await file.arrayBuffer());
 
         let mediaContent: newMediaContentsDB.Record | undefined;
-
         await processor.process(
             buffer,
             config,
@@ -104,9 +104,19 @@ export async function POST(request: NextRequest) {
                 return true;
             }
         );
+
+        if (mediaContent) {
+            result.push(mediaContent);
+        }
     }
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
+        values: result.map((value) => ({
+            id: value.id,
+            mediaVariants: value.mediaVariants,
+            created: value.created,
+            updated: value.updated,
+        })),
     });
 }
