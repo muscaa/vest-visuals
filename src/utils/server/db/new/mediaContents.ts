@@ -135,12 +135,12 @@ export async function remove(props: RemoveProps) {
 
     try {
         const listResult = await props.pb.collection(COLLECTION_NAME).getFullList<Record>({
-            filter: `id IN ("${props.ids.join(`", "`)}")`,
+            filter: props.ids.map((id) => `id="${id}"`).join("||"),
         });
 
-        return newMediaVariantsDB.remove({
+        return await newMediaVariantsDB.remove({
             pb: props.pb,
-            ids: listResult.flatMap((media) => media.mediaVariants || []),
+            ids: listResult.flatMap((content) => content.mediaVariants || []),
         });
     } catch (error) {}
 

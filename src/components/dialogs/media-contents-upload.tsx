@@ -22,7 +22,7 @@ export function MediaContentsUploadDialog(props: Props) {
     const submit = async () => {
         const result = await uploadMediaContents.mutateAsync({
             files,
-            configs: files.map(() => ({
+            configs: Array.from(files).map(() => ({
                 processor: {
                     id: "image-sharp-v1",
                     //alt: file.name,

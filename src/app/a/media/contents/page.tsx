@@ -102,14 +102,6 @@ export function MediaContentsList(props: MediaContentsListProps) {
                     Upload
                 </Button>
             </MediaContentsUploadDialog>
-            <Button
-                variant="secondary"
-                disabled={!selected}
-                onClick={() => router.push(`/a/media/groups/${selected?.id}`)}
-                className="grow"
-            >
-                Open
-            </Button>
             <MediaContentsDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}

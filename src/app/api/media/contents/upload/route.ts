@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         let mediaContent: newMediaContentsDB.Record | undefined;
         await processor.process(
             buffer,
-            config,
+            config.processor,
             async (value) => {
                 if (!mediaContent) {
                     const result = await newMediaContentsDB.create({
