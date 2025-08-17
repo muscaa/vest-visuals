@@ -56,7 +56,7 @@ function ListEntry(props: ListEntryProps) {
                         <h6>Created: {myDate(props.value.created)}</h6>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.media?.length || "no"}</p>
+                        <p>{props.value.mediaContents?.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
