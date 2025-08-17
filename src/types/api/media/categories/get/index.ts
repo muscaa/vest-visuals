@@ -1,4 +1,4 @@
-import { MediaCategory } from "@/types/api/media/categories";
+import { FullMediaCategory } from "@/types/api/media/categories";
 
 // POST
 
@@ -8,5 +8,5 @@ export type PostRequest = {
 
 export type PostResponse = {
     success: boolean;
-    value?: MediaCategory;
+    value?: FullMediaCategory;
 };

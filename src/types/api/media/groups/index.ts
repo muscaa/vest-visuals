@@ -1,9 +1,12 @@
-export interface MediaGroup {
+interface BaseMediaGroup<T extends "min" | "full"> {
     id: string;
-    mediaContents: string[];
+    mediaContents: T extends "min" ? string[] : never[];
     created: string;
     updated: string;
 }
+
+export type MediaGroup = BaseMediaGroup<"min">;
+export type FullMediaGroup = BaseMediaGroup<"full">;
 
 // POST
 
