@@ -4,16 +4,16 @@ import { MediaContent } from "@/types/api/media/contents";
 // POST
 
 export const formData = {
-    jsons: "jsons",
     files: "files",
+    configs: "configs",
 };
 
 export namespace formData {
-    export type jsons = JsonFormData[];
     export type files = File[];
+    export type configs = FileConfig[];
 }
 
-export type JsonFormData = {
+export type FileConfig = {
     variant: string;
     config: MediaProcessor;
 };
