@@ -3,12 +3,12 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@/types/api/media/categories";
+import { FullMediaCategory } from "@/types/api/media/categories";
 
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
-    parent?: MediaCategory;
+    parent?: FullMediaCategory;
 }
 
 export function MediaGroupsCreateDialog(props: Props) {

@@ -13,7 +13,7 @@ import { myDate } from "@/utils/snippets";
 import { List } from "@/components/list";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { MediaGroup } from "@/types/api/media/groups";
-import { MediaCategory } from "@/types/api/media/categories";
+import { FullMediaCategory } from "@/types/api/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Loading } from "@/components/status";
@@ -68,7 +68,7 @@ function ListEntry(props: ListEntryProps) {
 interface MediaGroupsListProps {
     data: MediaGroup[];
     refetch?: () => void;
-    parent?: MediaCategory;
+    parent?: FullMediaCategory;
 }
 
 export function MediaGroupsList(props: MediaGroupsListProps) {

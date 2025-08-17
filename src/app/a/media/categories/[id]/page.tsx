@@ -18,12 +18,11 @@ export default function Page() {
         <MainAdmin extraClassName="overflow-hidden">
             {
                 data && (
-                    // <MediaGroupsList
-                    //     data={data.mediaGroups}
-                    //     refetch={refetch}
-                    //     parent={data}
-                    // />
-                    <div></div>
+                    <MediaGroupsList
+                        data={data.mediaGroups}
+                        refetch={refetch}
+                        parent={data}
+                    />
                 ) || data === null && (
                     <NotFound />
                 ) || (
