@@ -15,7 +15,7 @@ export namespace formData {
 
 export type FileConfig = {
     variant: string;
-    config: MediaProcessor;
+    processor: MediaProcessor;
 };
 
 export type PostResponse = {
