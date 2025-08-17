@@ -1,22 +1,18 @@
 import * as base from "@/utils/server/media/processor/base";
 import { V1SharpProcessorConfig } from "@/types/media/processor/image";
-import { MediaRecord } from "@/types/db/media";
-import { MediaVariantsRecord } from "@/types/db/mediaVariants";
 import sharp from "sharp";
-import {
-    mediaDB,
-    mediaVariantsDB,
-} from "@/utils/server/db";
 
 export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
 
-    async upload(props: base.UploadProps<V1SharpProcessorConfig>): Promise<MediaVariantsRecord | null> {
-        const original = sharp(props.buffer);
+    async process(
+        buffer: Buffer,
+        config: V1SharpProcessorConfig,
+        func: (value: base.ProcessorValue) => Promise<boolean>
+    ): Promise<boolean> {
+        const original = sharp(buffer);
         const metadata = await original.metadata();
 
-        const media: MediaRecord[] = [];
-
-        for (const [key, variant] of Object.entries(props.config.variants)) {
+        for (const [key, variant] of Object.entries(config.variants)) {
             if (!variant) continue;
 
             let width: number = metadata.width;
@@ -59,38 +55,24 @@ export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
                 })
                 .toBuffer();
 
-            const record = await mediaDB.create({
-                pb: props.pb,
-                value: {
-                    variant: key,
-                    file: new Blob([processed], { type: "image/webp" }),
-                    type: "image",
-                    info: {
-                        alt: props.config.alt || key,
-                        width: width,
-                        height: height,
-                    },
+            const value: base.ProcessorValue = {
+                variant: key,
+                buffer: processed,
+                mimeType: "image/webp",
+                type: "image",
+                info: {
+                    alt: config.alt || key,
+                    width: width,
+                    height: height,
                 },
-            });
-            if (!record) continue;
+            };
 
-            media.push(record);
+            const result = await func(value);
+            if (!result) {
+                return false;
+            }
         }
 
-        if (media.length == 0) return null;
-
-        const mediaVariant = await mediaVariantsDB.create({
-            pb: props.pb,
-            value: {
-                media: media.map((record) => record.id),
-            },
-        });
-        if (!mediaVariant) return null;
-
-        mediaVariant.expand = {
-            media,
-        };
-
-        return mediaVariant;
+        return true;
     }
 }

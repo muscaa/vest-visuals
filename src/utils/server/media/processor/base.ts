@@ -1,16 +1,13 @@
-import PocketBase from "pocketbase";
 import { ProcessorConfig } from "@/types/media/processor/base";
-import { FormDataJson } from "@/types/api/media/upload";
-import { MediaVariantsRecord } from "@/types/db/mediaVariants";
+import { MediaTypeInfo } from "@/types/media/info";
 
-export interface UploadProps<V extends ProcessorConfig> {
-    pb?: PocketBase;
+export type ProcessorValue = MediaTypeInfo & {
+    variant: string;
     buffer: Buffer;
-    json: FormDataJson;
-    config: V;
-}
+    mimeType: string;
+};
 
 export abstract class Processor<V extends ProcessorConfig> {
 
-    abstract upload(props: UploadProps<V>): Promise<MediaVariantsRecord | null>;
+    abstract process(buffer: Buffer, config: V, func: (value: ProcessorValue) => Promise<boolean>): Promise<boolean>;
 }

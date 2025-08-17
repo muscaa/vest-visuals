@@ -13,7 +13,6 @@ export namespace formData {
 }
 
 export type FileConfig = {
-    variant: string;
     processor: MediaProcessor;
 };
 
