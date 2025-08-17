@@ -52,7 +52,9 @@ export async function get(props: GetProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
+        const result = await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
+        format(result);
+        return result;
     } catch (error) {}
 
     return null;
@@ -67,7 +69,9 @@ export async function getList(props: GetListProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).getFullList<Record>(props.options);
+        const result = await props.pb.collection(COLLECTION_NAME).getFullList<Record>(props.options);
+        result.forEach(format);
+        return result;
     } catch (error) {}
 
     return null;
@@ -82,7 +86,9 @@ export async function create(props: CreateProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).create<Record>(props.value);
+        const result = await props.pb.collection(COLLECTION_NAME).create<Record>(props.value);
+        format(result);
+        return result;
     } catch (error) {}
 
     return null;
@@ -98,12 +104,14 @@ export async function update(props: UpdateProps) {
     props.pb ||= await createClientDB();
 
     try {
-        return await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
+        const result = await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
             category: props.value.category,
             mediaGroups: props.value.mediaGroups?.set,
             "mediaGroups+": props.value.mediaGroups?.append,
             "mediaGroups-": props.value.mediaGroups?.remove,
         });
+        format(result);
+        return result;
     } catch (error) {}
 
     return null;
