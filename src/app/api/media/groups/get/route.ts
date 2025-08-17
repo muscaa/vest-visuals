@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         pb,
         id: json.id,
         options: {
-            expand: "mediaContents",
+            expand: "mediaContents,mediaContents.mediaVariants",
         },
     });
     if (result == null) {
@@ -48,7 +48,15 @@ export async function POST(request: NextRequest) {
             id: result.id,
             mediaContents: result.expand!.mediaContents!.map((content) => ({
                 id: content.id,
-                mediaVariants: content.mediaVariants,
+                mediaVariants: content.expand!.mediaVariants!.map((variant) => ({
+                    id: variant.id,
+                    variant: variant.variant,
+                    file: variant.file,
+                    type: variant.type,
+                    info: variant.info,
+                    created: variant.created,
+                    updated: variant.updated,
+                })),
                 created: content.created,
                 updated: content.updated,
             })),

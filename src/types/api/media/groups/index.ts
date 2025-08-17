@@ -1,8 +1,8 @@
-import { MediaContent } from "../contents";
+import { FullMediaContent } from "../contents";
 
 interface BaseMediaGroup<T extends "min" | "full"> {
     id: string;
-    mediaContents: T extends "min" ? string[] : MediaContent[];
+    mediaContents: T extends "min" ? string[] : FullMediaContent[];
     created: string;
     updated: string;
 }

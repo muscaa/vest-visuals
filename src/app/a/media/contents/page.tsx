@@ -15,6 +15,8 @@ import { useMediaContents } from "@/hooks/useMediaContents";
 import { FullMediaContent } from "@/types/api/media/contents";
 import { FullMediaGroup } from "@/types/api/media/groups";
 import { Loading } from "@/components/status";
+import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
+import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
 
 interface ListEntryProps {
     value: FullMediaContent;
@@ -90,16 +92,16 @@ export function MediaContentsList(props: MediaContentsListProps) {
             onSelect={handleSelect}
             entry={(value) => <ListEntry value={value} />}
         >
-            {/* <MediaGroupsCreateDialog
+            <MediaContentsUploadDialog
                 onCreate={handleUpdate}
                 parent={props.parent}
-            > */}
-            <Button
-                className="grow"
             >
-                New
-            </Button>
-            {/* </MediaGroupsCreateDialog> */}
+                <Button
+                    className="grow"
+                >
+                    Upload
+                </Button>
+            </MediaContentsUploadDialog>
             <Button
                 variant="secondary"
                 disabled={!selected}
@@ -108,18 +110,18 @@ export function MediaContentsList(props: MediaContentsListProps) {
             >
                 Open
             </Button>
-            {/* <MediaGroupsDeleteDialog
+            <MediaContentsDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}
-            > */}
-            <Button
-                variant="secondary"
-                disabled={!selected}
-                className="grow"
             >
-                Delete
-            </Button>
-            {/* </MediaGroupsDeleteDialog> */}
+                <Button
+                    variant="secondary"
+                    disabled={!selected}
+                    className="grow"
+                >
+                    Delete
+                </Button>
+            </MediaContentsDeleteDialog>
         </List>
     );
 }

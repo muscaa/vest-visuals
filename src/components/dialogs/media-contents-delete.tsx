@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { MediaContent } from "@/types/api/media/contents";
+import { FullMediaContent } from "@/types/api/media/contents";
 import { useMediaContents } from "@/hooks/useMediaContents";
 
 interface CommonProps {
@@ -10,7 +10,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: MediaContent;
+    value: FullMediaContent;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -43,7 +43,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: MediaContent;
+    value?: FullMediaContent;
 }
 
 export function MediaContentsDeleteDialog(props: Props) {

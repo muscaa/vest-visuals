@@ -1,4 +1,4 @@
-import { MediaContent } from "@/types/api/media/contents";
+import { FullMediaContent } from "@/types/api/media/contents";
 
 // POST
 
@@ -8,5 +8,5 @@ export type PostRequest = {
 
 export type PostResponse = {
     success: boolean;
-    value?: MediaContent;
+    value?: FullMediaContent;
 };

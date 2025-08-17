@@ -14,7 +14,7 @@ interface Props {
     parent?: FullMediaGroup;
 }
 
-export function MediaGroupsCreateDialog(props: Props) {
+export function MediaContentsUploadDialog(props: Props) {
     const [files, setFiles] = useState<File[]>([]);
     const { uploadMediaContents } = useMediaContents();
     const { updateMediaGroup } = useMediaGroups();
