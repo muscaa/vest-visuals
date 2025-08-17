@@ -21,6 +21,14 @@ export type Value = {
     mediaVariants: newMediaVariantsDB.Value[];
 };
 
+export type ValueUpdate = {
+    mediaVariants?: {
+        //set?: newMediaVariantsDB.Value[];
+        append?: newMediaVariantsDB.Value[];
+        //remove?: newMediaVariantsDB.Value[];
+    };
+};
+
 export const COLLECTION_NAME = "newMediaContents";
 
 export function format(record: Record) {
@@ -82,6 +90,33 @@ export async function create(props: CreateProps) {
 
         const result = await props.pb.collection(COLLECTION_NAME).create<Record>({
             mediaVariants: results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
+        });
+        format(result);
+        return result;
+    } catch (error) {}
+
+    return null;
+}
+
+interface UpdateProps {
+    pb?: PocketBase;
+    id: string;
+    value: ValueUpdate;
+}
+
+export async function update(props: UpdateProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        const results = await Promise.all(props.value.mediaVariants!.append!.map((value) => newMediaVariantsDB.create({
+            pb: props.pb,
+            value,
+        })));
+
+        const result = await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
+            //mediaVariants: props.value.mediaContents?.set,
+            "mediaVariants+": results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
+            //"mediaVariants-": props.value.mediaContents?.remove,
         });
         format(result);
         return result;

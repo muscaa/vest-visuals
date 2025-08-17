@@ -3,6 +3,7 @@ import { createClientDB } from "@/utils/server/db";
 import { server_config } from "@/utils/server/config";
 import { BaseRecord } from "@/types/db";
 import { MediaTypeInfo } from "@/types/media/info";
+import { Blob } from "buffer";
 
 export type Record = BaseRecord & {
     variant: string;
