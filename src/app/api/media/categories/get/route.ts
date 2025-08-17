@@ -32,6 +32,9 @@ export async function POST(request: NextRequest) {
     const result = await newMediaCategoriesDB.get({
         pb,
         id: json.id,
+        options: {
+            expand: "mediaGroups",
+        },
     });
     if (result == null) {
         return responseJSON<types.PostResponse>(404, {
@@ -44,7 +47,12 @@ export async function POST(request: NextRequest) {
         value: {
             id: result.id,
             category: result.category,
-            mediaGroups: result.mediaGroups,
+            mediaGroups: result.expand!.mediaGroups!.map((group) => ({
+                id: group.id,
+                mediaContents: group.mediaContents,
+                created: group.created,
+                updated: group.updated,
+            })),
             created: result.created,
             updated: result.updated,
         },
