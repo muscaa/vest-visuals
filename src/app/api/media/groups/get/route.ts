@@ -32,6 +32,9 @@ export async function POST(request: NextRequest) {
     const result = await newMediaGroupsDB.get({
         pb,
         id: json.id,
+        options: {
+            expand: "mediaContents",
+        },
     });
     if (result == null) {
         return responseJSON<types.PostResponse>(404, {
@@ -43,7 +46,12 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            mediaContents: result.mediaContents,
+            mediaContents: result.expand!.mediaContents!.map((content) => ({
+                id: content.id,
+                mediaVariants: content.mediaVariants,
+                created: content.created,
+                updated: content.updated,
+            })),
             created: result.created,
             updated: result.updated,
         },
