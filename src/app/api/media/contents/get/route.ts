@@ -3,7 +3,7 @@ import * as types from "@/types/api/media/contents/get";
 import {
     createClientDB,
     usersDB,
-    newMediaContentsDB,
+    mediaContentsDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
     const user = await usersDB.get({
         pb,
         cookies: request.cookies,
-        redirect: false,
     });
     if (!user) {
         return responseJSON<types.PostResponse>(401, {
@@ -29,7 +28,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await newMediaContentsDB.get({
+    const result = await mediaContentsDB.get({
         pb,
         id: json.id,
         options: {

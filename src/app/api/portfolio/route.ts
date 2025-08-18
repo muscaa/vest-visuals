@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import * as types from "@/types/api/portfolio";
-import { newMediaCategoriesDB } from "@/utils/server/db";
+import { mediaCategoriesDB } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
 
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await newMediaCategoriesDB.getByCategory({
+    const result = await mediaCategoriesDB.getByCategory({
         category: json.category,
         options: {
             expand: "mediaGroups,mediaGroups.mediaContents,mediaGroups.mediaContents.mediaVariants",

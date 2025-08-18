@@ -3,7 +3,7 @@ import * as types from "@/types/api/media/contents/upload";
 import {
     createClientDB,
     usersDB,
-    newMediaContentsDB,
+    mediaContentsDB,
 } from "@/utils/server/db";
 import { safeJSON } from "@/utils/server/request";
 import { responseJSON } from "@/utils/server/response";
@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     const user = await usersDB.get({
         pb,
         cookies: request.cookies,
-        redirect: false,
     });
     if (!user) {
         return responseJSON<types.PostResponse>(401, {
@@ -42,7 +41,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result: newMediaContentsDB.Record[] = [];
+    const result: mediaContentsDB.Record[] = [];
     for (let i = 0; i < json.files.length; i++) {
         const file = json.files[i];
         const config = json.configs[i];
@@ -55,13 +54,13 @@ export async function POST(request: NextRequest) {
         const processor = new Processor();
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        let mediaContent: newMediaContentsDB.Record | undefined;
+        let mediaContent: mediaContentsDB.Record | undefined;
         await processor.process(
             buffer,
             config.processor,
             async (value) => {
                 if (!mediaContent) {
-                    const result = await newMediaContentsDB.create({
+                    const result = await mediaContentsDB.create({
                         pb,
                         value: {
                             mediaVariants: [
@@ -80,7 +79,7 @@ export async function POST(request: NextRequest) {
 
                     mediaContent = result;
                 } else {
-                    const result = await newMediaContentsDB.update({
+                    const result = await mediaContentsDB.update({
                         pb,
                         id: mediaContent.id,
                         value: {

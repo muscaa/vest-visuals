@@ -12,7 +12,7 @@ export const metadata = createMetadata({
 });
 
 export default async function Layout(props: LayoutProps) {
-    const user = await usersDB.get({ redirect: false });
+    const user = await usersDB.get();
     
     if (user) {
         redirect("/a");

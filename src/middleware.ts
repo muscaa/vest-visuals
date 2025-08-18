@@ -14,11 +14,10 @@ export async function middleware(request: NextRequest) {
     }
 
     const user = await usersDB.get({
-        redirect: false,
         cookies: request.cookies,
     });
 
-    if (user == null) {
+    if (!user) {
         return NextResponse.redirect(getUrlString(request, "/login"));
     }
 
