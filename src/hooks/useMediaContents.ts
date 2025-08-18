@@ -42,8 +42,7 @@ export function useMediaContents() {
 
             const { data } = await api_routes.media.contents.upload._.postForm(formData);
 
-            if (!data.success) throw new Error("Failed to upload media contents");
-            if (!data.values) throw new Error("No media contents returned");
+            if (!data.success) throw new Error(data.message);
 
             return data.values;
         },
@@ -54,7 +53,7 @@ export function useMediaContents() {
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.contents.remove._.post(props);
 
-            if (!data.success) throw new Error("Failed to remove media content");
+            if (!data.success) throw new Error(data.message);
 
             return data.success;
         },

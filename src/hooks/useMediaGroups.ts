@@ -39,8 +39,7 @@ export function useMediaGroups() {
         mutationFn: async (props: types_create.PostRequest) => {
             const { data } = await api_routes.media.groups.create._.post(props);
 
-            if (!data.success) throw new Error("Failed to create media group");
-            if (!data.value) throw new Error("No media group returned");
+            if (!data.success) throw new Error(data.message);
 
             return data.value;
         },
@@ -51,7 +50,7 @@ export function useMediaGroups() {
         mutationFn: async (props: types_update.PostRequest) => {
             const { data } = await api_routes.media.groups.update._.post(props);
 
-            if (!data.success) throw new Error("Failed to update media group");
+            if (!data.success) throw new Error(data.message);
 
             return data.success;
         },
@@ -62,7 +61,7 @@ export function useMediaGroups() {
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.groups.remove._.post(props);
 
-            if (!data.success) throw new Error("Failed to remove media group");
+            if (!data.success) throw new Error(data.message);
 
             return data.success;
         },

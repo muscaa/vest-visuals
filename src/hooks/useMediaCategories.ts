@@ -39,8 +39,7 @@ export function useMediaCategories() {
         mutationFn: async (props: types_create.PostRequest) => {
             const { data } = await api_routes.media.categories.create._.post(props);
 
-            if (!data.success) throw new Error("Failed to create media category");
-            if (!data.value) throw new Error("No media category returned");
+            if (!data.success) throw new Error(data.message);
 
             return data.value;
         },
@@ -51,7 +50,7 @@ export function useMediaCategories() {
         mutationFn: async (props: types_update.PostRequest) => {
             const { data } = await api_routes.media.categories.update._.post(props);
 
-            if (!data.success) throw new Error("Failed to update media category");
+            if (!data.success) throw new Error(data.message);
 
             return data.success;
         },
@@ -62,7 +61,7 @@ export function useMediaCategories() {
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.categories.remove._.post(props);
 
-            if (!data.success) throw new Error("Failed to remove media category");
+            if (!data.success) throw new Error(data.message);
 
             return data.success;
         },
