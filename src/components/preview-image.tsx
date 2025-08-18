@@ -7,16 +7,16 @@ import { Reveal } from "@/components/animations/reveal";
 import { Img } from "@/components/snippets";
 
 export interface PreviewItem {
-    alt: string;
+    alt?: string;
     preview: {
         src: string;
-        width: number;
-        height: number;
+        width?: number;
+        height?: number;
     };
-    display: {
+    full: {
         src: string;
-        width: number;
-        height: number;
+        width?: number;
+        height?: number;
     };
 }
 
@@ -53,10 +53,10 @@ export function PreviewImage(props: PreviewImageProps) {
                         >
                             <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
                                 <Img
-                                    src={props.item.display.src}
+                                    src={props.item.full.src}
                                     alt={props.item.alt}
-                                    width={props.item.display.width}
-                                    height={props.item.display.height}
+                                    width={props.item.full.width}
+                                    height={props.item.full.height}
                                     onClick={(e) => e.stopPropagation()}
                                     className="object-contain w-auto h-auto max-w-full max-h-full"
                                 />

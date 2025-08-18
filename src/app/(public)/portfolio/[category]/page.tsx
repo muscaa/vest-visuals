@@ -3,49 +3,12 @@
 import { Main } from "@/components/main";
 import { Masonry } from "react-plock";
 import { useParams } from "next/navigation";
-import {
-    PreviewImage,
-    PreviewItem
-} from "@/components/preview-image";
-import * as types from "@/types/api/media";
-import { useQuery } from "@tanstack/react-query";
-import { api_client } from "@/utils/client/axios";
+import { PreviewImage } from "@/components/preview-image";
+import { usePortfolio } from "@/hooks/usePortfolio";
 
 export default function Page() {
     const { category } = useParams<{ category: string; }>();
-    const { data } = useQuery({
-        queryKey: ["portfolio", category],
-        queryFn: async () => {
-            const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/media", {
-                category,
-                variants: ["small", "large"],
-            });
-
-            if (!data.success) return [];
-
-            return data.values
-                ?.map((value) => {
-                    const small = value.small!;
-                    const large = value.large!;
-
-                    const item: PreviewItem = {
-                        alt: small.info?.alt,
-                        preview: {
-                            src: small.file,
-                            width: small.info?.width,
-                            height: small.info?.height,
-                        },
-                        display: {
-                            src: large.file,
-                            width: large.info?.width,
-                            height: large.info?.height,
-                        },
-                    };
-
-                    return item;
-                });
-        },
-    });
+    const { data } = usePortfolio(category);
 
     return (
         <Main>
