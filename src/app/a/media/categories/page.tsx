@@ -29,10 +29,12 @@ function ListEntry(props: ListEntryProps) {
                 <h4>{props.value.category}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
-                    <div className="flex flex-col grow">
+                    <div className="flex flex-col gap-2 grow">
                         <p>{props.value.id}</p>
-                        <h6>Updated: {myDate(props.value.updated)}</h6>
-                        <h6>Created: {myDate(props.value.created)}</h6>
+                        <div className="flex flex-col">
+                            <h6>Updated: {myDate(props.value.updated)}</h6>
+                            <h6>Created: {myDate(props.value.created)}</h6>
+                        </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
                         <p>{props.value.mediaGroups?.length || "no"}</p>
