@@ -18,7 +18,7 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
-    const [all, setAll] = useState(true);
+    const [all, setAll] = useState(false);
     const { removeMediaGroups } = useMediaGroups();
     const { removeMediaContents } = useMediaContents();
 
@@ -35,7 +35,7 @@ function ValidDialog(props: ValidProps) {
     };
 
     const handleReset = () => {
-        setAll(true);
+        setAll(false);
     };
 
     return (

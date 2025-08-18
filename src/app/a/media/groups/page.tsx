@@ -18,9 +18,17 @@ import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-creat
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Loading } from "@/components/status";
 import { useMediaContents } from "@/hooks/useMediaContents";
+import {
+    ChevronUp,
+    ChevronDown,
+} from "lucide-react";
+import { useMediaCategories } from "@/hooks/useMediaCategories";
 
 interface ListEntryProps {
     value: MediaGroup;
+    movable?: boolean;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -53,6 +61,30 @@ function ListEntry(props: ListEntryProps) {
                     </div>
                 </div>
             </div>
+            {
+                props.movable && (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <Button
+                            size="icon"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                props.onMoveUp?.();
+                            }}
+                        >
+                            <ChevronUp />
+                        </Button>
+                        <Button
+                            size="icon"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                props.onMoveDown?.();
+                            }}
+                        >
+                            <ChevronDown />
+                        </Button>
+                    </div>
+                )
+            }
         </div>
     );
 }
@@ -66,6 +98,7 @@ interface MediaGroupsListProps {
 export function MediaGroupsList(props: MediaGroupsListProps) {
     const router = useRouter();
     const [selected, setSelected] = useState<MediaGroup>();
+    const { updateMediaCategory } = useMediaCategories();
 
     const handleSelect = (value: MediaGroup) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -77,12 +110,55 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
         props.refetch?.();
     };
 
+    const handleMoveUp = async (index: number) => {
+        if (!props.parent || props.data.length <= 1 || index <= 0) return;
+
+        const order = props.data.map((group) => group.id);
+        const temp = order[index - 1];
+        order[index - 1] = order[index];
+        order[index] = temp;
+
+        await updateMediaCategory.mutateAsync({
+            id: props.parent.id,
+            mediaGroups: {
+                set: order,
+            },
+        });
+
+        handleUpdate();
+    };
+
+    const handleMoveDown = async (index: number) => {
+        if (!props.parent || props.data.length <= 1 || index >= props.data.length - 1) return;
+
+        const order = props.data.map((group) => group.id);
+        const temp = order[index + 1];
+        order[index + 1] = order[index];
+        order[index] = temp;
+
+        await updateMediaCategory.mutateAsync({
+            id: props.parent.id,
+            mediaGroups: {
+                set: order,
+            },
+        });
+
+        handleUpdate();
+    };
+
     return (
         <List
             data={props.data}
             isSelected={(value) => selected?.id == value.id}
             onSelect={handleSelect}
-            entry={(value) => <ListEntry value={value} />}
+            entry={(value, index) => (
+                <ListEntry
+                    value={value}
+                    movable={props.parent != null}
+                    onMoveUp={() => handleMoveUp(index)}
+                    onMoveDown={() => handleMoveDown(index)}
+                />
+            )}
         >
             <MediaGroupsCreateDialog
                 onCreate={handleUpdate}
@@ -127,8 +203,8 @@ export default function Page() {
             {
                 data && (
                     <MediaGroupsList
-                    data={data}
-                    refetch={refetch}
+                        data={data}
+                        refetch={refetch}
                     />
                 ) || (
                     <Loading />

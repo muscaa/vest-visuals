@@ -17,9 +17,17 @@ import { FullMediaGroup } from "@/types/api/media/groups";
 import { Loading } from "@/components/status";
 import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
 import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
+import {
+    ChevronUp,
+    ChevronDown,
+} from "lucide-react";
+import { useMediaGroups } from "@/hooks/useMediaGroups";
 
 interface ListEntryProps {
     value: FullMediaContent;
+    movable?: boolean;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -65,6 +73,30 @@ function ListEntry(props: ListEntryProps) {
                     </div>
                 </div>
             </div>
+            {
+                props.movable && (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <Button
+                            size="icon"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                props.onMoveUp?.();
+                            }}
+                        >
+                            <ChevronUp />
+                        </Button>
+                        <Button
+                            size="icon"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                props.onMoveDown?.();
+                            }}
+                        >
+                            <ChevronDown />
+                        </Button>
+                    </div>
+                )
+            }
         </div>
     );
 }
@@ -78,6 +110,7 @@ interface MediaContentsListProps {
 export function MediaContentsList(props: MediaContentsListProps) {
     const router = useRouter();
     const [selected, setSelected] = useState<FullMediaContent>();
+    const { updateMediaGroup } = useMediaGroups();
 
     const handleSelect = (value: FullMediaContent) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -89,12 +122,55 @@ export function MediaContentsList(props: MediaContentsListProps) {
         props.refetch?.();
     };
 
+    const handleMoveUp = async (index: number) => {
+        if (!props.parent || props.data.length <= 1 || index <= 0) return;
+
+        const order = props.data.map((content) => content.id);
+        const temp = order[index - 1];
+        order[index - 1] = order[index];
+        order[index] = temp;
+
+        await updateMediaGroup.mutateAsync({
+            id: props.parent.id,
+            mediaContents: {
+                set: order,
+            },
+        });
+
+        handleUpdate();
+    };
+
+    const handleMoveDown = async (index: number) => {
+        if (!props.parent || props.data.length <= 1 || index >= props.data.length - 1) return;
+
+        const order = props.data.map((content) => content.id);
+        const temp = order[index + 1];
+        order[index + 1] = order[index];
+        order[index] = temp;
+
+        await updateMediaGroup.mutateAsync({
+            id: props.parent.id,
+            mediaContents: {
+                set: order,
+            },
+        });
+
+        handleUpdate();
+    };
+
     return (
         <List
             data={props.data}
             isSelected={(value) => selected?.id == value.id}
             onSelect={handleSelect}
-            entry={(value) => <ListEntry value={value} />}
+            entry={(value, index) => (
+                <ListEntry
+                    value={value}
+                    movable={props.parent != null}
+                    onMoveUp={() => handleMoveUp(index)}
+                    onMoveDown={() => handleMoveDown(index)}
+                />
+            )}
         >
             <MediaContentsUploadDialog
                 onCreate={handleUpdate}

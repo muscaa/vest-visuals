@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 interface ListProps<V> {
     data: V[];
-    entry: (value: V) => React.ReactNode;
+    entry: (value: V, index: number) => React.ReactNode;
     isSelected?: (value: V) => boolean;
     onSelect?: (value: V) => void;
     children?: React.ReactNode;
@@ -42,7 +42,7 @@ export function List<V>(props: ListProps<V>) {
                                         className: `${isSelected(value) ? "border-accent-foreground dark:border-accent-foreground" : ""}`
                                     }))}
                                 >
-                                    {props.entry(value)}
+                                    {props.entry(value, index)}
                                 </div>
                             ))
                         }
