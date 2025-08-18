@@ -18,6 +18,7 @@ import * as api_media_contents from "@/types/api/media/contents";
 import * as api_media_contents_get from "@/types/api/media/contents/get";
 import * as api_media_contents_upload from "@/types/api/media/contents/upload";
 import * as api_media_contents_remove from "@/types/api/media/contents/remove";
+import * as api_portfolio from "@/types/api/portfolio";
 
 export const api_client = createClientAxios({
     baseURL: "/api",
@@ -67,5 +68,8 @@ export const api_routes = routes({
                 _: endpoint<api_media_contents_remove.PostResponse, api_media_contents_remove.PostRequest>(api_client),
             }),
         }),
+    }),
+    portfolio: route("portfolio", {
+        _: endpoint<api_portfolio.PostResponse, api_portfolio.PostRequest>(api_client),
     }),
 });
