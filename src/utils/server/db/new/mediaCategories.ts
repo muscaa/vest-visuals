@@ -60,6 +60,25 @@ export async function get(props: GetProps) {
     return null;
 }
 
+interface GetByCategoryProps {
+    pb?: PocketBase;
+    category: string;
+    options?: RecordOptions;
+}
+
+export async function getByCategory(props: GetByCategoryProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        const result = await props.pb.collection(COLLECTION_NAME)
+            .getFirstListItem<Record>(`category="${props.category}"`, props.options);
+        format(result);
+        return result;
+    } catch (error) {}
+
+    return null;
+}
+
 interface GetListProps {
     pb?: PocketBase;
     options?: RecordFullListOptions;

@@ -1,0 +1,19 @@
+export type PortfolioVariant = {
+    src: string;
+};
+
+export type PortfolioEntry = {
+    preview: PortfolioVariant;
+    full: PortfolioVariant;
+};
+
+// POST
+
+export type PostRequest = {
+    category: string;
+};
+
+export type PostResponse = {
+    success: boolean;
+    values?: PortfolioEntry[];
+};
