@@ -43,6 +43,8 @@ export async function POST(request: NextRequest) {
         });
     }
 
+    console.log("Uploading files: ", json.files.length);
+
     const result: mediaContentsDB.Record[] = [];
     for (let i = 0; i < json.files.length; i++) {
         const file = json.files[i];
