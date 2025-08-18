@@ -4,9 +4,6 @@ import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/he
 import { headers } from "next/headers";
 
 export * as usersDB from "@/utils/server/db/users";
-export * as mediaDB from "@/utils/server/db/old/media";
-export * as mediaVariantsDB from "@/utils/server/db/old/mediaVariants";
-export * as mediaGroupsDB from "@/utils/server/db/old/mediaGroups";
 
 export * as newMediaVariantsDB from "@/utils/server/db/new/mediaVariants";
 export * as newMediaContentsDB from "@/utils/server/db/new/mediaContents";
