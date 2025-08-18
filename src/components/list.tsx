@@ -12,7 +12,8 @@ interface ListProps<V> {
 }
 
 export function List<V>(props: ListProps<V>) {
-    const [selected, setSelected] = props.onSelect ? [undefined, props.onSelect] : useState<V>();
+    const [selected0, setSelected0] = useState<V>();
+    const [selected, setSelected] = props.onSelect ? [undefined, props.onSelect] : [selected0, setSelected0];
 
     const isSelected = props.isSelected ?? ((value: V) => selected == value);
 
