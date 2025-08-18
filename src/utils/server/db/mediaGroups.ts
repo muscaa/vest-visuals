@@ -29,7 +29,7 @@ export type ValueUpdate = {
     };
 };
 
-export const COLLECTION_NAME = "newMediaGroups";
+export const COLLECTION_NAME = "mediaGroups";
 
 export function format(record: Record) {
     if (!record.expand || !record.expand.mediaContents) return;

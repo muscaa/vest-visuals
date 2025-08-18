@@ -32,7 +32,7 @@ export type ValueUpdate = {
     };
 };
 
-export const COLLECTION_NAME = "newMediaCategories";
+export const COLLECTION_NAME = "mediaCategories";
 
 export function format(record: Record) {
     if (!record.expand || !record.expand.mediaGroups) return;

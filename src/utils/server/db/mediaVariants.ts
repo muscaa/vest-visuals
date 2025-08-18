@@ -15,7 +15,7 @@ export type Value = {
     file: File | Blob;
 } & MediaTypeInfo;
 
-export const COLLECTION_NAME = "newMediaVariants";
+export const COLLECTION_NAME = "mediaVariants";
 
 export function format(record: Record) {
     record.file = `${server_config.env.S3_URL}/public/${record.collectionId}/${record.id}/${record.file}`;
