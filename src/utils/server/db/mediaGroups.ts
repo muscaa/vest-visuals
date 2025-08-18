@@ -5,40 +5,37 @@ import {
 } from "pocketbase";
 import {
     createClientDB,
-    newMediaGroupsDB,
+    mediaContentsDB,
 } from "@/utils/server/db";
-import { BaseRecord } from "@/types/db";
+import { BaseRecord } from "./base";
 
 export type Record = BaseRecord & {
-    category: string;
-    mediaGroups: string[];
+    mediaContents: string[];
 
     expand?: {
-        mediaGroups?: newMediaGroupsDB.Record[];
+        mediaContents?: mediaContentsDB.Record[];
     };
 };
 
 export type Value = {
-    category: string;
-    mediaGroups?: string[];
+    mediaContents?: string[];
 };
 
 export type ValueUpdate = {
-    category?: string;
-    mediaGroups?: {
+    mediaContents?: {
         set?: string[];
         append?: string[];
         remove?: string[];
     };
 };
 
-export const COLLECTION_NAME = "newMediaCategories";
+export const COLLECTION_NAME = "newMediaGroups";
 
 export function format(record: Record) {
-    if (!record.expand || !record.expand.mediaGroups) return;
+    if (!record.expand || !record.expand.mediaContents) return;
 
-    for (const mediaGroup of record.expand.mediaGroups) {
-        newMediaGroupsDB.format(mediaGroup);
+    for (const mediaContent of record.expand.mediaContents) {
+        mediaContentsDB.format(mediaContent);
     }
 }
 
@@ -53,25 +50,6 @@ export async function get(props: GetProps) {
 
     try {
         const result = await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
-        format(result);
-        return result;
-    } catch (error) {}
-
-    return null;
-}
-
-interface GetByCategoryProps {
-    pb?: PocketBase;
-    category: string;
-    options?: RecordOptions;
-}
-
-export async function getByCategory(props: GetByCategoryProps) {
-    props.pb ||= await createClientDB();
-
-    try {
-        const result = await props.pb.collection(COLLECTION_NAME)
-            .getFirstListItem<Record>(`category="${props.category}"`, props.options);
         format(result);
         return result;
     } catch (error) {}
@@ -124,10 +102,9 @@ export async function update(props: UpdateProps) {
 
     try {
         const result = await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
-            category: props.value.category,
-            mediaGroups: props.value.mediaGroups?.set,
-            "mediaGroups+": props.value.mediaGroups?.append,
-            "mediaGroups-": props.value.mediaGroups?.remove,
+            mediaContents: props.value.mediaContents?.set,
+            "mediaContents+": props.value.mediaContents?.append,
+            "mediaContents-": props.value.mediaContents?.remove,
         });
         format(result);
         return result;

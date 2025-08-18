@@ -5,37 +5,37 @@ import {
 } from "pocketbase";
 import {
     createClientDB,
-    newMediaContentsDB,
+    mediaVariantsDB,
 } from "@/utils/server/db";
-import { BaseRecord } from "@/types/db";
+import { BaseRecord } from "./base";
 
 export type Record = BaseRecord & {
-    mediaContents: string[];
+    mediaVariants: string[];
 
     expand?: {
-        mediaContents?: newMediaContentsDB.Record[];
+        mediaVariants?: mediaVariantsDB.Record[];
     };
 };
 
 export type Value = {
-    mediaContents?: string[];
+    mediaVariants: mediaVariantsDB.Value[];
 };
 
 export type ValueUpdate = {
-    mediaContents?: {
-        set?: string[];
-        append?: string[];
-        remove?: string[];
+    mediaVariants?: {
+        //set?: newMediaVariantsDB.Value[];
+        append?: mediaVariantsDB.Value[];
+        //remove?: newMediaVariantsDB.Value[];
     };
 };
 
-export const COLLECTION_NAME = "newMediaGroups";
+export const COLLECTION_NAME = "newMediaContents";
 
 export function format(record: Record) {
-    if (!record.expand || !record.expand.mediaContents) return;
+    if (!record.expand || !record.expand.mediaVariants) return;
 
-    for (const mediaContent of record.expand.mediaContents) {
-        newMediaContentsDB.format(mediaContent);
+    for (const mediaVariant of record.expand.mediaVariants) {
+        mediaVariantsDB.format(mediaVariant);
     }
 }
 
@@ -83,7 +83,14 @@ export async function create(props: CreateProps) {
     props.pb ||= await createClientDB();
 
     try {
-        const result = await props.pb.collection(COLLECTION_NAME).create<Record>(props.value);
+        const results = await Promise.all(props.value.mediaVariants.map((value) => mediaVariantsDB.create({
+            pb: props.pb,
+            value,
+        })));
+
+        const result = await props.pb.collection(COLLECTION_NAME).create<Record>({
+            mediaVariants: results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
+        });
         format(result);
         return result;
     } catch (error) {}
@@ -101,10 +108,15 @@ export async function update(props: UpdateProps) {
     props.pb ||= await createClientDB();
 
     try {
+        const results = await Promise.all(props.value.mediaVariants!.append!.map((value) => mediaVariantsDB.create({
+            pb: props.pb,
+            value,
+        })));
+
         const result = await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
-            mediaContents: props.value.mediaContents?.set,
-            "mediaContents+": props.value.mediaContents?.append,
-            "mediaContents-": props.value.mediaContents?.remove,
+            //mediaVariants: props.value.mediaContents?.set,
+            "mediaVariants+": results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
+            //"mediaVariants-": props.value.mediaContents?.remove,
         });
         format(result);
         return result;
@@ -122,13 +134,14 @@ export async function remove(props: RemoveProps) {
     props.pb ||= await createClientDB();
 
     try {
-        const batch = props.pb.createBatch();
-        for (const id of props.ids) {
-            batch.collection(COLLECTION_NAME).delete(id);
-        }
+        const listResult = await props.pb.collection(COLLECTION_NAME).getFullList<Record>({
+            filter: props.ids.map((id) => `id="${id}"`).join("||"),
+        });
 
-        const result = await batch.send();
-        return result != null;
+        return await mediaVariantsDB.remove({
+            pb: props.pb,
+            ids: listResult.flatMap((content) => content.mediaVariants || []),
+        });
     } catch (error) {}
 
     return null;

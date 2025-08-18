@@ -5,37 +5,40 @@ import {
 } from "pocketbase";
 import {
     createClientDB,
-    newMediaVariantsDB,
+    mediaGroupsDB,
 } from "@/utils/server/db";
-import { BaseRecord } from "@/types/db";
+import { BaseRecord } from "./base";
 
 export type Record = BaseRecord & {
-    mediaVariants: string[];
+    category: string;
+    mediaGroups: string[];
 
     expand?: {
-        mediaVariants?: newMediaVariantsDB.Record[];
+        mediaGroups?: mediaGroupsDB.Record[];
     };
 };
 
 export type Value = {
-    mediaVariants: newMediaVariantsDB.Value[];
+    category: string;
+    mediaGroups?: string[];
 };
 
 export type ValueUpdate = {
-    mediaVariants?: {
-        //set?: newMediaVariantsDB.Value[];
-        append?: newMediaVariantsDB.Value[];
-        //remove?: newMediaVariantsDB.Value[];
+    category?: string;
+    mediaGroups?: {
+        set?: string[];
+        append?: string[];
+        remove?: string[];
     };
 };
 
-export const COLLECTION_NAME = "newMediaContents";
+export const COLLECTION_NAME = "newMediaCategories";
 
 export function format(record: Record) {
-    if (!record.expand || !record.expand.mediaVariants) return;
+    if (!record.expand || !record.expand.mediaGroups) return;
 
-    for (const mediaVariant of record.expand.mediaVariants) {
-        newMediaVariantsDB.format(mediaVariant);
+    for (const mediaGroup of record.expand.mediaGroups) {
+        mediaGroupsDB.format(mediaGroup);
     }
 }
 
@@ -50,6 +53,25 @@ export async function get(props: GetProps) {
 
     try {
         const result = await props.pb.collection(COLLECTION_NAME).getOne<Record>(props.id, props.options);
+        format(result);
+        return result;
+    } catch (error) {}
+
+    return null;
+}
+
+interface GetByCategoryProps {
+    pb?: PocketBase;
+    category: string;
+    options?: RecordOptions;
+}
+
+export async function getByCategory(props: GetByCategoryProps) {
+    props.pb ||= await createClientDB();
+
+    try {
+        const result = await props.pb.collection(COLLECTION_NAME)
+            .getFirstListItem<Record>(`category="${props.category}"`, props.options);
         format(result);
         return result;
     } catch (error) {}
@@ -83,14 +105,7 @@ export async function create(props: CreateProps) {
     props.pb ||= await createClientDB();
 
     try {
-        const results = await Promise.all(props.value.mediaVariants.map((value) => newMediaVariantsDB.create({
-            pb: props.pb,
-            value,
-        })));
-
-        const result = await props.pb.collection(COLLECTION_NAME).create<Record>({
-            mediaVariants: results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
-        });
+        const result = await props.pb.collection(COLLECTION_NAME).create<Record>(props.value);
         format(result);
         return result;
     } catch (error) {}
@@ -108,15 +123,11 @@ export async function update(props: UpdateProps) {
     props.pb ||= await createClientDB();
 
     try {
-        const results = await Promise.all(props.value.mediaVariants!.append!.map((value) => newMediaVariantsDB.create({
-            pb: props.pb,
-            value,
-        })));
-
         const result = await props.pb.collection(COLLECTION_NAME).update<Record>(props.id, {
-            //mediaVariants: props.value.mediaContents?.set,
-            "mediaVariants+": results.flatMap((mediaVariant) => mediaVariant ? [mediaVariant.id] : []),
-            //"mediaVariants-": props.value.mediaContents?.remove,
+            category: props.value.category,
+            mediaGroups: props.value.mediaGroups?.set,
+            "mediaGroups+": props.value.mediaGroups?.append,
+            "mediaGroups-": props.value.mediaGroups?.remove,
         });
         format(result);
         return result;
@@ -134,14 +145,13 @@ export async function remove(props: RemoveProps) {
     props.pb ||= await createClientDB();
 
     try {
-        const listResult = await props.pb.collection(COLLECTION_NAME).getFullList<Record>({
-            filter: props.ids.map((id) => `id="${id}"`).join("||"),
-        });
+        const batch = props.pb.createBatch();
+        for (const id of props.ids) {
+            batch.collection(COLLECTION_NAME).delete(id);
+        }
 
-        return await newMediaVariantsDB.remove({
-            pb: props.pb,
-            ids: listResult.flatMap((content) => content.mediaVariants || []),
-        });
+        const result = await batch.send();
+        return result != null;
     } catch (error) {}
 
     return null;

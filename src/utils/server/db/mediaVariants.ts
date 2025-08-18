@@ -1,9 +1,9 @@
 import PocketBase from "pocketbase";
 import { createClientDB } from "@/utils/server/db";
 import { server_config } from "@/utils/server/config";
-import { BaseRecord } from "@/types/db";
 import { MediaTypeInfo } from "@/types/media/info";
 import { Blob } from "buffer";
+import { BaseRecord } from "./base";
 
 export type Record = BaseRecord & {
     variant: string;
