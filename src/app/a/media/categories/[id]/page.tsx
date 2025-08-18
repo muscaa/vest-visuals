@@ -11,8 +11,8 @@ import {
 
 export default function Page() {
     const params = useParams<{ id: string }>();
-    const { getMediaCategory } = useMediaCategories();
-    const { data, refetch } = getMediaCategory(params.id);
+    const { useMediaCategory } = useMediaCategories();
+    const { data, refetch } = useMediaCategory(params.id);
 
     return (
         <MainAdmin extraClassName="overflow-hidden">

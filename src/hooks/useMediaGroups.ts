@@ -10,7 +10,7 @@ import * as types_update from "@/types/api/media/groups/update";
 import * as types_remove from "@/types/api/media/groups/remove";
 
 export function useMediaGroups() {
-    const getMediaGroups = () => useQuery({
+    const useAllMediaGroups = () => useQuery({
         queryKey: [api_routes.media.groups._.url],
         queryFn: async () => {
             const { data } = await api_routes.media.groups._.post({});
@@ -21,7 +21,7 @@ export function useMediaGroups() {
         },
     });
 
-    const getMediaGroup = (id: string) => useQuery({
+    const useMediaGroup = (id: string) => useQuery({
         queryKey: [api_routes.media.groups.get._.url, id],
         queryFn: async () => {
             const { data } = await api_routes.media.groups.get._.post({
@@ -69,8 +69,8 @@ export function useMediaGroups() {
     });
 
     return {
-        getMediaGroups,
-        getMediaGroup,
+        useAllMediaGroups,
+        useMediaGroup,
         createMediaGroup,
         updateMediaGroup,
         removeMediaGroups,

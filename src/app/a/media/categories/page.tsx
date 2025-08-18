@@ -118,8 +118,8 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
 }
 
 export default function Page() {
-    const { getMediaCategories } = useMediaCategories();
-    const { data, refetch } = getMediaCategories();
+    const { useAllMediaCategories } = useMediaCategories();
+    const { data, refetch } = useAllMediaCategories();
 
     return (
         <MainAdmin extraClassName="overflow-hidden">

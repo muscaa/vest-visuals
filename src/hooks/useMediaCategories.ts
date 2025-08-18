@@ -10,7 +10,7 @@ import * as types_update from "@/types/api/media/categories/update";
 import * as types_remove from "@/types/api/media/categories/remove";
 
 export function useMediaCategories() {
-    const getMediaCategories = () => useQuery({
+    const useAllMediaCategories = () => useQuery({
         queryKey: [api_routes.media.categories._.url],
         queryFn: async () => {
             const { data } = await api_routes.media.categories._.post({});
@@ -21,7 +21,7 @@ export function useMediaCategories() {
         },
     });
 
-    const getMediaCategory = (id: string) => useQuery({
+    const useMediaCategory = (id: string) => useQuery({
         queryKey: [api_routes.media.categories.get._.url, id],
         queryFn: async () => {
             const { data } = await api_routes.media.categories.get._.post({
@@ -69,8 +69,8 @@ export function useMediaCategories() {
     });
 
     return {
-        getMediaCategories,
-        getMediaCategory,
+        useAllMediaCategories,
+        useMediaCategory,
         createMediaCategory,
         updateMediaCategory,
         removeMediaCategories,

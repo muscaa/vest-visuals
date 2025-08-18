@@ -199,8 +199,8 @@ export function MediaContentsList(props: MediaContentsListProps) {
 }
 
 export default function Page() {
-    const { getMediaContents } = useMediaContents();
-    const { data, refetch } = getMediaContents();
+    const { useAllMediaContents } = useMediaContents();
+    const { data, refetch } = useAllMediaContents();
 
     return (
         <MainAdmin extraClassName="overflow-hidden">

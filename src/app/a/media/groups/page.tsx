@@ -32,8 +32,8 @@ interface ListEntryProps {
 }
 
 function ListEntry(props: ListEntryProps) {
-    const { getMediaContent } = useMediaContents();
-    const { data } = getMediaContent(props.value.mediaContents.length > 0 ? props.value.mediaContents[0] : "null");
+    const { useMediaContent } = useMediaContents();
+    const { data } = useMediaContent(props.value.mediaContents.length > 0 ? props.value.mediaContents[0] : "null");
     const image = useMemo(() => data && data.mediaVariants.length > 0 ? data.mediaVariants[0].file : "/placeholder0.png", [data]);
 
     return (
@@ -195,8 +195,8 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
 }
 
 export default function Page() {
-    const { getMediaGroups } = useMediaGroups();
-    const { data, refetch } = getMediaGroups();
+    const { useAllMediaGroups } = useMediaGroups();
+    const { data, refetch } = useAllMediaGroups();
 
     return (
         <MainAdmin extraClassName="overflow-hidden">

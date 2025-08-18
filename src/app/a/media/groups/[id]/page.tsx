@@ -11,8 +11,8 @@ import {
 
 export default function Page() {
     const params = useParams<{ id: string }>();
-    const { getMediaGroup } = useMediaGroups();
-    const { data, refetch } = getMediaGroup(params.id);
+    const { useMediaGroup } = useMediaGroups();
+    const { data, refetch } = useMediaGroup(params.id);
 
     return (
         <MainAdmin extraClassName="overflow-hidden">

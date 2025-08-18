@@ -9,7 +9,7 @@ import * as types_upload from "@/types/api/media/contents/upload";
 import * as types_remove from "@/types/api/media/contents/remove";
 
 export function useMediaContents() {
-    const getMediaContents = () => useQuery({
+    const useAllMediaContents = () => useQuery({
         queryKey: [api_routes.media.contents._.url],
         queryFn: async () => {
             const { data } = await api_routes.media.contents._.post({});
@@ -20,7 +20,7 @@ export function useMediaContents() {
         },
     });
 
-    const getMediaContent = (id: string) => useQuery({
+    const useMediaContent = (id: string) => useQuery({
         queryKey: [api_routes.media.contents.get._.url, id],
         queryFn: async () => {
             const { data } = await api_routes.media.contents.get._.post({
@@ -61,8 +61,8 @@ export function useMediaContents() {
     });
 
     return {
-        getMediaContents,
-        getMediaContent,
+        useAllMediaContents,
+        useMediaContent,
         uploadMediaContents,
         removeMediaContents,
     };
