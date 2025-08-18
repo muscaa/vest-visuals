@@ -23,29 +23,8 @@ interface ListEntryProps {
 }
 
 function ListEntry(props: ListEntryProps) {
-    const image = useMemo(() => {
-        /*if (props.value.expand && props.value.expand.mediaVariants && props.value.expand.mediaVariants.length > 0) {
-            const mediaVariant = props.value.expand.mediaVariants[0];
-
-            if (mediaVariant.expand && mediaVariant.expand.media && mediaVariant.expand.media.length > 0) {
-                const media = mediaVariant.expand.media[0];
-
-                return media.file;
-            }
-        }*/
-
-        return "/placeholder0.png";
-    }, [props.value]);
-
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
-            <Img
-                src={image}
-                alt="Preview"
-                width={128}
-                height={128}
-                className="size-32 object-contain"
-            />
             <div className="flex flex-col gap-1 grow">
                 <h4>{props.value.category}</h4>
                 <Separator />

@@ -17,25 +17,16 @@ import { FullMediaCategory } from "@/types/api/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { Loading } from "@/components/status";
+import { useMediaContents } from "@/hooks/useMediaContents";
 
 interface ListEntryProps {
     value: MediaGroup;
 }
 
 function ListEntry(props: ListEntryProps) {
-    const image = useMemo(() => {
-        /*if (props.value.expand && props.value.expand.mediaVariants && props.value.expand.mediaVariants.length > 0) {
-            const mediaVariant = props.value.expand.mediaVariants[0];
-
-            if (mediaVariant.expand && mediaVariant.expand.media && mediaVariant.expand.media.length > 0) {
-                const media = mediaVariant.expand.media[0];
-
-                return media.file;
-            }
-        }*/
-
-        return "/placeholder0.png";
-    }, [props.value]);
+    const { getMediaContent } = useMediaContents();
+    const { data } = getMediaContent(props.value.mediaContents.length > 0 ? props.value.mediaContents[0] : "null");
+    const image = useMemo(() => data && data.mediaVariants.length > 0 ? data.mediaVariants[0].file : "/placeholder0.png", [data]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
@@ -46,12 +37,11 @@ function ListEntry(props: ListEntryProps) {
                 height={128}
                 className="size-32 object-contain"
             />
-            <div className="flex flex-col gap-1 grow">
+            <div className="flex flex-col gap-1 grow text-foreground">
                 <h4>{props.value.id}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col grow">
-                        <p>{props.value.id}</p>
                         <h6>Updated: {myDate(props.value.updated)}</h6>
                         <h6>Created: {myDate(props.value.created)}</h6>
                     </div>
