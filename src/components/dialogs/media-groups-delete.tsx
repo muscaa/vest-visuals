@@ -23,7 +23,7 @@ function ValidDialog(props: ValidProps) {
     const { removeMediaContents } = useMediaContents();
 
     const submit = async () => {
-        if (all) {
+        if (all && props.value.mediaContents.length > 0) {
             await removeMediaContents.mutateAsync({
                 ids: props.value.mediaContents,
             });
