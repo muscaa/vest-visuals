@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     if (!user) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
+            message: "Unauthorized",
         });
     }
 
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
+            message: "Invalid request body",
         });
     }
 
@@ -42,6 +44,7 @@ export async function POST(request: NextRequest) {
     if (result == null) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
+            message: "Internal server error",
         });
     }
 

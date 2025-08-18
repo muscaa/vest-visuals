@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     if (!user) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
+            message: "Unauthorized",
         });
     }
 
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
     if (json.files.length > json.configs.length) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
+            message: "Mismatch between number of files and configs",
         });
     }
 

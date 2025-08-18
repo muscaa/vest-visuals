@@ -1,3 +1,4 @@
+import { Response } from "@/types/http";
 import { MediaGroup } from "../groups";
 
 interface BaseMediaCategory<T extends "min" | "full"> {
@@ -16,7 +17,6 @@ export type FullMediaCategory = BaseMediaCategory<"full">;
 export type PostRequest = {
 };
 
-export type PostResponse = {
-    success: boolean;
-    values?: MediaCategory[];
-};
+export type PostResponse = Response<{
+    values: MediaCategory[];
+}>;

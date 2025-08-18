@@ -1,3 +1,4 @@
+import { Response } from "@/types/http";
 import { MediaTypeInfo } from "@/types/media/info";
 
 export type MediaVariant = MediaTypeInfo & {
@@ -23,7 +24,6 @@ export type FullMediaContent = BaseMediaContent<"full">;
 export type PostRequest = {
 };
 
-export type PostResponse = {
-    success: boolean;
-    values?: FullMediaContent[];
-};
+export type PostResponse = Response<{
+    values: FullMediaContent[];
+}>;

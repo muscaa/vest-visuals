@@ -1,3 +1,4 @@
+import { Response } from "@/types/http";
 import { FullMediaContent } from "../contents";
 
 interface BaseMediaGroup<T extends "min" | "full"> {
@@ -15,7 +16,6 @@ export type FullMediaGroup = BaseMediaGroup<"full">;
 export type PostRequest = {
 };
 
-export type PostResponse = {
-    success: boolean;
-    values?: MediaGroup[];
-};
+export type PostResponse = Response<{
+    values: MediaGroup[];
+}>;

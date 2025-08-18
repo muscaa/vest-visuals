@@ -1,3 +1,4 @@
+import { Response } from "@/types/http";
 import { MediaProcessor } from "@/types/media/processor";
 import { MediaContent } from "..";
 
@@ -22,7 +23,6 @@ export type PostRequest = {
     configs: FileConfig[];
 };
 
-export type PostResponse = {
-    success: boolean;
-    values?: MediaContent[];
-};
+export type PostResponse = Response<{
+    values: MediaContent[];
+}>;

@@ -1,3 +1,4 @@
+import { Response } from "@/types/http";
 import { MediaCategory } from "@/types/api/media/categories";
 
 // POST
@@ -7,7 +8,6 @@ export type PostRequest = {
     mediaGroups?: string[];
 };
 
-export type PostResponse = {
-    success: boolean;
-    value?: MediaCategory;
-};
+export type PostResponse = Response<{
+    value: MediaCategory;
+}>;

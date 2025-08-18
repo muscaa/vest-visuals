@@ -1,3 +1,5 @@
+import { Response } from "@/types/http";
+
 // POST
 
 export type PostRequest = {
@@ -10,6 +12,4 @@ export type PostRequest = {
     };
 };
 
-export type PostResponse = {
-    success: boolean;
-};
+export type PostResponse = Response<{}>;

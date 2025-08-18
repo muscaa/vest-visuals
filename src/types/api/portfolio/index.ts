@@ -1,3 +1,5 @@
+import { Response } from "@/types/http";
+
 export type PortfolioVariant = {
     src: string;
 };
@@ -13,7 +15,6 @@ export type PostRequest = {
     category: string;
 };
 
-export type PostResponse = {
-    success: boolean;
-    values?: PortfolioEntry[];
-};
+export type PostResponse = Response<{
+    values: PortfolioEntry[];
+}>;
