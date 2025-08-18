@@ -57,7 +57,7 @@ export function useMediaGroups() {
         },
     });
 
-    const removeMediaGroup = useMutation({
+    const removeMediaGroups = useMutation({
         mutationKey: [api_routes.media.groups.remove._.url],
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.groups.remove._.post(props);
@@ -73,6 +73,6 @@ export function useMediaGroups() {
         getMediaGroup,
         createMediaGroup,
         updateMediaGroup,
-        removeMediaGroup,
+        removeMediaGroups,
     };
 }

@@ -14,11 +14,11 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
-    const { removeMediaContent } = useMediaContents();
+    const { removeMediaContents } = useMediaContents();
 
     const submit = async () => {
-        return await removeMediaContent.mutateAsync({
-            id: props.value.id,
+        return await removeMediaContents.mutateAsync({
+            ids: [props.value.id],
         });
     };
 
@@ -28,7 +28,7 @@ function ValidDialog(props: ValidProps) {
             title="Remove Media Content"
             description={
                 <>
-                    Are you sure you want to delete the media content <strong>&quot;{props.value.id}&quot;</strong>?
+                    Are you sure you want to delete media content <strong>&quot;{props.value.id}&quot;</strong>?
                 </>
             }
             submitText={{

@@ -3,6 +3,10 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { MediaGroup } from "@/types/api/media/groups";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
+import { useState } from "react";
+import { Label } from "../ui/label";
+import { Checkbox } from "../ui/checkbox";
+import { useMediaContents } from "@/hooks/useMediaContents";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -14,12 +18,24 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
-    const { removeMediaGroup } = useMediaGroups();
+    const [all, setAll] = useState(true);
+    const { removeMediaGroups } = useMediaGroups();
+    const { removeMediaContents } = useMediaContents();
 
     const submit = async () => {
-        return await removeMediaGroup.mutateAsync({
-            id: props.value.id,
+        if (all) {
+            await removeMediaContents.mutateAsync({
+                ids: props.value.mediaContents,
+            });
+        }
+
+        return await removeMediaGroups.mutateAsync({
+            ids: [props.value.id],
         });
+    };
+
+    const handleReset = () => {
+        setAll(true);
     };
 
     return (
@@ -28,7 +44,7 @@ function ValidDialog(props: ValidProps) {
             title="Remove Media Group"
             description={
                 <>
-                    Are you sure you want to delete the media group <strong>&quot;{props.value.id}&quot;</strong>?
+                    Are you sure you want to delete media group <strong>&quot;{props.value.id}&quot;</strong>?
                 </>
             }
             submitText={{
@@ -37,8 +53,18 @@ function ValidDialog(props: ValidProps) {
             }}
             destructive={true}
             onSuccess={props.onDelete}
+            onReset={handleReset}
             trigger={props.children}
-        />
+        >
+            <div className="flex items-center gap-2">
+                <Checkbox
+                    id="all"
+                    checked={all}
+                    onCheckedChange={(state) => setAll(state != false)}
+                />
+                <Label htmlFor="all">Remove Contents</Label>
+            </div>
+        </SimpleDialog>
     );
 }
 

@@ -57,7 +57,7 @@ export function useMediaCategories() {
         },
     });
 
-    const removeMediaCategory = useMutation({
+    const removeMediaCategories = useMutation({
         mutationKey: [api_routes.media.categories.remove._.url],
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.categories.remove._.post(props);
@@ -73,6 +73,6 @@ export function useMediaCategories() {
         getMediaCategory,
         createMediaCategory,
         updateMediaCategory,
-        removeMediaCategory,
+        removeMediaCategories,
     };
 }

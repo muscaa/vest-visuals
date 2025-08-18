@@ -1,7 +1,7 @@
 // POST
 
 export type PostRequest = {
-    id: string;
+    ids: string[];
 };
 
 export type PostResponse = {

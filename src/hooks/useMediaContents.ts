@@ -49,7 +49,7 @@ export function useMediaContents() {
         },
     });
 
-    const removeMediaContent = useMutation({
+    const removeMediaContents = useMutation({
         mutationKey: [api_routes.media.contents.remove._.url],
         mutationFn: async (props: types_remove.PostRequest) => {
             const { data } = await api_routes.media.contents.remove._.post(props);
@@ -64,6 +64,6 @@ export function useMediaContents() {
         getMediaContents,
         getMediaContent,
         uploadMediaContents,
-        removeMediaContent,
+        removeMediaContents,
     };
 }

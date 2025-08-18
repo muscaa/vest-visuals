@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request, (json) => json.id);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.ids);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     const result = await mediaCategoriesDB.remove({
         pb,
-        ids: [json.id],
+        ids: json.ids,
     });
     if (result == null) {
         return responseJSON<types.PostResponse>(404, {
