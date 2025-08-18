@@ -3,7 +3,7 @@
 import { MainAdmin } from "@/components/admin/main";
 import { useParams } from "next/navigation";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaGroupsList } from "../../groups/page";
+import { MediaGroupsList } from "@/components/lists/media-groups";
 import {
     Loading,
     NotFound,
