@@ -76,6 +76,7 @@ export function MediaContentsUploadDialog(props: Props) {
                 default: "Upload",
                 sending: "Uploading...",
             }}
+            submitDisabled={files.length == 0}
             onSuccess={props.onCreate}
             onReset={handleReset}
             trigger={props.children}
