@@ -1,10 +1,11 @@
 "use client";
 
 import { Main } from "@/components/main";
-import { Masonry } from "react-plock";
+// import { Masonry } from "react-plock";
 import { useParams } from "next/navigation";
 import { PreviewImage } from "@/components/preview-image";
 import { usePortfolio } from "@/hooks/usePortfolio";
+import { Masonry } from "masonic";
 
 export default function Page() {
     const { category } = useParams<{ category: string; }>();
@@ -15,19 +16,31 @@ export default function Page() {
             <div className="flex justify-center size-full p-2">
                 {
                     data && (
+                        // <Masonry
+                        //     items={data}
+                        //     config={{
+                        //         columns: [2, 3, 4, 5],
+                        //         gap: [4, 4, 4, 4, 4],
+                        //         media: [640, 768, 1024, 1408],
+                        //     }}
+                        //     render={(item, index) => (
+                        //         <PreviewImage
+                        //             key={index}
+                        //             item={item}
+                        //             index={index}
+                        //             className="w-full h-auto"
+                        //         />
+                        //     )}
+                        // />
                         <Masonry
                             items={data}
-                            config={{
-                                columns: [2, 3, 4, 5],
-                                gap: [4, 4, 4, 4, 4],
-                                media: [640, 768, 1024, 1408],
-                            }}
-                            render={(item, index) => (
+                            columnGutter={4}
+                            columnWidth={250}
+                            render={(props) => (
                                 <PreviewImage
-                                    key={index}
-                                    item={item}
-                                    index={index}
-                                    className="w-full h-auto"
+                                    key={props.index}
+                                    item={props.data}
+                                    index={props.index}
                                 />
                             )}
                         />
