@@ -1,7 +1,7 @@
 "use client";
 
 import { Main } from "@/components/main";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -9,9 +9,9 @@ import {
     CardTitle,
     CardDescription,
     CardFooter,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     ShieldCheck,
 } from "lucide-react";
