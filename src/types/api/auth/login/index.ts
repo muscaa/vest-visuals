@@ -1,12 +1,11 @@
+import { Response } from "@/types/http";
+
 // POST
 
-export interface PostRequest {
+export type PostRequest = {
     token: string;
     email: string;
     password: string;
-}
+};
 
-export interface PostResponse {
-    success: boolean;
-    message?: string;
-}
+export type PostResponse = Response<{}>;

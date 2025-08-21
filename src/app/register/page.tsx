@@ -3,7 +3,7 @@
 import { Main } from "@/components/main";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { client_config } from "@/utils/client/config";
-import { LoginCard } from "@/components/cards/login";
+import { RegisterCard } from "@/components/cards/register";
 
 export default function Page() {
     return (
@@ -12,7 +12,7 @@ export default function Page() {
         >
             <Main>
                 <div className="flex flex-col justify-center items-center size-full p-8">
-                    <LoginCard />
+                    <RegisterCard />
                 </div>
             </Main>
         </GoogleReCaptchaProvider>
