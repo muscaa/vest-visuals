@@ -19,8 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      ":/*": ["./public/*"],
+        "@client/*": ["./src/lib/client/*"],
+        "@server/*": ["./src/lib/server/*"],
+        "@shared/*": ["./src/lib/shared/*"],
+        "@/*": ["./src/*"],
+        ":/*": ["./public/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
