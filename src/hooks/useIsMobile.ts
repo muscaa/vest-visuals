@@ -1,3 +1,5 @@
+"use client";
+
 import { useWindowSize } from "./useWindowSize";
 
 export function useIsMobile() {

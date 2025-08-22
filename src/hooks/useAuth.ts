@@ -1,3 +1,5 @@
+"use client";
+
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { api_client } from "@/utils/client/axios";
 import { useMutation } from "@tanstack/react-query";
