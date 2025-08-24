@@ -2,8 +2,8 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import { usersDB } from "@/utils/server/db";
 import { getUrlString } from "@/utils/server/request";
+import { auth } from "@server/auth";
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
@@ -13,11 +13,11 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const user = await usersDB.get({
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
 
-    if (!user) {
+    if (!session) {
         return NextResponse.redirect(getUrlString(request, "/login"));
     }
 

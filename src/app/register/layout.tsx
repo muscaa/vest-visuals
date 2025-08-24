@@ -3,8 +3,9 @@ import {
     LayoutProps,
     createMetadata,
 } from "@/components/layout";
-import { usersDB } from "@/utils/server/db";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "@server/auth";
 
 export const metadata = createMetadata({
     route: "/register",
@@ -12,9 +13,11 @@ export const metadata = createMetadata({
 });
 
 export default async function Layout(props: LayoutProps) {
-    const user = await usersDB.get();
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
     
-    if (user) {
+    if (session) {
         redirect("/a");
     }
 
