@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@server/db";
 import * as schema from "@server/db/schema/auth";
+import { openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -12,4 +13,7 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: false,
     },
+    plugins: [
+        openAPI(),
+    ],
 });
