@@ -8,16 +8,13 @@
         "postbuild": "next-sitemap",
         "start": "next start",
         "lint": "next lint",
-        
         "db:update": "dotenvx run -f .env.local -- run-s drizzle:push",
         "db:start": "docker compose up -d",
         "db:wait": "wait-on tcp:8080",
         "db:stop": "docker compose down",
-
         "drizzle:push": "drizzle-kit push",
         "drizzle:generate": "drizzle-kit generate",
         "drizzle:migrate": "drizzle-kit migrate",
-
         "auth:generate": "cli generate --config=./better-auth.config.ts --output=./src/lib/server/db/schema/auth.ts",
         "auth:migrate": "cli migrate --config=./better-auth.config.ts"
     },
