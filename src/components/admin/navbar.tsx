@@ -25,6 +25,7 @@ export function MenuSegment() {
     return (
         <>
             <ButtonLink href="/a/media" variant="navbar">MEDIA</ButtonLink>
+            <ButtonLink href="/a/cli" variant="navbar">CLI</ButtonLink>
             <ThemeToggle />
         </>
     );
