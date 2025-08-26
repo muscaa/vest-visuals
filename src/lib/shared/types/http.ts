@@ -1,6 +1,6 @@
 export type Response<T> = {
     success: false;
-    message: string;
+    error: string;
 } | ({
     success: true;
 } & T);
