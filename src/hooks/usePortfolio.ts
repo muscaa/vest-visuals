@@ -1,13 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { api_routes } from "@/utils/client/axios";
+import { apiClient } from "@client/http";
+import * as types from "@shared/types/api/portfolio";
 
 export function usePortfolio(category: string) {
     return useQuery({
-        queryKey: [api_routes.portfolio._.url, category],
+        queryKey: ["portfolio", category],
         queryFn: async () => {
-            const { data } = await api_routes.portfolio._.post({
+            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/portfolio", {
                 category,
             });
 

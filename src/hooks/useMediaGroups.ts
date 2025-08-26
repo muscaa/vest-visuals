@@ -4,16 +4,18 @@ import {
     useQuery,
     useMutation,
 } from "@tanstack/react-query";
-import { api_routes } from "@/utils/client/axios";
-import * as types_create from "@/types/api/media/groups/create";
-import * as types_update from "@/types/api/media/groups/update";
-import * as types_remove from "@/types/api/media/groups/remove";
+import { apiClient } from "@client/http";
+import * as types from "@shared/types/api/media/groups";
+import * as types_get from "@shared/types/api/media/groups/get";
+import * as types_create from "@shared/types/api/media/groups/create";
+import * as types_update from "@shared/types/api/media/groups/update";
+import * as types_remove from "@shared/types/api/media/groups/remove";
 
 export function useMediaGroups() {
     const useAllMediaGroups = () => useQuery({
-        queryKey: [api_routes.media.groups._.url],
+        queryKey: ["media/groups"],
         queryFn: async () => {
-            const { data } = await api_routes.media.groups._.post({});
+            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/groups", {});
 
             if (!data.success) return [];
 
@@ -22,9 +24,9 @@ export function useMediaGroups() {
     });
 
     const useMediaGroup = (id: string) => useQuery({
-        queryKey: [api_routes.media.groups.get._.url, id],
+        queryKey: ["media/groups", id],
         queryFn: async () => {
-            const { data } = await api_routes.media.groups.get._.post({
+            const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/groups/get", {
                 id,
             });
 
@@ -35,33 +37,33 @@ export function useMediaGroups() {
     });
 
     const createMediaGroup = useMutation({
-        mutationKey: [api_routes.media.groups.create._.url],
+        mutationKey: ["media/groups"],
         mutationFn: async (props: types_create.PostRequest) => {
-            const { data } = await api_routes.media.groups.create._.post(props);
+            const { data } = await apiClient.post<types_create.PostResponse, types_create.PostRequest>("/media/groups/create", props);
 
-            if (!data.success) throw new Error(data.message);
+            if (!data.success) throw new Error(data.error);
 
             return data.value;
         },
     });
 
     const updateMediaGroup = useMutation({
-        mutationKey: [api_routes.media.groups.update._.url],
+        mutationKey: ["media/groups"],
         mutationFn: async (props: types_update.PostRequest) => {
-            const { data } = await api_routes.media.groups.update._.post(props);
+            const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/media/groups/update", props);
 
-            if (!data.success) throw new Error(data.message);
+            if (!data.success) throw new Error(data.error);
 
             return data.success;
         },
     });
 
     const removeMediaGroups = useMutation({
-        mutationKey: [api_routes.media.groups.remove._.url],
+        mutationKey: ["media/groups"],
         mutationFn: async (props: types_remove.PostRequest) => {
-            const { data } = await api_routes.media.groups.remove._.post(props);
+            const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/groups/remove", props);
 
-            if (!data.success) throw new Error(data.message);
+            if (!data.success) throw new Error(data.error);
 
             return data.success;
         },
