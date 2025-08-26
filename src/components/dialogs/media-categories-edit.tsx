@@ -5,7 +5,7 @@ import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@/types/api/media/categories";
+import { MediaCategory } from "@shared/types/api/media/categories";
 
 interface CommonProps {
     onEdit?: () => void;

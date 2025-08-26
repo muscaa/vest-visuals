@@ -14,7 +14,7 @@ import {
     CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
-import { client_config } from "@/utils/client/config";
+import { sharedConfig } from "@shared/config";
 import { Reveal } from "@/components/animations/reveal";
 
 export function SectionCarousel() {
@@ -57,7 +57,7 @@ export function SectionCarousel() {
                 >
                     <CarouselContent>
                         {
-                            client_config.categories.map((category, index) => (
+                            sharedConfig.categories.map((category, index) => (
                                 <CarouselItem key={index} className="md:basis-3/5">
                                     <div
                                         onClick={() => api?.scrollTo(index)}

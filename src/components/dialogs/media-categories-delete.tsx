@@ -2,7 +2,7 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@/types/api/media/categories";
+import { MediaCategory } from "@shared/types/api/media/categories";
 
 interface CommonProps {
     onDelete?: () => void;

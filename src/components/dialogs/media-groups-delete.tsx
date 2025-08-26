@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { MediaGroup } from "@/types/api/media/groups";
+import { MediaGroup } from "@shared/types/api/media/groups";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useState } from "react";
 import { Label } from "../ui/label";

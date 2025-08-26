@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { FullMediaContent } from "@/types/api/media/contents";
+import { FullMediaContent } from "@shared/types/api/media/contents";
 import { useMediaContents } from "@/hooks/useMediaContents";
 
 interface CommonProps {

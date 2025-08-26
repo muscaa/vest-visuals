@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/utils/shadcn/lib/utils";
+import { cn } from "@shared/shadcn/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 interface ListProps<V> {

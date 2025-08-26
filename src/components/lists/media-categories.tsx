@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
-import { myDate } from "@/utils/snippets";
+import { dateToString } from "@shared/snippets";
 import { List } from "@/components/list";
-import { MediaCategory } from "@/types/api/media/categories";
+import { MediaCategory } from "@shared/types/api/media/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
 import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
@@ -25,8 +25,8 @@ function ListEntry(props: ListEntryProps) {
                     <div className="flex flex-col gap-2 grow">
                         <p>{props.value.id}</p>
                         <div className="flex flex-col">
-                            <h6>Updated: {myDate(props.value.updated)}</h6>
-                            <h6>Created: {myDate(props.value.created)}</h6>
+                            <h6>Updated: {dateToString(props.value.updated)}</h6>
+                            <h6>Created: {dateToString(props.value.created)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">

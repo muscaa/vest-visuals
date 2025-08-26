@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
-import { myDate } from "@/utils/snippets";
+import { dateToString } from "@shared/snippets";
 import { List } from "@/components/list";
-import { MediaGroup } from "@/types/api/media/groups";
-import { FullMediaCategory } from "@/types/api/media/categories";
+import { MediaGroup } from "@shared/types/api/media/groups";
+import { FullMediaCategory } from "@shared/types/api/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { useMediaContents } from "@/hooks/useMediaContents";
@@ -48,8 +48,8 @@ function ListEntry(props: ListEntryProps) {
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
                         <div className="flex flex-col">
-                            <h6>Updated: {myDate(props.value.updated)}</h6>
-                            <h6>Created: {myDate(props.value.created)}</h6>
+                            <h6>Updated: {dateToString(props.value.updated)}</h6>
+                            <h6>Created: {dateToString(props.value.created)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">

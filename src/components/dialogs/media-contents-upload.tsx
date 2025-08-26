@@ -3,7 +3,7 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaContents } from "@/hooks/useMediaContents";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { FullMediaGroup } from "@/types/api/media/groups";
+import { FullMediaGroup } from "@shared/types/api/media/groups";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
