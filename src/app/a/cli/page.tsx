@@ -1,32 +1,41 @@
 "use client";
 
 import { MainAdmin } from "@/components/admin/main";
-import { ButtonLink } from "@/components/snippets";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { actionRunCommand } from "@/actions/cli";
 
 export default function Page() {
-    const links: { [key: string]: string; } = {
-        "CLI Categories": "/a/media/categories",
-        "CLI Groups": "/a/media/groups",
-        "CLI Contents": "/a/media/contents",
+    const [command, setCommand] = useState<string>("");
+    const [output, setOutput] = useState<string[]>([]);
+
+    const handleSend = async () => {
+        const result = await actionRunCommand(command);
+        setOutput((prev) => [...prev, `$ ${command}`, result]);
     };
 
     return (
-        <MainAdmin>
-            <div className="flex justify-center items-center size-full p-2">
-                <div className="flex flex-col w-full max-w-4xl gap-2">
-                    {
-                        Object.entries(links).map(([name, href], index) => (
-                            <ButtonLink
-                                key={index}
-                                href={href}
-                                variant="secondary"
-                                size="lg"
-                                className="w-full"
-                            >
-                                {name}
-                            </ButtonLink>
-                        ))
-                    }
+        <MainAdmin extraClassName="overflow-hidden">
+            <div className="flex flex-col size-full p-2 gap-2">
+                <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background0 rounded-md shadow-sm">
+                    <div className="flex flex-col grow">
+                        {
+                            output.map((line, index) => (
+                                <p key={index}>{line}</p>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    <Input
+                        placeholder="command"
+                        value={command}
+                        onChange={(e) => setCommand(e.target.value)}
+                    />
+                    <Button onClick={handleSend}>
+                        Send
+                    </Button>
                 </div>
             </div>
         </MainAdmin>

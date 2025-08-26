@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
             new URL("https://s3.vestvisuals.ro/public/**"),
         ],
     },*/
+    devIndicators: {
+        position: "top-right",
+    },
 };
 
 export default nextConfig;
