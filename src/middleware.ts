@@ -2,7 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
-import { getUrlString } from "@/utils/server/request";
+import { getUrlString } from "@server/http";
 import { auth } from "@server/auth";
 
 export async function middleware(request: NextRequest) {
