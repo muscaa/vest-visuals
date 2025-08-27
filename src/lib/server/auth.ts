@@ -16,17 +16,55 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         autoSignIn: false,
+        disableSignUp: true,
+        requireEmailVerification: true,
+        sendResetPassword: async (data, req) => {
+            // TODO
+        },
+    },
+    emailVerification: {
+        sendVerificationEmail: async (data, req) => {
+            // TODO
+        },
+        sendOnSignUp: true,
+        sendOnSignIn: true,
+        autoSignInAfterVerification: false,
+        
+    },
+    user: {
+        changeEmail: {
+            enabled: true,
+            sendChangeEmailVerification: async (data, req) => {
+                // TODO
+            },
+        },
+        deleteUser: {
+            enabled: false,
+            sendDeleteAccountVerification: async (data, req) => {
+                // TODO
+            },
+        },
     },
     plugins: [
         openAPI(),
     ],
-    hooks: {
-        before: createAuthMiddleware(async (ctx) => {
-            if (ctx.path.startsWith("/sign-up")) {
-                throw new APIError("UNAUTHORIZED", {
-                    message: "Sign-ups are disabled",
-                });
-            }
-        }),
+    // hooks: {
+    //     before: createAuthMiddleware(async (ctx) => {
+    //         if (ctx.path.startsWith("/sign-up")) {
+    //             throw new APIError("UNAUTHORIZED", {
+    //                 message: "Sign-ups are disabled",
+    //             });
+    //         }
+    //     }),
+    // },
+    advanced: {
+        ipAddress: {
+            ipAddressHeaders: ["x-forwarded-for"],
+            disableIpTracking: false,
+        },
+    },
+    telemetry: {
+        enabled: false,
+        disableNotice: true,
     },
 });
