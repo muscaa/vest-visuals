@@ -18,7 +18,7 @@ export default function Page() {
     return (
         <MainAdmin extraClassName="overflow-hidden">
             <div className="flex flex-col size-full p-2 gap-2">
-                <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background0 rounded-md shadow-sm">
+                <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background0 rounded-md shadow-sm whitespace-pre-wrap">
                     <div className="flex flex-col grow">
                         {
                             output.map((line, index) => (
