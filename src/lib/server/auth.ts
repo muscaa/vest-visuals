@@ -17,7 +17,7 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: false,
         disableSignUp: true,
-        requireEmailVerification: true,
+        requireEmailVerification: false,
         sendResetPassword: async (data, req) => {
             // TODO
         },
