@@ -2,7 +2,7 @@ import { db } from "@server/db";
 import {
     mediaContents,
     mediaContentVariants,
-} from "@server/db/schema/mediaContents";
+} from "@server/db/schema";
 import { eq } from "drizzle-orm";
 
 export type MediaContent = typeof mediaContents.$inferSelect;

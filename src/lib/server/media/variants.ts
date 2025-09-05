@@ -1,5 +1,5 @@
 import { db } from "@server/db";
-import { mediaVariants } from "@server/db/schema/mediaVariants";
+import { mediaVariants } from "@server/db/schema";
 import { eq } from "drizzle-orm";
 import {
     s3,
