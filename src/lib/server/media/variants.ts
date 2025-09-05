@@ -36,6 +36,21 @@ function filePath(fileName: string) {
     return `${mediaVariants._.name}/${fileName}`;
 }
 
+export async function getAll(): Promise<MediaVariant[]> {
+    const result = await db.select()
+        .from(mediaVariants)
+        .all();
+    return result.map(format);
+}
+
+export async function get(id: string): Promise<MediaVariant | undefined> {
+    const result = await db.select()
+        .from(mediaVariants)
+        .where(eq(mediaVariants.id, id))
+        .get();
+    return result ? format(result) : undefined;
+}
+
 async function newFileName(): Promise<string> {
     let fileName: string;
     let exists: boolean;
@@ -89,21 +104,6 @@ export async function create(props: CreateProps): Promise<MediaVariant | undefin
             info: props.info,
         })
         .returning()
-        .get();
-    return result ? format(result) : undefined;
-}
-
-export async function getAll(): Promise<MediaVariant[]> {
-    const result = await db.select()
-        .from(mediaVariants)
-        .all();
-    return result.map(format);
-}
-
-export async function get(id: string): Promise<MediaVariant | undefined> {
-    const result = await db.select()
-        .from(mediaVariants)
-        .where(eq(mediaVariants.id, id))
         .get();
     return result ? format(result) : undefined;
 }

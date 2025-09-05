@@ -10,14 +10,6 @@ type InsertProps = typeof mediaContents.$inferInsert;
 type CreateProps = InsertProps;
 type UpdateProps = InsertProps;
 
-export async function create(props: CreateProps): Promise<MediaContent | undefined> {
-    const result = await db.insert(mediaContents)
-        .values(props)
-        .returning()
-        .get();
-    return result;
-}
-
 export async function getAll(): Promise<MediaContent[]> {
     const result = await db.select()
         .from(mediaContents)
@@ -29,6 +21,14 @@ export async function get(id: string): Promise<MediaContent | undefined> {
     const result = await db.select()
         .from(mediaContents)
         .where(eq(mediaContents.id, id))
+        .get();
+    return result;
+}
+
+export async function create(props: CreateProps): Promise<MediaContent | undefined> {
+    const result = await db.insert(mediaContents)
+        .values(props)
+        .returning()
         .get();
     return result;
 }
