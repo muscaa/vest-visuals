@@ -22,14 +22,21 @@ export const mediaContents = sqliteTable("media_contents", {
 export const mediaContentVariants = sqliteTable("media_content_variants", {
     contentId: text("content_id")
         .notNull()
-        .references(() => mediaContents.id),
+        .references(() => mediaContents.id, { onDelete: "cascade" }),
     variantId: text("variant_id")
         .notNull()
-        .references(() => mediaVariants.id),
+        .references(() => mediaVariants.id, { onDelete: "cascade" }),
     order: integer("order")
         .notNull(),
 });
 
 export const mediaContentsRelations = relations(mediaContents, ({ many }) => ({
-    mediaVariants: many(mediaContentVariants),
+    mediaContentVariants: many(mediaContentVariants),
+}));
+
+export const mediaContentVariantsRelations = relations(mediaContentVariants, ({ one }) => ({
+    mediaVariant: one(mediaVariants, {
+        fields: [mediaContentVariants.variantId],
+        references: [mediaVariants.id],
+    }),
 }));

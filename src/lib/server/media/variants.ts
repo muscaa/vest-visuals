@@ -14,11 +14,21 @@ import {
 } from "@aws-sdk/client-s3";
 import { v4 } from "uuid";
 
-type SelectProps = typeof mediaVariants.$inferSelect;
-export type MediaVariant = Omit<SelectProps, "fileName" | "type" | "info"> & { fileUrl: string; } & MediaTypeInfo;
-type InsertProps = typeof mediaVariants.$inferInsert;
-type CreateProps = Omit<InsertProps, "id" | "createdAt" | "updatedAt" | "fileName" | "type" | "info"> & { blob: Blob; } & MediaTypeInfo;
-type UpdateProps = Partial<CreateProps>;
+export type SelectProps = typeof mediaVariants.$inferSelect;
+export type MediaVariant =
+    Omit<SelectProps, "fileName" | "type" | "info">
+    & {
+        fileUrl: string;
+    }
+    & MediaTypeInfo;
+export type InsertProps = typeof mediaVariants.$inferInsert;
+export type CreateProps =
+    Omit<InsertProps, "id" | "createdAt" | "updatedAt" | "fileName" | "type" | "info">
+    & {
+        blob: Blob;
+    }
+    & MediaTypeInfo;
+export type UpdateProps = Partial<CreateProps>;
 
 export function format(props: SelectProps): MediaVariant {
     return {
