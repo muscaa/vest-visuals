@@ -5,6 +5,7 @@ import {
     index,
 } from "drizzle-orm/sqlite-core";
 import { createId } from "@paralleldrive/cuid2";
+import { MediaInfo } from "@shared/types/media/info";
 
 export const mediaVariants = sqliteTable("media_variants", {
     id: text("id")
@@ -12,12 +13,12 @@ export const mediaVariants = sqliteTable("media_variants", {
         .primaryKey(),
     variant: text("variant")
         .notNull(),
-    file: text("file")
+    fileName: text("file_name")
         .notNull(),
     type: text("type", { enum: ["image", "video"] })
         .notNull(),
     info: text("info", { mode: "json" })
-        .$type<{}>(),
+        .$type<MediaInfo>(),
     createdAt: integer("created_at", { mode: "timestamp" })
         .$defaultFn(() => new Date())
         .notNull(),
