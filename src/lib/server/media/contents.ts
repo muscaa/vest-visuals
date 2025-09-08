@@ -5,53 +5,46 @@ import {
 } from "@server/db/schema";
 import { eq } from "drizzle-orm";
 import * as variants from "./variants";
+import { SelectRequired } from "@server/db/utils";
 
-type PartialSelectProps =
-    typeof mediaContents.$inferSelect
-    & {
-        mediaContentVariants: typeof mediaContentVariants.$inferSelect[];
-    };
-type SelectProps =
+export type SelectProps =
     typeof mediaContents.$inferSelect
     & {
         mediaContentVariants: (
             typeof mediaContentVariants.$inferSelect
             & {
-                mediaVariant: variants.SelectProps;
+                mediaVariant?: variants.SelectProps;
             }
         )[];
     };
-export type PartialMediaContent =
-    Omit<PartialSelectProps, "mediaContentVariants">
-    & {
-        mediaVariantIds: string[];
-    };
-export type MediaContent =
-    PartialMediaContent
-    & {
-        mediaVariants: variants.MediaVariant[];
-    };
-type InsertProps = typeof mediaContents.$inferInsert;
-type CreateProps =
-    Omit<InsertProps, "id" | "createdAt" | "updatedAt">
-    & {
-        mediaVariants: variants.CreateProps[];
-    };
+export type PartialMediaContent = {
+    id: string;
+    mediaVariantIds: string[];
+    mediaVariants?: variants.MediaVariant[];
+    createdAt: Date;
+    updatedAt: Date;
+};
+export type MediaContent = SelectRequired<PartialMediaContent, "mediaVariants">;
+type AutoMediaContent<T extends SelectProps> =
+    T extends { mediaContentVariants: (infer V)[]; }
+        ? V extends { mediaVariant: variants.SelectProps; }
+            ? MediaContent
+            : PartialMediaContent
+        : PartialMediaContent;
+export type CreateProps = {
+    mediaVariants: variants.CreateProps[];
+};
 
-export function formatPartial(props: PartialSelectProps): PartialMediaContent {
+export function format<T extends SelectProps>(props: T): AutoMediaContent<T> {
     return {
         id: props.id,
         mediaVariantIds: props.mediaContentVariants.map((value) => value.variantId),
+        mediaVariants: props.mediaContentVariants.every((value) => value.mediaVariant != undefined)
+            ? props.mediaContentVariants.map((value) => variants.format(value.mediaVariant!))
+            : undefined,
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,
-    };
-}
-
-export function format(props: SelectProps): MediaContent {
-    return {
-        ...formatPartial(props),
-        mediaVariants: props.mediaContentVariants.map((value) => variants.format(value.mediaVariant)),
-    };
+    } as AutoMediaContent<T>;
 }
 
 export async function getAllPartial(): Promise<PartialMediaContent[]> {
@@ -62,7 +55,7 @@ export async function getAllPartial(): Promise<PartialMediaContent[]> {
             },
         },
     });
-    return result.map(formatPartial);
+    return result.map(format);
 }
 
 export async function getAll(): Promise<MediaContent[]> {
@@ -88,7 +81,7 @@ export async function getPartial(id: string): Promise<PartialMediaContent | unde
             },
         },
     });
-    return result ? formatPartial(result) : undefined;
+    return result ? format(result) : undefined;
 }
 
 export async function get(id: string): Promise<MediaContent | undefined> {
