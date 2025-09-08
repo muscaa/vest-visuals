@@ -5,7 +5,7 @@ import {
 } from "@server/db/schema";
 import { eq } from "drizzle-orm";
 import * as variants from "./variants";
-import { SelectRequired } from "@server/db/utils";
+import { SelectRequired } from "@shared/types/utils";
 
 export type SelectProps =
     typeof mediaContents.$inferSelect

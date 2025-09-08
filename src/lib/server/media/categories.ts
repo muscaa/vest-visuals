@@ -12,7 +12,7 @@ import * as groups from "./groups";
 import {
     SelectRequired,
     ListProps,
-} from "@server/db/utils";
+} from "@shared/types/utils";
 
 export type SelectProps =
     typeof mediaCategories.$inferSelect
