@@ -11,16 +11,14 @@ export const sql: CliCommand = (program, core) => {
         .argument("<string>")
         .option("-s, --shortcut")
         .action(async (command: string, options) => {
-            try {
-                if (options.shortcut) {
-                    command = shortcuts[command];
-                    if (!command) throw new Error("Unknown shortcut");
-                }
+            const shortcut = options.shortcut;
 
-                const result = await libsql.execute(command);
-                core.out("result: ", result.toJSON());
-            } catch (error) {
-                core.out((error as Error).message);
+            if (shortcut) {
+                command = shortcuts[command];
+                if (!command) throw new Error("Unknown shortcut");
             }
+
+            const result = await libsql.execute(command);
+            core.out("result: ", result.toJSON());
         });
 };
