@@ -5,8 +5,8 @@ import {
 import {
     PostRequest,
     PostResponse,
-} from "@/types/api/contact";
-import { server_config } from "@/utils/server/config";
+} from "@shared/types/api/contact";
+import { serverConfig } from "@server/config";
 
 export async function POST(request: NextRequest) {
     try {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         if (!json.token || !json.name || !json.email || !json.message) {
             return NextResponse.json<PostResponse>({
                 success: false,
-                message: "Missing fields",
+                error: "Missing fields",
             }, {
                 status: 400,
             });
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: `secret=${server_config.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
+            body: `secret=${serverConfig.env.RECAPTCHA_KEY_SECRET}&response=${json.token}`,
         });
 
         const recaptchaData = await recaptchaRes.json();
@@ -34,13 +34,13 @@ export async function POST(request: NextRequest) {
         if (!recaptchaData.success || recaptchaData.score < 0.5) {
             return NextResponse.json<PostResponse>({
                 success: false,
-                message: "reCAPTCHA verification failed",
+                error: "reCAPTCHA verification failed",
             }, {
                 status: 403,
             });
         }
 
-        const discordRes = await fetch(server_config.env.DISCORD_WEBHOOK_CONTACT, {
+        const discordRes = await fetch(serverConfig.env.DISCORD_WEBHOOK_CONTACT, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         if (!discordRes.ok) {
             return NextResponse.json<PostResponse>({
                 success: false,
-                message: "Failed to send message",
+                error: "Failed to send message",
             },
             {
                 status: 500,
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         return NextResponse.json<PostResponse>({
             success: false,
-            message: "Internal Server Error",
+            error: "Internal Server Error",
         }, {
             status: 500,
         });
