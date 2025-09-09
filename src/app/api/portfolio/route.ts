@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
                             src: mediaVariants[0].fileUrl,
                         },
                         full: {
-                            src: mediaVariants[mediaVariants.length > 1 ? 1 : 0].fileUrl,
+                            src: mediaVariants[mediaVariants.length - 1].fileUrl,
                         },
                     } satisfies types.PortfolioEntry,
                 ];
