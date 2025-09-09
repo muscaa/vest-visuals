@@ -1,24 +1,20 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/categories";
+import * as types from "@shared/types/api/media/categories";
 import {
-    createClientDB,
-    usersDB,
-    mediaCategoriesDB,
-} from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import { auth } from "@server/auth";
+import * as categories from "@server/media/categories";
 
 export async function POST(request: NextRequest) {
-    const pb = await createClientDB();
-
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
-    if (!user) {
+    if (!session) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
-            message: "Unauthorized",
+            error: "Unauthorized",
         });
     }
 
@@ -26,17 +22,15 @@ export async function POST(request: NextRequest) {
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Invalid request body",
+            error: "Invalid request body",
         });
     }
 
-    const result = await mediaCategoriesDB.getList({
-        pb,
-    });
-    if (result == null) {
+    const result = await categories.getAllPartial();
+    if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
-            message: "Internal server error",
+            error: "Internal server error",
         });
     }
 
@@ -45,9 +39,9 @@ export async function POST(request: NextRequest) {
         values: result.map((value) => ({
             id: value.id,
             category: value.category,
-            mediaGroups: value.mediaGroups,
-            created: value.created,
-            updated: value.updated,
+            mediaGroups: value.mediaGroupIds,
+            created: value.createdAt.toString(),
+            updated: value.updatedAt.toString(),
         })),
     });
 }

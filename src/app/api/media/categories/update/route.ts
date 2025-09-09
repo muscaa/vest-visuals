@@ -1,24 +1,20 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/categories/update";
+import * as types from "@shared/types/api/media/categories/update";
 import {
-    createClientDB,
-    usersDB,
-    mediaCategoriesDB,
-} from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import { auth } from "@server/auth";
+import * as categories from "@server/media/categories";
 
 export async function POST(request: NextRequest) {
-    const pb = await createClientDB();
-
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
-    if (!user) {
+    if (!session) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
-            message: "Unauthorized",
+            error: "Unauthorized",
         });
     }
 
@@ -26,26 +22,22 @@ export async function POST(request: NextRequest) {
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Invalid request body",
+            error: "Invalid request body",
         });
     }
 
-    const result = await mediaCategoriesDB.update({
-        pb,
-        id: json.id,
-        value: {
-            category: json.category,
-            mediaGroups: {
-                set: json.mediaGroups?.set,
-                append: json.mediaGroups?.append,
-                remove: json.mediaGroups?.remove,
-            },
+    const result = await categories.update(json.id, {
+        category: json.category,
+        mediaGroups: {
+            set: json.mediaGroups?.set,
+            append: json.mediaGroups?.append,
+            remove: json.mediaGroups?.remove,
         },
     });
-    if (result == null) {
+    if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
-            message: "Internal server error",
+            error: "Internal server error",
         });
     }
 

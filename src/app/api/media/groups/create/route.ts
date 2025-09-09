@@ -1,24 +1,20 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/groups/create";
+import * as types from "@shared/types/api/media/groups/create";
 import {
-    createClientDB,
-    usersDB,
-    mediaGroupsDB,
-} from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import { auth } from "@server/auth";
+import * as groups from "@server/media/groups";
 
 export async function POST(request: NextRequest) {
-    const pb = await createClientDB();
-
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
-    if (!user) {
+    if (!session) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
-            message: "Unauthorized",
+            error: "Unauthorized",
         });
     }
 
@@ -26,20 +22,17 @@ export async function POST(request: NextRequest) {
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Invalid request body",
+            error: "Invalid request body",
         });
     }
 
-    const result = await mediaGroupsDB.create({
-        pb,
-        value: {
-            mediaContents: json.mediaContents,
-        },
+    const result = await groups.create({
+        mediaContents: json.mediaContents,
     });
-    if (result == null) {
+    if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
-            message: "Internal server error",
+            error: "Internal server error",
         });
     }
 
@@ -47,9 +40,9 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            mediaContents: result.mediaContents,
-            created: result.created,
-            updated: result.updated,
+            mediaContents: result.mediaContents?.map((content) => content.id) || [],
+            created: result.createdAt.toString(),
+            updated: result.updatedAt.toString(),
         },
     });
 }

@@ -1,24 +1,20 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/contents/get";
+import * as types from "@shared/types/api/media/contents/get";
 import {
-    createClientDB,
-    usersDB,
-    mediaContentsDB,
-} from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import { auth } from "@server/auth";
+import * as contents from "@server/media/contents";
 
 export async function POST(request: NextRequest) {
-    const pb = await createClientDB();
-
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
-    if (!user) {
+    if (!session) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
-            message: "Unauthorized",
+            error: "Unauthorized",
         });
     }
 
@@ -26,21 +22,15 @@ export async function POST(request: NextRequest) {
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Invalid request body",
+            error: "Invalid request body",
         });
     }
 
-    const result = await mediaContentsDB.get({
-        pb,
-        id: json.id,
-        options: {
-            expand: "mediaVariants",
-        },
-    });
-    if (result == null) {
+    const result = await contents.get(json.id);
+    if (!result) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
-            message: "Media content not found",
+            error: "Media content not found",
         });
     }
 
@@ -48,17 +38,17 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
-            mediaVariants: result.expand?.mediaVariants ? result.expand.mediaVariants.map((variant) => ({
+            mediaVariants: result.mediaVariants.map((variant) => ({
                 id: variant.id,
                 variant: variant.variant,
-                file: variant.file,
+                file: variant.fileUrl,
                 type: variant.type,
                 info: variant.info,
-                created: variant.created,
-                updated: variant.updated,
-            })) : [],
-            created: result.created,
-            updated: result.updated,
+                created: variant.createdAt.toString(),
+                updated: variant.updatedAt.toString(),
+            })),
+            created: result.createdAt.toString(),
+            updated: result.updatedAt.toString(),
         },
     });
 }

@@ -1,26 +1,22 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/media/contents/upload";
+import * as types from "@shared/types/api/media/contents/upload";
 import {
-    createClientDB,
-    usersDB,
-    mediaContentsDB,
-} from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
-import { mediaProcessors } from "@/utils/server/media/processor";
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import { auth } from "@server/auth";
+import * as contents from "@server/media/contents";
+import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
 
 export async function POST(request: NextRequest) {
-    const pb = await createClientDB();
-
-    const user = await usersDB.get({
-        pb,
-        cookies: request.cookies,
+    const session = await auth.api.getSession({
+        headers: request.headers,
     });
-    if (!user) {
+    if (!session) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
-            message: "Unauthorized",
+            error: "Unauthorized",
         });
     }
 
@@ -39,11 +35,11 @@ export async function POST(request: NextRequest) {
     if (json.files.length > json.configs.length) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Mismatch between number of files and configs",
+            error: "Mismatch between number of files and configs",
         });
     }
 
-    const result: mediaContentsDB.Record[] = [];
+    const result: contents.PartialMediaContent[] = [];
     for (let i = 0; i < json.files.length; i++) {
         const file = json.files[i];
         const config = json.configs[i];
@@ -56,24 +52,21 @@ export async function POST(request: NextRequest) {
         const processor = new Processor();
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        let mediaContent: mediaContentsDB.Record | undefined;
+        let mediaContent: contents.PartialMediaContent | undefined;
         await processor.process(
             buffer,
             config.processor,
             async (value) => {
                 if (!mediaContent) {
-                    const result = await mediaContentsDB.create({
-                        pb,
-                        value: {
-                            mediaVariants: [
-                                {
-                                    variant: value.variant,
-                                    file: new Blob([value.buffer], { type: value.mimeType }),
-                                    type: value.type,
-                                    info: value.info,
-                                }
-                            ],
-                        },
+                    const result = await contents.create({
+                        mediaVariants: [
+                            {
+                                variant: value.variant,
+                                blob: new Blob([value.buffer], { type: value.mimeType }),
+                                type: value.type,
+                                info: value.info,
+                            },
+                        ],
                     });
                     if (!result) {
                         return false;
@@ -81,20 +74,16 @@ export async function POST(request: NextRequest) {
 
                     mediaContent = result;
                 } else {
-                    const result = await mediaContentsDB.update({
-                        pb,
-                        id: mediaContent.id,
-                        value: {
-                            mediaVariants: {
-                                append: [
-                                    {
-                                        variant: value.variant,
-                                        file: new Blob([value.buffer], { type: value.mimeType }),
-                                        type: value.type,
-                                        info: value.info,
-                                    }
-                                ]
-                            },
+                    const result = await contents.update(mediaContent.id, {
+                        mediaVariants: {
+                            append: [
+                                {
+                                    variant: value.variant,
+                                    blob: new Blob([value.buffer], { type: value.mimeType }),
+                                    type: value.type,
+                                    info: value.info,
+                                },
+                            ],
                         },
                     });
                     if (!result) {
@@ -115,9 +104,9 @@ export async function POST(request: NextRequest) {
         success: true,
         values: result.map((value) => ({
             id: value.id,
-            mediaVariants: value.mediaVariants,
-            created: value.created,
-            updated: value.updated,
+            mediaVariants: value.mediaVariants?.map((variant) => variant.id) || [],
+            created: value.createdAt.toString(),
+            updated: value.updatedAt.toString(),
         })),
     });
 }
