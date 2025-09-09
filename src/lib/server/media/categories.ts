@@ -32,7 +32,7 @@ export type PartialMediaCategory = {
     createdAt: Date;
     updatedAt: Date;
 };
-export type MediaCategory = SelectRequired<PartialMediaCategory, "mediaGroups">;
+export type MediaCategory = Omit<PartialMediaCategory, "mediaGroups"> & { mediaGroups: groups.MediaGroup[]; };
 type AutoMediaCategory<T extends SelectProps> =
     T extends { mediaCategoryGroups: (infer V)[]; }
         ? V extends { mediaGroup: groups.SelectProps; }
@@ -82,6 +82,18 @@ export async function getAll(): Promise<MediaCategory[]> {
                         with: {
                             mediaGroupContents: {
                                 orderBy: (fields, operators) => operators.asc(fields.order),
+                                with: {
+                                    mediaContent: {
+                                        with: {
+                                            mediaContentVariants: {
+                                                orderBy: (fields, operators) => operators.asc(fields.order),
+                                                with: {
+                                                    mediaVariant: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     },
@@ -115,6 +127,18 @@ export async function get(id: string): Promise<MediaCategory | undefined> {
                         with: {
                             mediaGroupContents: {
                                 orderBy: (fields, operators) => operators.asc(fields.order),
+                                with: {
+                                    mediaContent: {
+                                        with: {
+                                            mediaContentVariants: {
+                                                orderBy: (fields, operators) => operators.asc(fields.order),
+                                                with: {
+                                                    mediaVariant: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     },
@@ -209,5 +233,13 @@ export async function remove(id: string): Promise<number> {
         .where(eq(mediaCategoryGroups.categoryId, id));
     const result = await db.delete(mediaCategories)
         .where(eq(mediaCategories.id, id));
+    return result.rowsAffected;
+}
+
+export async function removeAll(ids: string[]): Promise<number> {
+    await db.delete(mediaCategoryGroups)
+        .where(inArray(mediaCategoryGroups.categoryId, ids));
+    const result = await db.delete(mediaCategories)
+        .where(inArray(mediaCategories.id, ids));
     return result.rowsAffected;
 }
