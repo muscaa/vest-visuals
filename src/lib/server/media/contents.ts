@@ -3,9 +3,16 @@ import {
     mediaContents,
     mediaContentVariants,
 } from "@server/db/schema";
-import { eq } from "drizzle-orm";
+import {
+    eq,
+    inArray,
+    desc,
+} from "drizzle-orm";
 import * as variants from "./variants";
-import { SelectRequired } from "@shared/types/utils";
+import {
+    SelectRequired,
+    ListProps,
+} from "@shared/types/utils";
 
 export type SelectProps =
     typeof mediaContents.$inferSelect
@@ -33,6 +40,9 @@ type AutoMediaContent<T extends SelectProps> =
         : PartialMediaContent;
 export type CreateProps = {
     mediaVariants: variants.CreateProps[];
+};
+export type UpdateProps = {
+    mediaVariants?: ListProps<variants.CreateProps, variants.CreateProps, string>;
 };
 
 export function format<T extends SelectProps>(props: T): AutoMediaContent<T> {
@@ -133,6 +143,54 @@ export async function create(props: CreateProps): Promise<PartialMediaContent | 
     return await getPartial(result.id);
 }
 
+export async function update(id: string, props: UpdateProps): Promise<PartialMediaContent | undefined> {
+    if (props.mediaVariants) {
+        if (props.mediaVariants.set) {
+            const mediaVariants = await Promise.all(props.mediaVariants.set.map(variants.create));
+            if (!mediaVariants.every((value): value is variants.MediaVariant => value != undefined)) {
+                await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.id) : undefined));
+            } else {
+                await db.delete(mediaContentVariants)
+                    .where(eq(mediaContentVariants.contentId, id));
+    
+                await db.insert(mediaContentVariants)
+                    .values(mediaVariants.map((value, index) => ({
+                        contentId: id,
+                        variantId: value.id,
+                        order: index,
+                    })));
+            }
+        } else {
+            if (props.mediaVariants.remove) {
+                await db.delete(mediaContentVariants)
+                    .where(inArray(mediaContentVariants.variantId, props.mediaVariants.remove));
+            }
+            if (props.mediaVariants.append) {
+                const mediaVariants = await Promise.all(props.mediaVariants.append.map(variants.create));
+                if (!mediaVariants.every((value): value is variants.MediaVariant => value != undefined)) {
+                    await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.id) : undefined));
+                } else {
+                    const last = await db.select()
+                        .from(mediaContentVariants)
+                        .where(eq(mediaContentVariants.contentId, id))
+                        .orderBy(desc(mediaContentVariants.order))
+                        .get();
+                    const startOrder = last ? last.order + 1 : 0;
+
+                    await db.insert(mediaContentVariants)
+                        .values(mediaVariants.map((value, index) => ({
+                            contentId: id,
+                            variantId: value.id,
+                            order: startOrder + index,
+                        })));
+                }
+            }
+        }
+    }
+    
+    return await getPartial(id);
+}
+
 export async function remove(id: string): Promise<number> {
     const query = await getPartial(id);
     if (!query) return 0;
@@ -140,5 +198,14 @@ export async function remove(id: string): Promise<number> {
     await Promise.all(query.mediaVariantIds.map(variants.remove));
     const result = await db.delete(mediaContents)
         .where(eq(mediaContents.id, id));
+    return result.rowsAffected;
+}
+
+export async function removeAll(ids: string[]): Promise<number> {
+    const queries = await Promise.all(ids.map(getPartial));
+
+    await Promise.all(queries.flatMap((query) => query ? query.mediaVariantIds.map(variants.remove) : []));
+    const result = await db.delete(mediaContents)
+        .where(inArray(mediaContents.id, ids));
     return result.rowsAffected;
 }

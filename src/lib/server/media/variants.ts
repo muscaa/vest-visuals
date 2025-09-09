@@ -13,6 +13,7 @@ import {
     DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { v4 } from "uuid";
+import { Blob } from "buffer";
 
 export type SelectProps = typeof mediaVariants.$inferSelect;
 export type MediaVariant =
