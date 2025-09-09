@@ -14,6 +14,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { v4 } from "uuid";
 import { Blob } from "buffer";
+import { getTableConfig } from "drizzle-orm/sqlite-core";
 
 export type SelectProps = typeof mediaVariants.$inferSelect;
 export type MediaVariant =
@@ -44,7 +45,7 @@ export function format(props: SelectProps): MediaVariant {
 }
 
 function filePath(fileName: string) {
-    return `${mediaVariants._.name}/${fileName}`;
+    return `${getTableConfig(mediaVariants).name}/${fileName}`;
 }
 
 export async function getAll(): Promise<MediaVariant[]> {
