@@ -149,6 +149,39 @@ export async function get(id: string): Promise<MediaCategory | undefined> {
     return result ? format(result) : undefined;
 }
 
+export async function getByCategory(category: string): Promise<MediaCategory | undefined> {
+    const result = await db.query.mediaCategories.findFirst({
+        where: (fields, operators) => operators.eq(fields.category, category),
+        with: {
+            mediaCategoryGroups: {
+                orderBy: (fields, operators) => operators.asc(fields.order),
+                with: {
+                    mediaGroup: {
+                        with: {
+                            mediaGroupContents: {
+                                orderBy: (fields, operators) => operators.asc(fields.order),
+                                with: {
+                                    mediaContent: {
+                                        with: {
+                                            mediaContentVariants: {
+                                                orderBy: (fields, operators) => operators.asc(fields.order),
+                                                with: {
+                                                    mediaVariant: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+    return result ? format(result) : undefined;
+}
+
 export async function create(props: CreateProps): Promise<PartialMediaCategory | undefined> {
     const result = await db.insert(mediaCategories)
         .values({

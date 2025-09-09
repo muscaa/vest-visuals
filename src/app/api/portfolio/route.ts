@@ -1,36 +1,33 @@
 import { NextRequest } from "next/server";
-import * as types from "@/types/api/portfolio";
-import { mediaCategoriesDB } from "@/utils/server/db";
-import { safeJSON } from "@/utils/server/request";
-import { responseJSON } from "@/utils/server/response";
+import * as types from "@shared/types/api/portfolio";
+import {
+    safeJSON,
+    responseJSON,
+} from "@server/http";
+import * as categories from "@server/media/categories";
 
 export async function POST(request: NextRequest) {
     const json = await safeJSON<types.PostRequest>(request, (json) => json.category);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
-            message: "Invalid request body",
+            error: "Invalid request body",
         });
     }
 
-    const result = await mediaCategoriesDB.getByCategory({
-        category: json.category,
-        options: {
-            expand: "mediaGroups,mediaGroups.mediaContents,mediaGroups.mediaContents.mediaVariants",
-        },
-    });
-    if (result == null) {
+    const result = await categories.getByCategory(json.category);
+    if (!result) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
-            message: "Category not found",
+            error: "Category not found",
         });
     }
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        values: result.expand?.mediaGroups?.flatMap((group) =>
-            group.expand?.mediaContents?.flatMap((content) => {
-                const mediaVariants = content.expand?.mediaVariants || [];
+        values: result.mediaGroups.flatMap((group) =>
+            group.mediaContents.flatMap((content) => {
+                const mediaVariants = content.mediaVariants;
                 if (mediaVariants.length == 0) {
                     return [];
                 }
@@ -38,14 +35,14 @@ export async function POST(request: NextRequest) {
                 return [
                     {
                         preview: {
-                            src: mediaVariants[0].file,
+                            src: mediaVariants[0].fileUrl,
                         },
                         full: {
-                            src: mediaVariants[mediaVariants.length > 1 ? 1 : 0].file,
+                            src: mediaVariants[mediaVariants.length > 1 ? 1 : 0].fileUrl,
                         },
                     } satisfies types.PortfolioEntry,
                 ];
-            }) || []
-        ) || [],
+            }),
+        ),
     });
 }
