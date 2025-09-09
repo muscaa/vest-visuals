@@ -5,8 +5,12 @@ export type CliCommand = (program: Command, core: CliCore) => void;
 export class CliCore {
     output: string[] = [];
 
-    out(format: any, ...args: any[]) {
-        const line = args.map((arg) => JSON.stringify(arg, null, 2)).join("");
-        this.output.push(String(format) + line);
+    out(...args: any[]) {
+        const types: Record<string, (arg: any) => string> = {
+            object: (arg: any) => JSON.stringify(arg, null, 2),
+        };
+
+        const line = args.map((arg) => types[typeof arg] ? types[typeof arg](arg) : String(arg)).join("");
+        this.output.push(line);
     }
 }
