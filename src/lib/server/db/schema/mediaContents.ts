@@ -35,6 +35,10 @@ export const mediaContentsRelations = relations(mediaContents, ({ many }) => ({
 }));
 
 export const mediaContentVariantsRelations = relations(mediaContentVariants, ({ one }) => ({
+    mediaContent: one(mediaContents, {
+        fields: [mediaContentVariants.contentId],
+        references: [mediaContents.id],
+    }),
     mediaVariant: one(mediaVariants, {
         fields: [mediaContentVariants.variantId],
         references: [mediaVariants.id],

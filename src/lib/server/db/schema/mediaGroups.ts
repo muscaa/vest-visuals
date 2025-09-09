@@ -35,6 +35,10 @@ export const mediaGroupsRelations = relations(mediaGroups, ({ many }) => ({
 }));
 
 export const mediaGroupContentsRelations = relations(mediaGroupContents, ({ one }) => ({
+    mediaGroup: one(mediaGroups, {
+        fields: [mediaGroupContents.groupId],
+        references: [mediaGroups.id],
+    }),
     mediaContent: one(mediaContents, {
         fields: [mediaGroupContents.contentId],
         references: [mediaContents.id],
