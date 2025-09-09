@@ -4,15 +4,16 @@ import { MainAdmin } from "@/components/admin/main";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { actionRunCommand } from "@/actions/cli";
+import { useCli } from "@/hooks/useCli";
 
 export default function Page() {
+    const { execute } = useCli();
     const [command, setCommand] = useState<string>("");
     const [output, setOutput] = useState<string[]>([]);
 
     const handleSend = async () => {
-        const result = await actionRunCommand(command);
-        setOutput((prev) => [...prev, `$ ${command}`, result]);
+        const result = await execute.mutateAsync(command);
+        setOutput((prev) => [...prev, `$ ${command}`, result.join("\n")]);
     };
 
     return (
