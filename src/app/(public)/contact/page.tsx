@@ -19,23 +19,17 @@ import {
     Mail,
     ShieldCheck,
 } from "lucide-react";
-import {
-    SiWhatsapp,
-} from "@icons-pack/react-simple-icons";
-import {
-    GoogleReCaptchaProvider,
-    useGoogleReCaptcha
-} from "react-google-recaptcha-v3";
+import { SiWhatsapp } from "@icons-pack/react-simple-icons";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useState } from "react";
-import { client_config } from "@/utils/client/config";
-import * as types from "@/types/api/contact";
+import { clientConfig } from "@client/config";
 import { Reveal } from "@/components/animations/reveal";
-import { api_client } from "@/utils/client/axios";
+import { useContact } from "@/hooks/useContact";
 
 type ContactStatus = "sending" | "success" | "error";
 
 function ContactForm() {
-    const { executeRecaptcha } = useGoogleReCaptcha();
+    const { contact } = useContact();
     const [status, setStatus] = useState<ContactStatus>();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [name, setName] = useState("");
@@ -44,22 +38,22 @@ function ContactForm() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (!executeRecaptcha) return;
 
         setStatus("sending");
         setErrorMessage(undefined);
 
-        const token = await executeRecaptcha("contact_form");
+        try {
+            await contact.mutateAsync({
+                name,
+                email,
+                message,
+            });
 
-        const { data } = await api_client.post<types.PostResponse, types.PostRequest>("/contact", {
-            token,
-            name,
-            email,
-            message,
-        });
-
-        setStatus(data.success ? "success" : "error");
-        setErrorMessage(data.message);
+            setStatus("success");
+        } catch (error) {
+            setStatus("error");
+            setErrorMessage((error as Error).message);
+        }
     };
 
     return (
@@ -188,7 +182,7 @@ function ContactOther() {
 export default function Page() {
     return (
         <GoogleReCaptchaProvider
-            reCaptchaKey={client_config.env.RECAPTCHA_KEY_SITE}
+            reCaptchaKey={clientConfig.env.RECAPTCHA_KEY_SITE}
         >
             <Main>
                 <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
