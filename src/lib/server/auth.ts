@@ -5,8 +5,10 @@ import * as schema from "./db/schema/auth";
 import {
     openAPI,
     twoFactor,
+    captcha,
 } from "better-auth/plugins";
 import * as templates from "./mail/templates";
+import { serverConfig } from "./config";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -57,6 +59,10 @@ export const auth = betterAuth({
                     console.log(templates.signInOTP(data.otp));
                 },
             },
+        }),
+        captcha({
+            provider: "google-recaptcha",
+            secretKey: serverConfig.env.RECAPTCHA_KEY_SECRET,
         }),
     ],
     advanced: {
