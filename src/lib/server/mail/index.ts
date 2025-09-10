@@ -1,5 +1,10 @@
 import { createTransport } from "nodemailer";
-import { serverConfig } from "./config";
+import { serverConfig } from "../config";
+
+export interface MailTemplate {
+    subject: string;
+    body: string;
+}
 
 const transporter = createTransport({
     host: serverConfig.env.SMTP_HOST,
@@ -12,11 +17,11 @@ const transporter = createTransport({
     },
 });
 
-export async function sendMail(to: string[], subject: string, body: string) {
+export async function sendMail(to: string[], content: MailTemplate) {
     return await transporter.sendMail({
         from: `"${serverConfig.env.SMTP_SENDER_NAME}" <${serverConfig.env.SMTP_SENDER_ADDRESS}>`,
         to: to.join(", "),
-        subject: subject,
-        html: body,
+        subject: content.subject,
+        html: content.body,
     });
 }

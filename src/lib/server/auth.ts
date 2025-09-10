@@ -2,61 +2,63 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
 import * as schema from "./db/schema/auth";
-import { openAPI } from "better-auth/plugins";
 import {
-    createAuthMiddleware,
-    APIError,
-} from "better-auth/api";
+    openAPI,
+    emailOTP,
+} from "better-auth/plugins";
+import * as templates from "./mail/templates";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "sqlite",
         schema,
     }),
+    appName: "Vest Visuals",
     emailAndPassword: {
         enabled: true,
         autoSignIn: false,
         disableSignUp: true,
-        requireEmailVerification: false,
+        requireEmailVerification: true,
         sendResetPassword: async (data, req) => {
-            // TODO
+            console.log(templates.resetPassword(data.url));
         },
     },
     emailVerification: {
-        sendVerificationEmail: async (data, req) => {
-            // TODO
-        },
         sendOnSignUp: true,
         sendOnSignIn: true,
         autoSignInAfterVerification: false,
-        
     },
     user: {
         changeEmail: {
-            enabled: true,
+            enabled: false,
             sendChangeEmailVerification: async (data, req) => {
-                // TODO
+                console.log(templates.changeEmail(data.url));
             },
         },
         deleteUser: {
             enabled: false,
             sendDeleteAccountVerification: async (data, req) => {
-                // TODO
+                console.log(templates.deleteAccount(data.url));
             },
         },
     },
     plugins: [
         openAPI(),
+        emailOTP({
+            disableSignUp: true,
+            overrideDefaultEmailVerification: true,
+            sendVerificationOnSignUp: true,
+            sendVerificationOTP: async (data, request) => {
+                if (data.type == "sign-in") {
+                    console.log(templates.signInOTP(data.otp));
+                } else if (data.type == "email-verification") {
+                    console.log(templates.emailVerificationOTP(data.otp));
+                } else if (data.type == "forget-password") {
+                    console.log(templates.forgetPasswordOTP(data.otp));
+                }
+            },
+        }),
     ],
-    // hooks: {
-    //     before: createAuthMiddleware(async (ctx) => {
-    //         if (ctx.path.startsWith("/sign-up")) {
-    //             throw new APIError("UNAUTHORIZED", {
-    //                 message: "Sign-ups are disabled",
-    //             });
-    //         }
-    //     }),
-    // },
     advanced: {
         ipAddress: {
             ipAddressHeaders: ["x-forwarded-for"],
