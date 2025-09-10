@@ -4,7 +4,7 @@ import { db } from "./db";
 import * as schema from "./db/schema/auth";
 import {
     openAPI,
-    emailOTP,
+    twoFactor,
 } from "better-auth/plugins";
 import * as templates from "./mail/templates";
 
@@ -19,7 +19,7 @@ export const auth = betterAuth({
         autoSignIn: false,
         disableSignUp: true,
         requireEmailVerification: true,
-        sendResetPassword: async (data, req) => {
+        sendResetPassword: async (data) => {
             console.log(templates.resetPassword(data.url));
         },
     },
@@ -27,37 +27,27 @@ export const auth = betterAuth({
         sendOnSignUp: true,
         sendOnSignIn: true,
         autoSignInAfterVerification: false,
+        sendVerificationEmail: async (data) => {
+            console.log(templates.emailVerification(data.url));
+        },
     },
     user: {
         changeEmail: {
             enabled: false,
-            sendChangeEmailVerification: async (data, req) => {
+            sendChangeEmailVerification: async (data) => {
                 console.log(templates.changeEmail(data.url));
             },
         },
         deleteUser: {
             enabled: false,
-            sendDeleteAccountVerification: async (data, req) => {
+            sendDeleteAccountVerification: async (data) => {
                 console.log(templates.deleteAccount(data.url));
             },
         },
     },
     plugins: [
         openAPI(),
-        emailOTP({
-            disableSignUp: true,
-            overrideDefaultEmailVerification: true,
-            sendVerificationOnSignUp: true,
-            sendVerificationOTP: async (data, request) => {
-                if (data.type == "sign-in") {
-                    console.log(templates.signInOTP(data.otp));
-                } else if (data.type == "email-verification") {
-                    console.log(templates.emailVerificationOTP(data.otp));
-                } else if (data.type == "forget-password") {
-                    console.log(templates.forgetPasswordOTP(data.otp));
-                }
-            },
-        }),
+        twoFactor(),
     ],
     advanced: {
         ipAddress: {

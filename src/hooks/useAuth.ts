@@ -21,10 +21,22 @@ export function useAuth() {
             //     password: props.password,
             // });
 
-            await authClient.signIn.email({
+            // await authClient.signIn.email({
+            //     email: props.email,
+            //     password: props.password,
+            //     rememberMe: true,
+            // }, {
+            //     onSuccess: (ctx) => {
+            //         router.push("/a");
+            //     },
+            //     onError: (ctx) => {
+            //         throw new Error(ctx.error.message);
+            //     },
+            // });
+
+            await authClient.signIn.emailOtp({
                 email: props.email,
-                password: props.password,
-                rememberMe: true,
+                otp: "123456",
             }, {
                 onSuccess: (ctx) => {
                     router.push("/a");
@@ -32,7 +44,7 @@ export function useAuth() {
                 onError: (ctx) => {
                     throw new Error(ctx.error.message);
                 },
-            })
+            });
         },
     });
 

@@ -2,15 +2,6 @@ import { MailTemplate } from ".";
 
 const APP_NAME = "Vest Visuals";
 
-export function emailVerificationOTP(otp: string): MailTemplate {
-    return {
-        subject: `Verify your ${APP_NAME} account`,
-        body: `
-        <p>${otp}</p>
-        `,
-    };
-}
-
 export function signInOTP(otp: string): MailTemplate {
     return {
         subject: `${APP_NAME} login OTP`,
@@ -20,11 +11,11 @@ export function signInOTP(otp: string): MailTemplate {
     };
 }
 
-export function forgetPasswordOTP(otp: string): MailTemplate {
+export function emailVerification(url: string): MailTemplate {
     return {
-        subject: `${APP_NAME} password reset OTP`,
+        subject: `Verify your ${APP_NAME} account`,
         body: `
-        <p>${otp}</p>
+        <a class="btn" href="${url}" target="_blank" rel="noopener">Reset password</a>
         `,
     };
 }
