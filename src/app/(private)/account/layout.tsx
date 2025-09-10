@@ -8,8 +8,8 @@ import { headers } from "next/headers";
 import { auth } from "@server/auth";
 
 export const metadata = createMetadata({
-    route: "/register",
-    routeName: "Register",
+    route: "/account",
+    routeName: "Contul Meu",
 });
 
 export default async function Layout(props: LayoutProps) {
@@ -17,8 +17,8 @@ export default async function Layout(props: LayoutProps) {
         headers: await headers(),
     });
     
-    if (session) {
-        redirect("/account");
+    if (!session) {
+        redirect("/login");
     }
 
     return (

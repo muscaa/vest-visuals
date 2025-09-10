@@ -48,6 +48,7 @@ export const auth = betterAuth({
     plugins: [
         openAPI(),
         twoFactor({
+            skipVerificationOnEnable: true,
             totpOptions: {
                 disable: true,
             },

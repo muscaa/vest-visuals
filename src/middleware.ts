@@ -9,7 +9,12 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
     const pathname = url.pathname;
 
-    if (!pathname.startsWith("/a/") && pathname != "/a") {
+    const guarded = [
+        "/a",
+        "/account",
+    ];
+
+    if (!guarded.includes(pathname) && !guarded.find(p => pathname.startsWith(p + "/"))) {
         return NextResponse.next();
     }
 

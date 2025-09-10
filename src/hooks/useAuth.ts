@@ -1,88 +1,112 @@
 "use client";
 
-// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { useMutation } from "@tanstack/react-query";
+import {
+    useQuery,
+    useMutation,
+    useQueryClient,
+} from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { authClient } from "@client/auth";
 
 export function useAuth() {
     const router = useRouter();
-    // const { executeRecaptcha } = useGoogleReCaptcha();
+    const queryClient = useQueryClient();
 
     const login = useMutation({
-        mutationKey: ["login"],
         mutationFn: async (props: { email: string, password: string }) => {
-            // if (!executeRecaptcha) return;
-
-            // const token = await executeRecaptcha("login_form");
-            // const { data } = await api_client.post<types_login.PostResponse, types_login.PostRequest>("/auth/login", {
-            //     token,
-            //     email: props.email,
-            //     password: props.password,
-            // });
-
-            // await authClient.signIn.email({
-            //     email: props.email,
-            //     password: props.password,
-            //     rememberMe: true,
-            // }, {
-            //     onSuccess: (ctx) => {
-            //         router.push("/a");
-            //     },
-            //     onError: (ctx) => {
-            //         throw new Error(ctx.error.message);
-            //     },
-            // });
-
-            await authClient.signIn.emailOtp({
+            const { data, error } = await authClient.signIn.email({
                 email: props.email,
-                otp: "123456",
-            }, {
-                onSuccess: (ctx) => {
-                    router.push("/a");
-                },
-                onError: (ctx) => {
-                    throw new Error(ctx.error.message);
-                },
+                password: props.password,
+                rememberMe: true,
             });
+            if (error) throw new Error(error.message);
+
+            if ("twoFactorRedirect" in data) {
+                const { error } = await authClient.twoFactor.sendOtp();
+                if (error) throw new Error(error.message);
+
+                router.push("/login/verify");
+            } else {
+                await queryClient.invalidateQueries({ queryKey: ["profile"] });
+                router.push("/account");
+            }
+        },
+    });
+
+    const loginVerify = useMutation({
+        mutationFn: async (code: string) => {
+            const { error } = await authClient.twoFactor.verifyOtp({
+                code,
+                trustDevice: true,
+            });
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+            router.push("/account");
         },
     });
 
     const register = useMutation({
-        mutationKey: ["register"],
         mutationFn: async (props: { email: string, password: string }) => {
-            await authClient.signUp.email({
+            const { error } = await authClient.signUp.email({
                 email: props.email,
                 password: props.password,
                 name: props.email.split("@")[0],
-            }, {
-                onSuccess: (ctx) => {
-                    router.push("/login");
-                },
-                onError: (ctx) => {
-                    throw new Error(ctx.error.message);
-                },
             });
+            if (error) throw new Error(error.message);
+
+            router.push("/login");
         },
     });
 
     const logout = useMutation({
-        mutationKey: ["logout"],
         mutationFn: async () => {
-            await authClient.signOut({}, {
-                onSuccess: (ctx) => {
-                    router.push("/login");
-                },
-                onError: (ctx) => {
-                    throw new Error(ctx.error.message);
-                },
+            const { error } = await authClient.signOut();
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+            router.push("/login");
+        },
+    });
+
+    const useProfile = () => useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => {
+            const session = await authClient.getSession();
+
+            return session.data?.user;
+        },
+    });
+
+    const enable2FA = useMutation({
+        mutationFn: async (password: string) => {
+            const { error } = await authClient.twoFactor.enable({
+                password,
             });
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+        },
+    });
+
+    const disable2FA = useMutation({
+        mutationFn: async (password: string) => {
+            const { error } = await authClient.twoFactor.disable({
+                password,
+            });
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
     });
 
     return {
         login,
+        loginVerify,
         register,
         logout,
+        useProfile,
+        enable2FA,
+        disable2FA,
     };
 }

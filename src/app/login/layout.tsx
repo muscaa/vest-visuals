@@ -18,7 +18,7 @@ export default async function Layout(props: LayoutProps) {
     });
     
     if (session) {
-        redirect("/a");
+        redirect("/account");
     }
 
     return (
