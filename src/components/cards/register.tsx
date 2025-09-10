@@ -6,13 +6,22 @@ import { ShieldCheck } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useAuth } from "@/hooks/useAuth";
+import { ButtonLink } from "../snippets";
 
 function Footer() {
     return (
-        <div className="flex justify-center items-center gap-1 mt-2">
-            <ShieldCheck size={24} strokeWidth={1.5} className="size-6" />
-            <p>Protected by reCAPTCHA</p>
-        </div>
+        <>
+            <div className="flex justify-center items-center gap-1 mt-2">
+                <ShieldCheck size={24} strokeWidth={1.5} className="size-6" />
+                <p>Protected by reCAPTCHA</p>
+            </div>
+            <div className="text-center mt-2">
+                Already have an account?{" "}
+                <ButtonLink href="/login" variant="link" size="none">
+                    Login
+                </ButtonLink>
+            </div>
+        </>
     );
 }
 
