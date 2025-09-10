@@ -57,11 +57,12 @@ export function useAuth() {
     const logout = useMutation({
         mutationKey: ["logout"],
         mutationFn: async () => {
-            await authClient.signOut({
-                fetchOptions: {
-                    onSuccess: () => {
-                        router.push("/login");
-                    },
+            await authClient.signOut({}, {
+                onSuccess: (ctx) => {
+                    router.push("/login");
+                },
+                onError: (ctx) => {
+                    throw new Error(ctx.error.message);
                 },
             });
         },
