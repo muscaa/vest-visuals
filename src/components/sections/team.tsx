@@ -72,7 +72,7 @@ export function SectionTeam() {
             <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
                 <Member
                     name="David"
-                    image="https://s3.vestvisuals.ro/public/pbc_36079378282/bsmpx9pyfim7xfr/blob_r61tm6qqfa.webp"
+                    image="https://s3.vestvisuals.ro/public/media_variants/inphocft2nkcw7zrx0rrv0ae"
                     roles={[
                         "videograf",
                         "fotograf",
@@ -86,7 +86,7 @@ export function SectionTeam() {
                 />
                 <Member
                     name="Mihail"
-                    image="https://s3.vestvisuals.ro/public/pbc_36079378282/nbmypwcf9u071sd/blob_sfi3a6vb0x.webp"
+                    image="https://s3.vestvisuals.ro/public/media_variants/phrzk4zyeichg2u1lwsphziw"
                     roles={[
                         "fotograf",
                         "editor foto",
