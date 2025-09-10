@@ -17,10 +17,10 @@ const transporter = createTransport({
     },
 });
 
-export async function sendMail(to: string[], content: MailTemplate) {
+export async function sendMail(to: string | string[], content: MailTemplate) {
     return await transporter.sendMail({
         from: `"${serverConfig.env.SMTP_SENDER_NAME}" <${serverConfig.env.SMTP_SENDER_ADDRESS}>`,
-        to: to.join(", "),
+        to: Array.isArray(to) ? to.join(", ") : to,
         subject: content.subject,
         html: content.body,
     });

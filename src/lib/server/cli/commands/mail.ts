@@ -14,7 +14,7 @@ export const mail: CliCommand = (program, core) => {
             if (!to) throw new Error("destination email is required");
             if (!subject) throw new Error("email title is required");
 
-            const info = await sendMail([to], { subject, body });
+            const info = await sendMail(to, { subject, body });
             core.out(info);
         });
 };
