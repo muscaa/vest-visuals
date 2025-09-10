@@ -47,7 +47,16 @@ export const auth = betterAuth({
     },
     plugins: [
         openAPI(),
-        twoFactor(),
+        twoFactor({
+            totpOptions: {
+                disable: true,
+            },
+            otpOptions: {
+                sendOTP: async (data) => {
+                    console.log(templates.signInOTP(data.otp));
+                },
+            },
+        }),
     ],
     advanced: {
         ipAddress: {
