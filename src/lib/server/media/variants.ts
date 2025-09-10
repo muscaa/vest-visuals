@@ -12,20 +12,20 @@ import {
     PutObjectCommand,
     DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
-import { v4 } from "uuid";
 import { Blob } from "buffer";
 import { getTableConfig } from "drizzle-orm/sqlite-core";
+import { createId } from "@paralleldrive/cuid2";
 
 export type SelectProps = typeof mediaVariants.$inferSelect;
 export type MediaVariant =
-    Omit<SelectProps, "fileName" | "type" | "info">
+    Omit<SelectProps, "type" | "info">
     & {
         fileUrl: string;
     }
     & MediaTypeInfo;
 export type InsertProps = typeof mediaVariants.$inferInsert;
 export type CreateProps =
-    Omit<InsertProps, "id" | "createdAt" | "updatedAt" | "fileName" | "type" | "info">
+    Omit<InsertProps, "id" | "createdAt" | "updatedAt" | "type" | "info">
     & {
         blob: Blob;
     }
@@ -36,7 +36,7 @@ export function format(props: SelectProps): MediaVariant {
     return {
         id: props.id,
         variant: props.variant,
-        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.fileName)}`,
+        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.id)}`,
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -44,8 +44,8 @@ export function format(props: SelectProps): MediaVariant {
     };
 }
 
-function filePath(fileName: string) {
-    return `${getTableConfig(mediaVariants).name}/${fileName}`;
+function filePath(id: string) {
+    return `${getTableConfig(mediaVariants).name}/${id}`;
 }
 
 export async function getAll(): Promise<MediaVariant[]> {
@@ -63,35 +63,35 @@ export async function get(id: string): Promise<MediaVariant | undefined> {
     return result ? format(result) : undefined;
 }
 
-async function newFileName(): Promise<string> {
-    let fileName: string;
+async function newId(): Promise<string> {
+    let id: string;
     let exists: boolean;
 
     do {
-        fileName = v4();
+        id = createId();
         exists = false;
 
         try {
             const command = new HeadObjectCommand({
                 Bucket: buckets.public,
-                Key: filePath(fileName),
+                Key: filePath(id),
             });
             await s3.send(command);
             exists = true;
         } catch (error) { }
     } while (exists);
 
-    return fileName;
+    return id;
 }
 
-async function upload(fileName: string, blob: Blob): Promise<boolean> {
+async function upload(id: string, blob: Blob): Promise<boolean> {
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
         const command = new PutObjectCommand({
             Bucket: buckets.public,
-            Key: filePath(fileName),
+            Key: filePath(id),
             Body: buffer,
             ContentType: blob.type,
         });
@@ -103,15 +103,15 @@ async function upload(fileName: string, blob: Blob): Promise<boolean> {
 }
 
 export async function create(props: CreateProps): Promise<MediaVariant | undefined> {
-    const fileName = await newFileName();
+    const id = await newId();
 
-    const uploaded = await upload(fileName, props.blob);
+    const uploaded = await upload(id, props.blob);
     if (!uploaded) return undefined;
 
     const result = await db.insert(mediaVariants)
         .values({
+            id,
             variant: props.variant,
-            fileName,
             type: props.type,
             info: props.info,
         })
@@ -128,7 +128,7 @@ export async function update(id: string, props: UpdateProps): Promise<MediaVaria
             .get();
         if (!query) return undefined;
 
-        const uploaded = await upload(query.fileName, props.blob);
+        const uploaded = await upload(query.id, props.blob);
         if (!uploaded) return undefined;
     }
 
@@ -153,7 +153,7 @@ export async function remove(id: string): Promise<number> {
         try {
             const command = new DeleteObjectCommand({
                 Bucket: buckets.public,
-                Key: filePath(query.fileName),
+                Key: filePath(query.id),
             });
             await s3.send(command);
         } catch (error) { }

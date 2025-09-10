@@ -13,8 +13,6 @@ export const mediaVariants = sqliteTable("media_variants", {
         .primaryKey(),
     variant: text("variant")
         .notNull(),
-    fileName: text("file_name")
-        .notNull(),
     type: text("type", { enum: ["image", "video"] })
         .notNull(),
     info: text("info", { mode: "json" })
