@@ -3,7 +3,7 @@ import {
     NextResponse,
 } from "next/server";
 import { getUrlString } from "@server/http";
-import { auth } from "@server/auth";
+import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
@@ -13,11 +13,9 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const session = await auth.api.getSession({
-        headers: request.headers,
-    });
+    const cookie = getSessionCookie(request);
 
-    if (!session) {
+    if (!cookie) {
         return NextResponse.redirect(getUrlString(request, "/login"));
     }
 
