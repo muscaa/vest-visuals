@@ -16,8 +16,7 @@ export function useContact() {
         mutationKey: ["contact"],
         mutationFn: async (props: ContactProps) => {
             if (!executeRecaptcha) throw new Error("Recaptcha error");
-
-            const token = await executeRecaptcha("contact_form");
+            const token = await executeRecaptcha("contact");
 
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/contact", {
                 token,
