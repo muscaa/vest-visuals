@@ -22,6 +22,7 @@
             "@client/*": ["./src/lib/client/*"],
             "@server/*": ["./src/lib/server/*"],
             "@shared/*": ["./src/lib/shared/*"],
+            "@type/*": ["./src/lib/type/*"],
             "@/*": ["./src/*"],
             ":/*": ["./public/*"],
         }
