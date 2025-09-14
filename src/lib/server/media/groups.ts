@@ -9,10 +9,7 @@ import {
     desc,
 } from "drizzle-orm";
 import * as contents from "./contents";
-import {
-    SelectRequired,
-    ListProps,
-} from "@shared/types/utils";
+import { ListProps } from "@shared/types/utils";
 
 export type SelectProps =
     typeof mediaGroups.$inferSelect
@@ -26,6 +23,7 @@ export type SelectProps =
     };
 export type PartialMediaGroup = {
     id: string;
+    description?: string;
     mediaContentIds: string[];
     mediaContents?: contents.PartialMediaContent[];
     createdAt: Date;
@@ -34,20 +32,23 @@ export type PartialMediaGroup = {
 export type MediaGroup = Omit<PartialMediaGroup, "mediaContents"> & { mediaContents: contents.MediaContent[]; };
 type AutoMediaGroup<T extends SelectProps> =
     T extends { mediaGroupContents: (infer V)[]; }
-        ? V extends { mediaContent: contents.SelectProps; }
-            ? MediaGroup
-            : PartialMediaGroup
-        : PartialMediaGroup;
+    ? V extends { mediaContent: contents.SelectProps; }
+    ? MediaGroup
+    : PartialMediaGroup
+    : PartialMediaGroup;
 export type CreateProps = {
+    description?: string;
     mediaContents?: string[];
 };
 export type UpdateProps = {
+    description?: string | null;
     mediaContents?: ListProps<string>;
 };
 
 export function format<T extends SelectProps>(props: T): AutoMediaGroup<T> {
     return {
         id: props.id,
+        description: props.description,
         mediaContentIds: props.mediaGroupContents.map((value) => value.contentId),
         mediaContents: props.mediaGroupContents.every((value) => value.mediaContent != undefined)
             ? props.mediaGroupContents.map((value) => contents.format(value.mediaContent!))
@@ -129,7 +130,9 @@ export async function get(id: string): Promise<MediaGroup | undefined> {
 
 export async function create(props: CreateProps): Promise<PartialMediaGroup | undefined> {
     const result = await db.insert(mediaGroups)
-        .values({})
+        .values({
+            description: props.description,
+        })
         .returning()
         .get();
     if (!result) {
@@ -158,6 +161,14 @@ export async function create(props: CreateProps): Promise<PartialMediaGroup | un
 }
 
 export async function update(id: string, props: UpdateProps): Promise<PartialMediaGroup | undefined> {
+    if (props.description || props.description === null) {
+        await db.update(mediaGroups)
+            .set({
+                description: props.description,
+            })
+            .where(eq(mediaGroups.id, id));
+    }
+
     if (props.mediaContents) {
         if (props.mediaContents.set) {
             await db.delete(mediaGroupContents)
@@ -189,7 +200,7 @@ export async function update(id: string, props: UpdateProps): Promise<PartialMed
             }
         }
     }
-    
+
     return await getPartial(id);
 }
 

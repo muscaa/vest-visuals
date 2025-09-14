@@ -4,6 +4,7 @@ import { Response } from "@shared/types/http";
 
 export type PostRequest = {
     id: string;
+    description?: string;
     mediaContents?: {
         set?: string[];
         append?: string[];

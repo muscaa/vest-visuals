@@ -11,6 +11,7 @@ export const mediaGroups = sqliteTable("media_groups", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
+    description: text("description"),
     createdAt: integer("created_at", { mode: "timestamp" })
         .$defaultFn(() => new Date())
         .notNull(),

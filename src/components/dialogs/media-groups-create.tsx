@@ -7,6 +7,7 @@ import { FullMediaCategory } from "@shared/types/api/media/categories";
 import { useState } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 
 interface Props {
     onCreate?: () => void;
@@ -15,12 +16,15 @@ interface Props {
 }
 
 export function MediaGroupsCreateDialog(props: Props) {
+    const [description, setDescription] = useState<string>("");
     const [top, setTop] = useState(true);
     const { createMediaGroup, removeMediaGroups } = useMediaGroups();
     const { updateMediaCategory } = useMediaCategories();
 
     const submit = async () => {
-        const result = await createMediaGroup.mutateAsync({});
+        const result = await createMediaGroup.mutateAsync({
+            description,
+        });
 
         if (props.parent) {
             try {
@@ -44,6 +48,7 @@ export function MediaGroupsCreateDialog(props: Props) {
     };
 
     const handleReset = () => {
+        setDescription("");
         setTop(true);
     };
 
@@ -60,6 +65,16 @@ export function MediaGroupsCreateDialog(props: Props) {
             onReset={handleReset}
             trigger={props.children}
         >
+            <div className="flex flex-col gap-2">
+                <Label htmlFor="description">Description (optional)</Label>
+                <Input
+                    id="description"
+                    type="text"
+                    placeholder="description"
+                    required
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
             <div className="flex items-center gap-2">
                 <Checkbox
                     id="top"

@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await groups.create({
+        description: json.description,
         mediaContents: json.mediaContents,
     });
     if (!result) {
@@ -40,6 +41,7 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
+            description: result.description,
             mediaContents: result.mediaContents?.map((content) => content.id) || [],
             created: result.createdAt.toString(),
             updated: result.updatedAt.toString(),

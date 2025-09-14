@@ -4,6 +4,7 @@ import { MediaGroup } from "..";
 // POST
 
 export type PostRequest = {
+    description?: string;
     mediaContents?: string[];
 };
 

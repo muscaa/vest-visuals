@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
             category: result.category,
             mediaGroups: result.mediaGroups.map((group) => ({
                 id: group.id,
+                description: group.description,
                 mediaContents: group.mediaContentIds,
                 created: group.createdAt.toString(),
                 updated: group.updatedAt.toString(),

@@ -20,6 +20,7 @@ import {
     ChevronDown,
 } from "lucide-react";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { MediaGroupsEditDialog } from "../dialogs/media-groups-edit";
 
 interface ListEntryProps {
     value: MediaGroup;
@@ -47,6 +48,7 @@ function ListEntry(props: ListEntryProps) {
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
+                        <p>{props.value.description}</p>
                         <div className="flex flex-col">
                             <h6>Updated: {dateToString(props.value.updated)}</h6>
                             <h6>Created: {dateToString(props.value.created)}</h6>
@@ -175,6 +177,18 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
             >
                 Open
             </Button>
+            <MediaGroupsEditDialog
+                value={selected}
+                onEdit={handleUpdate}
+            >
+                <Button
+                    variant="secondary"
+                    disabled={!selected}
+                    className="grow"
+                >
+                    Edit
+                </Button>
+            </MediaGroupsEditDialog>
             <MediaGroupsDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}

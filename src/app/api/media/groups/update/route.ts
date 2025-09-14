@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && json.mediaContents);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.id);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await groups.update(json.id, {
+        description: json.description === undefined ? undefined : (json.description || null),
         mediaContents: {
             set: json.mediaContents?.set,
             append: json.mediaContents?.append,

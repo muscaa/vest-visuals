@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
         success: true,
         value: {
             id: result.id,
+            description: result.description,
             mediaContents: result.mediaContents.map((content) => ({
                 id: content.id,
                 mediaVariants: content.mediaVariants.map((variant) => ({
