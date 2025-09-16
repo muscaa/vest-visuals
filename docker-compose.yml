@@ -7,6 +7,9 @@ services:
       - "5001:5001"
     volumes:
       - ./.data/libsql:/var/lib/sqld
+    environment:
+      - SQLD_HTTP_LISTEN_ADDR=127.0.0.1:8080
+      - SQLD_HTTP_AUTH=basic:Y29uc29sZTpjb25zb2xlMTIzNCE=
   minio:
     image: bitnami/minio:2025.4.22
     platform: linux/amd64
