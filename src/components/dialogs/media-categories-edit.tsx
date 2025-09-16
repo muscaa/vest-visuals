@@ -5,7 +5,7 @@ import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@shared/types/api/media/categories";
+import { PartialMediaCategory } from "@type/media/categories";
 
 interface CommonProps {
     onEdit?: () => void;
@@ -13,7 +13,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: MediaCategory;
+    value: PartialMediaCategory;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -23,7 +23,9 @@ function ValidDialog(props: ValidProps) {
     const submit = async () => {
         return updateMediaCategory.mutateAsync({
             id: props.value.id,
-            category,
+            value: {
+                category,
+            },
         });
     };
 
@@ -61,7 +63,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: MediaCategory;
+    value?: PartialMediaCategory;
 }
 
 export function MediaCategoriesEditDialog(props: Props) {

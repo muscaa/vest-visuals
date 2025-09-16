@@ -3,7 +3,7 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaContents } from "@/hooks/useMediaContents";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { FullMediaGroup } from "@shared/types/api/media/groups";
+import { MediaGroup } from "@type/media/groups";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { useState } from "react";
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
-    parent?: FullMediaGroup;
+    parent?: MediaGroup;
 }
 
 export function MediaContentsUploadDialog(props: Props) {
@@ -54,8 +54,10 @@ export function MediaContentsUploadDialog(props: Props) {
         if (props.parent) {
             await updateMediaGroup.mutateAsync({
                 id: props.parent.id,
-                mediaContents: {
-                    append: result.map((value) => value.id),
+                value: {
+                    mediaContents: {
+                        append: result.map((value) => value.id),
+                    },
                 },
             });
         }

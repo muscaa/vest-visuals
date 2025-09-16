@@ -6,13 +6,13 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { dateToString } from "@shared/snippets";
 import { List } from "@/components/list";
-import { MediaCategory } from "@shared/types/api/media/categories";
+import { PartialMediaCategory } from "@type/media/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
 import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
 
 interface ListEntryProps {
-    value: MediaCategory;
+    value: PartialMediaCategory;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -25,8 +25,8 @@ function ListEntry(props: ListEntryProps) {
                     <div className="flex flex-col gap-2 grow">
                         <p>{props.value.id}</p>
                         <div className="flex flex-col">
-                            <h6>Updated: {dateToString(props.value.updated)}</h6>
-                            <h6>Created: {dateToString(props.value.created)}</h6>
+                            <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
+                            <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -40,15 +40,15 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaGroupsListProps {
-    data: MediaCategory[];
+    data: PartialMediaCategory[];
     refetch?: () => void;
 }
 
 export function MediaCategoriesList(props: MediaGroupsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<MediaCategory>();
+    const [selected, setSelected] = useState<PartialMediaCategory>();
 
-    const handleSelect = (value: MediaCategory) => {
+    const handleSelect = (value: PartialMediaCategory) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 

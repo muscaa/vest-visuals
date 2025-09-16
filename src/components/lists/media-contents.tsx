@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { ButtonLink, Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { List } from "@/components/list";
-import { FullMediaContent } from "@shared/types/api/media/contents";
-import { FullMediaGroup } from "@shared/types/api/media/groups";
+import { MediaContent } from "@type/media/contents";
+import { MediaGroup } from "@type/media/groups";
 import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
 import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
 import {
@@ -21,14 +21,14 @@ import {
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 
 interface ListEntryProps {
-    value: FullMediaContent;
+    value: MediaContent;
     movable?: boolean;
     onMoveUp?: () => void;
     onMoveDown?: () => void;
 }
 
 function ListEntry(props: ListEntryProps) {
-    const image = useMemo(() => props.value.mediaVariants.length > 0 ? props.value.mediaVariants[0].file : "/placeholder0.png", [props.value]);
+    const image = useMemo(() => props.value.mediaVariants.length > 0 ? props.value.mediaVariants[0].fileUrl : "/placeholder0.png", [props.value]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
@@ -49,7 +49,7 @@ function ListEntry(props: ListEntryProps) {
                                 props.value.mediaVariants.map((variant, index) => (
                                     <ButtonLink
                                         key={index}
-                                        href={variant.file}
+                                        href={variant.fileUrl}
                                         target="_blank"
                                         size="none"
                                         variant="link"
@@ -60,8 +60,8 @@ function ListEntry(props: ListEntryProps) {
                             }
                         </div>
                         <div className="flex flex-col">
-                            <h6>Updated: {dateToString(props.value.updated)}</h6>
-                            <h6>Created: {dateToString(props.value.created)}</h6>
+                            <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
+                            <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -99,17 +99,17 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaContentsListProps {
-    data: FullMediaContent[];
+    data: MediaContent[];
     refetch?: () => void;
-    parent?: FullMediaGroup;
+    parent?: MediaGroup;
 }
 
 export function MediaContentsList(props: MediaContentsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<FullMediaContent>();
+    const [selected, setSelected] = useState<MediaContent>();
     const { updateMediaGroup } = useMediaGroups();
 
-    const handleSelect = (value: FullMediaContent) => {
+    const handleSelect = (value: MediaContent) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
@@ -129,8 +129,10 @@ export function MediaContentsList(props: MediaContentsListProps) {
 
         await updateMediaGroup.mutateAsync({
             id: props.parent.id,
-            mediaContents: {
-                set: order,
+            value: {
+                mediaContents: {
+                    set: order,
+                },
             },
         });
 
@@ -147,8 +149,10 @@ export function MediaContentsList(props: MediaContentsListProps) {
 
         await updateMediaGroup.mutateAsync({
             id: props.parent.id,
-            mediaContents: {
-                set: order,
+            value: {
+                mediaContents: {
+                    set: order,
+                },
             },
         });
 

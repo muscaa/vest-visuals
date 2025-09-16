@@ -3,7 +3,7 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { FullMediaCategory } from "@shared/types/api/media/categories";
+import { MediaCategory } from "@type/media/categories";
 import { useState } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
-    parent?: FullMediaCategory;
+    parent?: MediaCategory;
 }
 
 export function MediaGroupsCreateDialog(props: Props) {
@@ -23,16 +23,20 @@ export function MediaGroupsCreateDialog(props: Props) {
 
     const submit = async () => {
         const result = await createMediaGroup.mutateAsync({
-            description,
+            value: {
+                description,
+            },
         });
 
         if (props.parent) {
             try {
                 await updateMediaCategory.mutateAsync({
                     id: props.parent.id,
-                    mediaGroups: {
-                        set: top ? [result.id, ...props.parent.mediaGroups.map((group) => group.id)] : undefined,
-                        append: top ? undefined : [result.id],
+                    value: {
+                        mediaGroups: {
+                            set: top ? [result.id, ...props.parent.mediaGroups.map((group) => group.id)] : undefined,
+                            append: top ? undefined : [result.id],
+                        },
                     },
                 });
             } catch (error) {

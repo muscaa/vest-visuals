@@ -5,7 +5,7 @@ import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { MediaGroup } from "@shared/types/api/media/groups";
+import { PartialMediaGroup } from "@type/media/groups";
 
 interface CommonProps {
     onEdit?: () => void;
@@ -13,7 +13,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: MediaGroup;
+    value: PartialMediaGroup;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -23,7 +23,9 @@ function ValidDialog(props: ValidProps) {
     const submit = async () => {
         return updateMediaGroup.mutateAsync({
             id: props.value.id,
-            description,
+            value: {
+                description: description || null,
+            },
         });
     };
 
@@ -60,7 +62,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: MediaGroup;
+    value?: PartialMediaGroup;
 }
 
 export function MediaGroupsEditDialog(props: Props) {

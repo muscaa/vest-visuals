@@ -2,7 +2,7 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@shared/types/api/media/categories";
+import { PartialMediaCategory } from "@type/media/categories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -10,7 +10,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: MediaCategory;
+    value: PartialMediaCategory;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -43,7 +43,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: MediaCategory;
+    value?: PartialMediaCategory;
 }
 
 export function MediaCategoriesDeleteDialog(props: Props) {

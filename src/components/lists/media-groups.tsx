@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { List } from "@/components/list";
-import { MediaGroup } from "@shared/types/api/media/groups";
-import { FullMediaCategory } from "@shared/types/api/media/categories";
+import { PartialMediaGroup } from "@type/media/groups";
+import { MediaCategory } from "@type/media/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { useMediaContents } from "@/hooks/useMediaContents";
@@ -23,7 +23,7 @@ import { useMediaCategories } from "@/hooks/useMediaCategories";
 import { MediaGroupsEditDialog } from "../dialogs/media-groups-edit";
 
 interface ListEntryProps {
-    value: MediaGroup;
+    value: PartialMediaGroup;
     movable?: boolean;
     onMoveUp?: () => void;
     onMoveDown?: () => void;
@@ -31,8 +31,8 @@ interface ListEntryProps {
 
 function ListEntry(props: ListEntryProps) {
     const { useMediaContent } = useMediaContents();
-    const { data } = useMediaContent(props.value.mediaContents.length > 0 ? props.value.mediaContents[0] : "null");
-    const image = useMemo(() => data && data.mediaVariants.length > 0 ? data.mediaVariants[0].file : "/placeholder0.png", [data]);
+    const { data } = useMediaContent(props.value.mediaContentIds.length > 0 ? props.value.mediaContentIds[0] : "null");
+    const image = useMemo(() => data && data.mediaVariants.length > 0 ? data.mediaVariants[0].fileUrl : "/placeholder0.png", [data]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
@@ -50,8 +50,8 @@ function ListEntry(props: ListEntryProps) {
                     <div className="flex flex-col gap-2 grow">
                         <p>{props.value.description}</p>
                         <div className="flex flex-col">
-                            <h6>Updated: {dateToString(props.value.updated)}</h6>
-                            <h6>Created: {dateToString(props.value.created)}</h6>
+                            <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
+                            <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -89,17 +89,17 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaGroupsListProps {
-    data: MediaGroup[];
+    data: PartialMediaGroup[];
     refetch?: () => void;
-    parent?: FullMediaCategory;
+    parent?: MediaCategory;
 }
 
 export function MediaGroupsList(props: MediaGroupsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<MediaGroup>();
+    const [selected, setSelected] = useState<PartialMediaGroup>();
     const { updateMediaCategory } = useMediaCategories();
 
-    const handleSelect = (value: MediaGroup) => {
+    const handleSelect = (value: PartialMediaGroup) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
@@ -119,8 +119,10 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
 
         await updateMediaCategory.mutateAsync({
             id: props.parent.id,
-            mediaGroups: {
-                set: order,
+            value: {
+                mediaGroups: {
+                    set: order,
+                },
             },
         });
 
@@ -137,8 +139,10 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
 
         await updateMediaCategory.mutateAsync({
             id: props.parent.id,
-            mediaGroups: {
-                set: order,
+            value: {
+                mediaGroups: {
+                    set: order,
+                },
             },
         });
 

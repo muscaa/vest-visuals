@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Category } from "@shared/types/config";
+import { Category } from "@type/config";
 
 export interface CategoryLinkProps {
     category: Category;
