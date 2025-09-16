@@ -2,13 +2,21 @@ import {
     MiddlewareContext,
     MiddlewareOptions,
     AuthContext,
-    APIError,
 } from "better-auth";
+import { APIError } from "better-auth/api";
+import { Status } from "@type/http";
+import * as templates from "@server/mail/templates";
 
 type Hook = Omit<MiddlewareContext<MiddlewareOptions>, "context">;
 type BeforeContext = AuthContext;
 type AfterContext = AuthContext & {
-    returned: unknown;
+    returned: {
+        status: Status;
+        body: any;
+        headers: any;
+        statusCode: number;
+        name: string;
+    };
     responseHeaders: Headers;
 };
 
@@ -23,12 +31,9 @@ export async function beforeHook(hook: Hook, ctx: BeforeContext) {
 }
 
 export async function afterHook(hook: Hook, ctx: AfterContext) {
-    if (hook.path == "/verify-email") {
-        console.log(`
-            -------------------
-            ${JSON.stringify(ctx.returned, null, 2)}
-            ${JSON.stringify(ctx.responseHeaders, null, 2)}
-            -------------------
-            `);
+    if (hook.path == "/sign-in/email") {
+        if (ctx.returned.statusCode == 200) {
+            console.log(templates.newSignIn());
+        }
     }
 }

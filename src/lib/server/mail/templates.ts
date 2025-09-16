@@ -2,6 +2,15 @@ import { MailTemplate } from ".";
 
 const APP_NAME = "Vest Visuals";
 
+export function newSignIn(): MailTemplate {
+    return {
+        subject: `${APP_NAME} login`,
+        body: `
+        <p>Login from another device</p>
+        `,
+    };
+}
+
 export function signInOTP(otp: string): MailTemplate {
     return {
         subject: `${APP_NAME} login OTP`,
