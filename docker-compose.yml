@@ -7,3 +7,13 @@ services:
       - "5001:5001"
     volumes:
       - ./.data/libsql:/var/lib/sqld
+  minio:
+    image: bitnami/minio:2025.4.22
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - "./minio_data:/data"
+    environment:
+      - MINIO_ROOT_USER=console
+      - MINIO_ROOT_PASSWORD=console1234!
