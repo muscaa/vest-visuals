@@ -1,14 +1,19 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "./db";
-import * as schema from "./db/schema/auth";
+import { db } from "@server/db";
+import * as schema from "@server/db/schema/auth";
 import {
     openAPI,
     twoFactor,
     captcha,
 } from "better-auth/plugins";
-import * as templates from "./mail/templates";
-import { serverConfig } from "./config";
+import * as templates from "@server/mail/templates";
+import { serverConfig } from "@server/config";
+import { createAuthMiddleware } from "better-auth/api";
+import {
+    beforeHook,
+    afterHook,
+} from "./hooks";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -19,7 +24,6 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         autoSignIn: false,
-        disableSignUp: true,
         requireEmailVerification: true,
         sendResetPassword: async (data) => {
             console.log(templates.resetPassword(data.url));
@@ -65,6 +69,10 @@ export const auth = betterAuth({
             secretKey: serverConfig.env.RECAPTCHA_KEY_SECRET,
         }),
     ],
+    hooks: {
+        before: createAuthMiddleware(async (ctx) => await beforeHook(ctx, ctx.context)),
+        after: createAuthMiddleware(async (ctx) => await afterHook(ctx, ctx.context as any)),
+    },
     advanced: {
         ipAddress: {
             ipAddressHeaders: ["x-forwarded-for"],
