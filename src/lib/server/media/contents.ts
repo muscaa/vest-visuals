@@ -9,10 +9,8 @@ import {
     desc,
 } from "drizzle-orm";
 import * as variants from "./variants";
-import {
-    SelectRequired,
-    ListProps,
-} from "@shared/types/utils";
+import * as types from "@type/media/contents";
+import { MediaVariant } from "@type/media/variants";
 
 export type SelectProps =
     typeof mediaContents.$inferSelect
@@ -24,26 +22,12 @@ export type SelectProps =
             }
         )[];
     };
-export type PartialMediaContent = {
-    id: string;
-    mediaVariantIds: string[];
-    mediaVariants?: variants.MediaVariant[];
-    createdAt: Date;
-    updatedAt: Date;
-};
-export type MediaContent = SelectRequired<PartialMediaContent, "mediaVariants">;
 type AutoMediaContent<T extends SelectProps> =
     T extends { mediaContentVariants: (infer V)[]; }
         ? V extends { mediaVariant: variants.SelectProps; }
-            ? MediaContent
-            : PartialMediaContent
-        : PartialMediaContent;
-export type CreateProps = {
-    mediaVariants: variants.CreateProps[];
-};
-export type UpdateProps = {
-    mediaVariants?: ListProps<variants.CreateProps, variants.CreateProps, string>;
-};
+            ? types.MediaContent
+            : types.PartialMediaContent
+        : types.PartialMediaContent;
 
 export function format<T extends SelectProps>(props: T): AutoMediaContent<T> {
     return {
@@ -57,7 +41,7 @@ export function format<T extends SelectProps>(props: T): AutoMediaContent<T> {
     } as AutoMediaContent<T>;
 }
 
-export async function getAllPartial(): Promise<PartialMediaContent[]> {
+export async function getAllPartial(): Promise<types.PartialMediaContent[]> {
     const result = await db.query.mediaContents.findMany({
         with: {
             mediaContentVariants: {
@@ -68,7 +52,7 @@ export async function getAllPartial(): Promise<PartialMediaContent[]> {
     return result.map(format);
 }
 
-export async function getAll(): Promise<MediaContent[]> {
+export async function getAll(): Promise<types.MediaContent[]> {
     const result = await db.query.mediaContents.findMany({
         with: {
             mediaContentVariants: {
@@ -82,7 +66,7 @@ export async function getAll(): Promise<MediaContent[]> {
     return result.map(format);
 }
 
-export async function getPartial(id: string): Promise<PartialMediaContent | undefined> {
+export async function getPartial(id: string): Promise<types.PartialMediaContent | undefined> {
     const result = await db.query.mediaContents.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -94,7 +78,7 @@ export async function getPartial(id: string): Promise<PartialMediaContent | unde
     return result ? format(result) : undefined;
 }
 
-export async function get(id: string): Promise<MediaContent | undefined> {
+export async function get(id: string): Promise<types.MediaContent | undefined> {
     const result = await db.query.mediaContents.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -109,9 +93,9 @@ export async function get(id: string): Promise<MediaContent | undefined> {
     return result ? format(result) : undefined;
 }
 
-export async function create(props: CreateProps): Promise<PartialMediaContent | undefined> {
+export async function create(props: types.CreateProps): Promise<types.PartialMediaContent | undefined> {
     const mediaVariants = await Promise.all(props.mediaVariants.map(variants.create));
-    if (!mediaVariants.every((value): value is variants.MediaVariant => value != undefined)) {
+    if (!mediaVariants.every((value): value is MediaVariant => value != undefined)) {
         await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.id) : undefined));
         return undefined;
     }
@@ -143,11 +127,11 @@ export async function create(props: CreateProps): Promise<PartialMediaContent | 
     return await getPartial(result.id);
 }
 
-export async function update(id: string, props: UpdateProps): Promise<PartialMediaContent | undefined> {
+export async function update(id: string, props: types.UpdateProps): Promise<types.PartialMediaContent | undefined> {
     if (props.mediaVariants) {
         if (props.mediaVariants.set) {
             const mediaVariants = await Promise.all(props.mediaVariants.set.map(variants.create));
-            if (!mediaVariants.every((value): value is variants.MediaVariant => value != undefined)) {
+            if (!mediaVariants.every((value): value is MediaVariant => value != undefined)) {
                 await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.id) : undefined));
             } else {
                 await db.delete(mediaContentVariants)
@@ -167,7 +151,7 @@ export async function update(id: string, props: UpdateProps): Promise<PartialMed
             }
             if (props.mediaVariants.append) {
                 const mediaVariants = await Promise.all(props.mediaVariants.append.map(variants.create));
-                if (!mediaVariants.every((value): value is variants.MediaVariant => value != undefined)) {
+                if (!mediaVariants.every((value): value is MediaVariant => value != undefined)) {
                     await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.id) : undefined));
                 } else {
                     const last = await db.select()

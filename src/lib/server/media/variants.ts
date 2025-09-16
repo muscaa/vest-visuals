@@ -6,7 +6,6 @@ import {
     buckets,
 } from "@server/s3";
 import { serverConfig } from "@server/config";
-import { MediaTypeInfo } from "@shared/types/media/info";
 import {
     HeadObjectCommand,
     PutObjectCommand,
@@ -15,24 +14,11 @@ import {
 import { Blob } from "buffer";
 import { getTableConfig } from "drizzle-orm/sqlite-core";
 import { createId } from "@paralleldrive/cuid2";
+import * as types from "@type/media/variants";
 
 export type SelectProps = typeof mediaVariants.$inferSelect;
-export type MediaVariant =
-    Omit<SelectProps, "type" | "info">
-    & {
-        fileUrl: string;
-    }
-    & MediaTypeInfo;
-export type InsertProps = typeof mediaVariants.$inferInsert;
-export type CreateProps =
-    Omit<InsertProps, "id" | "createdAt" | "updatedAt" | "type" | "info">
-    & {
-        blob: Blob;
-    }
-    & MediaTypeInfo;
-export type UpdateProps = Partial<CreateProps>;
 
-export function format(props: SelectProps): MediaVariant {
+export function format(props: SelectProps): types.MediaVariant {
     return {
         id: props.id,
         variant: props.variant,
@@ -48,14 +34,14 @@ function filePath(id: string) {
     return `${getTableConfig(mediaVariants).name}/${id}`;
 }
 
-export async function getAll(): Promise<MediaVariant[]> {
+export async function getAll(): Promise<types.MediaVariant[]> {
     const result = await db.select()
         .from(mediaVariants)
         .all();
     return result.map(format);
 }
 
-export async function get(id: string): Promise<MediaVariant | undefined> {
+export async function get(id: string): Promise<types.MediaVariant | undefined> {
     const result = await db.select()
         .from(mediaVariants)
         .where(eq(mediaVariants.id, id))
@@ -102,7 +88,7 @@ async function upload(id: string, blob: Blob): Promise<boolean> {
     return false;
 }
 
-export async function create(props: CreateProps): Promise<MediaVariant | undefined> {
+export async function create(props: types.CreateProps): Promise<types.MediaVariant | undefined> {
     const id = await newId();
 
     const uploaded = await upload(id, props.blob);
@@ -120,7 +106,7 @@ export async function create(props: CreateProps): Promise<MediaVariant | undefin
     return result ? format(result) : undefined;
 }
 
-export async function update(id: string, props: UpdateProps): Promise<MediaVariant | undefined> {
+export async function update(id: string, props: types.UpdateProps): Promise<types.MediaVariant | undefined> {
     if (props.blob) {
         const query = await db.select()
             .from(mediaVariants)

@@ -1,5 +1,5 @@
 import * as base from "./base";
-import { V1SharpProcessorConfig } from "@shared/types/media/processor/image";
+import { V1SharpProcessorConfig } from "@type/media/processor/image";
 import sharp from "sharp";
 
 export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {

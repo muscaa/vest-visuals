@@ -1,5 +1,5 @@
-import { ProcessorConfig } from "@shared/types/media/processor/base";
-import { MediaTypeInfo } from "@shared/types/media/info";
+import { ProcessorConfig } from "@type/media/processor/base";
+import { MediaTypeInfo } from "@type/media/info";
 
 export type ProcessorValue = MediaTypeInfo & {
     variant: string;

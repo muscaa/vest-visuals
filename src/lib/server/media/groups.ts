@@ -9,7 +9,7 @@ import {
     desc,
 } from "drizzle-orm";
 import * as contents from "./contents";
-import { ListProps } from "@shared/types/utils";
+import * as types from "@type/media/groups";
 
 export type SelectProps =
     typeof mediaGroups.$inferSelect
@@ -21,29 +21,12 @@ export type SelectProps =
             }
         )[];
     };
-export type PartialMediaGroup = {
-    id: string;
-    description?: string;
-    mediaContentIds: string[];
-    mediaContents?: contents.PartialMediaContent[];
-    createdAt: Date;
-    updatedAt: Date;
-};
-export type MediaGroup = Omit<PartialMediaGroup, "mediaContents"> & { mediaContents: contents.MediaContent[]; };
 type AutoMediaGroup<T extends SelectProps> =
     T extends { mediaGroupContents: (infer V)[]; }
-    ? V extends { mediaContent: contents.SelectProps; }
-    ? MediaGroup
-    : PartialMediaGroup
-    : PartialMediaGroup;
-export type CreateProps = {
-    description?: string;
-    mediaContents?: string[];
-};
-export type UpdateProps = {
-    description?: string | null;
-    mediaContents?: ListProps<string>;
-};
+        ? V extends { mediaContent: contents.SelectProps; }
+            ? types.MediaGroup
+            : types.PartialMediaGroup
+        : types.PartialMediaGroup;
 
 export function format<T extends SelectProps>(props: T): AutoMediaGroup<T> {
     return {
@@ -58,7 +41,7 @@ export function format<T extends SelectProps>(props: T): AutoMediaGroup<T> {
     } as AutoMediaGroup<T>;
 }
 
-export async function getAllPartial(): Promise<PartialMediaGroup[]> {
+export async function getAllPartial(): Promise<types.PartialMediaGroup[]> {
     const result = await db.query.mediaGroups.findMany({
         with: {
             mediaGroupContents: {
@@ -69,7 +52,7 @@ export async function getAllPartial(): Promise<PartialMediaGroup[]> {
     return result.map(format);
 }
 
-export async function getAll(): Promise<MediaGroup[]> {
+export async function getAll(): Promise<types.MediaGroup[]> {
     const result = await db.query.mediaGroups.findMany({
         with: {
             mediaGroupContents: {
@@ -92,7 +75,7 @@ export async function getAll(): Promise<MediaGroup[]> {
     return result.map(format);
 }
 
-export async function getPartial(id: string): Promise<PartialMediaGroup | undefined> {
+export async function getPartial(id: string): Promise<types.PartialMediaGroup | undefined> {
     const result = await db.query.mediaGroups.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -104,7 +87,7 @@ export async function getPartial(id: string): Promise<PartialMediaGroup | undefi
     return result ? format(result) : undefined;
 }
 
-export async function get(id: string): Promise<MediaGroup | undefined> {
+export async function get(id: string): Promise<types.MediaGroup | undefined> {
     const result = await db.query.mediaGroups.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -128,7 +111,7 @@ export async function get(id: string): Promise<MediaGroup | undefined> {
     return result ? format(result) : undefined;
 }
 
-export async function create(props: CreateProps): Promise<PartialMediaGroup | undefined> {
+export async function create(props: types.CreateProps): Promise<types.PartialMediaGroup | undefined> {
     const result = await db.insert(mediaGroups)
         .values({
             description: props.description,
@@ -160,7 +143,7 @@ export async function create(props: CreateProps): Promise<PartialMediaGroup | un
     return await getPartial(result.id);
 }
 
-export async function update(id: string, props: UpdateProps): Promise<PartialMediaGroup | undefined> {
+export async function update(id: string, props: types.UpdateProps): Promise<types.PartialMediaGroup | undefined> {
     if (props.description || props.description === null) {
         await db.update(mediaGroups)
             .set({

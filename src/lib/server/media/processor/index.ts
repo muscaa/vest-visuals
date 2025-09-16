@@ -1,4 +1,4 @@
-import { ProcessorConfig } from "@shared/types/media/processor/base";
+import { ProcessorConfig } from "@type/media/processor/base";
 import * as base from "./base";
 import * as image from "./image";
 import * as video from "./video";

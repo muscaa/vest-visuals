@@ -9,10 +9,7 @@ import {
     desc,
 } from "drizzle-orm";
 import * as groups from "./groups";
-import {
-    SelectRequired,
-    ListProps,
-} from "@shared/types/utils";
+import * as types from "@type/media/categories";
 
 export type SelectProps =
     typeof mediaCategories.$inferSelect
@@ -24,29 +21,12 @@ export type SelectProps =
             }
         )[];
     };
-export type PartialMediaCategory = {
-    id: string;
-    category: string;
-    mediaGroupIds: string[];
-    mediaGroups?: groups.PartialMediaGroup[];
-    createdAt: Date;
-    updatedAt: Date;
-};
-export type MediaCategory = Omit<PartialMediaCategory, "mediaGroups"> & { mediaGroups: groups.MediaGroup[]; };
 type AutoMediaCategory<T extends SelectProps> =
     T extends { mediaCategoryGroups: (infer V)[]; }
         ? V extends { mediaGroup: groups.SelectProps; }
-            ? MediaCategory
-            : PartialMediaCategory
-        : PartialMediaCategory;
-export type CreateProps = {
-    category: string;
-    mediaGroups?: string[];
-};
-export type UpdateProps = {
-    category?: string;
-    mediaGroups?: ListProps<string>;
-};
+            ? types.MediaCategory
+            : types.PartialMediaCategory
+        : types.PartialMediaCategory;
 
 export function format<T extends SelectProps>(props: T): AutoMediaCategory<T> {
     return {
@@ -61,7 +41,7 @@ export function format<T extends SelectProps>(props: T): AutoMediaCategory<T> {
     } as AutoMediaCategory<T>;
 }
 
-export async function getAllPartial(): Promise<PartialMediaCategory[]> {
+export async function getAllPartial(): Promise<types.PartialMediaCategory[]> {
     const result = await db.query.mediaCategories.findMany({
         with: {
             mediaCategoryGroups: {
@@ -72,7 +52,7 @@ export async function getAllPartial(): Promise<PartialMediaCategory[]> {
     return result.map(format);
 }
 
-export async function getAll(): Promise<MediaCategory[]> {
+export async function getAll(): Promise<types.MediaCategory[]> {
     const result = await db.query.mediaCategories.findMany({
         with: {
             mediaCategoryGroups: {
@@ -104,7 +84,7 @@ export async function getAll(): Promise<MediaCategory[]> {
     return result.map(format);
 }
 
-export async function getPartial(id: string): Promise<PartialMediaCategory | undefined> {
+export async function getPartial(id: string): Promise<types.PartialMediaCategory | undefined> {
     const result = await db.query.mediaCategories.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -116,7 +96,7 @@ export async function getPartial(id: string): Promise<PartialMediaCategory | und
     return result ? format(result) : undefined;
 }
 
-export async function get(id: string): Promise<MediaCategory | undefined> {
+export async function get(id: string): Promise<types.MediaCategory | undefined> {
     const result = await db.query.mediaCategories.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
@@ -149,7 +129,7 @@ export async function get(id: string): Promise<MediaCategory | undefined> {
     return result ? format(result) : undefined;
 }
 
-export async function getByCategory(category: string): Promise<MediaCategory | undefined> {
+export async function getByCategory(category: string): Promise<types.MediaCategory | undefined> {
     const result = await db.query.mediaCategories.findFirst({
         where: (fields, operators) => operators.eq(fields.category, category),
         with: {
@@ -182,7 +162,7 @@ export async function getByCategory(category: string): Promise<MediaCategory | u
     return result ? format(result) : undefined;
 }
 
-export async function create(props: CreateProps): Promise<PartialMediaCategory | undefined> {
+export async function create(props: types.CreateProps): Promise<types.PartialMediaCategory | undefined> {
     const result = await db.insert(mediaCategories)
         .values({
             category: props.category,
@@ -214,7 +194,7 @@ export async function create(props: CreateProps): Promise<PartialMediaCategory |
     return await getPartial(result.id);
 }
 
-export async function update(id: string, props: UpdateProps): Promise<PartialMediaCategory | undefined> {
+export async function update(id: string, props: types.UpdateProps): Promise<types.PartialMediaCategory | undefined> {
     if (props.category) {
         await db.update(mediaCategories)
             .set({
