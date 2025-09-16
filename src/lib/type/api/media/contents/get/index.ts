@@ -1,5 +1,5 @@
 import { Response } from "@type/http";
-import { FullMediaContent } from "..";
+import { MediaContent } from "@type/media/contents";
 
 // POST
 
@@ -8,5 +8,5 @@ export type PostRequest = {
 };
 
 export type PostResponse = Response<{
-    value: FullMediaContent;
+    value: MediaContent;
 }>;

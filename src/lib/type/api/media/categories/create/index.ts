@@ -1,13 +1,15 @@
 import { Response } from "@type/http";
-import { MediaCategory } from "..";
+import {
+    PartialMediaCategory,
+    CreateProps,
+} from "@type/media/categories";
 
 // POST
 
 export type PostRequest = {
-    category: string;
-    mediaGroups?: string[];
+    value: CreateProps;
 };
 
 export type PostResponse = Response<{
-    value: MediaCategory;
+    value: PartialMediaCategory;
 }>;

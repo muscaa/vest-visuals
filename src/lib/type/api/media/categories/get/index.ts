@@ -1,5 +1,5 @@
 import { Response } from "@type/http";
-import { FullMediaCategory } from "..";
+import { MediaCategory } from "@type/media/categories";
 
 // POST
 
@@ -8,5 +8,5 @@ export type PostRequest = {
 };
 
 export type PostResponse = Response<{
-    value: FullMediaCategory;
+    value: MediaCategory;
 }>;

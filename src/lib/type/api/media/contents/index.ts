@@ -1,23 +1,5 @@
 import { Response } from "@type/http";
-import { MediaTypeInfo } from "@type/media/info";
-
-export type MediaVariant = MediaTypeInfo & {
-    id: string;
-    variant: string;
-    file: string;
-    created: string;
-    updated: string;
-};
-
-interface BaseMediaContent<T extends "min" | "full"> {
-    id: string;
-    mediaVariants: T extends "min" ? string[] : MediaVariant[];
-    created: string;
-    updated: string;
-}
-
-export type MediaContent = BaseMediaContent<"min">;
-export type FullMediaContent = BaseMediaContent<"full">;
+import { MediaContent } from "@type/media/contents";
 
 // POST
 
@@ -25,5 +7,5 @@ export type PostRequest = {
 };
 
 export type PostResponse = Response<{
-    values: FullMediaContent[];
+    values: MediaContent[];
 }>;

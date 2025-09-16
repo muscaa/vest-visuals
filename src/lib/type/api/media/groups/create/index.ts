@@ -1,13 +1,15 @@
 import { Response } from "@type/http";
-import { MediaGroup } from "..";
+import {
+    PartialMediaGroup,
+    CreateProps,
+} from "@type/media/groups";
 
 // POST
 
 export type PostRequest = {
-    description?: string;
-    mediaContents?: string[];
+    value: CreateProps;
 };
 
 export type PostResponse = Response<{
-    value: MediaGroup;
+    value: PartialMediaGroup;
 }>;

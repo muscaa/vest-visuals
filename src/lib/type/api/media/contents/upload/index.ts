@@ -1,6 +1,6 @@
 import { Response } from "@type/http";
 import { MediaProcessor } from "@type/media/processor";
-import { MediaContent } from "..";
+import { PartialMediaContent } from "@type/media/contents";
 
 // POST
 
@@ -24,5 +24,5 @@ export type PostRequest = {
 };
 
 export type PostResponse = Response<{
-    values: MediaContent[];
+    values: PartialMediaContent[];
 }>;

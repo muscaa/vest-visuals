@@ -1,15 +1,11 @@
 import { Response } from "@type/http";
+import { UpdateProps } from "@type/media/categories";
 
 // POST
 
 export type PostRequest = {
     id: string;
-    category?: string;
-    mediaGroups?: {
-        set?: string[];
-        append?: string[];
-        remove?: string[];
-    };
+    value: UpdateProps;
 };
 
 export type PostResponse = Response<{}>;
