@@ -5,7 +5,7 @@ import {
     index,
 } from "drizzle-orm/sqlite-core";
 import { createId } from "@paralleldrive/cuid2";
-import { MediaInfo } from "@shared/types/media/info";
+import { MediaInfo } from "@type/media/info";
 
 export const mediaVariants = sqliteTable("media_variants", {
     id: text("id")
