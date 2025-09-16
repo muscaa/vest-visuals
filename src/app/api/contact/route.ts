@@ -5,7 +5,7 @@ import {
 import {
     PostRequest,
     PostResponse,
-} from "@shared/types/api/contact";
+} from "@type/api/contact";
 import { serverConfig } from "@server/config";
 
 export async function POST(request: NextRequest) {

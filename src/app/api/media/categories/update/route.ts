@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/categories/update";
+import * as types from "@type/api/media/categories/update";
 import {
     safeJSON,
     responseJSON,
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && (json.category || json.mediaGroups));
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && json.value);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -26,14 +26,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await categories.update(json.id, {
-        category: json.category,
-        mediaGroups: {
-            set: json.mediaGroups?.set,
-            append: json.mediaGroups?.append,
-            remove: json.mediaGroups?.remove,
-        },
-    });
+    const result = await categories.update(json.id, json.value);
     if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,

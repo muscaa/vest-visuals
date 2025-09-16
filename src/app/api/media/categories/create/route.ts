@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/categories/create";
+import * as types from "@type/api/media/categories/create";
 import {
     safeJSON,
     responseJSON,
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.value);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -26,10 +26,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await categories.create({
-        category: json.category,
-        mediaGroups: json.mediaGroups,
-    });
+    const result = await categories.create(json.value);
     if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
@@ -39,12 +36,6 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        value: {
-            id: result.id,
-            category: result.category,
-            mediaGroups: result.mediaGroupIds,
-            created: result.createdAt.toString(),
-            updated: result.updatedAt.toString(),
-        },
+        value: result,
     });
 }

@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/categories";
+import * as types from "@type/api/media/categories";
 import {
     safeJSON,
     responseJSON,
@@ -36,12 +36,6 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        values: result.map((value) => ({
-            id: value.id,
-            category: value.category,
-            mediaGroups: value.mediaGroupIds,
-            created: value.createdAt.toString(),
-            updated: value.updatedAt.toString(),
-        })),
+        values: result,
     });
 }

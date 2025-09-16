@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/groups/get";
+import * as types from "@type/api/media/groups/get";
 import {
     safeJSON,
     responseJSON,
@@ -36,25 +36,6 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        value: {
-            id: result.id,
-            description: result.description,
-            mediaContents: result.mediaContents.map((content) => ({
-                id: content.id,
-                mediaVariants: content.mediaVariants.map((variant) => ({
-                    id: variant.id,
-                    variant: variant.variant,
-                    file: variant.fileUrl,
-                    type: variant.type,
-                    info: variant.info,
-                    created: variant.createdAt.toString(),
-                    updated: variant.updatedAt.toString(),
-                })),
-                created: content.createdAt.toString(),
-                updated: content.updatedAt.toString(),
-            })),
-            created: result.createdAt.toString(),
-            updated: result.updatedAt.toString(),
-        },
+        value: result,
     });
 }

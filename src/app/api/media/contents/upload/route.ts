@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/contents/upload";
+import * as types from "@type/api/media/contents/upload";
 import {
     safeJSON,
     responseJSON,
@@ -8,6 +8,7 @@ import { auth } from "@server/auth";
 import * as contents from "@server/media/contents";
 import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
+import { PartialMediaContent } from "@type/media/contents";
 
 export async function POST(request: NextRequest) {
     const session = await auth.api.getSession({
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result: contents.PartialMediaContent[] = [];
+    const result: PartialMediaContent[] = [];
     for (let i = 0; i < json.files.length; i++) {
         const file = json.files[i];
         const config = json.configs[i];
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
         const processor = new Processor();
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        let mediaContent: contents.PartialMediaContent | undefined;
+        let mediaContent: PartialMediaContent | undefined;
         await processor.process(
             buffer,
             config.processor,
@@ -102,11 +103,6 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        values: result.map((value) => ({
-            id: value.id,
-            mediaVariants: value.mediaVariants?.map((variant) => variant.id) || [],
-            created: value.createdAt.toString(),
-            updated: value.updatedAt.toString(),
-        })),
+        values: result,
     });
 }

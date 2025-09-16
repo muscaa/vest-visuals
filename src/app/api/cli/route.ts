@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/cli";
+import * as types from "@type/api/cli";
 import {
     safeJSON,
     responseJSON,

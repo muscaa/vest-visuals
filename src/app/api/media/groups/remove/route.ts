@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/groups/remove";
+import * as types from "@type/api/media/groups/remove";
 import {
     safeJSON,
     responseJSON,

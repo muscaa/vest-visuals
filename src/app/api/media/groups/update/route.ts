@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@shared/types/api/media/groups/update";
+import * as types from "@type/api/media/groups/update";
 import {
     safeJSON,
     responseJSON,
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const json = await safeJSON<types.PostRequest>(request, (json) => json.id);
+    const json = await safeJSON<types.PostRequest>(request, (json) => json.id && json.value);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
             success: false,
@@ -26,14 +26,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const result = await groups.update(json.id, {
-        description: json.description === undefined ? undefined : (json.description || null),
-        mediaContents: {
-            set: json.mediaContents?.set,
-            append: json.mediaContents?.append,
-            remove: json.mediaContents?.remove,
-        },
-    });
+    const result = await groups.update(json.id, json.value);
     if (!result) {
         return responseJSON<types.PostResponse>(500, {
             success: false,
