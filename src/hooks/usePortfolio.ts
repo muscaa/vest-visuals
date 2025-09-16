@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
-import * as types from "@shared/types/api/portfolio";
+import * as types from "@type/api/portfolio";
 
 export function usePortfolio(category: string) {
     return useQuery({

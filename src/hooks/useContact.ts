@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { apiClient } from "@client/http";
-import * as types from "@shared/types/api/contact";
+import * as types from "@type/api/contact";
 
 type ContactProps = {
     name: string;

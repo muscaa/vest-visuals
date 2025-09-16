@@ -5,10 +5,10 @@ import {
     useMutation,
 } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
-import * as types from "@shared/types/api/media/contents";
-import * as types_get from "@shared/types/api/media/contents/get";
-import * as types_upload from "@shared/types/api/media/contents/upload";
-import * as types_remove from "@shared/types/api/media/contents/remove";
+import * as types from "@type/api/media/contents";
+import * as types_get from "@type/api/media/contents/get";
+import * as types_upload from "@type/api/media/contents/upload";
+import * as types_remove from "@type/api/media/contents/remove";
 
 export function useMediaContents() {
     const useAllMediaContents = () => useQuery({

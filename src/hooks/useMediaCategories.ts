@@ -5,11 +5,11 @@ import {
     useMutation,
 } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
-import * as types from "@shared/types/api/media/categories";
-import * as types_get from "@shared/types/api/media/categories/get";
-import * as types_create from "@shared/types/api/media/categories/create";
-import * as types_update from "@shared/types/api/media/categories/update";
-import * as types_remove from "@shared/types/api/media/categories/remove";
+import * as types from "@type/api/media/categories";
+import * as types_get from "@type/api/media/categories/get";
+import * as types_create from "@type/api/media/categories/create";
+import * as types_update from "@type/api/media/categories/update";
+import * as types_remove from "@type/api/media/categories/remove";
 
 export function useMediaCategories() {
     const useAllMediaCategories = () => useQuery({

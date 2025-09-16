@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
-import * as types from "@shared/types/api/cli";
+import * as types from "@type/api/cli";
 
 export function useCli() {
     const execute = useMutation({
