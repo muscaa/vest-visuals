@@ -1,6 +1,6 @@
 import {
     Category,
-} from "./types/config";
+} from "@type/config";
 
 const env = {
     RECAPTCHA_KEY_SITE: process.env.NEXT_PUBLIC_RECAPTCHA_KEY_SITE!,
