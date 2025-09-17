@@ -13,4 +13,5 @@ export const s3 = new S3Client({
 
 export const buckets = {
     public: "public",
+    config: "config",
 };
