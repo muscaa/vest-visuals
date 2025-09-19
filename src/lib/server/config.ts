@@ -13,6 +13,7 @@ const env = {
     LIBSQL_AUTH: process.env.LIBSQL_AUTH!,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET!,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL!,
+    SMTP_ENABLED: process.env.SMTP_ENABLED! === "true",
     SMTP_HOST: process.env.SMTP_HOST!,
     SMTP_PORT: process.env.SMTP_PORT!,
     SMTP_USERNAME: process.env.SMTP_USERNAME!,
