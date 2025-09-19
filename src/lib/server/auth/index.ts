@@ -6,6 +6,7 @@ import {
     openAPI,
     twoFactor,
     captcha,
+    admin,
 } from "better-auth/plugins";
 import * as templates from "@server/mail/templates";
 import { sendMail } from "@server/mail";
@@ -69,6 +70,7 @@ export const auth = betterAuth({
             provider: "google-recaptcha",
             secretKey: serverConfig.env.RECAPTCHA_KEY_SECRET,
         }),
+        admin(),
     ],
     hooks: {
         before: createAuthMiddleware(async (ctx) => await beforeHook(ctx, ctx.context)),
