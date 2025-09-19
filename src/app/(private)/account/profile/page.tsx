@@ -14,7 +14,7 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export function TwoFactorDialog(props: Props) {
+function TwoFactorDialog(props: Props) {
     const text = props.enabled ? {
         title: "Disable 2FA",
         description: "Enter password to disable 2FA",
