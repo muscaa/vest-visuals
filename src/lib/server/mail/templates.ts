@@ -4,54 +4,59 @@ const APP_NAME = "Vest Visuals";
 
 export function newSignIn(): MailTemplate {
     return {
-        subject: `${APP_NAME} login`,
+        subject: `${APP_NAME} Login`,
         body: `
-        <p>Login from another device</p>
+        <p>Login from another device. If it wasn't you, contact the admin immediately.</p>
         `,
     };
 }
 
 export function signInOTP(otp: string): MailTemplate {
     return {
-        subject: `${APP_NAME} login OTP`,
+        subject: `${APP_NAME} Login OTP`,
         body: `
-        <p>${otp}</p>
+        <p>Your login OTP code is:</p>
+        <p><strong>${otp}</strong></p>
         `,
     };
 }
 
 export function emailVerification(url: string): MailTemplate {
     return {
-        subject: `Verify your ${APP_NAME} account`,
+        subject: `Verify ${APP_NAME} Account`,
         body: `
-        <a class="btn" href="${url}" target="_blank" rel="noopener">Reset password</a>
+        <p>Click the link below to verify your account. If it wasn't you, you can ignore this email.</p>
+        <a class="btn" href="${url}" target="_blank" rel="noopener">${url}</a>
         `,
     };
 }
 
 export function changeEmail(url: string): MailTemplate {
     return {
-        subject: `Confirm your ${APP_NAME} new email address`,
+        subject: `Confirm ${APP_NAME} E-mail Address Change`,
         body: `
-        <a class="btn" href="${url}" target="_blank" rel="noopener">Reset password</a>
+        <p>Click the link below to change your e-mail address. If it wasn't you, contact the admin immediately.</p>
+        <a class="btn" href="${url}" target="_blank" rel="noopener">${url}</a>
         `,
     };
 }
 
 export function resetPassword(url: string): MailTemplate {
     return {
-        subject: `Reset your ${APP_NAME} password`,
+        subject: `Reset ${APP_NAME} Password`,
         body: `
-        <a class="btn" href="${url}" target="_blank" rel="noopener">Reset password</a>
+        <p>Click the link below to reset your password. If it wasn't you, contact the admin immediately.</p>
+        <a class="btn" href="${url}" target="_blank" rel="noopener">${url}</a>
         `,
     };
 }
 
 export function deleteAccount(url: string): MailTemplate {
     return {
-        subject: `Confirm ${APP_NAME} account deletion`,
+        subject: `Confirm ${APP_NAME} Account Deletion`,
         body: `
-        <a class="btn" href="${url}" target="_blank" rel="noopener">Reset password</a>
+        <p>Click the link below to delete your account. If it wasn't you, contact the admin immediately.</p>
+        <a class="btn" href="${url}" target="_blank" rel="noopener">${url}</a>
         `,
     };
 }
