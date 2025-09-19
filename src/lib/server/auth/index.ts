@@ -8,6 +8,7 @@ import {
     captcha,
 } from "better-auth/plugins";
 import * as templates from "@server/mail/templates";
+import { sendMail } from "@server/mail";
 import { serverConfig } from "@server/config";
 import { createAuthMiddleware } from "better-auth/api";
 import {
@@ -26,7 +27,7 @@ export const auth = betterAuth({
         autoSignIn: false,
         requireEmailVerification: true,
         sendResetPassword: async (data) => {
-            console.log(templates.resetPassword(data.url));
+            sendMail(data.user.email, templates.resetPassword(data.url));
         },
     },
     emailVerification: {
@@ -34,20 +35,20 @@ export const auth = betterAuth({
         sendOnSignIn: true,
         autoSignInAfterVerification: false,
         sendVerificationEmail: async (data) => {
-            console.log(templates.emailVerification(data.url));
+            sendMail(data.user.email, templates.emailVerification(data.url));
         },
     },
     user: {
         changeEmail: {
             enabled: false,
             sendChangeEmailVerification: async (data) => {
-                console.log(templates.changeEmail(data.url));
+                sendMail(data.user.email, templates.changeEmail(data.url));
             },
         },
         deleteUser: {
             enabled: false,
             sendDeleteAccountVerification: async (data) => {
-                console.log(templates.deleteAccount(data.url));
+                sendMail(data.user.email, templates.deleteAccount(data.url));
             },
         },
     },
@@ -60,7 +61,7 @@ export const auth = betterAuth({
             },
             otpOptions: {
                 sendOTP: async (data) => {
-                    console.log(templates.signInOTP(data.otp));
+                    sendMail(data.user.email, templates.signInOTP(data.otp));
                 },
             },
         }),
