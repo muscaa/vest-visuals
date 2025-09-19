@@ -6,7 +6,7 @@ export function newSignIn(): MailTemplate {
     return {
         subject: `${APP_NAME} Login`,
         body: `
-        <p>Login from another device. If it wasn't you, contact the admin immediately.</p>
+        <p>New login detected. If it wasn't you, contact the admin immediately.</p>
         `,
     };
 }
