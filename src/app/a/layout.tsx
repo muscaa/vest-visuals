@@ -5,7 +5,7 @@ import {
 } from "@/components/layout";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
-import { auth } from "@server/auth";
+import { isAdmin } from "@server/auth/permissions";
 
 export const metadata = createMetadata({
     route: "/a",
@@ -13,11 +13,11 @@ export const metadata = createMetadata({
 });
 
 export default async function Layout(props: LayoutProps) {
-    const session = await auth.api.getSession({
+    const admin = await isAdmin({
         headers: await headers(),
     });
     
-    if (!session) {
+    if (!admin) {
         redirect("/login");
     }
 
