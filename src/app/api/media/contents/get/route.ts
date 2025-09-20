@@ -8,7 +8,7 @@ import { isAdmin } from "@server/auth/permissions";
 import * as contents from "@server/media/contents";
 
 export async function POST(request: NextRequest) {
-    const admin = await isAdmin(request);
+    const admin = await isAdmin({ request });
     if (!admin) {
         return responseJSON<types.PostResponse>(401, {
             success: false,

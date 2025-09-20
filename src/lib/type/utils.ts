@@ -7,3 +7,11 @@ export type ListProps<T, Append = T, Remove = T> = {
     append?: Append[];
     remove?: Remove[];
 };
+
+export type Single<T> = {
+    [K in keyof T]: {
+        [P in K]: T[P]
+    } & {
+        [P in Exclude<keyof T, K>]?: never
+    }
+}[keyof T];

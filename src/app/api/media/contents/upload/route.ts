@@ -11,7 +11,7 @@ import { Blob } from "buffer";
 import { PartialMediaContent } from "@type/media/contents";
 
 export async function POST(request: NextRequest) {
-    const admin = await isAdmin(request);
+    const admin = await isAdmin({ request });
     if (!admin) {
         return responseJSON<types.PostResponse>(401, {
             success: false,

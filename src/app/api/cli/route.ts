@@ -8,7 +8,7 @@ import { isAdmin } from "@server/auth/permissions";
 import { execute } from "@server/cli";
 
 export async function POST(request: NextRequest) {
-    const admin = await isAdmin(request);
+    const admin = await isAdmin({ request });
     if (!admin) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
