@@ -4,17 +4,15 @@ import {
     safeJSON,
     responseJSON,
 } from "@server/http";
-import { auth } from "@server/auth";
+import { isAdmin } from "@server/auth/permissions";
 import * as contents from "@server/media/contents";
 import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
 import { PartialMediaContent } from "@type/media/contents";
 
 export async function POST(request: NextRequest) {
-    const session = await auth.api.getSession({
-        headers: request.headers,
-    });
-    if (!session) {
+    const admin = await isAdmin(request);
+    if (!admin) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
             error: "Unauthorized",

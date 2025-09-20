@@ -4,14 +4,12 @@ import {
     safeJSON,
     responseJSON,
 } from "@server/http";
-import { auth } from "@server/auth";
+import { isAdmin } from "@server/auth/permissions";
 import { execute } from "@server/cli";
 
 export async function POST(request: NextRequest) {
-    const session = await auth.api.getSession({
-        headers: request.headers,
-    });
-    if (!session) {
+    const admin = await isAdmin(request);
+    if (!admin) {
         return responseJSON<types.PostResponse>(401, {
             success: false,
             error: "Unauthorized",
