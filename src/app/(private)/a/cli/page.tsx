@@ -1,10 +1,10 @@
 "use client";
 
-import { MainAdmin } from "@/components/admin/main";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useCli } from "@/hooks/useCli";
+import { MainSidebarProvider } from "@/components/sidebar/main";
 
 export default function Page() {
     const { execute } = useCli();
@@ -17,7 +17,12 @@ export default function Page() {
     };
 
     return (
-        <MainAdmin extraClassName="overflow-hidden">
+        <MainSidebarProvider
+            breadcrumbs={{
+                page: "CLI",
+            }}
+            extraClassName="overflow-hidden"
+        >
             <div className="flex flex-col size-full p-2 gap-2">
                 <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background0 rounded-md shadow-sm whitespace-pre-wrap">
                     <div className="flex flex-col grow">
@@ -39,6 +44,6 @@ export default function Page() {
                     </Button>
                 </div>
             </div>
-        </MainAdmin>
+        </MainSidebarProvider>
     );
 }
