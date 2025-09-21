@@ -33,7 +33,7 @@ interface UserProps {
 function User(props: UserProps) {
     return (
         <>
-            <Avatar className="size-8 rounded-lg">
+            <Avatar className="size-10 rounded-lg">
                 <AvatarImage src={props.avatar} alt={props.name} />
                 <AvatarFallback className="rounded-lg">{props.name[0].toUpperCase()}</AvatarFallback>
             </Avatar>
