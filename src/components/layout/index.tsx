@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
-import ThemeProvider from "@/components/theme/theme-provider";
-import { ClientLayout } from "@/components/layout-client";
+import ThemeProvider from "../theme/theme-provider";
+import { ClientLayout } from "./client";
 
 import "@/styles/main.css";
 

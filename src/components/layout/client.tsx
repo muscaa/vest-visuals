@@ -5,13 +5,16 @@ import {
     QueryClient,
     QueryClientProvider,
 } from "@tanstack/react-query";
+import { AuthContextProvider } from "@/contexts/auth";
 
 export const queryClient = new QueryClient();
 
 export function ClientLayout(props: LayoutProps) {
     return (
         <QueryClientProvider client={queryClient}>
-            {props.children}
+            <AuthContextProvider>
+                {props.children}
+            </AuthContextProvider>
         </QueryClientProvider>
     );
 }
