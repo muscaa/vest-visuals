@@ -15,8 +15,9 @@ interface MainSidebarProps {
 }
 
 export function MainSidebar(props: MainSidebarProps) {
-    const { useProfile, logout } = useAuth();
+    const { useProfile, useIsAdmin, logout } = useAuth();
     const { data } = useProfile();
+    const { data: isAdmin } = useIsAdmin();
 
     return (
         <SimpleSidebar
@@ -33,7 +34,7 @@ export function MainSidebar(props: MainSidebarProps) {
         >
             <SidebarNavSettings />
             {
-                data && data.role === "admin" && (
+                isAdmin && (
                     <SidebarNavAdmin />
                 )
             }
