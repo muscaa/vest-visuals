@@ -8,6 +8,7 @@ import {
 import { SidebarNavUser } from "./nav/user";
 import { SidebarNavSettings } from "./nav/settings";
 import { useAuth } from "@/hooks/useAuth";
+import { SidebarNavAdmin } from "./nav/admin";
 
 interface MainSidebarProps {
 
@@ -31,6 +32,11 @@ export function MainSidebar(props: MainSidebarProps) {
             }
         >
             <SidebarNavSettings />
+            {
+                data && data.role === "admin" && (
+                    <SidebarNavAdmin />
+                )
+            }
         </SimpleSidebar>
     );
 }
