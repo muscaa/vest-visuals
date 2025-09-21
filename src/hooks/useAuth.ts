@@ -38,7 +38,7 @@ export function useAuth() {
                 router.push("/login/verify");
             } else {
                 await queryClient.invalidateQueries({ queryKey: ["profile"] });
-                router.push("/account");
+                router.push("/u/account");
             }
         },
     });
@@ -52,7 +52,7 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
-            router.push("/account");
+            router.push("/u/account");
         },
     });
 
