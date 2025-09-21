@@ -198,7 +198,7 @@ export function SimpleSidebarProvider(props: SimpleSidebarProviderProps) {
                     </div>
                 </header>
                 <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
-                    <main className={cn("grow", props.extraClassName)}>
+                    <main className={cn("grow p-4 pt-0", props.extraClassName)}>
                         {props.children}
                     </main>
                 </div>

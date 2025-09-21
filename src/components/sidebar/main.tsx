@@ -35,7 +35,7 @@ export function MainSidebar(props: MainSidebarProps) {
 }
 
 interface MainSidebarProviderProps {
-
+    children?: React.ReactNode;
 }
 
 export function MainSidebarProvider(props: MainSidebarProviderProps) {
@@ -43,7 +43,7 @@ export function MainSidebarProvider(props: MainSidebarProviderProps) {
         <SimpleSidebarProvider
             sidebar={<MainSidebar />}
         >
-
+            {props.children}
         </SimpleSidebarProvider>
     );
 }

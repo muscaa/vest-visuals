@@ -5,14 +5,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { dateToString } from "@shared/snippets";
 import { Button } from "@/components/ui/button";
 import { TwoFactorDialog } from "@/components/dialogs/two-factor";
+import { MainSidebarProvider } from "@/components/sidebar/main";
 
 export default function Page() {
     const { useProfile } = useAuth();
     const { data } = useProfile();
 
     return (
-        <Main>
-            <div className="flex flex-col justify-center items-center size-full p-8">
+        <MainSidebarProvider>
+            <div className="flex flex-col size-full">
                 {
                     data && (
                         <>
@@ -32,6 +33,6 @@ export default function Page() {
                     )
                 }
             </div>
-        </Main>
+        </MainSidebarProvider>
     );
 }

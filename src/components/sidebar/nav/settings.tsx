@@ -17,12 +17,12 @@ export function SidebarNavSettings(props: SidebarNavSettingsProps) {
     return (
         <SimpleSidebarGroup title="Settings">
             <SimpleSidebarItem
-                href="/a/account"
+                href="/u/account"
                 text="Account"
                 icon={User}
             />
             <SimpleSidebarItem
-                href="/a/preferences"
+                href="/u/preferences"
                 text="Preferences"
                 icon={Settings2}
             />
