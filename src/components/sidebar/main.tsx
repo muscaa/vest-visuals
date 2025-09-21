@@ -3,6 +3,7 @@
 import {
     SimpleSidebar,
     SimpleSidebarProvider,
+    SimpleSidebarProviderProps,
 } from "./simple";
 import { SidebarNavUser } from "./nav/user";
 import { SidebarNavSettings } from "./nav/settings";
@@ -34,16 +35,13 @@ export function MainSidebar(props: MainSidebarProps) {
     );
 }
 
-interface MainSidebarProviderProps {
-    children?: React.ReactNode;
-}
+type MainSidebarProviderProps = Omit<SimpleSidebarProviderProps, "sidebar">;
 
 export function MainSidebarProvider(props: MainSidebarProviderProps) {
     return (
         <SimpleSidebarProvider
+            {...props}
             sidebar={<MainSidebar />}
-        >
-            {props.children}
-        </SimpleSidebarProvider>
+        />
     );
 }

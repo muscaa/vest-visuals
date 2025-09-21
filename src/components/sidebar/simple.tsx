@@ -166,7 +166,7 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
     );
 }
 
-interface SimpleSidebarProviderProps {
+export interface SimpleSidebarProviderProps {
     sidebar: React.ReactNode;
     breadcrumbs?: BreadcrumbsProps;
     className?: string;
