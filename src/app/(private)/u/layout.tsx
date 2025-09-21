@@ -8,8 +8,8 @@ import { headers } from "next/headers";
 import { auth } from "@server/auth";
 
 export const metadata = createMetadata({
-    route: "/account",
-    routeName: "Contul Meu",
+    route: "/a",
+    routeName: "User",
 });
 
 export default async function Layout(props: LayoutProps) {
