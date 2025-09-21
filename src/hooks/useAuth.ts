@@ -40,6 +40,8 @@ export function useAuth() {
                 await queryClient.invalidateQueries({ queryKey: ["profile"] });
                 router.push("/u/account");
             }
+
+            return true;
         },
     });
 
@@ -53,6 +55,8 @@ export function useAuth() {
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
             router.push("/u/account");
+
+            return true;
         },
     });
 
@@ -74,6 +78,8 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             router.push("/login");
+
+            return true;
         },
     });
 
@@ -84,6 +90,34 @@ export function useAuth() {
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
             router.push("/login");
+
+            return true;
+        },
+    });
+
+    const enable2FA = useMutation({
+        mutationFn: async (password: string) => {
+            const { error } = await authClient.twoFactor.enable({
+                password,
+            });
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+
+            return true;
+        },
+    });
+
+    const disable2FA = useMutation({
+        mutationFn: async (password: string) => {
+            const { error } = await authClient.twoFactor.disable({
+                password,
+            });
+            if (error) throw new Error(error.message);
+
+            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+
+            return true;
         },
     });
 
@@ -96,25 +130,12 @@ export function useAuth() {
         },
     });
 
-    const enable2FA = useMutation({
-        mutationFn: async (password: string) => {
-            const { error } = await authClient.twoFactor.enable({
-                password,
-            });
-            if (error) throw new Error(error.message);
+    const useIsAdmin = () => useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => {
+            const session = await authClient.getSession();
 
-            await queryClient.invalidateQueries({ queryKey: ["profile"] });
-        },
-    });
-
-    const disable2FA = useMutation({
-        mutationFn: async (password: string) => {
-            const { error } = await authClient.twoFactor.disable({
-                password,
-            });
-            if (error) throw new Error(error.message);
-
-            await queryClient.invalidateQueries({ queryKey: ["profile"] });
+            return session.data?.user.role === "admin";
         },
     });
 
@@ -123,8 +144,9 @@ export function useAuth() {
         loginVerify,
         register,
         logout,
-        useProfile,
         enable2FA,
         disable2FA,
+        useProfile,
+        useIsAdmin,
     };
 }
