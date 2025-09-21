@@ -1,18 +1,23 @@
 "use client";
 
 import {
-    useQuery,
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { authClient } from "@client/auth";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import {
+    useMemo,
+    useContext,
+} from "react";
+import { Auth } from "@/contexts/auth";
 
 export function useAuth() {
     const router = useRouter();
     const queryClient = useQueryClient();
     const { executeRecaptcha } = useGoogleReCaptcha();
+    const context = useContext(Auth);
 
     const login = useMutation({
         mutationFn: async (props: { email: string, password: string }) => {
@@ -121,23 +126,8 @@ export function useAuth() {
         },
     });
 
-    const useProfile = () => useQuery({
-        queryKey: ["profile"],
-        queryFn: async () => {
-            const session = await authClient.getSession();
-
-            return session.data?.user;
-        },
-    });
-
-    const useIsAdmin = () => useQuery({
-        queryKey: ["profile"],
-        queryFn: async () => {
-            const session = await authClient.getSession();
-
-            return session.data?.user.role === "admin";
-        },
-    });
+    const profile = useMemo(() => context.profile, [context.profile]);
+    const isAdmin = useMemo(() => profile?.role === "admin", [profile?.role]);
 
     return {
         login,
@@ -146,7 +136,7 @@ export function useAuth() {
         logout,
         enable2FA,
         disable2FA,
-        useProfile,
-        useIsAdmin,
+        profile,
+        isAdmin,
     };
 }
