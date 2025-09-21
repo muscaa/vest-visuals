@@ -15,18 +15,16 @@ interface MainSidebarProps {
 }
 
 export function MainSidebar(props: MainSidebarProps) {
-    const { useProfile, useIsAdmin, logout } = useAuth();
-    const { data } = useProfile();
-    const { data: isAdmin } = useIsAdmin();
+    const { logout, profile, isAdmin } = useAuth();
 
     return (
         <SimpleSidebar
             footer={
                 <SidebarNavUser
-                    user={data && {
-                        name: data.name,
-                        email: data.email,
-                        avatar: data.image || undefined,
+                    user={profile && {
+                        name: profile.name,
+                        email: profile.email,
+                        avatar: profile.image || undefined,
                     }}
                     onLogout={logout.mutate}
                 />
