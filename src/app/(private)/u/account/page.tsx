@@ -12,7 +12,11 @@ export default function Page() {
     const { data } = useProfile();
 
     return (
-        <MainSidebarProvider>
+        <MainSidebarProvider
+            breadcrumbs={{
+                page: "Account",
+            }}
+        >
             <div className="flex flex-col size-full">
                 {
                     data && (
