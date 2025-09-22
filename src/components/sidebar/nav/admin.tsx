@@ -29,6 +29,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 icon={Terminal}
             />
             <SimpleSidebarItem
+                onClick={openMinio.mutate}
+                text="Minio"
+                icon={Box}
+            />
+            <SimpleSidebarItem
                 href="/a/users"
                 text="Users"
                 icon={Users}
@@ -50,11 +55,6 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                     text="Contents"
                 />
             </SimpleSidebarMenu>
-            <SimpleSidebarItem
-                onClick={openMinio.mutate}
-                text="Minio"
-                icon={Box}
-            />
         </SimpleSidebarGroup>
     );
 }
