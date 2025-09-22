@@ -8,8 +8,9 @@ import {
 } from "../simple";
 import {
     Terminal,
-    Box,
+    Users,
     Image,
+    Box,
 } from "lucide-react";
 
 interface SidebarNavAdminProps {
@@ -25,9 +26,9 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 icon={Terminal}
             />
             <SimpleSidebarItem
-                href="#"
-                text="Minio"
-                icon={Box}
+                href="/a/users"
+                text="Users"
+                icon={Users}
             />
             <SimpleSidebarMenu
                 title="Media"
@@ -46,6 +47,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                     text="Contents"
                 />
             </SimpleSidebarMenu>
+            <SimpleSidebarItem
+                href="#"
+                text="Minio"
+                icon={Box}
+            />
         </SimpleSidebarGroup>
     );
 }
