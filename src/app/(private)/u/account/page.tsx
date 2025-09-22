@@ -1,11 +1,10 @@
 "use client";
 
-import { Main } from "@/components/main";
+import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useAuth } from "@/hooks/useAuth";
 import { dateToString } from "@shared/snippets";
 import { Button } from "@/components/ui/button";
 import { TwoFactorDialog } from "@/components/dialogs/two-factor";
-import { MainSidebarProvider } from "@/components/sidebar/main";
 
 export default function Page() {
     const { profile } = useAuth();

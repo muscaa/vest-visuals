@@ -1,10 +1,10 @@
 "use client";
 
+import { MainSidebarProvider } from "@/components/sidebar/main";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useCli } from "@/hooks/useCli";
-import { MainSidebarProvider } from "@/components/sidebar/main";
 
 export default function Page() {
     const { execute } = useCli();
