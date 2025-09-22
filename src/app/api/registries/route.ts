@@ -5,7 +5,10 @@ import {
     responseJSON,
 } from "@server/http";
 import { isAdmin } from "@server/auth/permissions";
-import { updateRegistry } from "@server/registry";
+import {
+    updateRegistry,
+    saveRegistry,
+} from "@server/registry";
 
 export async function POST(request: NextRequest) {
     const admin = await isAdmin({ request });
@@ -33,6 +36,7 @@ export async function POST(request: NextRequest) {
             reg[key] = value;
         }
     });
+    await saveRegistry(json.name);
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
