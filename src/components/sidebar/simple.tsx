@@ -36,6 +36,7 @@ import {
 
 interface SimpleSidebarMenuItemProps {
     href?: string;
+    onClick?: () => void;
     text?: string;
     icon?: Icon;
     children?: React.ReactNode;
@@ -51,6 +52,14 @@ export function SimpleSidebarMenuItem(props: SimpleSidebarMenuItemProps) {
                             {props.icon && <props.icon />}
                             <span>{props.text}</span>
                         </Link>
+                    ) || props.onClick && (
+                        <div
+                            className="cursor-pointer"
+                            onClick={props.onClick}
+                        >
+                            {props.icon && <props.icon />}
+                            <span>{props.text}</span>
+                        </div>
                     ) || (
                         props.children
                     )
@@ -92,6 +101,7 @@ export function SimpleSidebarMenu(props: SimpleSidebarMenuProps) {
 
 interface SimpleSidebarItemProps {
     href?: string;
+    onClick?: () => void;
     text?: string;
     icon?: Icon;
     children?: React.ReactNode;
@@ -107,6 +117,14 @@ export function SimpleSidebarItem(props: SimpleSidebarItemProps) {
                             {props.icon && <props.icon />}
                             <span>{props.text}</span>
                         </Link>
+                    ) || props.onClick && (
+                        <div
+                            className="cursor-pointer"
+                            onClick={props.onClick}
+                        >
+                            {props.icon && <props.icon />}
+                            <span>{props.text}</span>
+                        </div>
                     ) || (
                         props.children
                     )

@@ -1,5 +1,6 @@
 "use client";
 
+import { useAdmin } from "@/hooks/useAdmin";
 import {
     SimpleSidebarGroup,
     SimpleSidebarItem,
@@ -18,6 +19,8 @@ interface SidebarNavAdminProps {
 }
 
 export function SidebarNavAdmin(props: SidebarNavAdminProps) {
+    const { openMinio } = useAdmin();
+
     return (
         <SimpleSidebarGroup title="Admin">
             <SimpleSidebarItem
@@ -48,7 +51,7 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 />
             </SimpleSidebarMenu>
             <SimpleSidebarItem
-                href="#"
+                onClick={openMinio.mutate}
                 text="Minio"
                 icon={Box}
             />
