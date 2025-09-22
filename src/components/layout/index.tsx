@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import ThemeProvider from "../theme/theme-provider";
 import { ClientLayout } from "./client";
+import { Toaster } from "../ui/sonner";
 
 import "@/styles/main.css";
 
@@ -84,6 +85,9 @@ export function RootLayout(props: LayoutProps) {
                 >
                     <ClientLayout>
                         <BaseLayout {...props} />
+                        <Toaster
+                            position="top-center"
+                        />
                     </ClientLayout>
                 </ThemeProvider>
             </body>
