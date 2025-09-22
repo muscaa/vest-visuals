@@ -6,11 +6,23 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
+import * as types from "@type/api/registries";
 import * as types_team from "@type/api/registries/team";
 import * as types_portfolio from "@type/api/registries/portfolio";
 
 export function useRegistries() {
     const queryClient = useQueryClient();
+
+    const update = useMutation({
+        mutationFn: async (props: types.PostRequest) => {
+            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/registries", props);
+            if (!data.success) throw new Error(data.error);
+
+            await queryClient.invalidateQueries({ queryKey: [`${props.name}-reg`] });
+
+            return true;
+        },
+    });
 
     const useTeamRegistry = () => useQuery({
         queryKey: ["team-reg"],
@@ -33,6 +45,7 @@ export function useRegistries() {
     });
 
     return {
+        update,
         useTeamRegistry,
         usePortfolioRegistry,
     };
