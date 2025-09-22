@@ -10,8 +10,8 @@ export async function middleware(request: NextRequest) {
     const pathname = url.pathname;
 
     const guarded = [
+        "/u",
         "/a",
-        "/account",
     ];
 
     if (!guarded.includes(pathname) && !guarded.find(p => pathname.startsWith(p + "/"))) {
