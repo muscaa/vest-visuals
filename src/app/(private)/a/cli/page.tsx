@@ -38,6 +38,12 @@ export default function Page() {
                         placeholder="command"
                         value={command}
                         onChange={(e) => setCommand(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                handleSend();
+                            }
+                        }}
                     />
                     <Button onClick={handleSend}>
                         Send
