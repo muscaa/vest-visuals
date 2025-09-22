@@ -1,6 +1,6 @@
 "use client";
 
-import { MainAdmin } from "@/components/admin/main";
+import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { Loading } from "@/components/status";
 import { MediaGroupsList } from "@/components/lists/media-groups";
@@ -10,7 +10,12 @@ export default function Page() {
     const { data, refetch } = useAllMediaGroups();
 
     return (
-        <MainAdmin extraClassName="overflow-hidden">
+        <MainSidebarProvider
+            breadcrumbs={{
+                page: "Media Groups",
+            }}
+            extraClassName="overflow-hidden"
+        >
             {
                 data && (
                     <MediaGroupsList
@@ -21,6 +26,6 @@ export default function Page() {
                     <Loading />
                 )
             }
-        </MainAdmin>
+        </MainSidebarProvider>
     );
 }

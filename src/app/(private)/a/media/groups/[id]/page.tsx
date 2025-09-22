@@ -1,6 +1,6 @@
 "use client";
 
-import { MainAdmin } from "@/components/admin/main";
+import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useParams } from "next/navigation";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { MediaContentsList } from "@/components/lists/media-contents";
@@ -15,7 +15,18 @@ export default function Page() {
     const { data, refetch } = useMediaGroup(params.id);
 
     return (
-        <MainAdmin extraClassName="overflow-hidden">
+        <MainSidebarProvider
+            breadcrumbs={{
+                path: [
+                    {
+                        href: "/a/media/groups",
+                        text: "Media Groups",
+                    }
+                ],
+                page: params.id,
+            }}
+            extraClassName="overflow-hidden"
+        >
             {
                 data && (
                     <MediaContentsList
@@ -29,6 +40,6 @@ export default function Page() {
                     <Loading />
                 )
             }
-        </MainAdmin>
+        </MainSidebarProvider>
     );
 }
