@@ -9,9 +9,10 @@ import {
 } from "../simple";
 import {
     Terminal,
+    Box,
     Users,
     Image,
-    Box,
+    FileBox,
 } from "lucide-react";
 
 interface SidebarNavAdminProps {
@@ -53,6 +54,19 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 <SimpleSidebarMenuItem
                     href="/a/media/contents"
                     text="Contents"
+                />
+            </SimpleSidebarMenu>
+            <SimpleSidebarMenu
+                title="Registries"
+                icon={FileBox}
+            >
+                <SimpleSidebarMenuItem
+                    href="/a/registries/team"
+                    text="Team"
+                />
+                <SimpleSidebarMenuItem
+                    href="/a/registries/portfolio"
+                    text="Portfolio"
                 />
             </SimpleSidebarMenu>
         </SimpleSidebarGroup>
