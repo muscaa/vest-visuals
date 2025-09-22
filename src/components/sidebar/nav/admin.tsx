@@ -34,15 +34,15 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 icon={Image}
             >
                 <SimpleSidebarMenuItem
-                    href="#"
+                    href="/a/media/categories"
                     text="Categories"
                 />
                 <SimpleSidebarMenuItem
-                    href="#"
+                    href="/a/media/groups"
                     text="Groups"
                 />
                 <SimpleSidebarMenuItem
-                    href="#"
+                    href="/a/media/contents"
                     text="Contents"
                 />
             </SimpleSidebarMenu>
