@@ -1,27 +1,25 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Category } from "@type/config";
+import { PortfolioCategory } from "@type/registries/portfolio";
+import { Img } from "./snippets";
 
-export interface CategoryLinkProps {
-    category: Category;
+interface PortfolioCategoryLinkProps {
+    category: PortfolioCategory;
     href?: string;
 }
 
-export function CategoryLink(props: CategoryLinkProps) {
+export function PortfolioCategoryLink(props: PortfolioCategoryLinkProps) {
     return (
         <Link
-            href={props.href ?? props.category.portfolioUrl}
+            href={props.href ?? props.category.href}
             className="
                 relative rounded-xl shadow-sm overflow-hidden
                 w-full h-40 max-w-128 group
             "
         >
             <div className="absolute size-full overflow-hidden">
-                <Image
-                    src={props.category.coverImage.src}
-                    alt={props.category.coverImage.alt}
-                    width={props.category.coverImage.w}
-                    height={props.category.coverImage.h}
+                <Img
+                    src={props.category.cover}
+                    alt="Category Cover"
                     className="
                         size-full object-cover object-center transition-all ease-out
                         not-group-hover:opacity-75 contrast-50 not-group-hover:saturate-0 group-hover:scale-105

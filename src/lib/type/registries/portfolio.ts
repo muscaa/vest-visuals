@@ -1,11 +1,7 @@
 export interface PortfolioCategory {
     name: string;
     href: string;
-    cover: {
-        src: string;
-        width: number;
-        height: number;
-    };
+    cover: string;
 }
 
 export interface PortfolioRegistry {
