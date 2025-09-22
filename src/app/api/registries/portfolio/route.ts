@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
-import * as types from "@type/api/registry";
+import * as types from "@type/api/registries/portfolio";
 import {
     safeJSON,
     responseJSON,
 } from "@server/http";
+import { getRegistry } from "@server/registry";
 
 export async function POST(request: NextRequest) {
     const json = await safeJSON<types.PostRequest>(request);
@@ -14,10 +15,8 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    // TODO
-
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        value: null,
+        value: getRegistry("portfolio"),
     });
 }
