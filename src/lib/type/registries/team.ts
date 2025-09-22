@@ -4,9 +4,9 @@ export interface TeamMember {
     roles: string[];
     email: string;
     socials: {
-        instagram: string;
-        facebook: string;
-        linkedin: string;
+        instagram?: string;
+        facebook?: string;
+        linkedin?: string;
     };
 }
 
