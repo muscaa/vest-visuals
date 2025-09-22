@@ -15,7 +15,8 @@ export function useAdmin() {
         queryFn: async () => {
             const { data, error } = await authClient.admin.listUsers({
                 query: {
-
+                    sortBy: "role",
+                    sortDirection: "asc",
                 },
             });
             if (error) return undefined;
