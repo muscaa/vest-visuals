@@ -28,18 +28,18 @@ export default function Page() {
             extraClassName="overflow-hidden"
         >
             {
-        data && (
-            <MediaGroupsList
-                data={data.mediaGroups}
-                refetch={refetch}
-                parent={data}
-            />
-        ) || data === null && (
-            <NotFound />
-        ) || (
-                <Loading />
-            )
-    }
+                data && (
+                    <MediaGroupsList
+                        data={data.mediaGroups}
+                        refetch={refetch}
+                        parent={data}
+                    />
+                ) || data === null && (
+                    <NotFound />
+                ) || (
+                    <Loading />
+                )
+            }
         </MainSidebarProvider >
     );
 }
