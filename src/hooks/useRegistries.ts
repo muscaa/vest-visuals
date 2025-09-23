@@ -30,12 +30,12 @@ export function useRegistries() {
     const useRegistry = <K extends RegistryKey>(key: K | undefined) => useQuery({
         queryKey: [`reg-${key}`],
         queryFn: async () => {
-            if (!key) return undefined;
+            if (!key) return null;
 
             const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/registries/get", {
                 key,
             });
-            if (!data.success) return undefined;
+            if (!data.success) return null;
 
             return data.value as Registry<K>;
         },
