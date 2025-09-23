@@ -1,13 +1,14 @@
 import { z } from "zod";
-import * as team from "./team";
-import * as portfolio from "./portfolio";
+import { TeamMembersRegistry } from "./team-members";
+import { PortfolioCategoriesRegistry } from "./portfolio-categories";
 
-export const registrySchemas: Record<string, z.ZodType> = {
-    team: team.TeamRegistrySchema,
-    portfolio: portfolio.PortfolioRegistrySchema,
+export const registries = {
+    team_members: TeamMembersRegistry,
+    portfolio_categories: PortfolioCategoriesRegistry,
+} as const;
+
+export type RegistryKey = keyof typeof registries;
+export type Registries = {
+    [K in RegistryKey]: z.infer<typeof registries[K]>;
 };
-
-export interface Registries {
-    team: team.TeamRegistry;
-    portfolio: portfolio.PortfolioRegistry;
-}
+export type Registry<K extends RegistryKey> = Registries[K];
