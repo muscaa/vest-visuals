@@ -6,56 +6,46 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
-import { Registries } from "@type/registries";
-import * as types from "@type/api/registries";
-import * as types_team from "@type/api/registries/team";
-import * as types_portfolio from "@type/api/registries/portfolio";
+import {
+    RegistryKey,
+    Registry,
+} from "@type/registries";
+import * as types_get from "@type/api/registries/get";
+import * as types_update from "@type/api/registries/update";
 
 export function useRegistries() {
     const queryClient = useQueryClient();
 
-    const getRegistry = async <T extends keyof Registries>(name: T) => {
-        const { data } = await apiClient.post(`/registries/${name}`, {});
-        if (!data.success) return undefined
-
-        return data.value as Registries[T];
+    const getRegistry = async <K extends RegistryKey>(key: K) => {
+        const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/registries/get", {
+            key,
+        });
+        if (!data.success) return undefined;
+        
+        return data.value as Registry<K>;
     };
 
     const update = useMutation({
-        mutationFn: async (props: types.PostRequest) => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/registries", props);
+        mutationFn: async (props: types_update.PostRequest) => {
+            const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/registries/update", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: [`${props.name}-reg`] });
+            await queryClient.invalidateQueries({ queryKey: [`reg-${props.key}`] });
 
             return true;
         },
     });
 
-    const useTeamRegistry = () => useQuery({
-        queryKey: ["team-reg"],
+    const useRegistry = <K extends RegistryKey>(key: K) => useQuery({
+        queryKey: [`reg-${key}`],
         queryFn: async () => {
-            const { data } = await apiClient.post<types_team.PostResponse, types_team.PostRequest>("/registries/team", {});
-            if (!data.success) return undefined;
-
-            return data.value;
-        },
-    });
-
-    const usePortfolioRegistry = () => useQuery({
-        queryKey: ["portfolio-reg"],
-        queryFn: async () => {
-            const { data } = await apiClient.post<types_portfolio.PostResponse, types_portfolio.PostRequest>("/registries/portfolio", {});
-            if (!data.success) return undefined;
-
-            return data.value;
+            return await getRegistry(key);
         },
     });
 
     return {
         getRegistry,
         update,
-        useTeamRegistry,
-        usePortfolioRegistry,
+        useRegistry,
     };
 }

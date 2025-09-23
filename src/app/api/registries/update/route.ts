@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import * as types from "@type/api/registries";
+import * as types from "@type/api/registries/update";
 import {
     safeJSON,
     responseJSON,
