@@ -17,6 +17,7 @@ export function ClientLayout(props: LayoutProps) {
                 {props.children}
                 <Toaster
                     position="top-center"
+                    richColors
                 />
             </AuthContextProvider>
         </QueryClientProvider>

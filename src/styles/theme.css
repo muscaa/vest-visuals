@@ -69,6 +69,7 @@
     --color-keppel: var(--keppel);
     --color-taupe-gray: var(--taupe-gray);
     --color-imperial-red: var(--imperial-red);
+    --color-goldenrod: var(--goldenrod);
 
     --color-seasalt: var(--seasalt);
     --color-antiflash-white: var(--antiflash-white);
@@ -208,6 +209,7 @@
     --keppel: #2ac1a8ff;
     --taupe-gray: #919295ff;
     --imperial-red: #f1414dff;
+    --goldenrod: #e0a800ff;
 
     --seasalt: #f8f9fbff;
     --antiflash-white: #f1f2f4ff;
