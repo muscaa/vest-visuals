@@ -6,6 +6,7 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { apiClient } from "@client/http";
+import { Registries } from "@type/registries";
 import * as types from "@type/api/registries";
 import * as types_team from "@type/api/registries/team";
 import * as types_portfolio from "@type/api/registries/portfolio";
@@ -13,14 +14,12 @@ import * as types_portfolio from "@type/api/registries/portfolio";
 export function useRegistries() {
     const queryClient = useQueryClient();
 
-    const get = useMutation({ // TODO not the right way to use mutations...
-        mutationFn: async (name: string) => {
-            const { data } = await apiClient.post(`/registries/${name}`, {});
-            if (!data.success) throw new Error(data.error);
+    const getRegistry = async <T extends keyof Registries>(name: T) => {
+        const { data } = await apiClient.post(`/registries/${name}`, {});
+        if (!data.success) return undefined
 
-            return data.value;
-        },
-    });
+        return data.value as Registries[T];
+    };
 
     const update = useMutation({
         mutationFn: async (props: types.PostRequest) => {
@@ -54,7 +53,7 @@ export function useRegistries() {
     });
 
     return {
-        get,
+        getRegistry,
         update,
         useTeamRegistry,
         usePortfolioRegistry,
