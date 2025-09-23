@@ -56,19 +56,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                     text="Contents"
                 />
             </SimpleSidebarMenu>
-            <SimpleSidebarMenu
-                title="Registries"
+            <SimpleSidebarItem
+                href="/a/registries"
+                text="Registries"
                 icon={FileBox}
-            >
-                <SimpleSidebarMenuItem
-                    href="/a/registries/team"
-                    text="Team"
-                />
-                <SimpleSidebarMenuItem
-                    href="/a/registries/portfolio"
-                    text="Portfolio"
-                />
-            </SimpleSidebarMenu>
+            />
         </SimpleSidebarGroup>
     );
 }
