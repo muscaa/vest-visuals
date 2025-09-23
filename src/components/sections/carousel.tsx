@@ -18,8 +18,8 @@ import { Reveal } from "@/components/animations/reveal";
 import { useRegistries } from "@/hooks/useRegistries";
 
 export function SectionCarousel() {
-    const { usePortfolioRegistry } = useRegistries();
-    const { data } = usePortfolioRegistry();
+    const { useRegistry } = useRegistries();
+    const { data } = useRegistry("portfolio_categories");
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [hovered, setHovered] = useState(false);
@@ -59,7 +59,7 @@ export function SectionCarousel() {
                 >
                     <CarouselContent>
                         {
-                            data && data.categories.map((category, index) => (
+                            data && data.map((category, index) => (
                                 <CarouselItem key={index} className="md:basis-3/5">
                                     <div
                                         onClick={() => api?.scrollTo(index)}

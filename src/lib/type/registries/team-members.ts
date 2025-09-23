@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const TeamMemberSchema = z.object({
+export const TeamMember = z.object({
     name: z.string(),
     image: z.string(),
     roles: z.array(z.string()),
@@ -11,9 +11,7 @@ export const TeamMemberSchema = z.object({
         linkedin: z.string().optional(),
     }),
 });
-export type TeamMember = z.infer<typeof TeamMemberSchema>;
+export type TeamMember = z.infer<typeof TeamMember>;
 
-export const TeamRegistrySchema = z.object({
-    members: z.array(TeamMemberSchema),
-});
-export type TeamRegistry = z.infer<typeof TeamRegistrySchema>;
+export const TeamMembersRegistry = z.array(TeamMember);
+export type TeamMembersRegistry = z.infer<typeof TeamMembersRegistry>;

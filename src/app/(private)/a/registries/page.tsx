@@ -2,7 +2,10 @@
 
 import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useRegistries } from "@/hooks/useRegistries";
-import { useState } from "react";
+import {
+    useState,
+    useEffect,
+} from "react";
 import { Button } from "@/components/ui/button";
 import { CodeEditor } from "@/components/code-editor";
 import { json } from "@codemirror/lang-json";
@@ -23,18 +26,30 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import {
-    Registries,
-    registrySchemas,
+    RegistryKey,
+    registries,
 } from "@type/registries";
 import { zodToString } from "@shared/snippets";
 
 export default function Page() {
-    const { getRegistry, update } = useRegistries();
-    const [registry, setRegistry] = useState<keyof Registries>();
+    const { useRegistry, update } = useRegistries();
+    const [key, setKey] = useState<RegistryKey>();
     const [value, setValue] = useState<string>();
+    const { data } = useRegistry(key);
+
+    useEffect(() => {
+        if (!data) return;
+
+        try {
+            setValue(JSON.stringify(data, null, 2));
+            toast.success("Registry loaded");
+        } catch (error) {
+            toast.error((error as Error).message);
+        }
+    }, [data]);
 
     const handleSave = async () => {
-        if (!registry) {
+        if (!key) {
             toast.warning("No registry selected");
             return;
         }
@@ -45,26 +60,17 @@ export default function Page() {
 
         try {
             await update.mutateAsync({
-                name: registry,
+                key,
                 value: JSON.parse(value),
             });
-            const data = await getRegistry(registry);
-            setValue(JSON.stringify(data, null, 2));
             toast.success("Registry updated");
         } catch (error) {
             toast.error((error as Error).message);
         }
     };
 
-    const handleLoad = async (reg: keyof Registries) => {
-        try {
-            const data = await getRegistry(reg);
-            setValue(JSON.stringify(data, null, 2));
-            setRegistry(reg);
-            toast.success("Registry loaded");
-        } catch (error) {
-            toast.error((error as Error).message);
-        }
+    const handleLoad = (key: RegistryKey) => {
+        setKey(key);
     };
 
     return (
@@ -78,7 +84,7 @@ export default function Page() {
                 <div className="flex flex-col size-full gap-2">
                     <div className="flex gap-2">
                         <Button
-                            disabled={!registry}
+                            disabled={!key}
                             onClick={handleSave}
                         >
                             Save
@@ -87,7 +93,7 @@ export default function Page() {
                             <DialogTrigger asChild>
                                 <Button
                                     variant="secondary"
-                                    disabled={!registry}
+                                    disabled={!key}
                                 >
                                     View Schema
                                 </Button>
@@ -98,14 +104,14 @@ export default function Page() {
                                 </DialogHeader>
                                 <CodeEditor
                                     extensions={[javascript()]}
-                                    value={registry && zodToString(registrySchemas[registry])}
+                                    value={key && zodToString(registries[key])}
                                     readOnly
                                     className="max-h-[70vh]"
                                 />
                             </DialogContent>
                         </Dialog>
                         <Select
-                            value={registry}
+                            value={key}
                             onValueChange={handleLoad}
                         >
                             <SelectTrigger>
@@ -113,7 +119,7 @@ export default function Page() {
                             </SelectTrigger>
                             <SelectContent>
                                 {
-                                    Object.entries(registrySchemas).map(([key, _], index) => (
+                                    Object.entries(registries).map(([key, _], index) => (
                                         <SelectItem key={index} value={key}>{key.toUpperCase()}</SelectItem>
                                     ))
                                 }

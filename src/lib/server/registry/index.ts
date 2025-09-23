@@ -6,38 +6,33 @@ import {
     PutObjectCommand,
     GetObjectCommand,
 } from "@aws-sdk/client-s3";
-import * as registries from "./registries";
+import {
+    RegistryKey,
+    Registry,
+} from "@type/registries";
+import { registries } from "./registries";
 
-type Registries = typeof registries;
-type Registry<T extends keyof Registries | unknown> = T extends keyof Registries ? Registries[T] : unknown;
-
-export function getRegistry<T extends keyof Registries>(name: T): Registry<T>;
-export function getRegistry(name: string): Registry<unknown> | undefined;
-export function getRegistry<T extends keyof Registries>(name: T | string): Registry<T | unknown> | undefined {
-    return registries[name as keyof Registries];
+export function getRegistry<K extends RegistryKey>(key: K): Registry<K> {
+    return registries[key];
 }
 
-export function updateRegistry<T extends keyof Registries>(name: T, func: (reg: Registry<T>) => void): boolean;
-export function updateRegistry(name: string, func: (reg: Registry<unknown>) => void): boolean;
-export function updateRegistry<T extends keyof Registries>(name: T | string, func: (reg: Registry<T | unknown>) => void): boolean {
-    const registry = getRegistry(name);
+export function updateRegistry<K extends RegistryKey>(key: K, reg: Registry<K>): boolean {
+    const registry = getRegistry(key);
     if (!registry) return false;
 
-    func(registry);
+    registries[key] = reg;
 
     return true;
 }
 
-export async function saveRegistry<T extends keyof Registries>(name: T): Promise<boolean>;
-export async function saveRegistry(name: string): Promise<boolean>;
-export async function saveRegistry<T extends keyof Registries>(name: T | string): Promise<boolean> {
+export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boolean> {
     try {
-        const registry = getRegistry(name);
+        const registry = getRegistry(key);
         if (!registry) return false;
 
         const command = new PutObjectCommand({
             Bucket: buckets.registries,
-            Key: `${name}.json`,
+            Key: `${key}.json`,
             Body: JSON.stringify(registry, null, 2),
             ContentType: "application/json",
         });
@@ -48,13 +43,11 @@ export async function saveRegistry<T extends keyof Registries>(name: T | string)
     return false;
 }
 
-export async function loadRegistry<T extends keyof Registries>(name: T): Promise<Registry<T>>;
-export async function loadRegistry(name: string): Promise<Registry<unknown> | undefined>;
-export async function loadRegistry<T extends keyof Registries>(name: T | string): Promise<Registry<T | unknown> | undefined> {
+export async function loadRegistry<K extends RegistryKey>(key: K): Promise<Registry<K> | undefined> {
     try {
         const command = new GetObjectCommand({
             Bucket: buckets.registries,
-            Key: `${name}.json`,
+            Key: `${key}.json`,
         });
         const response = await s3.send(command);
         const body = await response.Body?.transformToString();
@@ -66,8 +59,8 @@ export async function loadRegistry<T extends keyof Registries>(name: T | string)
     return undefined;
 }
 
-export async function createRegistry<T extends keyof Registries>(name: T, value: Registry<T>): Promise<Registry<T>> {
-    const saved = await loadRegistry(name);
+export async function createRegistry<K extends RegistryKey>(key: K, value: Registry<K>): Promise<Registry<K>> {
+    const saved = await loadRegistry(key);
     const registry = saved ?? value;
 
     return registry;
