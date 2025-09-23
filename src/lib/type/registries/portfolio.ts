@@ -1,9 +1,13 @@
-export interface PortfolioCategory {
-    name: string;
-    href: string;
-    cover: string;
-}
+import { z } from "zod";
 
-export interface PortfolioRegistry {
-    categories: PortfolioCategory[];
-}
+export const PortfolioCategorySchema = z.object({
+    name: z.string(),
+    href: z.string(),
+    cover: z.string(),
+});
+export type PortfolioCategory = z.infer<typeof PortfolioCategorySchema>;
+
+export const PortfolioRegistrySchema = z.object({
+    categories: z.array(PortfolioCategorySchema),
+});
+export type PortfolioRegistry = z.infer<typeof PortfolioRegistrySchema>;
