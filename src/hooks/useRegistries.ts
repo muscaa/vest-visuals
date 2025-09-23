@@ -13,6 +13,15 @@ import * as types_portfolio from "@type/api/registries/portfolio";
 export function useRegistries() {
     const queryClient = useQueryClient();
 
+    const get = useMutation({ // TODO not the right way to use mutations...
+        mutationFn: async (name: string) => {
+            const { data } = await apiClient.post(`/registries/${name}`, {});
+            if (!data.success) throw new Error(data.error);
+
+            return data.value;
+        },
+    });
+
     const update = useMutation({
         mutationFn: async (props: types.PostRequest) => {
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/registries", props);
@@ -45,6 +54,7 @@ export function useRegistries() {
     });
 
     return {
+        get,
         update,
         useTeamRegistry,
         usePortfolioRegistry,
