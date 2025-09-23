@@ -28,7 +28,7 @@ export default function Page() {
                                 <AccordionContent className="flex flex-col text-balance">
                                     {
                                         faq.lines.map((line, index) => (
-                                            <p key={index}>{line}</p>
+                                            <p key={index}>{line || "\u00A0"}</p>
                                         ))
                                     }
                                 </AccordionContent>
