@@ -16,15 +16,6 @@ import * as types_update from "@type/api/registries/update";
 export function useRegistries() {
     const queryClient = useQueryClient();
 
-    const getRegistry = async <K extends RegistryKey>(key: K) => {
-        const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/registries/get", {
-            key,
-        });
-        if (!data.success) return undefined;
-        
-        return data.value as Registry<K>;
-    };
-
     const update = useMutation({
         mutationFn: async (props: types_update.PostRequest) => {
             const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/registries/update", props);
@@ -36,15 +27,21 @@ export function useRegistries() {
         },
     });
 
-    const useRegistry = <K extends RegistryKey>(key: K) => useQuery({
+    const useRegistry = <K extends RegistryKey>(key: K | undefined) => useQuery({
         queryKey: [`reg-${key}`],
         queryFn: async () => {
-            return await getRegistry(key);
+            if (!key) return undefined;
+
+            const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/registries/get", {
+                key,
+            });
+            if (!data.success) return undefined;
+
+            return data.value as Registry<K>;
         },
     });
 
     return {
-        getRegistry,
         update,
         useRegistry,
     };
