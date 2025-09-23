@@ -13,6 +13,7 @@ interface CodeEditorProps {
     extensions?: Extension[];
     value?: string;
     onChange?: (value: string) => void;
+    readOnly?: boolean;
     className?: string;
 }
 
@@ -23,6 +24,8 @@ export function CodeEditor(props: CodeEditorProps) {
         <CodeMirror
             theme={theme === "dark" ? vscodeDark : vscodeLight}
             extensions={props.extensions}
+            readOnly={props.readOnly}
+            editable={!props.readOnly}
             value={props.value}
             onChange={(value) => props.onChange?.(value)}
             className={cn("flex size-full overflow-auto", props.className)}
