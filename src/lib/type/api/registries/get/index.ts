@@ -8,7 +8,8 @@ import {
 
 export type PostRequest = {
     key: RegistryKey;
-    value: Registries[RegistryKey];
 };
 
-export type PostResponse = Response<{}>;
+export type PostResponse = Response<{
+    value: Registries[RegistryKey];
+}>;
