@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     const registrySchema = registrySchemas[json.name];
     if (!registrySchema) {
-        return responseJSON<types.PostResponse>(400, {
+        return responseJSON<types.PostResponse>(404, {
             success: false,
             error: "Invalid registry name",
         });
@@ -38,9 +38,9 @@ export async function POST(request: NextRequest) {
 
     const validation = registrySchema.safeParse(json.value);
     if (!validation.success) {
-        return responseJSON<types.PostResponse>(400, {
+        return responseJSON<types.PostResponse>(412, {
             success: false,
-            error: "Invalid registry value",
+            error: validation.error.message,
         });
     }
 
