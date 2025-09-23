@@ -30,7 +30,7 @@ import { zodToString } from "@shared/snippets";
 
 export default function Page() {
     const { getRegistry, update } = useRegistries();
-    const [registry, setRegistry] = useState<string>();
+    const [registry, setRegistry] = useState<keyof Registries>();
     const [value, setValue] = useState<string>();
 
     const handleSave = async () => {
@@ -48,6 +48,8 @@ export default function Page() {
                 name: registry,
                 value: JSON.parse(value),
             });
+            const data = await getRegistry(registry);
+            setValue(JSON.stringify(data, null, 2));
             toast.success("Registry updated");
         } catch (error) {
             toast.error((error as Error).message);
