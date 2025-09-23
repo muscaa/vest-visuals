@@ -9,9 +9,10 @@ import {
 } from "../simple";
 import {
     Terminal,
+    Box,
     Users,
     Image,
-    Box,
+    FileBox,
 } from "lucide-react";
 
 interface SidebarNavAdminProps {
@@ -27,6 +28,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 href="/a/cli"
                 text="CLI"
                 icon={Terminal}
+            />
+            <SimpleSidebarItem
+                onClick={openMinio.mutate}
+                text="Minio"
+                icon={Box}
             />
             <SimpleSidebarItem
                 href="/a/users"
@@ -51,9 +57,9 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 />
             </SimpleSidebarMenu>
             <SimpleSidebarItem
-                onClick={openMinio.mutate}
-                text="Minio"
-                icon={Box}
+                href="/a/registries"
+                text="Registries"
+                icon={FileBox}
             />
         </SimpleSidebarGroup>
     );

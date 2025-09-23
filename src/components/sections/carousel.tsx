@@ -2,9 +2,9 @@ import {
     useState,
     useEffect,
 } from "react";
-import Image from "next/image";
 import {
     ButtonLink,
+    Img,
 } from "@/components/snippets";
 import {
     Carousel,
@@ -14,10 +14,12 @@ import {
     CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
-import { sharedConfig } from "@shared/config";
 import { Reveal } from "@/components/animations/reveal";
+import { useRegistries } from "@/hooks/useRegistries";
 
 export function SectionCarousel() {
+    const { usePortfolioRegistry } = useRegistries();
+    const { data } = usePortfolioRegistry();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [hovered, setHovered] = useState(false);
@@ -26,7 +28,7 @@ export function SectionCarousel() {
         if (!api) {
             return;
         }
-        
+
         setCurrent(api.selectedScrollSnap() + 1);
         api.on("select", () => {
             setCurrent(api.selectedScrollSnap() + 1);
@@ -46,7 +48,7 @@ export function SectionCarousel() {
     return (
         <section id="carousel" className="flex flex-col justify-center items-center px-2 py-8">
             <Reveal delay={200} duration={1000} direction="none" className="w-full">
-                <Carousel 
+                <Carousel
                     setApi={setApi}
                     opts={{
                         loop: true,
@@ -57,17 +59,15 @@ export function SectionCarousel() {
                 >
                     <CarouselContent>
                         {
-                            sharedConfig.categories.map((category, index) => (
+                            data && data.categories.map((category, index) => (
                                 <CarouselItem key={index} className="md:basis-3/5">
                                     <div
                                         onClick={() => api?.scrollTo(index)}
                                         className="relative w-full h-112"
                                     >
-                                        <Image
-                                            src={category.coverImage.src}
-                                            alt={category.coverImage.alt}
-                                            width={category.coverImage.w}
-                                            height={category.coverImage.h}
+                                        <Img
+                                            src={category.cover}
+                                            alt="Category Cover"
                                             className={`
                                                 absolute size-full object-cover object-center
                                                 transition-all duration-500
@@ -83,7 +83,7 @@ export function SectionCarousel() {
                                             `}
                                         >
                                             <h2 className="not-md:text-center">{category.name.toUpperCase()}</h2>
-                                            <ButtonLink href={category.portfolioUrl} variant="neutral" className="theme-light">
+                                            <ButtonLink href={category.href} variant="neutral" className="theme-light">
                                                 PORTOFOLIU
                                             </ButtonLink>
                                         </div>

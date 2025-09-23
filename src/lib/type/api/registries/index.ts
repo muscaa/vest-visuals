@@ -4,8 +4,7 @@ import { Response } from "@type/http";
 
 export type PostRequest = {
     name: string;
+    value: any;
 };
 
-export type PostResponse = Response<{
-    value: any;
-}>;
+export type PostResponse = Response<{}>;

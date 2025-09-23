@@ -3,16 +3,15 @@ import {
     SiInstagram,
 } from "@icons-pack/react-simple-icons";
 import Linkedin from "@/components/svg/linkedin";
-import {
-    IconLink,
-    Icon
-} from "@/components/snippets";
+import { IconLink } from "@/components/snippets";
 import { Separator } from "@/components/ui/separator";
 import { Reveal } from "@/components/animations/reveal";
 import { TextLink } from "@/components/ui/text-link";
 import { Img } from "@/components/snippets";
+import { TeamMember } from "@type/registries/team";
+import { useRegistries } from "@/hooks/useRegistries";
 
-function Member(props: { name: string, image: string, roles: string[], email: string, socials: { [key: string]: Icon } }) {
+function Member(props: TeamMember) {
     return (
         <div className="flex flex-col p-8 justify-center items-center gap-4">
             <Reveal duration={1000}>
@@ -52,11 +51,9 @@ function Member(props: { name: string, image: string, roles: string[], email: st
             </div>
             <Reveal delay={900}>
                 <div className="flex items-center justify-center gap-4">
-                    {
-                        Object.entries(props.socials).map(([key, icon], index) => (
-                            <IconLink key={index} href={key} icon={icon} />
-                        ))
-                    }
+                    {props.socials.instagram && <IconLink href={props.socials.instagram} icon={SiInstagram} />}
+                    {props.socials.facebook && <IconLink href={props.socials.facebook} icon={SiFacebook} />}
+                    {props.socials.linkedin && <IconLink href={props.socials.linkedin} icon={Linkedin} />}
                 </div>
             </Reveal>
         </div>
@@ -64,41 +61,23 @@ function Member(props: { name: string, image: string, roles: string[], email: st
 }
 
 export function SectionTeam() {
+    const { useTeamRegistry } = useRegistries();
+    const { data } = useTeamRegistry();
+
     return (
         <section id="team" className="flex flex-col justify-center items-center px-2 py-8">
             <Reveal delay={200}>
                 <h1>Cunoaste echipa</h1>
             </Reveal>
             <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
-                <Member
-                    name="David"
-                    image="https://s3.vestvisuals.ro/public/media_variants/inphocft2nkcw7zrx0rrv0ae"
-                    roles={[
-                        "videograf",
-                        "fotograf",
-                        "editor video"
-                    ]}
-                    email="david@vestvisuals.ro"
-                    socials={{
-                        "https://www.instagram.com/david.bostina/": SiInstagram,
-                        "https://www.facebook.com/david.bostina": SiFacebook,
-                    }}
-                />
-                <Member
-                    name="Mihail"
-                    image="https://s3.vestvisuals.ro/public/media_variants/phrzk4zyeichg2u1lwsphziw"
-                    roles={[
-                        "fotograf",
-                        "editor foto",
-                        "editor video"
-                    ]}
-                    email="mihail@vestvisuals.ro"
-                    socials={{
-                        "https://www.instagram.com/musca.mihail/": SiInstagram,
-                        "https://www.facebook.com/mihailmusca": SiFacebook,
-                        "https://www.linkedin.com/in/muscaa/": Linkedin,
-                    }}
-                />
+                {
+                    data && data.members.map((member, index) => (
+                        <Member
+                            key={index}
+                            {...member}
+                        />
+                    ))
+                }
             </div>
         </section>
     );

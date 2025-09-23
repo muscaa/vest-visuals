@@ -1,9 +1,6 @@
 import { createRegistry } from "..";
-
-interface TeamRegistry {
-    something: number;
-}
+import { TeamRegistry } from "@type/registries/team";
 
 export const team: TeamRegistry = await createRegistry("team", {
-    something: 1,
+    members: [],
 });
