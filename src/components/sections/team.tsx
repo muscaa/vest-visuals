@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Reveal } from "@/components/animations/reveal";
 import { TextLink } from "@/components/ui/text-link";
 import { Img } from "@/components/snippets";
-import { TeamMember } from "@type/registries/team";
+import { TeamMember } from "@type/registries/team-members";
 import { useRegistries } from "@/hooks/useRegistries";
 
 function Member(props: TeamMember) {
@@ -61,8 +61,8 @@ function Member(props: TeamMember) {
 }
 
 export function SectionTeam() {
-    const { useTeamRegistry } = useRegistries();
-    const { data } = useTeamRegistry();
+    const { useRegistry } = useRegistries();
+    const { data } = useRegistry("team_members");
 
     return (
         <section id="team" className="flex flex-col justify-center items-center px-2 py-8">
@@ -71,7 +71,7 @@ export function SectionTeam() {
             </Reveal>
             <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
                 {
-                    data && data.members.map((member, index) => (
+                    data && data.map((member, index) => (
                         <Member
                             key={index}
                             {...member}
