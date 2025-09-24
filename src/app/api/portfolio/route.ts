@@ -32,13 +32,20 @@ export async function POST(request: NextRequest) {
                     return [];
                 }
 
+                const first = mediaVariants[0];
+                const last = mediaVariants[mediaVariants.length - 1];
+
                 return [
                     {
                         preview: {
-                            src: mediaVariants[0].fileUrl,
+                            src: first.fileUrl,
+                            width: first.info?.width,
+                            height: first.info?.height,
                         },
                         full: {
-                            src: mediaVariants[mediaVariants.length - 1].fileUrl,
+                            src: last.fileUrl,
+                            width: last.info?.width,
+                            height: last.info?.height,
                         },
                     } satisfies types.PortfolioEntry,
                 ];

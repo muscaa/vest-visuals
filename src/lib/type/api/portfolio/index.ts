@@ -2,6 +2,8 @@ import { Response } from "@type/http";
 
 export type PortfolioVariant = {
     src: string;
+    width: number;
+    height: number;
 };
 
 export type PortfolioEntry = {

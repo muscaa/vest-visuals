@@ -1,7 +1,7 @@
 "use client";
 
 import { Main } from "@/components/main";
-import { Masonry } from "react-plock";
+import { Masonry } from "@/components/masonry";
 import { useParams } from "next/navigation";
 import { PreviewImage } from "@/components/preview-image";
 import { usePortfolio } from "@/hooks/usePortfolio";
@@ -30,6 +30,7 @@ export default function Page() {
                                     index={index}
                                 />
                             )}
+                            getHeight={(item) => item.preview.height}
                         />
                     )
                 }
