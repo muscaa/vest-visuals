@@ -35,10 +35,8 @@ export function PreviewImage(props: PreviewImageProps) {
                 <Img
                     src={props.item.preview.src}
                     alt={props.item.alt}
-                    width={props.item.preview.width}
-                    height={props.item.preview.height}
                     onClick={() => setOpen(true)}
-                    className={`transition-all ease-out hover:opacity-75 hover:scale-105 ${props.className}`}
+                    className={`transition-all ease-out hover:opacity-75 hover:scale-105 size-full ${props.className}`}
                 />
             </Reveal>
             {
