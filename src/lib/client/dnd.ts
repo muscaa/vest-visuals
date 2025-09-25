@@ -1,8 +1,8 @@
 import { UniqueIdentifier } from "@dnd-kit/core";
 
 export type DndId = {
-    type: "sortable";
-    index: number;
+    id: string;
+    type: "draggable" | "dropzone" | "sortable";
 };
 
 export function getDndId(id: UniqueIdentifier | undefined) {
