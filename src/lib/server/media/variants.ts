@@ -1,6 +1,11 @@
 import { db } from "@server/db";
 import { mediaVariants } from "@server/db/schema";
-import { eq } from "drizzle-orm";
+import {
+    eq,
+    and,
+    inArray,
+    asc,
+} from "drizzle-orm";
 import {
     s3,
     buckets,
@@ -12,17 +17,16 @@ import {
     DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { Blob } from "buffer";
-import { getTableConfig } from "drizzle-orm/sqlite-core";
-import { createId } from "@paralleldrive/cuid2";
 import * as types from "@type/media/variants";
 
 export type SelectProps = typeof mediaVariants.$inferSelect;
 
 export function format(props: SelectProps): types.MediaVariant {
     return {
-        id: props.id,
+        contentId: props.contentId,
         variant: props.variant,
-        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.id)}`,
+        order: props.order,
+        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.contentId, props.variant)}`,
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -30,54 +34,64 @@ export function format(props: SelectProps): types.MediaVariant {
     };
 }
 
-function filePath(id: string) {
-    return `${getTableConfig(mediaVariants).name}/${id}`;
+function filePath(contentId: string, variant: string) {
+    return `media/${contentId}/${variant}`;
 }
 
 export async function getAll(): Promise<types.MediaVariant[]> {
     const result = await db.select()
         .from(mediaVariants)
+        .orderBy(
+            asc(mediaVariants.contentId),
+            asc(mediaVariants.order),
+        )
         .all();
     return result.map(format);
 }
 
-export async function get(id: string): Promise<types.MediaVariant | undefined> {
+export async function getContent(contentId: string): Promise<types.MediaVariant[]> {
     const result = await db.select()
         .from(mediaVariants)
-        .where(eq(mediaVariants.id, id))
+        .where(eq(mediaVariants.contentId, contentId))
+        .orderBy(asc(mediaVariants.order))
+        .all();
+    return result.map(format);
+}
+
+export async function get(contentId: string, variant: string): Promise<types.MediaVariant | undefined> {
+    const result = await db.select()
+        .from(mediaVariants)
+        .where(
+            and(
+                eq(mediaVariants.contentId, contentId),
+                eq(mediaVariants.variant, variant),
+            )
+        )
         .get();
     return result ? format(result) : undefined;
 }
 
-async function newId(): Promise<string> {
-    let id: string;
-    let exists: boolean;
+async function exists(contentId: string, variant: string): Promise<boolean> {
+    try {
+        const command = new HeadObjectCommand({
+            Bucket: buckets.public,
+            Key: filePath(contentId, variant),
+        });
+        await s3.send(command);
 
-    do {
-        id = createId();
-        exists = false;
-
-        try {
-            const command = new HeadObjectCommand({
-                Bucket: buckets.public,
-                Key: filePath(id),
-            });
-            await s3.send(command);
-            exists = true;
-        } catch (error) { }
-    } while (exists);
-
-    return id;
+        return true;
+    } catch (error) { }
+    return false;
 }
 
-async function upload(id: string, blob: Blob): Promise<boolean> {
+async function upload(contentId: string, variant: string, blob: Blob): Promise<boolean> {
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
         const command = new PutObjectCommand({
             Bucket: buckets.public,
-            Key: filePath(id),
+            Key: filePath(contentId, variant),
             Body: buffer,
             ContentType: blob.type,
         });
@@ -89,15 +103,16 @@ async function upload(id: string, blob: Blob): Promise<boolean> {
 }
 
 export async function create(props: types.CreateProps): Promise<types.MediaVariant | undefined> {
-    const id = await newId();
+    if (await exists(props.contentId, props.variant)) return undefined;
 
-    const uploaded = await upload(id, props.blob);
+    const uploaded = await upload(props.contentId, props.variant, props.blob);
     if (!uploaded) return undefined;
 
     const result = await db.insert(mediaVariants)
         .values({
-            id,
+            contentId: props.contentId,
             variant: props.variant,
+            order: props.order,
             type: props.type,
             info: props.info,
         })
@@ -106,46 +121,90 @@ export async function create(props: types.CreateProps): Promise<types.MediaVaria
     return result ? format(result) : undefined;
 }
 
-export async function update(id: string, props: types.UpdateProps): Promise<types.MediaVariant | undefined> {
-    if (props.blob) {
-        const query = await db.select()
-            .from(mediaVariants)
-            .where(eq(mediaVariants.id, id))
-            .get();
-        if (!query) return undefined;
+// TODO when changing contentId or variant, need to move s3 object to new path
+// export async function update(contentId: string, variant: string, props: types.UpdateProps): Promise<types.MediaVariant | undefined> {
+//     if (props.blob) {
+//         const query = await db.select()
+//             .from(mediaVariants)
+//             .where(
+//                 and(
+//                     eq(mediaVariants.contentId, contentId),
+//                     eq(mediaVariants.variant, variant),
+//                 )
+//             )
+//             .get();
+//         if (!query) return undefined;
 
-        const uploaded = await upload(query.id, props.blob);
-        if (!uploaded) return undefined;
-    }
+//         const uploaded = await upload(query.id, props.blob);
+//         if (!uploaded) return undefined;
+//     }
 
-    const result = await db.update(mediaVariants)
-        .set({
-            variant: props.variant,
-            type: props.type,
-            info: props.info,
-        })
-        .where(eq(mediaVariants.id, id))
-        .returning()
-        .get();
-    return result ? format(result) : undefined;
-}
+//     const result = await db.update(mediaVariants)
+//         .set({
+//             variant: props.variant,
+//             type: props.type,
+//             info: props.info,
+//         })
+//         .where(eq(mediaVariants.id, id))
+//         .returning()
+//         .get();
+//     return result ? format(result) : undefined;
+// }
 
-export async function remove(id: string): Promise<number> {
-    const query = await db.select()
-        .from(mediaVariants)
-        .where(eq(mediaVariants.id, id))
-        .get();
-    if (query) {
-        try {
-            const command = new DeleteObjectCommand({
-                Bucket: buckets.public,
-                Key: filePath(query.id),
-            });
-            await s3.send(command);
-        } catch (error) { }
-    }
+export async function remove(contentId: string, variant: string): Promise<number> {
+    try {
+        const command = new DeleteObjectCommand({
+            Bucket: buckets.public,
+            Key: filePath(contentId, variant),
+        });
+        await s3.send(command);
+    } catch (error) { }
 
     const result = await db.delete(mediaVariants)
-        .where(eq(mediaVariants.id, id));
+        .where(
+            and(
+                eq(mediaVariants.contentId, contentId),
+                eq(mediaVariants.variant, variant),
+            )
+        );
+    return result.rowsAffected;
+}
+
+export async function removeContent(contentId: string): Promise<number> {
+    const byContent = await getContent(contentId);
+
+    try {
+        await Promise.all(byContent.map((value) => {
+            const command = new DeleteObjectCommand({
+                Bucket: buckets.public,
+                Key: filePath(value.contentId, value.variant),
+            });
+            return s3.send(command);
+        }));
+    } catch (error) { }
+
+    const result = await db.delete(mediaVariants)
+        .where(eq(mediaVariants.contentId, contentId));
+    return result.rowsAffected;
+}
+
+export async function removeAll(contentId: string, variants: string[]): Promise<number> {
+    try {
+        await Promise.all(variants.map((variant) => {
+            const command = new DeleteObjectCommand({
+                Bucket: buckets.public,
+                Key: filePath(contentId, variant),
+            });
+            return s3.send(command);
+        }));
+    } catch (error) { }
+
+    const result = await db.delete(mediaVariants)
+        .where(
+            and(
+                eq(mediaVariants.contentId, contentId),
+                inArray(mediaVariants.variant, variants),
+            )
+        );
     return result.rowsAffected;
 }

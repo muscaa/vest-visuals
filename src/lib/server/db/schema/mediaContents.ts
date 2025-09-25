@@ -19,28 +19,6 @@ export const mediaContents = sqliteTable("media_contents", {
         .notNull(),
 });
 
-export const mediaContentVariants = sqliteTable("media_content_variants", {
-    contentId: text("content_id")
-        .notNull()
-        .references(() => mediaContents.id, { onDelete: "cascade" }),
-    variantId: text("variant_id")
-        .notNull()
-        .references(() => mediaVariants.id, { onDelete: "cascade" }),
-    order: integer("order")
-        .notNull(),
-});
-
 export const mediaContentsRelations = relations(mediaContents, ({ many }) => ({
-    mediaContentVariants: many(mediaContentVariants),
-}));
-
-export const mediaContentVariantsRelations = relations(mediaContentVariants, ({ one }) => ({
-    mediaContent: one(mediaContents, {
-        fields: [mediaContentVariants.contentId],
-        references: [mediaContents.id],
-    }),
-    mediaVariant: one(mediaVariants, {
-        fields: [mediaContentVariants.variantId],
-        references: [mediaVariants.id],
-    }),
+    mediaVariants: many(mediaVariants),
 }));

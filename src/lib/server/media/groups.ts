@@ -60,11 +60,8 @@ export async function getAll(): Promise<types.MediaGroup[]> {
                 with: {
                     mediaContent: {
                         with: {
-                            mediaContentVariants: {
+                            mediaVariants: {
                                 orderBy: (fields, operators) => operators.asc(fields.order),
-                                with: {
-                                    mediaVariant: true,
-                                },
                             },
                         },
                     },
@@ -96,11 +93,8 @@ export async function get(id: string): Promise<types.MediaGroup | undefined> {
                 with: {
                     mediaContent: {
                         with: {
-                            mediaContentVariants: {
+                            mediaVariants: {
                                 orderBy: (fields, operators) => operators.asc(fields.order),
-                                with: {
-                                    mediaVariant: true,
-                                },
                             },
                         },
                     },

@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
                         mediaVariants: [
                             {
                                 variant: value.variant,
+                                order: value.order,
                                 blob: new Blob([value.buffer], { type: value.mimeType }),
                                 type: value.type,
                                 info: value.info,
@@ -78,6 +79,7 @@ export async function POST(request: NextRequest) {
                             append: [
                                 {
                                     variant: value.variant,
+                                    order: value.order,
                                     blob: new Blob([value.buffer], { type: value.mimeType }),
                                     type: value.type,
                                     info: value.info,

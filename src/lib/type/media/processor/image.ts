@@ -6,6 +6,7 @@ interface ProcessorConfig extends base.ProcessorConfig {
 
 export interface V1SharpProcessorConfig extends ProcessorConfig {
     variants: base.VariantMap<{
+        order?: number;
         qualityPercent?: number;
         size?: Partial<base.Size> & {
             scalePercent?: number;

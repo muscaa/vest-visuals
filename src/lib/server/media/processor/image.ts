@@ -57,6 +57,7 @@ export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
 
             const value: base.ProcessorValue = {
                 variant: key,
+                order: variant.order,
                 buffer: processed,
                 mimeType: "image/webp",
                 type: "image",
