@@ -28,21 +28,21 @@ export function MediaContentsUploadDialog(props: Props) {
                     //alt: file.name,
                     variants: { // order kinda matters
                         small: {
-                            order: 0,
+                            order: 100,
                             qualityPercent: 70,
                             size: {
                                 scaleUnit: 360,
                             },
                         },
                         medium: {
-                            order: 1,
+                            order: 200,
                             qualityPercent: 80,
                             size: {
                                 scaleUnit: 768,
                             },
                         },
                         large: {
-                            order: 2,
+                            order: 300,
                             qualityPercent: 90,
                             size: {
                                 scaleUnit: 1080,
