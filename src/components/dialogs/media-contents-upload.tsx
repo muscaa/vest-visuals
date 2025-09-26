@@ -7,6 +7,7 @@ import { MediaGroup } from "@type/media/groups";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { Progress } from "@/components/ui/progress";
 
 interface Props {
     onCreate?: () => void;
@@ -16,7 +17,7 @@ interface Props {
 
 export function MediaContentsUploadDialog(props: Props) {
     const [files, setFiles] = useState<File[]>([]);
-    const { uploadMediaContents } = useMediaContents();
+    const { uploadMediaContents, uploadProgress } = useMediaContents();
     const { updateMediaGroup } = useMediaGroups();
 
     const submit = async () => {
@@ -97,6 +98,14 @@ export function MediaContentsUploadDialog(props: Props) {
                     onChange={(e) => setFiles((e.target.files || []) as File[])}
                 />
             </div>
+            {
+                uploadProgress && (
+                    <Progress
+                        value={uploadProgress.at}
+                        max={uploadProgress.max}
+                    />
+                )
+            }
         </SimpleDialog>
     );
 }
