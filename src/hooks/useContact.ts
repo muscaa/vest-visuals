@@ -13,7 +13,6 @@ export function useContact() {
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const contact = useMutation({
-        mutationKey: ["contact"],
         mutationFn: async (props: ContactProps) => {
             if (!executeRecaptcha) throw new Error("Recaptcha error");
             const token = await executeRecaptcha("contact");
@@ -22,7 +21,6 @@ export function useContact() {
                 token,
                 ...props,
             });
-
             if (!data.success) throw new Error(data.error);
 
             return data.success;
