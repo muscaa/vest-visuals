@@ -3,28 +3,31 @@
 import {
     useMemo,
     useState,
+    useEffect,
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/navigation";
-import { ButtonLink, Img } from "@/components/snippets";
+import {
+    ButtonLink,
+    Img,
+} from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
-import { List } from "@/components/list";
+import { SortableList } from "./sortable";
 import { MediaContent } from "@type/media/contents";
 import { MediaGroup } from "@type/media/groups";
 import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
 import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
-import {
-    ChevronUp,
-    ChevronDown,
-} from "lucide-react";
+import { GripVertical } from "lucide-react";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
+import {
+    DndSortable,
+    arrayMove,
+} from "@client/dnd";
 
 interface ListEntryProps {
     value: MediaContent;
-    movable?: boolean;
-    onMoveUp?: () => void;
-    onMoveDown?: () => void;
+    sortable: DndSortable;
+    disabled?: boolean;
 }
 
 function ListEntry(props: ListEntryProps) {
@@ -35,8 +38,6 @@ function ListEntry(props: ListEntryProps) {
             <Img
                 src={image}
                 alt="Preview"
-                width={128}
-                height={128}
                 className="size-32 object-contain"
             />
             <div className="flex flex-col gap-1 grow text-foreground">
@@ -71,25 +72,15 @@ function ListEntry(props: ListEntryProps) {
                 </div>
             </div>
             {
-                props.movable && (
+                !props.disabled && (
                     <div className="flex flex-col items-center justify-center gap-2">
                         <Button
-                            size="icon"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                props.onMoveUp?.();
-                            }}
+                            size="none"
+                            variant="link"
+                            className="w-10"
+                            {...props.sortable.listeners}
                         >
-                            <ChevronUp />
-                        </Button>
-                        <Button
-                            size="icon"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                props.onMoveDown?.();
-                            }}
-                        >
-                            <ChevronDown />
+                            <GripVertical strokeWidth={1.5} className="size-10" />
                         </Button>
                     </div>
                 )
@@ -100,12 +91,14 @@ function ListEntry(props: ListEntryProps) {
 
 interface MediaContentsListProps {
     data: MediaContent[];
-    refetch?: () => void;
+    onUpdate?: () => void;
     parent?: MediaGroup;
 }
 
 export function MediaContentsList(props: MediaContentsListProps) {
-    const router = useRouter();
+    const [data, setData] = useState<MediaContent[]>(props.data);
+    useEffect(() => setData(props.data), [props.data]);
+
     const [selected, setSelected] = useState<MediaContent>();
     const { updateMediaGroup } = useMediaGroups();
 
@@ -116,36 +109,14 @@ export function MediaContentsList(props: MediaContentsListProps) {
     const handleUpdate = () => {
         setSelected(undefined);
 
-        props.refetch?.();
+        props.onUpdate?.();
     };
 
-    const handleMoveUp = async (index: number) => {
-        if (!props.parent || props.data.length <= 1 || index <= 0) return;
+    const handleMove = async (from: number, to: number) => {
+        if (!props.parent) return;
 
-        const order = props.data.map((content) => content.id);
-        const temp = order[index - 1];
-        order[index - 1] = order[index];
-        order[index] = temp;
-
-        await updateMediaGroup.mutateAsync({
-            id: props.parent.id,
-            value: {
-                mediaContents: {
-                    set: order,
-                },
-            },
-        });
-
-        handleUpdate();
-    };
-
-    const handleMoveDown = async (index: number) => {
-        if (!props.parent || props.data.length <= 1 || index >= props.data.length - 1) return;
-
-        const order = props.data.map((content) => content.id);
-        const temp = order[index + 1];
-        order[index + 1] = order[index];
-        order[index] = temp;
+        setData((prev) => arrayMove(prev, from, to));
+        const order = arrayMove(props.data.map((content) => content.id), from, to);
 
         await updateMediaGroup.mutateAsync({
             id: props.parent.id,
@@ -160,18 +131,20 @@ export function MediaContentsList(props: MediaContentsListProps) {
     };
 
     return (
-        <List
-            data={props.data}
-            isSelected={(value) => selected?.id == value.id}
-            onSelect={handleSelect}
-            entry={(value, index) => (
+        <SortableList
+            data={data}
+            entry={(value, index, sortable) => (
                 <ListEntry
                     value={value}
-                    movable={props.parent != null}
-                    onMoveUp={() => handleMoveUp(index)}
-                    onMoveDown={() => handleMoveDown(index)}
+                    sortable={sortable}
+                    disabled={!props.parent}
                 />
             )}
+            entryToId={(value, index) => value.id}
+            move={handleMove}
+            isSelected={(value) => selected?.id == value.id}
+            onSelect={handleSelect}
+            disabled={!props.parent}
         >
             <MediaContentsUploadDialog
                 onCreate={handleUpdate}
@@ -195,6 +168,6 @@ export function MediaContentsList(props: MediaContentsListProps) {
                     Delete
                 </Button>
             </MediaContentsDeleteDialog>
-        </List>
+        </SortableList>
     );
 }
