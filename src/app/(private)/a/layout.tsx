@@ -6,6 +6,7 @@ import {
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { isAdmin } from "@server/auth/permissions";
+import { DndContextProvider } from "@/contexts/dnd";
 
 export const metadata = createMetadata({
     route: "/a",
@@ -22,6 +23,8 @@ export default async function Layout(props: LayoutProps) {
     }
 
     return (
-        <BaseLayout {...props} />
+        <DndContextProvider>
+            <BaseLayout {...props} />
+        </DndContextProvider>
     );
 }
