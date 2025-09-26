@@ -12,7 +12,7 @@ import {
 export default function Page() {
     const params = useParams<{ id: string }>();
     const { useMediaGroup } = useMediaGroups();
-    const { data, refetch } = useMediaGroup(params.id);
+    const { data } = useMediaGroup(params.id);
 
     return (
         <MainSidebarProvider
@@ -31,7 +31,6 @@ export default function Page() {
                 data && (
                     <MediaContentsList
                         data={data.mediaContents}
-                        refetch={refetch}
                         parent={data}
                     />
                 ) || data === null && (

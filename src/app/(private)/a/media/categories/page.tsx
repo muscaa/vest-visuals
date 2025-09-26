@@ -7,7 +7,7 @@ import { MediaCategoriesList } from "@/components/lists/media-categories";
 
 export default function Page() {
     const { useAllMediaCategories } = useMediaCategories();
-    const { data, refetch } = useAllMediaCategories();
+    const { data } = useAllMediaCategories();
 
     return (
         <MainSidebarProvider
@@ -20,7 +20,6 @@ export default function Page() {
                 data && (
                     <MediaCategoriesList
                         data={data}
-                        refetch={refetch}
                     />
                 ) || (
                     <Loading />
