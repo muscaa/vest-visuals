@@ -16,7 +16,7 @@ export function useMediaGroups() {
     const queryClient = useQueryClient();
 
     const useAllMediaGroups = () => useQuery({
-        queryKey: ["media-groups"],
+        queryKey: ["media"],
         queryFn: async () => {
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/groups", {});
             if (!data.success) return [];
@@ -26,7 +26,7 @@ export function useMediaGroups() {
     });
 
     const useMediaGroup = (id: string) => useQuery({
-        queryKey: ["media-groups", id],
+        queryKey: ["media", id],
         queryFn: async () => {
             const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/groups/get", {
                 id,
@@ -42,7 +42,7 @@ export function useMediaGroups() {
             const { data } = await apiClient.post<types_create.PostResponse, types_create.PostRequest>("/media/groups/create", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-groups"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.value;
         },
@@ -53,7 +53,7 @@ export function useMediaGroups() {
             const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/media/groups/update", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-groups"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.success;
         },
@@ -64,7 +64,7 @@ export function useMediaGroups() {
             const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/groups/remove", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-groups"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.success;
         },
