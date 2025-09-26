@@ -15,7 +15,7 @@ export function useMediaContents() {
     const queryClient = useQueryClient();
 
     const useAllMediaContents = () => useQuery({
-        queryKey: ["media-contents"],
+        queryKey: ["media"],
         queryFn: async () => {
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/contents", {});
             if (!data.success) return [];
@@ -25,7 +25,7 @@ export function useMediaContents() {
     });
 
     const useMediaContent = (id: string) => useQuery({
-        queryKey: ["media-contents", id],
+        queryKey: ["media", id],
         queryFn: async () => {
             const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/contents/get", {
                 id,
@@ -45,7 +45,7 @@ export function useMediaContents() {
             const { data } = await apiClient.postForm<types_upload.PostResponse>("/media/contents/upload", formData);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-contents"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.values;
         },
@@ -56,7 +56,7 @@ export function useMediaContents() {
             const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/contents/remove", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-contents"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.success;
         },

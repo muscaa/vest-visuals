@@ -6,7 +6,7 @@ import * as types from "@type/api/portfolio";
 
 export function usePortfolio(category: string) {
     return useQuery({
-        queryKey: ["portfolio", category],
+        queryKey: ["portfolio", category, "media"],
         queryFn: async () => {
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/portfolio", {
                 category,

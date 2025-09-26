@@ -16,7 +16,7 @@ export function useMediaCategories() {
     const queryClient = useQueryClient();
 
     const useAllMediaCategories = () => useQuery({
-        queryKey: ["media-categories"],
+        queryKey: ["media"],
         queryFn: async () => {
             const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/categories", {});
             if (!data.success) return [];
@@ -26,7 +26,7 @@ export function useMediaCategories() {
     });
 
     const useMediaCategory = (id: string) => useQuery({
-        queryKey: ["media-categories", id],
+        queryKey: ["media", id],
         queryFn: async () => {
             const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/categories/get", {
                 id,
@@ -42,7 +42,7 @@ export function useMediaCategories() {
             const { data } = await apiClient.post<types_create.PostResponse, types_create.PostRequest>("/media/categories/create", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-categories"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.value;
         },
@@ -53,7 +53,7 @@ export function useMediaCategories() {
             const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/media/categories/update", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-categories"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.success;
         },
@@ -64,7 +64,7 @@ export function useMediaCategories() {
             const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/categories/remove", props);
             if (!data.success) throw new Error(data.error);
 
-            await queryClient.invalidateQueries({ queryKey: ["media-categories"] });
+            await queryClient.invalidateQueries({ queryKey: ["media"] });
 
             return data.success;
         },
