@@ -79,14 +79,18 @@ export function MediaGroupsCreateDialog(props: Props) {
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <div className="flex items-center gap-2">
-                <Checkbox
-                    id="top"
-                    checked={top}
-                    onCheckedChange={(state) => setTop(state != false)}
-                />
-                <Label htmlFor="top">Append at Top</Label>
-            </div>
+            {
+                props.parent && (
+                    <div className="flex items-center gap-2">
+                        <Checkbox
+                            id="top"
+                            checked={top}
+                            onCheckedChange={(state) => setTop(state != false)}
+                        />
+                        <Label htmlFor="top">Append at Top</Label>
+                    </div>
+                )
+            }
         </SimpleDialog>
     );
 }
