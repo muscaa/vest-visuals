@@ -101,8 +101,8 @@ export function MediaContentsUploadDialog(props: Props) {
             {
                 uploadProgress && (
                     <Progress
-                        value={uploadProgress.at}
-                        max={uploadProgress.max}
+                        value={uploadProgress.at * 100 / uploadProgress.max}
+                        max={100}
                     />
                 )
             }
