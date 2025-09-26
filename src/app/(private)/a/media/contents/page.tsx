@@ -7,7 +7,7 @@ import { MediaContentsList } from "@/components/lists/media-contents";
 
 export default function Page() {
     const { useAllMediaContents } = useMediaContents();
-    const { data, refetch } = useAllMediaContents();
+    const { data } = useAllMediaContents();
 
     return (
         <MainSidebarProvider
@@ -20,7 +20,6 @@ export default function Page() {
                 data && (
                     <MediaContentsList
                         data={data}
-                        refetch={refetch}
                     />
                 ) || (
                     <Loading />

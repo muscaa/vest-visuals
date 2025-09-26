@@ -3,6 +3,7 @@ import { MediaTypeInfo } from "@type/media/info";
 
 export type ProcessorValue = MediaTypeInfo & {
     variant: string;
+    order?: number;
     buffer: Buffer;
     mimeType: string;
 };

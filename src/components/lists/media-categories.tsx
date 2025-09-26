@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { dateToString } from "@shared/snippets";
-import { List } from "@/components/list";
+import { SimpleList } from "./simple";
 import { PartialMediaCategory } from "@type/media/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
@@ -41,7 +41,7 @@ function ListEntry(props: ListEntryProps) {
 
 interface MediaGroupsListProps {
     data: PartialMediaCategory[];
-    refetch?: () => void;
+    onUpdate?: () => void;
 }
 
 export function MediaCategoriesList(props: MediaGroupsListProps) {
@@ -55,15 +55,15 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
     const handleUpdate = () => {
         setSelected(undefined);
 
-        props.refetch?.();
+        props.onUpdate?.();
     };
 
     return (
-        <List
+        <SimpleList
             data={props.data}
+            entry={(value) => <ListEntry value={value} />}
             isSelected={(value) => selected?.id == value.id}
             onSelect={handleSelect}
-            entry={(value) => <ListEntry value={value} />}
         >
             <MediaCategoriesCreateDialog
                 onCreate={handleUpdate}
@@ -106,6 +106,6 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
                     Delete
                 </Button>
             </MediaCategoriesDeleteDialog>
-        </List>
+        </SimpleList>
     );
 }

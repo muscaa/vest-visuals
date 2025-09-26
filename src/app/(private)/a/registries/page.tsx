@@ -42,7 +42,6 @@ export default function Page() {
 
         try {
             setValue(JSON.stringify(data, null, 2));
-            toast.success("Registry loaded");
         } catch (error) {
             toast.error((error as Error).message);
         }
@@ -71,6 +70,7 @@ export default function Page() {
 
     const handleLoad = (key: RegistryKey) => {
         setKey(key);
+        toast.success("Registry loaded");
     };
 
     return (

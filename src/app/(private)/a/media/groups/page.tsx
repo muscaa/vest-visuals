@@ -7,7 +7,7 @@ import { MediaGroupsList } from "@/components/lists/media-groups";
 
 export default function Page() {
     const { useAllMediaGroups } = useMediaGroups();
-    const { data, refetch } = useAllMediaGroups();
+    const { data } = useAllMediaGroups();
 
     return (
         <MainSidebarProvider
@@ -20,7 +20,6 @@ export default function Page() {
                 data && (
                     <MediaGroupsList
                         data={data}
-                        refetch={refetch}
                     />
                 ) || (
                     <Loading />

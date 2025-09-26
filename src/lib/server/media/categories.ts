@@ -65,11 +65,8 @@ export async function getAll(): Promise<types.MediaCategory[]> {
                                 with: {
                                     mediaContent: {
                                         with: {
-                                            mediaContentVariants: {
+                                            mediaVariants: {
                                                 orderBy: (fields, operators) => operators.asc(fields.order),
-                                                with: {
-                                                    mediaVariant: true,
-                                                },
                                             },
                                         },
                                     },
@@ -110,11 +107,8 @@ export async function get(id: string): Promise<types.MediaCategory | undefined> 
                                 with: {
                                     mediaContent: {
                                         with: {
-                                            mediaContentVariants: {
+                                            mediaVariants: {
                                                 orderBy: (fields, operators) => operators.asc(fields.order),
-                                                with: {
-                                                    mediaVariant: true,
-                                                },
                                             },
                                         },
                                     },
@@ -143,11 +137,8 @@ export async function getByCategory(category: string): Promise<types.MediaCatego
                                 with: {
                                     mediaContent: {
                                         with: {
-                                            mediaContentVariants: {
+                                            mediaVariants: {
                                                 orderBy: (fields, operators) => operators.asc(fields.order),
-                                                with: {
-                                                    mediaVariant: true,
-                                                },
                                             },
                                         },
                                     },

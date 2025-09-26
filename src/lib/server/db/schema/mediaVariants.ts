@@ -3,15 +3,20 @@ import {
     text,
     integer,
     index,
+    primaryKey,
 } from "drizzle-orm/sqlite-core";
-import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import { MediaInfo } from "@type/media/info";
+import { mediaContents } from "./mediaContents";
 
 export const mediaVariants = sqliteTable("media_variants", {
-    id: text("id")
-        .$defaultFn(() => createId())
-        .primaryKey(),
+    contentId: text("content_id")
+        .notNull()
+        .references(() => mediaContents.id, { onDelete: "cascade" }),
     variant: text("variant")
+        .notNull(),
+    order: integer("order")
+        .default(0)
         .notNull(),
     type: text("type", { enum: ["image", "video"] })
         .notNull(),
@@ -24,6 +29,15 @@ export const mediaVariants = sqliteTable("media_variants", {
         .$defaultFn(() => new Date())
         .notNull(),
 }, (table) => ([
+    primaryKey({ columns: [table.contentId, table.variant] }),
+    index("media_variants_content_id_idx").on(table.variant),
     index("media_variants_variant_idx").on(table.variant),
     index("media_variants_type_idx").on(table.type),
 ]));
+
+export const mediaVariantsRelations = relations(mediaVariants, ({ one }) => ({
+    mediaContent: one(mediaContents, {
+        fields: [mediaVariants.contentId],
+        references: [mediaContents.id],
+    }),
+}));

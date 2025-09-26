@@ -21,14 +21,14 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         queryFn: async () => {
             const session = await authClient.getSession();
 
-            return session.data?.user;
+            return session.data?.user || null;
         },
     });
 
     return (
         <Auth.Provider
             value={{
-                profile: data,
+                profile: data || undefined,
             }}
         >
             {props.children}
