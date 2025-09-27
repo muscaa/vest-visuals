@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import {
     RegistryKey,
-    registries,
+    Registries,
 } from "@type/registries";
 import { zodToString } from "@shared/snippets";
 
@@ -104,7 +104,7 @@ export default function Page() {
                                 </DialogHeader>
                                 <CodeEditor
                                     extensions={[javascript()]}
-                                    value={key && zodToString(registries[key])}
+                                    value={key && zodToString(Registries[key])}
                                     readOnly
                                     className="max-h-[70vh]"
                                 />
@@ -119,7 +119,7 @@ export default function Page() {
                             </SelectTrigger>
                             <SelectContent>
                                 {
-                                    Object.entries(registries).map(([key, _], index) => (
+                                    Object.entries(Registries).map(([key, _], index) => (
                                         <SelectItem key={index} value={key}>{key.toUpperCase()}</SelectItem>
                                     ))
                                 }

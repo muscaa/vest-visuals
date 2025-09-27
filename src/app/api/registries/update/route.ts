@@ -11,7 +11,7 @@ import {
 } from "@server/registry";
 import {
     RegistryKey,
-    registries,
+    Registries,
 } from "@type/registries";
 
 export async function POST(request: NextRequest) {
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     const key = json.key as RegistryKey;
-    const registry = registries[key];
+    const registry = Registries[key];
     if (!registry) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
