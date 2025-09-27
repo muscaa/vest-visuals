@@ -16,22 +16,7 @@ export function SectionParallaxHeader(props: Props) {
                     options={{
                         yFactor: 0,
                     }}
-                    layers={[
-                        {
-                            image: "/background.png",
-                            offset: 15,
-                            width: 6000,
-                            height: 4000,
-                            scale: 105,
-                        },
-                        {
-                            image: "/car.png",
-                            width: 6000,
-                            height: 4000,
-                            offset: 25,
-                            scale: 105,
-                        },
-                    ]}
+                    layers={[]}
                 />
                 <div
                     className="

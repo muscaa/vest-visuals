@@ -23,7 +23,11 @@ export function SectionsMain(props: SectionsMainProps) {
                 footer={(
                     <FooterLarge />
                 )}
-                header={<SectionParallaxHeader setMore={setMore} />}
+                header={(
+                    <SectionParallaxHeader
+                        setMore={setMore}
+                    />
+                )}
                 className="min-h-[calc(100%-4rem)] max-h-[calc(100%-4rem)] h-[calc(100%-4rem)]"
             >
                 <div className="flex flex-col">
