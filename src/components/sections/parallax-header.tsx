@@ -1,33 +1,7 @@
-import Image from "next/image";
 import { ButtonLink } from "@/components/snippets";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { ParallaxLayers } from "@/components/parallax";
-import { IconProps } from "@/components/snippets";
-
-function ImageBackground(props: IconProps) {
-    return (
-        <Image
-            src="/background.png"
-            alt="Background"
-            width={6000}
-            height={4000}
-            className={props.className}
-        />
-    );
-}
-
-function ImageCar(props: IconProps) {
-    return (
-        <Image
-            src="/car.png"
-            alt="Car"
-            width={6000}
-            height={4000}
-            className={props.className}
-        />
-    );
-}
 
 interface Props {
     setMore: (value: boolean) => void;
@@ -44,17 +18,17 @@ export function SectionParallaxHeader(props: Props) {
                     }}
                     layers={[
                         {
-                            icon: ImageBackground,
+                            image: "/background.png",
                             offset: 15,
                             width: 6000,
                             height: 4000,
                             scale: 105,
                         },
                         {
-                            icon: ImageCar,
-                            offset: 25,
+                            image: "/car.png",
                             width: 6000,
                             height: 4000,
+                            offset: 25,
                             scale: 105,
                         },
                     ]}

@@ -1,8 +1,8 @@
-import { Icon } from "@/components/snippets";
 import {
     useState,
     useEffect,
 } from "react";
+import { Img } from "@/components/snippets";
 
 export interface State {
     x: number;
@@ -10,10 +10,10 @@ export interface State {
 }
 
 export interface Layer {
-    icon: Icon;
-    offset: number;
+    image: string;
     width: number;
     height: number;
+    offset: number;
     scale: number;
 }
 
@@ -45,7 +45,11 @@ export function Parallax(props: ParallaxProps) {
                     ${props.state.y * props.layer.offset * (props.options.yFactor ?? 1)}px)`,
             }}
         >
-            <props.layer.icon className="absolute inset-0 w-full h-full" />
+            <Img
+                src={props.layer.image}
+                alt="Parallax"
+                className="absolute inset-0 w-full h-full"
+            />
         </div>
     );
 }
