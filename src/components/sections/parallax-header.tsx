@@ -3,13 +3,22 @@ import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { ParallaxLayers } from "@/components/parallax";
 import { useRegistries } from "@/hooks/useRegistries";
+import { useMemo } from "react";
 
 interface Props {
     setMore: (value: boolean) => void;
 }
 
 export function SectionParallaxHeader(props: Props) {
-    const {} = useRegistries();
+    const { useRegistry } = useRegistries();
+    const { data } = useRegistry("parallax");
+    const layers = useMemo(() => {
+        if (!data) return undefined;
+
+        const now = Math.floor(Date.now() / 1000);
+        const index = now % data.length;
+        return data[index].layers;
+    }, [data]);
 
     return (
         <>
@@ -19,7 +28,7 @@ export function SectionParallaxHeader(props: Props) {
                     options={{
                         yFactor: 0,
                     }}
-                    layers={[]}
+                    layers={layers ?? []}
                 />
                 <div
                     className="
