@@ -30,7 +30,6 @@ export const ParallaxLayerOut = z.object({
 export type ParallaxLayerOut = z.infer<typeof ParallaxLayerOut>;
 
 export const ParallaxEntryOut = z.object({
-    name: z.string(),
     layers: z.array(ParallaxLayerOut),
 });
 export type ParallaxEntryOut = z.infer<typeof ParallaxEntryOut>;
