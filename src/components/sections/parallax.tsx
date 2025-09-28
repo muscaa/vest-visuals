@@ -9,7 +9,7 @@ interface Props {
     setMore: (value: boolean) => void;
 }
 
-export function SectionParallaxHeader(props: Props) {
+export function SectionParallax(props: Props) {
     const { useRegistry } = useRegistries();
     const { data } = useRegistry("parallax");
     const layers = useMemo(() => {

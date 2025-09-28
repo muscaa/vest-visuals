@@ -4,7 +4,6 @@ import * as variants from "@server/media/variants";
 export const parallax = await createRegistry("parallax", {
     default: [],
     transform: async (reg) => await Promise.all(reg.map(async (value) => ({
-        ...value,
         layers: await Promise.all(value.layers.map(async (layer) => {
             const variant = await variants.get(layer.mediaContent, "large");
 
@@ -15,6 +14,6 @@ export const parallax = await createRegistry("parallax", {
                 offset: layer.offset,
                 scale: layer.scale,
             };
-        }))
+        })),
     }))),
 });
