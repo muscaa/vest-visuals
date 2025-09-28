@@ -27,15 +27,15 @@ import {
 } from "@/components/ui/dialog";
 import {
     RegistryKey,
-    registries,
+    Registries,
 } from "@type/registries";
 import { zodToString } from "@shared/snippets";
 
 export default function Page() {
-    const { useRegistry, update } = useRegistries();
+    const { useRegistryIn, update } = useRegistries();
     const [key, setKey] = useState<RegistryKey>();
     const [value, setValue] = useState<string>();
-    const { data } = useRegistry(key);
+    const { data } = useRegistryIn(key);
 
     useEffect(() => {
         if (!data) return;
@@ -104,7 +104,7 @@ export default function Page() {
                                 </DialogHeader>
                                 <CodeEditor
                                     extensions={[javascript()]}
-                                    value={key && zodToString(registries[key])}
+                                    value={key && zodToString(Registries[key].in)}
                                     readOnly
                                     className="max-h-[70vh]"
                                 />
@@ -119,8 +119,8 @@ export default function Page() {
                             </SelectTrigger>
                             <SelectContent>
                                 {
-                                    Object.entries(registries).map(([key, _], index) => (
-                                        <SelectItem key={index} value={key}>{key.toUpperCase()}</SelectItem>
+                                    Object.entries(Registries).map(([key, _], index) => (
+                                        <SelectItem key={index} value={key}>{key}</SelectItem>
                                     ))
                                 }
                             </SelectContent>

@@ -1,39 +1,25 @@
-import Image from "next/image";
 import { ButtonLink } from "@/components/snippets";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { ParallaxLayers } from "@/components/parallax";
-import { IconProps } from "@/components/snippets";
-
-function ImageBackground(props: IconProps) {
-    return (
-        <Image
-            src="/background.png"
-            alt="Background"
-            width={6000}
-            height={4000}
-            className={props.className}
-        />
-    );
-}
-
-function ImageCar(props: IconProps) {
-    return (
-        <Image
-            src="/car.png"
-            alt="Car"
-            width={6000}
-            height={4000}
-            className={props.className}
-        />
-    );
-}
+import { useRegistries } from "@/hooks/useRegistries";
+import { useMemo } from "react";
 
 interface Props {
     setMore: (value: boolean) => void;
 }
 
 export function SectionParallaxHeader(props: Props) {
+    const { useRegistry } = useRegistries();
+    const { data } = useRegistry("parallax");
+    const layers = useMemo(() => {
+        if (!data) return undefined;
+
+        const now = Math.floor(Date.now() / 1000);
+        const index = now % data.length;
+        return data[index].layers;
+    }, [data]);
+
     return (
         <>
             <div className="relative min-h-screen w-screen h-screen">
@@ -42,22 +28,7 @@ export function SectionParallaxHeader(props: Props) {
                     options={{
                         yFactor: 0,
                     }}
-                    layers={[
-                        {
-                            icon: ImageBackground,
-                            offset: 15,
-                            width: 6000,
-                            height: 4000,
-                            scale: 105,
-                        },
-                        {
-                            icon: ImageCar,
-                            offset: 25,
-                            width: 6000,
-                            height: 4000,
-                            scale: 105,
-                        },
-                    ]}
+                    layers={layers ?? []}
                 />
                 <div
                     className="

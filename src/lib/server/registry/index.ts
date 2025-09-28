@@ -8,32 +8,41 @@ import {
 } from "@aws-sdk/client-s3";
 import {
     RegistryKey,
-    Registry,
+    RegistryIn,
+    RegistryOut,
 } from "@type/registries";
-import { registries } from "./registries";
+import * as registries from "./registries";
 
-export function getRegistry<K extends RegistryKey>(key: K): Registry<K> {
-    return registries[key];
+const registryEntries = registries as RegistryEntries; // stupid typescript
+
+export function getRegistryKey(str: string): RegistryKey | undefined {
+    const key = str as RegistryKey;
+    return registryEntries[key] ? key : undefined;
 }
 
-export function updateRegistry<K extends RegistryKey>(key: K, reg: Registry<K>): boolean {
-    const registry = getRegistry(key);
-    if (!registry) return false;
+export function getRegistryEntry<K extends RegistryKey>(key: K): RegistryEntry<K> {
+    return registryEntries[key];
+}
 
-    registries[key] = reg;
+export async function updateRegistry<K extends RegistryKey>(key: K, reg: RegistryIn<K>): Promise<boolean> {
+    const entry = getRegistryEntry(key);
+    if (!entry) return false;
+
+    entry.in = reg;
+    entry.out = await entry.transform(reg);
 
     return true;
 }
 
 export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boolean> {
     try {
-        const registry = getRegistry(key);
-        if (!registry) return false;
+        const entry = getRegistryEntry(key);
+        if (!entry) return false;
 
         const command = new PutObjectCommand({
             Bucket: buckets.registries,
             Key: `${key}.json`,
-            Body: JSON.stringify(registry, null, 2),
+            Body: JSON.stringify(entry.in, null, 2),
             ContentType: "application/json",
         });
         await s3.send(command);
@@ -43,7 +52,7 @@ export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boole
     return false;
 }
 
-export async function loadRegistry<K extends RegistryKey>(key: K): Promise<Registry<K> | undefined> {
+export async function loadRegistry<K extends RegistryKey>(key: K): Promise<RegistryIn<K> | undefined> {
     try {
         const command = new GetObjectCommand({
             Bucket: buckets.registries,
@@ -59,9 +68,41 @@ export async function loadRegistry<K extends RegistryKey>(key: K): Promise<Regis
     return undefined;
 }
 
-export async function createRegistry<K extends RegistryKey>(key: K, value: Registry<K>): Promise<Registry<K>> {
-    const saved = await loadRegistry(key);
-    const registry = saved ?? value;
+export interface RegistryEntry<K extends RegistryKey> {
+    key: K;
+    default: () => RegistryIn<K>;
+    in: RegistryIn<K>;
+    transform: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
+    out: RegistryOut<K>;
+}
 
-    return registry;
+export type RegistryEntries = {
+    readonly [K in RegistryKey]: RegistryEntry<K>;
+};
+
+interface CreateProps<K extends RegistryKey> {
+    default: RegistryIn<K>;
+    transform?: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
+}
+
+export async function createRegistry<K extends RegistryKey>(key: K, props: CreateProps<K>): Promise<RegistryEntry<K>> {
+    const _default = (): RegistryIn<K> => {
+        return JSON.parse(JSON.stringify(props.default));
+    };
+
+    const _transform = async (input: RegistryIn<K>): Promise<RegistryOut<K>> => {
+        return input as RegistryOut<K>;
+    };
+    
+    const saved = await loadRegistry(key);
+    const reg = saved ?? _default();
+    const transform = props.transform ?? _transform;
+
+    return {
+        key,
+        default: _default,
+        in: reg,
+        transform,
+        out: await transform(reg),
+    };
 }

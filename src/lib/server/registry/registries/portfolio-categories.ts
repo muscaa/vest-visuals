@@ -1,3 +1,5 @@
 import { createRegistry } from "..";
 
-export const portfolio_categories = await createRegistry("portfolio_categories", []);
+export const portfolio_categories = await createRegistry("portfolio_categories", {
+    default: [],
+});

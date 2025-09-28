@@ -1,10 +1,13 @@
 import { NextRequest } from "next/server";
-import * as types from "@type/api/registries/get";
+import * as types from "@type/api/registries/out";
 import {
     safeJSON,
     responseJSON,
 } from "@server/http";
-import { getRegistry } from "@server/registry";
+import {
+    getRegistryKey,
+    getRegistryEntry,
+} from "@server/registry";
 
 export async function POST(request: NextRequest) {
     const json = await safeJSON<types.PostRequest>(request, (json) => json.key);
@@ -15,8 +18,16 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const registry = getRegistry(json.key);
-    if (!registry) {
+    const key = getRegistryKey(json.key);
+    if (!key) {
+        return responseJSON<types.PostResponse>(404, {
+            success: false,
+            error: "Invalid registry key",
+        });
+    }
+
+    const entry = getRegistryEntry(key);
+    if (!entry) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
             error: "Invalid registry key",
@@ -25,6 +36,6 @@ export async function POST(request: NextRequest) {
 
     return responseJSON<types.PostResponse>(200, {
         success: true,
-        value: registry,
+        value: entry.out,
     });
 }

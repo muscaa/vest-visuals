@@ -6,13 +6,11 @@ import {
 } from "@server/http";
 import { isAdmin } from "@server/auth/permissions";
 import {
+    getRegistryKey,
     updateRegistry,
     saveRegistry,
 } from "@server/registry";
-import {
-    RegistryKey,
-    registries,
-} from "@type/registries";
+import { Registries } from "@type/registries";
 
 export async function POST(request: NextRequest) {
     const admin = await isAdmin({ request });
@@ -31,16 +29,16 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const key = json.key as RegistryKey;
-    const registry = registries[key];
-    if (!registry) {
+    const key = getRegistryKey(json.key);
+    if (!key) {
         return responseJSON<types.PostResponse>(404, {
             success: false,
             error: "Invalid registry key",
         });
     }
 
-    const validation = registry.safeParse(json.value);
+    const registryIn = Registries[key].in;
+    const validation = registryIn.safeParse(json.value);
     if (!validation.success) {
         return responseJSON<types.PostResponse>(412, {
             success: false,
@@ -48,7 +46,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    updateRegistry(key, validation.data);
+    await updateRegistry(key, validation.data);
     await saveRegistry(key);
 
     return responseJSON<types.PostResponse>(200, {
