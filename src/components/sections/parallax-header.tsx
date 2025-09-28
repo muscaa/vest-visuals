@@ -2,12 +2,15 @@ import { ButtonLink } from "@/components/snippets";
 import { Reveal } from "@/components/animations/reveal";
 import { Navbar } from "@/components/navbar";
 import { ParallaxLayers } from "@/components/parallax";
+import { useRegistries } from "@/hooks/useRegistries";
 
 interface Props {
     setMore: (value: boolean) => void;
 }
 
 export function SectionParallaxHeader(props: Props) {
+    const {} = useRegistries();
+
     return (
         <>
             <div className="relative min-h-screen w-screen h-screen">

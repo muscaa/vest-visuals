@@ -20,29 +20,29 @@ export function getRegistryKey(str: string): RegistryKey | undefined {
     return registryEntries[key] ? key : undefined;
 }
 
-export function getRegistry<K extends RegistryKey>(key: K): RegistryOut<K> {
-    return registryEntries[key].value;
+export function getRegistryEntry<K extends RegistryKey>(key: K): RegistryEntry<K> {
+    return registryEntries[key];
 }
 
 export async function updateRegistry<K extends RegistryKey>(key: K, reg: RegistryIn<K>): Promise<boolean> {
-    const registry = getRegistry(key);
-    if (!registry) return false;
+    const entry = getRegistryEntry(key);
+    if (!entry) return false;
 
-    const entry = registryEntries[key];
-    entry.value = await entry.transformer(reg);
+    entry.in = reg;
+    entry.out = await entry.transform(reg);
 
     return true;
 }
 
 export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boolean> {
     try {
-        const registry = getRegistry(key);
-        if (!registry) return false;
+        const entry = getRegistryEntry(key);
+        if (!entry) return false;
 
         const command = new PutObjectCommand({
             Bucket: buckets.registries,
             Key: `${key}.json`,
-            Body: JSON.stringify(registry, null, 2),
+            Body: JSON.stringify(entry.in, null, 2),
             ContentType: "application/json",
         });
         await s3.send(command);
@@ -70,9 +70,10 @@ export async function loadRegistry<K extends RegistryKey>(key: K): Promise<Regis
 
 export interface RegistryEntry<K extends RegistryKey> {
     key: K;
-    value: RegistryOut<K>;
     default: () => RegistryIn<K>;
-    transformer: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
+    in: RegistryIn<K>;
+    transform: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
+    out: RegistryOut<K>;
 }
 
 export type RegistryEntries = {
@@ -81,7 +82,7 @@ export type RegistryEntries = {
 
 interface CreateProps<K extends RegistryKey> {
     default: RegistryIn<K>;
-    transformer?: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
+    transform?: (reg: RegistryIn<K>) => Promise<RegistryOut<K>>;
 }
 
 export async function createRegistry<K extends RegistryKey>(key: K, props: CreateProps<K>): Promise<RegistryEntry<K>> {
@@ -89,18 +90,19 @@ export async function createRegistry<K extends RegistryKey>(key: K, props: Creat
         return JSON.parse(JSON.stringify(props.default));
     };
 
-    const _transformer = async (input: RegistryIn<K>): Promise<RegistryOut<K>> => {
+    const _transform = async (input: RegistryIn<K>): Promise<RegistryOut<K>> => {
         return input as RegistryOut<K>;
     };
     
     const saved = await loadRegistry(key);
     const reg = saved ?? _default();
-    const transformer = props.transformer ?? _transformer;
+    const transform = props.transform ?? _transform;
 
     return {
         key,
-        value: await transformer(reg),
         default: _default,
-        transformer,
+        in: reg,
+        transform,
+        out: await transform(reg),
     };
 }

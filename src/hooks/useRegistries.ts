@@ -8,9 +8,11 @@ import {
 import { apiClient } from "@client/http";
 import {
     RegistryKey,
+    RegistryIn,
     RegistryOut,
 } from "@type/registries";
-import * as types_get from "@type/api/registries/get";
+import * as types_in from "@type/api/registries/in";
+import * as types_out from "@type/api/registries/out";
 import * as types_update from "@type/api/registries/update";
 
 export function useRegistries() {
@@ -32,7 +34,7 @@ export function useRegistries() {
         queryFn: async () => {
             if (!key) return null;
 
-            const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/registries/get", {
+            const { data } = await apiClient.post<types_out.PostResponse, types_out.PostRequest>("/registries/out", {
                 key,
             });
             if (!data.success) return null;
@@ -41,8 +43,23 @@ export function useRegistries() {
         },
     });
 
+    const useRegistryIn = <K extends RegistryKey>(key: K | undefined) => useQuery({
+        queryKey: [`reg-${key}`],
+        queryFn: async () => {
+            if (!key) return null;
+
+            const { data } = await apiClient.post<types_in.PostResponse, types_in.PostRequest>("/registries/in", {
+                key,
+            });
+            if (!data.success) return null;
+
+            return data.value as RegistryIn<K>;
+        },
+    });
+
     return {
         update,
         useRegistry,
+        useRegistryIn,
     };
 }

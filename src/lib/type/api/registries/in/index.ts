@@ -1,7 +1,7 @@
 import { Response } from "@type/http";
 import {
     RegistryKey,
-    RegistryOut
+    RegistryIn,
 } from "@type/registries";
 
 // POST
@@ -11,5 +11,5 @@ export type PostRequest = {
 };
 
 export type PostResponse = Response<{
-    value: RegistryOut<RegistryKey>;
+    value: RegistryIn<RegistryKey>;
 }>;

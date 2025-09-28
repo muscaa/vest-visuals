@@ -32,10 +32,10 @@ import {
 import { zodToString } from "@shared/snippets";
 
 export default function Page() {
-    const { useRegistry, update } = useRegistries();
+    const { useRegistryIn, update } = useRegistries();
     const [key, setKey] = useState<RegistryKey>();
     const [value, setValue] = useState<string>();
-    const { data } = useRegistry(key);
+    const { data } = useRegistryIn(key);
 
     useEffect(() => {
         if (!data) return;
