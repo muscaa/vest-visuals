@@ -1,17 +1,39 @@
 import { z } from "zod";
 
-export const ParallaxLayer = z.object({
+// IN
+
+export const ParallaxLayerIn = z.object({
     mediaContent: z.string(),
     offset: z.number(),
     scale: z.number(),
 });
-export type ParallaxLayer = z.infer<typeof ParallaxLayer>;
+export type ParallaxLayerIn = z.infer<typeof ParallaxLayerIn>;
 
-export const ParallaxEntry = z.object({
+export const ParallaxEntryIn = z.object({
     name: z.string(),
-    layers: z.array(ParallaxLayer),
+    layers: z.array(ParallaxLayerIn),
 });
-export type ParallaxEntry = z.infer<typeof ParallaxEntry>;
+export type ParallaxEntryIn = z.infer<typeof ParallaxEntryIn>;
 
-export const ParallaxRegistry = z.array(ParallaxEntry);
-export type ParallaxRegistry = z.infer<typeof ParallaxRegistry>;
+export const ParallaxRegistryIn = z.array(ParallaxEntryIn);
+export type ParallaxRegistryIn = z.infer<typeof ParallaxRegistryIn>;
+
+// OUT
+
+export const ParallaxLayerOut = z.object({
+    image: z.string(),
+    width: z.number(),
+    height: z.number(),
+    offset: z.number(),
+    scale: z.number(),
+});
+export type ParallaxLayerOut = z.infer<typeof ParallaxLayerOut>;
+
+export const ParallaxEntryOut = z.object({
+    name: z.string(),
+    layers: z.array(ParallaxLayerOut),
+});
+export type ParallaxEntryOut = z.infer<typeof ParallaxEntryOut>;
+
+export const ParallaxRegistryOut = z.array(ParallaxEntryOut);
+export type ParallaxRegistryOut = z.infer<typeof ParallaxRegistryOut>;
