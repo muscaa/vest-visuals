@@ -30,7 +30,7 @@ export function useRegistries() {
     });
 
     const useRegistry = <K extends RegistryKey>(key: K | undefined) => useQuery({
-        queryKey: [`reg-${key}`],
+        queryKey: [`reg-${key}`, "out"],
         queryFn: async () => {
             if (!key) return null;
 
@@ -44,7 +44,7 @@ export function useRegistries() {
     });
 
     const useRegistryIn = <K extends RegistryKey>(key: K | undefined) => useQuery({
-        queryKey: [`reg-${key}`],
+        queryKey: [`reg-${key}`, "in"],
         queryFn: async () => {
             if (!key) return null;
 
