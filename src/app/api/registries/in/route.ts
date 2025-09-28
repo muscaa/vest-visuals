@@ -8,8 +8,17 @@ import {
     getRegistryKey,
     getRegistryEntry,
 } from "@server/registry";
+import { isAdmin } from "@server/auth/permissions";
 
 export async function POST(request: NextRequest) {
+    const admin = await isAdmin({ request });
+    if (!admin) {
+        return responseJSON<types.PostResponse>(401, {
+            success: false,
+            error: "Unauthorized",
+        });
+    }
+
     const json = await safeJSON<types.PostRequest>(request, (json) => json.key);
     if (json == null) {
         return responseJSON<types.PostResponse>(400, {
