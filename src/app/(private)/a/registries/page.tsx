@@ -98,13 +98,20 @@ export default function Page() {
                                     View Schema
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent>
+                            <DialogContent className="max-h-screen">
                                 <DialogHeader>
                                     <DialogTitle>Schema</DialogTitle>
                                 </DialogHeader>
                                 <CodeEditor
                                     extensions={[javascript()]}
                                     value={key && zodToString(Registries[key].in)}
+                                    readOnly
+                                    className="max-h-[70vh]"
+                                />
+                                <p>Transforms To:</p>
+                                <CodeEditor
+                                    extensions={[javascript()]}
+                                    value={key && zodToString(Registries[key].out)}
                                     readOnly
                                     className="max-h-[70vh]"
                                 />
