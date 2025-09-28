@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Main } from "../main";
 import { useState } from "react";
 import { FooterLarge } from "../footer";
-import { SectionParallaxHeader } from "./parallax-header";
+import { SectionParallax } from "./parallax";
 import { SectionAbout } from "./about";
 import { SectionCarousel } from "./carousel";
 import { SectionTeam } from "./team";
@@ -24,7 +24,7 @@ export function SectionsMain(props: SectionsMainProps) {
                     <FooterLarge />
                 )}
                 header={(
-                    <SectionParallaxHeader
+                    <SectionParallax
                         setMore={setMore}
                     />
                 )}
