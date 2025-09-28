@@ -8,7 +8,7 @@ import {
 import { apiClient } from "@client/http";
 import {
     RegistryKey,
-    Registry,
+    RegistryOut,
 } from "@type/registries";
 import * as types_get from "@type/api/registries/get";
 import * as types_update from "@type/api/registries/update";
@@ -37,7 +37,7 @@ export function useRegistries() {
             });
             if (!data.success) return null;
 
-            return data.value as Registry<K>;
+            return data.value as RegistryOut<K>;
         },
     });
 

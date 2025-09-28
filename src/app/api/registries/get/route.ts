@@ -4,7 +4,10 @@ import {
     safeJSON,
     responseJSON,
 } from "@server/http";
-import { getRegistry } from "@server/registry";
+import {
+    getRegistryKey,
+    getRegistry,
+} from "@server/registry";
 
 export async function POST(request: NextRequest) {
     const json = await safeJSON<types.PostRequest>(request, (json) => json.key);
@@ -15,7 +18,15 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    const registry = getRegistry(json.key);
+    const key = getRegistryKey(json.key);
+    if (!key) {
+        return responseJSON<types.PostResponse>(404, {
+            success: false,
+            error: "Invalid registry key",
+        });
+    }
+
+    const registry = getRegistry(key);
     if (!registry) {
         return responseJSON<types.PostResponse>(404, {
             success: false,

@@ -104,7 +104,7 @@ export default function Page() {
                                 </DialogHeader>
                                 <CodeEditor
                                     extensions={[javascript()]}
-                                    value={key && zodToString(Registries[key])}
+                                    value={key && zodToString(Registries[key].in)}
                                     readOnly
                                     className="max-h-[70vh]"
                                 />
@@ -120,7 +120,7 @@ export default function Page() {
                             <SelectContent>
                                 {
                                     Object.entries(Registries).map(([key, _], index) => (
-                                        <SelectItem key={index} value={key}>{key.toUpperCase()}</SelectItem>
+                                        <SelectItem key={index} value={key}>{key}</SelectItem>
                                     ))
                                 }
                             </SelectContent>
