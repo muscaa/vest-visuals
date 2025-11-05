@@ -67,7 +67,7 @@ export default function Page() {
                         transition-all opacity-100
                     "
                 >
-                    <CarouselContent className="-ml-2">
+                    <CarouselContent>
                         {
                             data && data.map((item, index) => (
                                 <CarouselItem key={index} className="relative flex justify-center items-center">
