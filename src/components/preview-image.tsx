@@ -23,11 +23,12 @@ export interface PreviewItem {
 interface PreviewImageProps {
     item: PreviewItem;
     index: number;
+    onClick?: () => void;
     className?: string;
 }
 
 export function PreviewImage(props: PreviewImageProps) {
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     return (
         <>
@@ -35,11 +36,12 @@ export function PreviewImage(props: PreviewImageProps) {
                 <Img
                     src={props.item.preview.src}
                     alt={props.item.alt}
-                    onClick={() => setOpen(true)}
+                    // onClick={() => setOpen(true)}
+                    onClick={props.onClick}
                     className={`transition-all ease-out hover:opacity-75 hover:scale-105 size-full ${props.className}`}
                 />
             </Reveal>
-            {
+            {/* {
                 open && (
                     <Reveal direction="none" duration={200} className="fixed inset-0 z-50">
                         <div
@@ -67,7 +69,7 @@ export function PreviewImage(props: PreviewImageProps) {
                         </div>
                     </Reveal>
                 )
-            }
+            } */}
         </>
     );
 }
