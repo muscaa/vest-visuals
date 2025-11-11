@@ -13,6 +13,7 @@ import {
     Users,
     Image,
     FileBox,
+    Library,
 } from "lucide-react";
 
 interface SidebarNavAdminProps {
@@ -60,6 +61,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 href="/a/registries"
                 text="Registries"
                 icon={FileBox}
+            />
+            <SimpleSidebarItem
+                href="/a/albums"
+                text="Albums"
+                icon={Library}
             />
         </SimpleSidebarGroup>
     );
