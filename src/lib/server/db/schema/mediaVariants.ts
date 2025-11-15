@@ -30,7 +30,7 @@ export const mediaVariants = sqliteTable("media_variants", {
         .notNull(),
 }, (table) => ([
     primaryKey({ columns: [table.contentId, table.variant] }),
-    index("media_variants_content_id_idx").on(table.variant),
+    index("media_variants_content_id_idx").on(table.contentId),
     index("media_variants_variant_idx").on(table.variant),
     index("media_variants_type_idx").on(table.type),
 ]));
