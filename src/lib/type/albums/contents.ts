@@ -4,17 +4,19 @@ import {
 } from "@type/utils";
 import * as variants from "./variants";
 
-export type PartialAlbumContent = {
+export type PartialAlbumMediaContent = {
     id: string;
-    albumVariants?: variants.AlbumVariant[];
+    albumId: string;
+    order: number;
+    albumMediaVariants?: variants.AlbumMediaVariant[];
     createdAt: Date;
     updatedAt: Date;
 };
-export type AlbumContent = SelectRequired<PartialAlbumContent, "albumVariants">;
+export type AlbumMediaContent = SelectRequired<PartialAlbumMediaContent, "albumMediaVariants">;
 type CreateVariantProps = Omit<variants.CreateProps, "contentId">;
 export type CreateProps = {
-    albumVariants: CreateVariantProps[];
+    albumMediaVariants: CreateVariantProps[];
 };
 export type UpdateProps = {
-    albumVariants?: ListProps<CreateVariantProps, CreateVariantProps, string>;
+    albumMediaVariants?: ListProps<CreateVariantProps, CreateVariantProps, string>;
 };

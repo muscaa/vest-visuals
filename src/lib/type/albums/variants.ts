@@ -1,10 +1,10 @@
 import { MediaTypeInfo } from "@type/media/info";
 import type { Blob } from "buffer";
 
-export type AlbumVariant =
+export type AlbumMediaVariant =
     {
         contentId: string;
-        variant: string;
+        tag: string;
         order: number;
         fileUrl: string;
         createdAt: Date;
@@ -14,7 +14,7 @@ export type AlbumVariant =
 export type CreateProps =
     {
         contentId: string;
-        variant: string;
+        tag: string;
         order?: number;
         blob: Blob;
     }
