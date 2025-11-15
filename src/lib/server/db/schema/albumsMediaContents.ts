@@ -26,7 +26,7 @@ export const albumMediaContents = sqliteTable("album_media_contents", {
 });
 
 export const albumMediaContentsRelations = relations(albumMediaContents, ({ one, many }) => ({
-    albumVariants: many(albumMediaVariants),
+    albumMediaVariants: many(albumMediaVariants),
     album: one(albums, {
         fields: [albumMediaContents.albumId],
         references: [albums.id],
