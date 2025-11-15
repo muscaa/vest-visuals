@@ -6,9 +6,9 @@ import {
 import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 import { albums } from "./albums";
-import { albumsMediaVariants } from "./albumsMediaVariants";
+import { albumMediaVariants } from "./albumsMediaVariants";
 
-export const albumsMediaContents = sqliteTable("albums_media_contents", {
+export const albumMediaContents = sqliteTable("album_media_contents", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
@@ -25,10 +25,10 @@ export const albumsMediaContents = sqliteTable("albums_media_contents", {
         .notNull(),
 });
 
-export const albumsMediaContentsRelations = relations(albumsMediaContents, ({ one, many }) => ({
-    albumVariants: many(albumsMediaVariants),
+export const albumMediaContentsRelations = relations(albumMediaContents, ({ one, many }) => ({
+    albumVariants: many(albumMediaVariants),
     album: one(albums, {
-        fields: [albumsMediaContents.albumId],
+        fields: [albumMediaContents.albumId],
         references: [albums.id],
     }),
 }));

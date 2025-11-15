@@ -7,12 +7,12 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { MediaInfo } from "@type/media/info";
-import { albumsMediaContents } from "./albumsMediaContents";
+import { albumMediaContents } from "./albumsMediaContents";
 
-export const albumsMediaVariants = sqliteTable("albums_media_variants", {
+export const albumMediaVariants = sqliteTable("album_media_variants", {
     contentId: text("content_id")
         .notNull()
-        .references(() => albumsMediaContents.id, { onDelete: "cascade" }),
+        .references(() => albumMediaContents.id, { onDelete: "cascade" }),
     tag: text("tag")
         .notNull(),
     order: integer("order")
@@ -30,14 +30,14 @@ export const albumsMediaVariants = sqliteTable("albums_media_variants", {
         .notNull(),
 }, (table) => ([
     primaryKey({ columns: [table.contentId, table.tag] }),
-    index("albums_media_variants_content_id_idx").on(table.contentId),
-    index("albums_media_variants_tag_idx").on(table.tag),
-    index("albums_media_variants_type_idx").on(table.type),
+    index("album_media_variants_content_id_idx").on(table.contentId),
+    index("album_media_variants_tag_idx").on(table.tag),
+    index("album_media_variants_type_idx").on(table.type),
 ]));
 
-export const albumsMediaVariantsRelations = relations(albumsMediaVariants, ({ one }) => ({
-    albumContent: one(albumsMediaContents, {
-        fields: [albumsMediaVariants.contentId],
-        references: [albumsMediaContents.id],
+export const albumMediaVariantsRelations = relations(albumMediaVariants, ({ one }) => ({
+    albumContent: one(albumMediaContents, {
+        fields: [albumMediaVariants.contentId],
+        references: [albumMediaContents.id],
     }),
 }));

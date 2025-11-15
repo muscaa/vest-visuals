@@ -5,7 +5,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
-import { albumsMediaContents } from "./albumsMediaContents";
+import { albumMediaContents } from "./albumsMediaContents";
 
 export const albums = sqliteTable("albums", {
     id: text("id")
@@ -21,5 +21,5 @@ export const albums = sqliteTable("albums", {
 });
 
 export const albumsRelations = relations(albums, ({ many }) => ({
-    albumsMediaContents: many(albumsMediaContents),
+    albumMediaContents: many(albumMediaContents),
 }));
