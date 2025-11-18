@@ -1,7 +1,7 @@
 import { db } from "@server/db";
 import {
     albums,
-    albumsAlbumContents,
+    albumMediaContents,
 } from "@server/db/schema";
 import {
     eq,
@@ -14,16 +14,11 @@ import * as types from "@type/albums";
 export type SelectProps =
     typeof albums.$inferSelect
     & {
-        albumsAlbumContents: (
-            typeof albumsAlbumContents.$inferSelect
-            & {
-                albumContent?: contents.SelectProps;
-            }
-        )[];
+        albumMediaContents?: contents.SelectProps[];
     };
 type AutoAlbum<T extends SelectProps> =
-    T extends { albumsAlbumContents: (infer V)[]; }
-        ? V extends { albumContent: contents.SelectProps; }
+    T extends { albumMediaContents: (infer V)[]; }
+        ? V extends contents.SelectProps
             ? types.Album
             : types.PartialAlbum
         : types.PartialAlbum;
@@ -32,10 +27,7 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
     return {
         id: props.id,
         description: props.description,
-        albumContentIds: props.albumsAlbumContents.map((value) => value.contentId),
-        albumContents: props.albumsAlbumContents.every((value) => value.albumContent != undefined)
-            ? props.albumsAlbumContents.map((value) => contents.format(value.albumContent!))
-            : undefined,
+        albumMediaContents: props.albumMediaContents?.map(contents.format),
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,
     } as AutoAlbum<T>;
@@ -43,11 +35,11 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
 
 export async function getAllPartial(): Promise<types.PartialAlbum[]> {
     const result = await db.query.albums.findMany({
-        with: {
-            albumsAlbumContents: {
-                orderBy: (fields, operators) => operators.asc(fields.order),
-            },
-        },
+        // with: {
+        //     albumMediaContents: {
+        //         orderBy: (fields, operators) => operators.asc(fields.order),
+        //     },
+        // },
     });
     return result.map(format);
 }
@@ -55,15 +47,11 @@ export async function getAllPartial(): Promise<types.PartialAlbum[]> {
 export async function getAll(): Promise<types.Album[]> {
     const result = await db.query.albums.findMany({
         with: {
-            albumsAlbumContents: {
+            albumMediaContents: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
                 with: {
-                    albumContent: {
-                        with: {
-                            albumVariants: {
-                                orderBy: (fields, operators) => operators.asc(fields.order),
-                            },
-                        },
+                    albumMediaVariants: {
+                        orderBy: (fields, operators) => operators.asc(fields.order),
                     },
                 },
             },
@@ -75,11 +63,11 @@ export async function getAll(): Promise<types.Album[]> {
 export async function getPartial(id: string): Promise<types.PartialAlbum | undefined> {
     const result = await db.query.albums.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
-        with: {
-            albumsAlbumContents: {
-                orderBy: (fields, operators) => operators.asc(fields.order),
-            },
-        },
+        // with: {
+        //     albumMediaContents: {
+        //         orderBy: (fields, operators) => operators.asc(fields.order),
+        //     },
+        // },
     });
     return result ? format(result) : undefined;
 }
@@ -88,15 +76,11 @@ export async function get(id: string): Promise<types.Album | undefined> {
     const result = await db.query.albums.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
-            albumsAlbumContents: {
+            albumMediaContents: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
                 with: {
-                    albumContent: {
-                        with: {
-                            albumVariants: {
-                                orderBy: (fields, operators) => operators.asc(fields.order),
-                            },
-                        },
+                    albumMediaVariants: {
+                        orderBy: (fields, operators) => operators.asc(fields.order),
                     },
                 },
             },
@@ -116,9 +100,9 @@ export async function create(props: types.CreateProps): Promise<types.PartialAlb
         return undefined;
     }
 
-    if (props.albumContents) {
+    if (props.albumMediaContents) { // TODO
         const results = await db.insert(albumsAlbumContents)
-            .values(props.albumContents.map((value, index) => ({
+            .values(props.albumMediaContents.map((value, index) => ({
                 albumId: result.id,
                 contentId: value,
                 order: index,
@@ -146,22 +130,22 @@ export async function update(id: string, props: types.UpdateProps): Promise<type
             .where(eq(albums.id, id));
     }
 
-    if (props.albumContents) {
-        if (props.albumContents.set) {
+    if (props.albumMediaContents) { // TODO
+        if (props.albumMediaContents.set) {
             await db.delete(albumsAlbumContents)
                 .where(eq(albumsAlbumContents.albumId, id));
             await db.insert(albumsAlbumContents)
-                .values(props.albumContents.set.map((value, index) => ({
+                .values(props.albumMediaContents.set.map((value, index) => ({
                     albumId: id,
                     contentId: value,
                     order: index,
                 })));
         } else {
-            if (props.albumContents.remove) {
+            if (props.albumMediaContents.remove) {
                 await db.delete(albumsAlbumContents)
-                    .where(inArray(albumsAlbumContents.contentId, props.albumContents.remove));
+                    .where(inArray(albumsAlbumContents.contentId, props.albumMediaContents.remove));
             }
-            if (props.albumContents.append) {
+            if (props.albumMediaContents.append) {
                 const last = await db.select()
                     .from(albumsAlbumContents)
                     .where(eq(albumsAlbumContents.albumId, id))
@@ -169,7 +153,7 @@ export async function update(id: string, props: types.UpdateProps): Promise<type
                     .get();
                 const startOrder = last ? last.order + 1 : 0;
                 await db.insert(albumsAlbumContents)
-                    .values(props.albumContents.append.map((value, index) => ({
+                    .values(props.albumMediaContents.append.map((value, index) => ({
                         albumId: id,
                         contentId: value,
                         order: startOrder + index,

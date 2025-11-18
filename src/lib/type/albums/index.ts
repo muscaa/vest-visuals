@@ -7,7 +7,6 @@ import * as contents from "./contents";
 export type PartialAlbum = {
     id: string;
     description?: string;
-    albumMediaContentIds: string[];
     albumMediaContents?: contents.PartialAlbumMediaContent[];
     createdAt: Date;
     updatedAt: Date;

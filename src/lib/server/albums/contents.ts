@@ -1,41 +1,43 @@
 import { db } from "@server/db";
-import { albumContents } from "@server/db/schema";
+import { albumMediaContents } from "@server/db/schema";
 import {
     eq,
     inArray,
 } from "drizzle-orm";
 import * as variants from "./variants";
 import * as types from "@type/albums/contents";
-import { AlbumVariant } from "@type/albums/variants";
+import { AlbumMediaVariant } from "@type/albums/variants";
 
 export type SelectProps =
-    typeof albumContents.$inferSelect
+    typeof albumMediaContents.$inferSelect
     & {
-        albumVariants?: variants.SelectProps[];
+        albumMediaVariants?: variants.SelectProps[];
     };
-type AutoAlbumContent<T extends SelectProps> =
-    T extends { albumVariants: variants.SelectProps[]; }
-    ? types.AlbumContent
-    : types.PartialAlbumContent;
+type AutoAlbumMediaContent<T extends SelectProps> =
+    T extends { albumMediaVariants: variants.SelectProps[]; }
+    ? types.AlbumMediaContent
+    : types.PartialAlbumMediaContent;
 
-export function format<T extends SelectProps>(props: T): AutoAlbumContent<T> {
+export function format<T extends SelectProps>(props: T): AutoAlbumMediaContent<T> {
     return {
         id: props.id,
-        albumVariants: props.albumVariants?.map((value) => variants.format(value)),
+        albumId: props.albumId,
+        order: props.order,
+        albumMediaVariants: props.albumMediaVariants?.map((value) => variants.format(value)),
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,
-    } as AutoAlbumContent<T>;
+    } as AutoAlbumMediaContent<T>;
 }
 
-export async function getAllPartial(): Promise<types.PartialAlbumContent[]> {
-    const result = await db.query.albumContents.findMany({});
+export async function getAllPartial(): Promise<types.PartialAlbumMediaContent[]> {
+    const result = await db.query.albumMediaContents.findMany({});
     return result.map(format);
 }
 
-export async function getAll(): Promise<types.AlbumContent[]> {
-    const result = await db.query.albumContents.findMany({
+export async function getAll(): Promise<types.AlbumMediaContent[]> {
+    const result = await db.query.albumMediaContents.findMany({
         with: {
-            albumVariants: {
+            albumMediaVariants: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
             },
         },
@@ -43,18 +45,18 @@ export async function getAll(): Promise<types.AlbumContent[]> {
     return result.map(format);
 }
 
-export async function getPartial(id: string): Promise<types.PartialAlbumContent | undefined> {
-    const result = await db.query.albumContents.findFirst({
+export async function getPartial(id: string): Promise<types.PartialAlbumMediaContent | undefined> {
+    const result = await db.query.albumMediaContents.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
     });
     return result ? format(result) : undefined;
 }
 
-export async function get(id: string): Promise<types.AlbumContent | undefined> {
-    const result = await db.query.albumContents.findFirst({
+export async function get(id: string): Promise<types.AlbumMediaContent | undefined> {
+    const result = await db.query.albumMediaContents.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
-            albumVariants: {
+            albumMediaVariants: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
             },
         },
@@ -62,43 +64,45 @@ export async function get(id: string): Promise<types.AlbumContent | undefined> {
     return result ? format(result) : undefined;
 }
 
-export async function create(props: types.CreateProps): Promise<types.PartialAlbumContent | undefined> {
-    const result = await db.insert(albumContents)
-        .values({})
+export async function create(props: types.CreateProps): Promise<types.PartialAlbumMediaContent | undefined> {
+    const result = await db.insert(albumMediaContents)
+        .values({
+            // TODO
+        })
         .returning()
         .get();
     if (!result) {
         return undefined;
     }
 
-    const albumVariants = await Promise.all(props.albumVariants.map((value) => variants.create({
+    const albumVariants = await Promise.all(props.albumMediaVariants.map((value) => variants.create({
         contentId: result.id,
         ...value,
     })));
-    if (!albumVariants.every((value): value is AlbumVariant => value != undefined)) {
-        await Promise.all(albumVariants.map((value) => value ? variants.remove(value.contentId, value.variant) : undefined));
-        await db.delete(albumContents)
-            .where(eq(albumContents.id, result.id));
+    if (!albumVariants.every((value): value is AlbumMediaVariant => value != undefined)) {
+        await Promise.all(albumVariants.map((value) => value ? variants.remove(value.contentId, value.tag) : undefined));
+        await db.delete(albumMediaContents)
+            .where(eq(albumMediaContents.id, result.id));
         return undefined;
     }
 
     return await getPartial(result.id);
 }
 
-export async function update(id: string, props: types.UpdateProps): Promise<types.PartialAlbumContent | undefined> {
-    if (props.albumVariants) {
-        if (props.albumVariants.set) {
+export async function update(id: string, props: types.UpdateProps): Promise<types.PartialAlbumMediaContent | undefined> {
+    if (props.albumMediaVariants) {
+        if (props.albumMediaVariants.set) {
             await variants.removeContent(id);
-            await Promise.all(props.albumVariants.set.map((value) => variants.create({
+            await Promise.all(props.albumMediaVariants.set.map((value) => variants.create({
                 contentId: id,
                 ...value,
             })));
         } else {
-            if (props.albumVariants.remove) {
-                await variants.removeAll(id, props.albumVariants.remove);
+            if (props.albumMediaVariants.remove) {
+                await variants.removeAll(id, props.albumMediaVariants.remove);
             }
-            if (props.albumVariants.append) {
-                await Promise.all(props.albumVariants.append.map((value) => variants.create({
+            if (props.albumMediaVariants.append) {
+                await Promise.all(props.albumMediaVariants.append.map((value) => variants.create({
                     contentId: id,
                     ...value,
                 })));
@@ -114,14 +118,14 @@ export async function remove(id: string): Promise<number> {
     if (!query) return 0;
 
     await variants.removeContent(id);
-    const result = await db.delete(albumContents)
-        .where(eq(albumContents.id, id));
+    const result = await db.delete(albumMediaContents)
+        .where(eq(albumMediaContents.id, id));
     return result.rowsAffected;
 }
 
 export async function removeAll(ids: string[]): Promise<number> {
     await Promise.all(ids.map((id) => variants.removeContent(id)));
-    const result = await db.delete(albumContents)
-        .where(inArray(albumContents.id, ids));
+    const result = await db.delete(albumMediaContents)
+        .where(inArray(albumMediaContents.id, ids));
     return result.rowsAffected;
 }
