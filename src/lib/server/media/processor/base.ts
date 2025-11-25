@@ -2,7 +2,7 @@ import { ProcessorConfig } from "@type/media/processor/base";
 import { MediaTypeInfo } from "@type/media/info";
 
 export type ProcessorValue = MediaTypeInfo & {
-    variant: string;
+    tag: string;
     order?: number;
     buffer: Buffer;
     mimeType: string;

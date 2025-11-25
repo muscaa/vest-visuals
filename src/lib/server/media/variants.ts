@@ -24,9 +24,9 @@ export type SelectProps = typeof mediaVariants.$inferSelect;
 export function format(props: SelectProps): types.MediaVariant {
     return {
         contentId: props.contentId,
-        variant: props.variant,
+        tag: props.tag,
         order: props.order,
-        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.contentId, props.variant)}`,
+        fileUrl: `${serverConfig.env.S3_URL}/${buckets.public}/${filePath(props.contentId, props.tag)}`,
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -34,8 +34,8 @@ export function format(props: SelectProps): types.MediaVariant {
     };
 }
 
-function filePath(contentId: string, variant: string) {
-    return `media/${contentId}/${variant}`;
+function filePath(contentId: string, tag: string) {
+    return `media/${contentId}/${tag}`;
 }
 
 export async function getAll(): Promise<types.MediaVariant[]> {
@@ -58,24 +58,24 @@ export async function getContent(contentId: string): Promise<types.MediaVariant[
     return result.map(format);
 }
 
-export async function get(contentId: string, variant: string): Promise<types.MediaVariant | undefined> {
+export async function get(contentId: string, tag: string): Promise<types.MediaVariant | undefined> {
     const result = await db.select()
         .from(mediaVariants)
         .where(
             and(
                 eq(mediaVariants.contentId, contentId),
-                eq(mediaVariants.variant, variant),
+                eq(mediaVariants.tag, tag),
             )
         )
         .get();
     return result ? format(result) : undefined;
 }
 
-async function exists(contentId: string, variant: string): Promise<boolean> {
+async function exists(contentId: string, tag: string): Promise<boolean> {
     try {
         const command = new HeadObjectCommand({
             Bucket: buckets.public,
-            Key: filePath(contentId, variant),
+            Key: filePath(contentId, tag),
         });
         await s3.send(command);
 
@@ -84,14 +84,14 @@ async function exists(contentId: string, variant: string): Promise<boolean> {
     return false;
 }
 
-async function upload(contentId: string, variant: string, blob: Blob): Promise<boolean> {
+async function upload(contentId: string, tag: string, blob: Blob): Promise<boolean> {
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
         const command = new PutObjectCommand({
             Bucket: buckets.public,
-            Key: filePath(contentId, variant),
+            Key: filePath(contentId, tag),
             Body: buffer,
             ContentType: blob.type,
         });
@@ -103,15 +103,15 @@ async function upload(contentId: string, variant: string, blob: Blob): Promise<b
 }
 
 export async function create(props: types.CreateProps): Promise<types.MediaVariant | undefined> {
-    if (await exists(props.contentId, props.variant)) return undefined;
+    if (await exists(props.contentId, props.tag)) return undefined;
 
-    const uploaded = await upload(props.contentId, props.variant, props.blob);
+    const uploaded = await upload(props.contentId, props.tag, props.blob);
     if (!uploaded) return undefined;
 
     const result = await db.insert(mediaVariants)
         .values({
             contentId: props.contentId,
-            variant: props.variant,
+            tag: props.tag,
             order: props.order,
             type: props.type,
             info: props.info,
@@ -121,41 +121,11 @@ export async function create(props: types.CreateProps): Promise<types.MediaVaria
     return result ? format(result) : undefined;
 }
 
-// TODO when changing contentId or variant, need to move s3 object to new path
-// export async function update(contentId: string, variant: string, props: types.UpdateProps): Promise<types.MediaVariant | undefined> {
-//     if (props.blob) {
-//         const query = await db.select()
-//             .from(mediaVariants)
-//             .where(
-//                 and(
-//                     eq(mediaVariants.contentId, contentId),
-//                     eq(mediaVariants.variant, variant),
-//                 )
-//             )
-//             .get();
-//         if (!query) return undefined;
-
-//         const uploaded = await upload(query.id, props.blob);
-//         if (!uploaded) return undefined;
-//     }
-
-//     const result = await db.update(mediaVariants)
-//         .set({
-//             variant: props.variant,
-//             type: props.type,
-//             info: props.info,
-//         })
-//         .where(eq(mediaVariants.id, id))
-//         .returning()
-//         .get();
-//     return result ? format(result) : undefined;
-// }
-
-export async function remove(contentId: string, variant: string): Promise<number> {
+export async function remove(contentId: string, tag: string): Promise<number> {
     try {
         const command = new DeleteObjectCommand({
             Bucket: buckets.public,
-            Key: filePath(contentId, variant),
+            Key: filePath(contentId, tag),
         });
         await s3.send(command);
     } catch (error) { }
@@ -164,7 +134,7 @@ export async function remove(contentId: string, variant: string): Promise<number
         .where(
             and(
                 eq(mediaVariants.contentId, contentId),
-                eq(mediaVariants.variant, variant),
+                eq(mediaVariants.tag, tag),
             )
         );
     return result.rowsAffected;
@@ -177,7 +147,7 @@ export async function removeContent(contentId: string): Promise<number> {
         await Promise.all(byContent.map((value) => {
             const command = new DeleteObjectCommand({
                 Bucket: buckets.public,
-                Key: filePath(value.contentId, value.variant),
+                Key: filePath(value.contentId, value.tag),
             });
             return s3.send(command);
         }));
@@ -188,12 +158,12 @@ export async function removeContent(contentId: string): Promise<number> {
     return result.rowsAffected;
 }
 
-export async function removeAll(contentId: string, variants: string[]): Promise<number> {
+export async function removeAll(contentId: string, tags: string[]): Promise<number> {
     try {
-        await Promise.all(variants.map((variant) => {
+        await Promise.all(tags.map((tag) => {
             const command = new DeleteObjectCommand({
                 Bucket: buckets.public,
-                Key: filePath(contentId, variant),
+                Key: filePath(contentId, tag),
             });
             return s3.send(command);
         }));
@@ -203,7 +173,7 @@ export async function removeAll(contentId: string, variants: string[]): Promise<
         .where(
             and(
                 eq(mediaVariants.contentId, contentId),
-                inArray(mediaVariants.variant, variants),
+                inArray(mediaVariants.tag, tags),
             )
         );
     return result.rowsAffected;

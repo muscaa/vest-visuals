@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
                     const result = await contents.create({
                         mediaVariants: [
                             {
-                                variant: value.variant,
+                                tag: value.tag,
                                 order: value.order,
                                 blob: new Blob([value.buffer], { type: value.mimeType }),
                                 type: value.type,
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
                         mediaVariants: {
                             append: [
                                 {
-                                    variant: value.variant,
+                                    tag: value.tag,
                                     order: value.order,
                                     blob: new Blob([value.buffer], { type: value.mimeType }),
                                     type: value.type,

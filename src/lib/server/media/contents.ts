@@ -78,7 +78,7 @@ export async function create(props: types.CreateProps): Promise<types.PartialMed
         ...value,
     })));
     if (!mediaVariants.every((value): value is MediaVariant => value != undefined)) {
-        await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.contentId, value.variant) : undefined));
+        await Promise.all(mediaVariants.map((value) => value ? variants.remove(value.contentId, value.tag) : undefined));
         await db.delete(mediaContents)
             .where(eq(mediaContents.id, result.id));
         return undefined;

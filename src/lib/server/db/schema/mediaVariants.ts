@@ -13,7 +13,7 @@ export const mediaVariants = sqliteTable("media_variants", {
     contentId: text("content_id")
         .notNull()
         .references(() => mediaContents.id, { onDelete: "cascade" }),
-    variant: text("variant")
+    tag: text("tag")
         .notNull(),
     order: integer("order")
         .default(0)
@@ -29,9 +29,9 @@ export const mediaVariants = sqliteTable("media_variants", {
         .$defaultFn(() => new Date())
         .notNull(),
 }, (table) => ([
-    primaryKey({ columns: [table.contentId, table.variant] }),
+    primaryKey({ columns: [table.contentId, table.tag] }),
     index("media_variants_content_id_idx").on(table.contentId),
-    index("media_variants_variant_idx").on(table.variant),
+    index("media_variants_tag_idx").on(table.tag),
     index("media_variants_type_idx").on(table.type),
 ]));
 

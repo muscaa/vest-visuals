@@ -55,7 +55,7 @@ function ListEntry(props: ListEntryProps) {
                                         size="none"
                                         variant="link"
                                     >
-                                        {variant.variant}
+                                        {variant.tag}
                                     </ButtonLink>
                                 ))
                             }

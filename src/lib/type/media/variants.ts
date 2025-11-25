@@ -4,7 +4,7 @@ import type { Blob } from "buffer";
 export type MediaVariant =
     {
         contentId: string;
-        variant: string;
+        tag: string;
         order: number;
         fileUrl: string;
         createdAt: Date;
@@ -14,7 +14,7 @@ export type MediaVariant =
 export type CreateProps =
     {
         contentId: string;
-        variant: string;
+        tag: string;
         order?: number;
         blob: Blob;
     }
