@@ -1,4 +1,4 @@
-import { createMedia } from "@server/db/core/media";
+import { createMedia } from "@server/db/builder/media";
 
 export const {
     contentsTable: portfolioMedia,
