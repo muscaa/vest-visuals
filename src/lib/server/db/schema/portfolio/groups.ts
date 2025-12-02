@@ -5,9 +5,9 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
-import { portfolioMedia } from "./media";
+import { PORTFOLIO_MEDIA } from "./media";
 
-export const portfolioGroups = sqliteTable("portfolio_groups", {
+export const PORTFOLIO_GROUPS = sqliteTable("portfolio_groups", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
@@ -20,28 +20,28 @@ export const portfolioGroups = sqliteTable("portfolio_groups", {
         .notNull(),
 });
 
-export const portfolioGroupMedia = sqliteTable("portfolio_group_media", {
+export const PORTFOLIO_GROUP_MEDIA = sqliteTable("portfolio_group_media", {
     groupId: text("group_id")
         .notNull()
-        .references(() => portfolioGroups.id, { onDelete: "cascade" }),
+        .references(() => PORTFOLIO_GROUPS.id, { onDelete: "cascade" }),
     mediaId: text("media_id")
         .notNull()
-        .references(() => portfolioMedia.id, { onDelete: "cascade" }),
+        .references(() => PORTFOLIO_MEDIA.id, { onDelete: "cascade" }),
     order: integer("order")
         .notNull(),
 });
 
-export const portfolioGroupsRelations = relations(portfolioGroups, ({ many }) => ({
-    portfolioGroupMedia: many(portfolioGroupMedia),
+export const PORTFOLIO_GROUPS_RELATIONS = relations(PORTFOLIO_GROUPS, ({ many }) => ({
+    portfolioGroupMedia: many(PORTFOLIO_GROUP_MEDIA),
 }));
 
-export const portfolioGroupMediaRelations = relations(portfolioGroupMedia, ({ one }) => ({
-    portfolioGroup: one(portfolioGroups, {
-        fields: [portfolioGroupMedia.groupId],
-        references: [portfolioGroups.id],
+export const PORTFOLIO_GROUP_MEDIA_RELATIONS = relations(PORTFOLIO_GROUP_MEDIA, ({ one }) => ({
+    portfolioGroup: one(PORTFOLIO_GROUPS, {
+        fields: [PORTFOLIO_GROUP_MEDIA.groupId],
+        references: [PORTFOLIO_GROUPS.id],
     }),
-    portfolioMedia: one(portfolioMedia, {
-        fields: [portfolioGroupMedia.mediaId],
-        references: [portfolioMedia.id],
+    portfolioMedia: one(PORTFOLIO_MEDIA, {
+        fields: [PORTFOLIO_GROUP_MEDIA.mediaId],
+        references: [PORTFOLIO_MEDIA.id],
     }),
 }));

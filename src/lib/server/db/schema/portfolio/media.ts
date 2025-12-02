@@ -1,10 +1,10 @@
 import { createMedia } from "@server/db/builder/media";
 
 export const {
-    contentsTable: portfolioMedia,
-    contentsRelations: portfolioMediaRelations,
-    variantsTable: portfolioMediaVariants,
-    variantsRelations: portfolioMediaVariantsRelations,
+    contentsTable: PORTFOLIO_MEDIA,
+    contentsRelations: PORTFOLIO_MEDIA_RELATIONS,
+    variantsTable: PORTFOLIO_MEDIA_VARIANTS,
+    variantsRelations: PORTFOLIO_MEDIA_VARIANTS_RELATIONS,
 } = createMedia({
     contents: {
         name: "portfolio_media",

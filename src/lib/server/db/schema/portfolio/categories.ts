@@ -7,7 +7,7 @@ import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 import { portfolioGroups } from "./groups";
 
-export const portfolioCategories = sqliteTable("portfolio_categories", {
+export const PORTFOLIO_CATEGORIES = sqliteTable("portfolio_categories", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
@@ -22,10 +22,10 @@ export const portfolioCategories = sqliteTable("portfolio_categories", {
         .notNull(),
 });
 
-export const portfolioCategoryGroups = sqliteTable("portfolio_category_groups", {
+export const PORTFOLIO_CATEGORY_GROUPS = sqliteTable("portfolio_category_groups", {
     categoryId: text("category_id")
         .notNull()
-        .references(() => portfolioCategories.id, { onDelete: "cascade" }),
+        .references(() => PORTFOLIO_CATEGORIES.id, { onDelete: "cascade" }),
     groupId: text("group_id")
         .notNull()
         .references(() => portfolioGroups.id, { onDelete: "cascade" }),
@@ -33,17 +33,17 @@ export const portfolioCategoryGroups = sqliteTable("portfolio_category_groups", 
         .notNull(),
 });
 
-export const portfolioCategoriesRelations = relations(portfolioCategories, ({ many }) => ({
-    portfolioCategoryGroups: many(portfolioCategoryGroups),
+export const PORTFOLIO_CATEGORIES_RELATIONS = relations(PORTFOLIO_CATEGORIES, ({ many }) => ({
+    portfolioCategoryGroups: many(PORTFOLIO_CATEGORY_GROUPS),
 }));
 
-export const portfolioCategoryGroupsRelations = relations(portfolioCategoryGroups, ({ one }) => ({
-    portfolioCategory: one(portfolioCategories, {
-        fields: [portfolioCategoryGroups.categoryId],
-        references: [portfolioCategories.id],
+export const PORTFOLIO_CATEGORY_GROUPS_RELATIONS = relations(PORTFOLIO_CATEGORY_GROUPS, ({ one }) => ({
+    portfolioCategory: one(PORTFOLIO_CATEGORIES, {
+        fields: [PORTFOLIO_CATEGORY_GROUPS.categoryId],
+        references: [PORTFOLIO_CATEGORIES.id],
     }),
     portfolioGroup: one(portfolioGroups, {
-        fields: [portfolioCategoryGroups.groupId],
+        fields: [PORTFOLIO_CATEGORY_GROUPS.groupId],
         references: [portfolioGroups.id],
     }),
 }));
