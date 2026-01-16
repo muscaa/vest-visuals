@@ -26,6 +26,9 @@ export interface CreateMediaProps<
     };
 }
 
+export type MediaContentsTable = ReturnType<typeof createMedia>["contentsTable"];
+export type MediaVariantsTable = ReturnType<typeof createMedia>["variantsTable"];
+
 export function createMedia<
     TContentsName extends string,
     TVariantsName extends string,

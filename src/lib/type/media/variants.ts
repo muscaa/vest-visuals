@@ -1,4 +1,7 @@
-import { MediaTypeInfo } from "./info";
+import {
+    MediaTypeInfo,
+    MediaInfo,
+} from "./info";
 import type { Blob } from "buffer";
 
 export type MediaVariant =
@@ -11,6 +14,15 @@ export type MediaVariant =
         updatedAt: Date;
     }
     & MediaTypeInfo;
+export type SelectProps = {
+    contentId: string;
+    tag: string;
+    order: number;
+    type: "image" | "video";
+    info: MediaInfo | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
 export type CreateProps =
     {
         contentId: string;
