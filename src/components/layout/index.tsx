@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Inter } from "next/font/google";
 import ThemeProvider from "../theme/theme-provider";
 import { ClientLayout } from "./client";
 
@@ -54,7 +54,10 @@ export function createMetadata(props: MetadataProps): Metadata {
     };
 }
 
-export const figtree = Figtree({
+// export const figtree = Figtree({
+//     subsets: ["latin"],
+// });
+export const inter = Inter({
     subsets: ["latin"],
 });
 
@@ -74,7 +77,7 @@ export function RootLayout(props: LayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${figtree.className} antialiased flex flex-col w-screen h-screen`}
+                className={`${inter.className} antialiased flex flex-col w-screen h-screen`}
             >
                 <ThemeProvider
                     attribute="class"
