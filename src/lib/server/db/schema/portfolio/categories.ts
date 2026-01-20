@@ -5,7 +5,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
-import { portfolioGroups } from "./groups";
+import { PORTFOLIO_GROUPS } from "./groups";
 
 export const PORTFOLIO_CATEGORIES = sqliteTable("portfolio_categories", {
     id: text("id")
@@ -28,7 +28,7 @@ export const PORTFOLIO_CATEGORY_GROUPS = sqliteTable("portfolio_category_groups"
         .references(() => PORTFOLIO_CATEGORIES.id, { onDelete: "cascade" }),
     groupId: text("group_id")
         .notNull()
-        .references(() => portfolioGroups.id, { onDelete: "cascade" }),
+        .references(() => PORTFOLIO_GROUPS.id, { onDelete: "cascade" }),
     order: integer("order")
         .notNull(),
 });
@@ -42,8 +42,8 @@ export const PORTFOLIO_CATEGORY_GROUPS_RELATIONS = relations(PORTFOLIO_CATEGORY_
         fields: [PORTFOLIO_CATEGORY_GROUPS.categoryId],
         references: [PORTFOLIO_CATEGORIES.id],
     }),
-    portfolioGroup: one(portfolioGroups, {
+    portfolioGroup: one(PORTFOLIO_GROUPS, {
         fields: [PORTFOLIO_CATEGORY_GROUPS.groupId],
-        references: [portfolioGroups.id],
+        references: [PORTFOLIO_GROUPS.id],
     }),
 }));
