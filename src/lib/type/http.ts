@@ -14,7 +14,11 @@ export type Status = Status2xx | Status3xx | Status4xx | Status5xx;
 export type ActionResponse<T> = Promise<[
     Status4xx | Status5xx,
     string,
-] | [
-    Status2xx | Status3xx,
-    T,
-]>;
+] | (
+        [T] extends [void] ? [
+            Status2xx | Status3xx,
+        ] : [
+            Status2xx | Status3xx,
+            T,
+        ]
+    )>;
