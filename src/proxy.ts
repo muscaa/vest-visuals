@@ -5,7 +5,7 @@ import {
 import { getUrlString } from "@server/http";
 import { getSessionCookie } from "better-auth/cookies";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const url = request.nextUrl;
     const pathname = url.pathname;
 
