@@ -6,7 +6,7 @@ import * as groups from "./groups";
 
 export type PartialPortfolioCategory = {
     id: string;
-    category: string;
+    tag: string;
     portfolioGroupIds: string[];
     portfolioGroups?: groups.PartialPortfolioGroup[];
     createdAt: Date;
@@ -14,10 +14,10 @@ export type PartialPortfolioCategory = {
 };
 export type PortfolioCategory = Replace<PartialPortfolioCategory, { portfolioGroups: groups.PortfolioGroup[]; }>;
 export type CreateProps = {
-    category: string;
+    tag: string;
     portfolioGroups?: string[];
 };
 export type UpdateProps = {
-    category?: string;
+    tag?: string;
     portfolioGroups?: ListProps<string>;
 };

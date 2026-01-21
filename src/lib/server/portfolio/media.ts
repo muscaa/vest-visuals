@@ -22,7 +22,6 @@ type AutoMedia<T extends SelectProps> =
 
 const mediaTable = PORTFOLIO_MEDIA;
 const mediaQuery = db.query.PORTFOLIO_MEDIA;
-const mediaVariantsRelationName = "portfolioMediaVariants";
 
 export function format<T extends SelectProps>(props: T): AutoMedia<T> {
     return {
@@ -41,7 +40,7 @@ export async function getAllPartial(): Promise<PartialMedia[]> {
 export async function getAll(): Promise<Media[]> {
     const result = await mediaQuery.findMany({
         with: {
-            [mediaVariantsRelationName]: {
+            portfolioMediaVariants: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
             },
         },
@@ -60,7 +59,7 @@ export async function get(id: string): Promise<Media | undefined> {
     const result = await mediaQuery.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
-            [mediaVariantsRelationName]: {
+            portfolioMediaVariants: {
                 orderBy: (fields, operators) => operators.asc(fields.order),
             },
         },
