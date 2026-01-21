@@ -2,10 +2,10 @@
 
 import { ActionResponse } from "@type/http";
 import { isAdmin } from "@server/auth/permissions";
-import { PortfolioMedia } from "@type/portfolio/media";
+import * as types from "@type/portfolio/media";
 import * as media from "@server/portfolio/media";
 
-export async function get(id: string): ActionResponse<PortfolioMedia> {
+export async function get(id: string): ActionResponse<types.PortfolioMedia> {
     const admin = await isAdmin({ next: true });
     if (!admin) {
         return ["UNAUTHORIZED", "Unauthorized"];
@@ -23,7 +23,7 @@ export async function get(id: string): ActionResponse<PortfolioMedia> {
     return ["OK", result];
 }
 
-export async function getAll(): ActionResponse<PortfolioMedia[]> {
+export async function getAll(): ActionResponse<types.PortfolioMedia[]> {
     const admin = await isAdmin({ next: true });
     if (!admin) {
         return ["UNAUTHORIZED", "Unauthorized"];
