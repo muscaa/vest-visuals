@@ -3,11 +3,11 @@
 import { useQuery } from "@tanstack/react-query";
 import * as portfolio from "@/actions/portfolio";
 
-export function usePortfolio(category: string) {
+export function usePortfolio(tag: string) {
     return useQuery({
-        queryKey: ["portfolio", category, "media"],
+        queryKey: ["portfolio", tag],
         queryFn: async () => {
-            const [status, result] = await portfolio.get(category);
+            const [status, result] = await portfolio.get(tag);
             if (status !== "OK") return [];
 
             return result || [];

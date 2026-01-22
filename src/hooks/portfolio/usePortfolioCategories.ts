@@ -8,11 +8,11 @@ import {
 import * as types from "@type/portfolio/categories";
 import * as categories from "@/actions/portfolio/categories";
 
-export function useMediaCategories() {
+export function usePortfolioCategories() {
     const queryClient = useQueryClient();
 
-    const useAllMediaCategories = () => useQuery({
-        queryKey: ["media", "categories"],
+    const useAllPortfolioCategories = () => useQuery({
+        queryKey: ["portfolio", "categories"],
         queryFn: async () => {
             const [status, result] = await categories.getAll();
             if (status !== "OK") return [];
@@ -21,8 +21,8 @@ export function useMediaCategories() {
         },
     });
 
-    const useMediaCategory = (id: string) => useQuery({
-        queryKey: ["media", id],
+    const usePortfolioCategory = (id: string) => useQuery({
+        queryKey: ["portfolio", id],
         queryFn: async () => {
             const [status, result] = await categories.get(id);
             if (status !== "OK") return null;
@@ -31,44 +31,44 @@ export function useMediaCategories() {
         },
     });
 
-    const createMediaCategory = useMutation({
+    const createPortfolioCategory = useMutation({
         mutationFn: async (props: types.CreateProps) => {
             const [status, result] = await categories.create(props);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return result;
         },
     });
 
-    const updateMediaCategory = useMutation({
+    const updatePortfolioCategory = useMutation({
         mutationFn: async (props: { id: string; value: types.UpdateProps; }) => {
             const [status, result] = await categories.update(props.id, props.value);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return true;
         },
     });
 
-    const removeMediaCategories = useMutation({
+    const removePortfolioCategories = useMutation({
         mutationFn: async (ids: string[]) => {
             const [status, result] = await categories.remove(ids);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return true;
         },
     });
 
     return {
-        useAllMediaCategories,
-        useMediaCategory,
-        createMediaCategory,
-        updateMediaCategory,
-        removeMediaCategories,
+        useAllPortfolioCategories,
+        usePortfolioCategory,
+        createPortfolioCategory,
+        updatePortfolioCategory,
+        removePortfolioCategories,
     };
 }

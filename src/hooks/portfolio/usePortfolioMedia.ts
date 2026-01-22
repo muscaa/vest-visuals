@@ -14,12 +14,12 @@ interface UploadProgress {
     max: number;
 }
 
-export function useMediaContents() {
+export function usePortfolioMedia() {
     const queryClient = useQueryClient();
     const [uploadProgress, setUploadProgress] = useState<UploadProgress>();
 
-    const useAllMediaContents = () => useQuery({
-        queryKey: ["media", "contents"],
+    const useAllPortfolioMedia = () => useQuery({
+        queryKey: ["portfolio", "media"],
         queryFn: async () => {
             const [status, result] = await media.getAll();
             if (status !== "OK") return [];
@@ -28,8 +28,8 @@ export function useMediaContents() {
         },
     });
 
-    const useMediaContent = (id: string) => useQuery({
-        queryKey: ["media", id],
+    const usePortfolioMedia = (id: string) => useQuery({
+        queryKey: ["portfolio", id],
         queryFn: async () => {
             const [status, result] = await media.get(id);
             if (status !== "OK") return null;
@@ -38,7 +38,7 @@ export function useMediaContents() {
         },
     });
 
-    const uploadMediaContents = useMutation({
+    const uploadPortfolioMedia = useMutation({
         mutationFn: async (props: { files: types.UploadFormData.file[]; configs: types.UploadFormData.config[]; }) => {
             if (props.files.length != props.configs.length) throw new Error("Files & configs length don't match");
 
@@ -61,7 +61,7 @@ export function useMediaContents() {
                     const [status, result] = await media.upload(formData);
                     if (status !== "OK") throw new Error(result as string);
 
-                    await queryClient.invalidateQueries({ queryKey: ["media"] });
+                    await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
                     values.push(result);
 
@@ -78,22 +78,22 @@ export function useMediaContents() {
         },
     });
 
-    const removeMediaContents = useMutation({
+    const removePortfolioMedia = useMutation({
         mutationFn: async (ids: string[]) => {
             const [status, result] = await media.remove(ids);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return true;
         },
     });
 
     return {
-        useAllMediaContents,
-        useMediaContent,
-        uploadMediaContents,
+        useAllPortfolioMedia,
+        usePortfolioMedia,
+        uploadPortfolioMedia,
         uploadProgress,
-        removeMediaContents,
+        removePortfolioMedia,
     };
 }

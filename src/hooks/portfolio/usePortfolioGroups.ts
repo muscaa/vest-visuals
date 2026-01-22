@@ -8,11 +8,11 @@ import {
 import * as types from "@type/portfolio/groups";
 import * as groups from "@/actions/portfolio/groups";
 
-export function useMediaGroups() {
+export function usePortfolioGroups() {
     const queryClient = useQueryClient();
 
-    const useAllMediaGroups = () => useQuery({
-        queryKey: ["media", "groups"],
+    const useAllPortfolioGroups = () => useQuery({
+        queryKey: ["portfolio", "groups"],
         queryFn: async () => {
             const [status, result] = await groups.getAll();
             if (status !== "OK") return [];
@@ -21,8 +21,8 @@ export function useMediaGroups() {
         },
     });
 
-    const useMediaGroup = (id: string) => useQuery({
-        queryKey: ["media", id],
+    const usePortfolioGroup = (id: string) => useQuery({
+        queryKey: ["portfolio", id],
         queryFn: async () => {
             const [status, result] = await groups.get(id);
             if (status !== "OK") return null;
@@ -31,44 +31,44 @@ export function useMediaGroups() {
         },
     });
 
-    const createMediaGroup = useMutation({
+    const createPortfolioGroup = useMutation({
         mutationFn: async (props: types.CreateProps) => {
             const [status, result] = await groups.create(props);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return result;
         },
     });
 
-    const updateMediaGroup = useMutation({
+    const updatePortfolioGroup = useMutation({
         mutationFn: async (props: { id: string; value: types.UpdateProps; }) => {
             const [status, result] = await groups.update(props.id, props.value);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return true;
         },
     });
 
-    const removeMediaGroups = useMutation({
+    const removePortfolioGroups = useMutation({
         mutationFn: async (ids: string[]) => {
             const [status, result] = await groups.remove(ids);
             if (status !== "OK") throw new Error(result as string);
 
-            await queryClient.invalidateQueries({ queryKey: ["media"] });
+            await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
 
             return true;
         },
     });
 
     return {
-        useAllMediaGroups,
-        useMediaGroup,
-        createMediaGroup,
-        updateMediaGroup,
-        removeMediaGroups,
+        useAllPortfolioGroups,
+        usePortfolioGroup,
+        createPortfolioGroup,
+        updatePortfolioGroup,
+        removePortfolioGroups,
     };
 }
