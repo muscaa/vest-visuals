@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { ButtonLink } from "../snippets";
+import { REGISTER } from "@shared/paths";
 
 function Footer() {
     return (
@@ -17,7 +18,7 @@ function Footer() {
             </div>
             <div className="text-center mt-2">
                 Don&apos;t have an account?{" "}
-                <ButtonLink href="/register" variant="link" size="none">
+                <ButtonLink href={REGISTER} variant="link" size="none">
                     Register
                 </ButtonLink>
             </div>

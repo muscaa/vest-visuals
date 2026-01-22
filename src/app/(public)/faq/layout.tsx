@@ -2,9 +2,10 @@ import {
     BaseLayout,
     createMetadata,
 } from "@/components/layout";
+import { FAQ } from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: "/faq",
+    route: FAQ,
     routeName: "FAQ",
 });
 

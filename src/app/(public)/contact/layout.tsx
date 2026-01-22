@@ -2,9 +2,10 @@ import {
     BaseLayout,
     createMetadata,
 } from "@/components/layout";
+import { CONTACT } from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: "/contact",
+    route: CONTACT,
     routeName: "Contact",
 });
 

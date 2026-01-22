@@ -6,9 +6,10 @@ import {
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { auth } from "@server/auth";
+import { REGISTER, U_ACCOUNT } from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: "/register",
+    route: REGISTER,
     routeName: "Register",
 });
 
@@ -18,7 +19,7 @@ export default async function Layout(props: LayoutProps) {
     });
     
     if (session) {
-        redirect("/u/account");
+        redirect(U_ACCOUNT);
     }
 
     return (

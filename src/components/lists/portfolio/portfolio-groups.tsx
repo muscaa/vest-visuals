@@ -23,6 +23,7 @@ import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 import { PortfolioGroupsCreateDialog } from "@/components/dialogs/portfolio/portfolio-groups-create";
 import { PortfolioGroupsEditDialog } from "@/components/dialogs/portfolio/portfolio-groups-edit";
 import { PortfolioGroupsDeleteDialog } from "@/components/dialogs/portfolio/portfolio-groups-delete";
+import { A_PORTFOLIO_GROUPS_$ID } from "@shared/paths";
 
 interface ListEntryProps {
     value: PartialPortfolioGroup;
@@ -149,7 +150,7 @@ export function PortfolioGroupsList(props: ListProps) {
             <Button
                 variant="secondary"
                 disabled={!selected}
-                onClick={() => router.push(`/a/media/groups/${selected?.id}`)}
+                onClick={() => router.push(A_PORTFOLIO_GROUPS_$ID(selected!.id))}
                 className="grow"
             >
                 Open

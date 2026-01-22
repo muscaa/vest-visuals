@@ -12,6 +12,11 @@ import {
     useContext,
 } from "react";
 import { Auth } from "@/contexts/auth";
+import {
+    LOGIN,
+    LOGIN_VERIFY,
+    U_ACCOUNT,
+} from "@shared/paths";
 
 export function useAuth() {
     const router = useRouter();
@@ -40,10 +45,10 @@ export function useAuth() {
                 const { error } = await authClient.twoFactor.sendOtp();
                 if (error) throw new Error(error.message);
 
-                router.push("/login/verify");
+                router.push(LOGIN_VERIFY);
             } else {
                 await queryClient.invalidateQueries({ queryKey: ["profile"] });
-                router.push("/u/account");
+                router.push(U_ACCOUNT);
             }
 
             return true;
@@ -59,7 +64,7 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
-            router.push("/u/account");
+            router.push(U_ACCOUNT);
 
             return true;
         },
@@ -82,7 +87,7 @@ export function useAuth() {
             });
             if (error) throw new Error(error.message);
 
-            router.push("/login");
+            router.push(LOGIN);
 
             return true;
         },
@@ -94,7 +99,7 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
-            router.push("/login");
+            router.push(LOGIN);
 
             return true;
         },

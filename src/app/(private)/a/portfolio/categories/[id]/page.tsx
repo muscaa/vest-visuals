@@ -8,6 +8,7 @@ import {
     Loading,
     NotFound,
 } from "@/components/status";
+import { A_PORTFOLIO_CATEGORIES } from "@shared/paths";
 
 export default function Page() {
     const params = useParams<{ id: string }>();
@@ -19,8 +20,8 @@ export default function Page() {
             breadcrumbs={{
                 path: [
                     {
-                        href: "/a/media/categories",
-                        text: "Media Categories",
+                        href: A_PORTFOLIO_CATEGORIES,
+                        text: "Portfolio Categories",
                     }
                 ],
                 page: params.id,

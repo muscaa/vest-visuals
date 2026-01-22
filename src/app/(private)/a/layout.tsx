@@ -7,9 +7,13 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { isAdmin } from "@server/auth/permissions";
 import { DndContextProvider } from "@/contexts/dnd";
+import {
+    A,
+    LOGIN,
+} from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: "/a",
+    route: A,
     routeName: "Admin",
 });
 
@@ -19,7 +23,7 @@ export default async function Layout(props: LayoutProps) {
     });
     
     if (!admin) {
-        redirect("/login");
+        redirect(LOGIN);
     }
 
     return (

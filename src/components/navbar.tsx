@@ -12,6 +12,11 @@ import {
     X
 } from "lucide-react";
 import { ButtonLink } from "@/components/snippets";
+import {
+    CONTACT,
+    FAQ,
+    PORTFOLIO,
+} from "@shared/paths";
 
 export function LogoSegment() {
     return (
@@ -29,10 +34,10 @@ export function MenuSegment() {
     return (
         <>
             <ButtonLink href="/?more" variant="navbar">ACASA</ButtonLink>
-            <ButtonLink href="/portfolio" variant="navbar">PORTOFOLIU</ButtonLink>
+            <ButtonLink href={PORTFOLIO} variant="navbar">PORTOFOLIU</ButtonLink>
             <ButtonLink href="/services" variant="navbar">SERVICII</ButtonLink>
-            <ButtonLink href="/faq" variant="navbar">FAQ</ButtonLink>
-            <ButtonLink href="/contact" variant="navbar">CONTACT</ButtonLink>
+            <ButtonLink href={FAQ} variant="navbar">FAQ</ButtonLink>
+            <ButtonLink href={CONTACT} variant="navbar">CONTACT</ButtonLink>
             <ThemeToggle />
         </>
     );

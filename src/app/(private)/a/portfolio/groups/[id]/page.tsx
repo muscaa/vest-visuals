@@ -8,6 +8,7 @@ import {
     Loading,
     NotFound,
 } from "@/components/status";
+import { A_PORTFOLIO_GROUPS } from "@shared/paths";
 
 export default function Page() {
     const params = useParams<{ id: string }>();
@@ -19,8 +20,8 @@ export default function Page() {
             breadcrumbs={{
                 path: [
                     {
-                        href: "/a/media/groups",
-                        text: "Media Groups",
+                        href: A_PORTFOLIO_GROUPS,
+                        text: "Portfolio Groups",
                     }
                 ],
                 page: params.id,

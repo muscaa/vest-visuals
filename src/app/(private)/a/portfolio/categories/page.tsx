@@ -12,7 +12,7 @@ export default function Page() {
     return (
         <MainSidebarProvider
             breadcrumbs={{
-                page: "Media Categories",
+                page: "Portfolio Categories",
             }}
             extraClassName="overflow-hidden"
         >

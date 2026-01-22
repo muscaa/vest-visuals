@@ -12,7 +12,6 @@ export const s3 = new S3Client({
 });
 
 export const buckets = {
-    public: "public",
     registries: "registries",
     portfolio: "portfolio",
     albums: "albums",

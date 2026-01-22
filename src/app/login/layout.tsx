@@ -6,9 +6,13 @@ import {
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { auth } from "@server/auth";
+import {
+    LOGIN,
+    U_ACCOUNT,
+} from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: "/login",
+    route: LOGIN,
     routeName: "Login",
 });
 
@@ -18,7 +22,7 @@ export default async function Layout(props: LayoutProps) {
     });
     
     if (session) {
-        redirect("/u/account");
+        redirect(U_ACCOUNT);
     }
 
     return (

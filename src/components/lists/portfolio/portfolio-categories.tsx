@@ -10,6 +10,7 @@ import { PartialPortfolioCategory } from "@type/portfolio/categories";
 import { PortfolioCategoriesCreateDialog } from "@/components/dialogs/portfolio/portfolio-categories-create";
 import { PortfolioCategoriesEditDialog } from "@/components/dialogs/portfolio/portfolio-categories-edit";
 import { PortfolioCategoriesDeleteDialog } from "@/components/dialogs/portfolio/portfolio-categories-delete";
+import { A_PORTFOLIO_CATEGORIES_$ID } from "@shared/paths";
 
 interface ListEntryProps {
     value: PartialPortfolioCategory;
@@ -77,7 +78,7 @@ export function PortfolioCategoriesList(props: ListProps) {
             <Button
                 variant="secondary"
                 disabled={!selected}
-                onClick={() => router.push(`/a/media/categories/${selected?.id}`)}
+                onClick={() => router.push(A_PORTFOLIO_CATEGORIES_$ID(selected!.id))}
                 className="grow"
             >
                 Open

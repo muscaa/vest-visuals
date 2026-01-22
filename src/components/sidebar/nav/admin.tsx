@@ -15,6 +15,14 @@ import {
     FileBox,
     Library,
 } from "lucide-react";
+import {
+    A_CLI,
+    A_PORTFOLIO_CATEGORIES,
+    A_PORTFOLIO_GROUPS,
+    A_PORTFOLIO_MEDIA,
+    A_REGISTRIES,
+    A_USERS,
+} from "@shared/paths";
 
 interface SidebarNavAdminProps {
 
@@ -26,7 +34,7 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
     return (
         <SimpleSidebarGroup title="Admin">
             <SimpleSidebarItem
-                href="/a/cli"
+                href={A_CLI}
                 text="CLI"
                 icon={Terminal}
             />
@@ -36,29 +44,29 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 icon={Box}
             />
             <SimpleSidebarItem
-                href="/a/users"
+                href={A_USERS}
                 text="Users"
                 icon={Users}
             />
             <SimpleSidebarMenu
-                title="Media"
+                title="Portfolio"
                 icon={Image}
             >
                 <SimpleSidebarMenuItem
-                    href="/a/media/categories"
+                    href={A_PORTFOLIO_CATEGORIES}
                     text="Categories"
                 />
                 <SimpleSidebarMenuItem
-                    href="/a/media/groups"
+                    href={A_PORTFOLIO_GROUPS}
                     text="Groups"
                 />
                 <SimpleSidebarMenuItem
-                    href="/a/media/contents"
-                    text="Contents"
+                    href={A_PORTFOLIO_MEDIA}
+                    text="Media"
                 />
             </SimpleSidebarMenu>
             <SimpleSidebarItem
-                href="/a/registries"
+                href={A_REGISTRIES}
                 text="Registries"
                 icon={FileBox}
             />

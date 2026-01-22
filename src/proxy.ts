@@ -4,6 +4,7 @@ import {
 } from "next/server";
 import { getUrlString } from "@server/http";
 import { getSessionCookie } from "better-auth/cookies";
+import { LOGIN } from "@shared/paths";
 
 export async function proxy(request: NextRequest) {
     const url = request.nextUrl;
@@ -21,7 +22,7 @@ export async function proxy(request: NextRequest) {
     const cookie = getSessionCookie(request);
 
     if (!cookie) {
-        return NextResponse.redirect(getUrlString(request, "/login"));
+        return NextResponse.redirect(getUrlString(request, LOGIN));
     }
 
     return NextResponse.next();
