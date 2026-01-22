@@ -17,9 +17,7 @@ export function MediaCategoriesCreateDialog(props: Props) {
 
     const submit = async () => {
         return await createMediaCategory.mutateAsync({
-            value: {
-                category,
-            },
+            tag: category,
         });
     };
 

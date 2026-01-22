@@ -13,8 +13,8 @@ import {
 } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "./sortable";
-import { MediaContent } from "@type/media/contents";
-import { MediaGroup } from "@type/media/groups";
+import { PortfolioMedia } from "@type/portfolio/media";
+import { PortfolioGroup } from "@type/portfolio/groups";
 import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
 import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
 import { GripVertical } from "lucide-react";
@@ -25,13 +25,13 @@ import {
 } from "@client/dnd";
 
 interface ListEntryProps {
-    value: MediaContent;
+    value: PortfolioMedia;
     sortable: DndSortable;
     disabled?: boolean;
 }
 
 function ListEntry(props: ListEntryProps) {
-    const image = useMemo(() => props.value.mediaVariants.length > 0 ? props.value.mediaVariants[0].fileUrl : "/placeholder0.png", [props.value]);
+    const image = useMemo(() => props.value.portfolioMediaVariants.length > 0 ? props.value.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [props.value]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
@@ -47,7 +47,7 @@ function ListEntry(props: ListEntryProps) {
                     <div className="flex flex-col gap-2 grow">
                         <div className="flex gap-2 items-center">
                             {
-                                props.value.mediaVariants.map((variant, index) => (
+                                props.value.portfolioMediaVariants.map((variant, index) => (
                                     <ButtonLink
                                         key={index}
                                         href={variant.fileUrl}
@@ -66,7 +66,7 @@ function ListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.mediaVariants?.length || "no"}</p>
+                        <p>{props.value.portfolioMediaVariants?.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
@@ -90,19 +90,19 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaContentsListProps {
-    data: MediaContent[];
+    data: PortfolioMedia[];
     onUpdate?: () => void;
-    parent?: MediaGroup;
+    parent?: PortfolioGroup;
 }
 
 export function MediaContentsList(props: MediaContentsListProps) {
-    const [data, setData] = useState<MediaContent[]>(props.data);
+    const [data, setData] = useState<PortfolioMedia[]>(props.data);
     useEffect(() => setData(props.data), [props.data]);
 
-    const [selected, setSelected] = useState<MediaContent>();
+    const [selected, setSelected] = useState<PortfolioMedia>();
     const { updateMediaGroup } = useMediaGroups();
 
-    const handleSelect = (value: MediaContent) => {
+    const handleSelect = (value: PortfolioMedia) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
@@ -121,7 +121,7 @@ export function MediaContentsList(props: MediaContentsListProps) {
         await updateMediaGroup.mutateAsync({
             id: props.parent.id,
             value: {
-                mediaContents: {
+                portfolioMedia: {
                     set: order,
                 },
             },

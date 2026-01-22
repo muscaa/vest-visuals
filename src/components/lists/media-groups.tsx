@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "./sortable";
-import { PartialMediaGroup } from "@type/media/groups";
-import { MediaCategory } from "@type/media/categories";
+import { PartialPortfolioGroup } from "@type/portfolio/groups";
+import { PortfolioCategory } from "@type/portfolio/categories";
 import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
 import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
 import { useMediaContents } from "@/hooks/useMediaContents";
@@ -25,15 +25,15 @@ import {
 } from "@client/dnd";
 
 interface ListEntryProps {
-    value: PartialMediaGroup;
+    value: PartialPortfolioGroup;
     sortable: DndSortable;
     disabled?: boolean;
 }
 
 function ListEntry(props: ListEntryProps) {
     const { useMediaContent } = useMediaContents();
-    const { data } = useMediaContent(props.value.mediaContentIds.length > 0 ? props.value.mediaContentIds[0] : "null");
-    const image = useMemo(() => data && data.mediaVariants.length > 0 ? data.mediaVariants[0].fileUrl : "/placeholder0.png", [data]);
+    const { data } = useMediaContent(props.value.portfolioMediaIds?.length > 0 ? props.value.portfolioMediaIds[0] : "null");
+    const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [data]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
@@ -54,7 +54,7 @@ function ListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.mediaContents?.length || "no"}</p>
+                        <p>{props.value.portfolioMediaIds?.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
@@ -78,21 +78,21 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaGroupsListProps {
-    data: PartialMediaGroup[];
+    data: PartialPortfolioGroup[];
     onUpdate?: () => void;
-    parent?: MediaCategory;
+    parent?: PortfolioCategory;
 }
 
 export function MediaGroupsList(props: MediaGroupsListProps) {
     const router = useRouter();
 
-    const [data, setData] = useState<PartialMediaGroup[]>(props.data);
+    const [data, setData] = useState<PartialPortfolioGroup[]>(props.data);
     useEffect(() => setData(props.data), [props.data]);
 
-    const [selected, setSelected] = useState<PartialMediaGroup>();
+    const [selected, setSelected] = useState<PartialPortfolioGroup>();
     const { updateMediaCategory } = useMediaCategories();
 
-    const handleSelect = (value: PartialMediaGroup) => {
+    const handleSelect = (value: PartialPortfolioGroup) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
@@ -111,7 +111,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
         await updateMediaCategory.mutateAsync({
             id: props.parent.id,
             value: {
-                mediaGroups: {
+                portfolioGroups: {
                     set: order,
                 },
             },

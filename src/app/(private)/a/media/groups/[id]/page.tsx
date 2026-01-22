@@ -30,7 +30,7 @@ export default function Page() {
             {
                 data && (
                     <MediaContentsList
-                        data={data.mediaContents}
+                        data={data.portfolioMedia}
                         parent={data}
                     />
                 ) || data === null && (

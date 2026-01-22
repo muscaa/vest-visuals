@@ -5,68 +5,62 @@ import {
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import { apiClient } from "@client/http";
-import * as types from "@type/api/media/groups";
-import * as types_get from "@type/api/media/groups/get";
-import * as types_create from "@type/api/media/groups/create";
-import * as types_update from "@type/api/media/groups/update";
-import * as types_remove from "@type/api/media/groups/remove";
+import * as types from "@type/portfolio/groups";
+import * as groups from "@/actions/portfolio/groups";
 
 export function useMediaGroups() {
     const queryClient = useQueryClient();
 
     const useAllMediaGroups = () => useQuery({
-        queryKey: ["media"],
+        queryKey: ["media", "groups"],
         queryFn: async () => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/groups", {});
-            if (!data.success) return [];
+            const [status, result] = await groups.getAll();
+            if (status !== "OK") return [];
 
-            return data.values || [];
+            return result || [];
         },
     });
 
     const useMediaGroup = (id: string) => useQuery({
         queryKey: ["media", id],
         queryFn: async () => {
-            const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/groups/get", {
-                id,
-            });
-            if (!data.success) return null;
+            const [status, result] = await groups.get(id);
+            if (status !== "OK") return null;
 
-            return data.value || null;
+            return result || null;
         },
     });
 
     const createMediaGroup = useMutation({
-        mutationFn: async (props: types_create.PostRequest) => {
-            const { data } = await apiClient.post<types_create.PostResponse, types_create.PostRequest>("/media/groups/create", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (props: types.CreateProps) => {
+            const [status, result] = await groups.create(props);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.value;
+            return result;
         },
     });
 
     const updateMediaGroup = useMutation({
-        mutationFn: async (props: types_update.PostRequest) => {
-            const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/media/groups/update", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (props: { id: string; value: types.UpdateProps; }) => {
+            const [status, result] = await groups.update(props.id, props.value);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.success;
+            return true;
         },
     });
 
     const removeMediaGroups = useMutation({
-        mutationFn: async (props: types_remove.PostRequest) => {
-            const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/groups/remove", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (ids: string[]) => {
+            const [status, result] = await groups.remove(ids);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.success;
+            return true;
         },
     });
 

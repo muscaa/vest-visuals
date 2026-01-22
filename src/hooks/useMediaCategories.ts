@@ -5,68 +5,62 @@ import {
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import { apiClient } from "@client/http";
-import * as types from "@type/api/media/categories";
-import * as types_get from "@type/api/media/categories/get";
-import * as types_create from "@type/api/media/categories/create";
-import * as types_update from "@type/api/media/categories/update";
-import * as types_remove from "@type/api/media/categories/remove";
+import * as types from "@type/portfolio/categories";
+import * as categories from "@/actions/portfolio/categories";
 
 export function useMediaCategories() {
     const queryClient = useQueryClient();
 
     const useAllMediaCategories = () => useQuery({
-        queryKey: ["media"],
+        queryKey: ["media", "categories"],
         queryFn: async () => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/media/categories", {});
-            if (!data.success) return [];
+            const [status, result] = await categories.getAll();
+            if (status !== "OK") return [];
 
-            return data.values || [];
+            return result || [];
         },
     });
 
     const useMediaCategory = (id: string) => useQuery({
         queryKey: ["media", id],
         queryFn: async () => {
-            const { data } = await apiClient.post<types_get.PostResponse, types_get.PostRequest>("/media/categories/get", {
-                id,
-            });
-            if (!data.success) return null;
+            const [status, result] = await categories.get(id);
+            if (status !== "OK") return null;
 
-            return data.value || null;
+            return result || null;
         },
     });
 
     const createMediaCategory = useMutation({
-        mutationFn: async (props: types_create.PostRequest) => {
-            const { data } = await apiClient.post<types_create.PostResponse, types_create.PostRequest>("/media/categories/create", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (props: types.CreateProps) => {
+            const [status, result] = await categories.create(props);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.value;
+            return result;
         },
     });
 
     const updateMediaCategory = useMutation({
-        mutationFn: async (props: types_update.PostRequest) => {
-            const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/media/categories/update", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (props: { id: string; value: types.UpdateProps; }) => {
+            const [status, result] = await categories.update(props.id, props.value);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.success;
+            return true;
         },
     });
 
     const removeMediaCategories = useMutation({
-        mutationFn: async (props: types_remove.PostRequest) => {
-            const { data } = await apiClient.post<types_remove.PostResponse, types_remove.PostRequest>("/media/categories/remove", props);
-            if (!data.success) throw new Error(data.error);
+        mutationFn: async (ids: string[]) => {
+            const [status, result] = await categories.remove(ids);
+            if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["media"] });
 
-            return data.success;
+            return true;
         },
     });
 

@@ -2,7 +2,7 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { PartialMediaCategory } from "@type/media/categories";
+import { PartialPortfolioCategory } from "@type/portfolio/categories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -10,16 +10,14 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: PartialMediaCategory;
+    value: PartialPortfolioCategory;
 }
 
 function ValidDialog(props: ValidProps) {
     const { removeMediaCategories } = useMediaCategories();
 
     const submit = async () => {
-        return await removeMediaCategories.mutateAsync({
-            ids: [props.value.id],
-        });
+        return await removeMediaCategories.mutateAsync([props.value.id]);
     };
 
     return (
@@ -28,7 +26,7 @@ function ValidDialog(props: ValidProps) {
             title="Remove Media Category"
             description={
                 <>
-                    Are you sure you want to delete media category <strong>&quot;{props.value.category}&quot;</strong>?
+                    Are you sure you want to delete media category <strong>&quot;{props.value.tag}&quot;</strong>?
                 </>
             }
             submitText={{
@@ -43,7 +41,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: PartialMediaCategory;
+    value?: PartialPortfolioCategory;
 }
 
 export function MediaCategoriesDeleteDialog(props: Props) {

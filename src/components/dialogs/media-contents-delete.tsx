@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { MediaContent } from "@type/media/contents";
+import { PortfolioMedia } from "@type/portfolio/media";
 import { useMediaContents } from "@/hooks/useMediaContents";
 
 interface CommonProps {
@@ -10,16 +10,14 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: MediaContent;
+    value: PortfolioMedia;
 }
 
 function ValidDialog(props: ValidProps) {
     const { removeMediaContents } = useMediaContents();
 
     const submit = async () => {
-        return await removeMediaContents.mutateAsync({
-            ids: [props.value.id],
-        });
+        return await removeMediaContents.mutateAsync([props.value.id]);
     };
 
     return (
@@ -43,7 +41,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: MediaContent;
+    value?: PortfolioMedia;
 }
 
 export function MediaContentsDeleteDialog(props: Props) {

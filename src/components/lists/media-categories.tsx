@@ -6,20 +6,20 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { dateToString } from "@shared/snippets";
 import { SimpleList } from "./simple";
-import { PartialMediaCategory } from "@type/media/categories";
+import { PartialPortfolioCategory } from "@type/portfolio/categories";
 import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
 import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
 import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
 
 interface ListEntryProps {
-    value: PartialMediaCategory;
+    value: PartialPortfolioCategory;
 }
 
 function ListEntry(props: ListEntryProps) {
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
             <div className="flex flex-col gap-1 grow">
-                <h4>{props.value.category}</h4>
+                <h4>{props.value.tag}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
@@ -30,7 +30,7 @@ function ListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.mediaGroups?.length || "no"}</p>
+                        <p>{props.value.portfolioGroupIds.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
@@ -40,15 +40,15 @@ function ListEntry(props: ListEntryProps) {
 }
 
 interface MediaGroupsListProps {
-    data: PartialMediaCategory[];
+    data: PartialPortfolioCategory[];
     onUpdate?: () => void;
 }
 
 export function MediaCategoriesList(props: MediaGroupsListProps) {
     const router = useRouter();
-    const [selected, setSelected] = useState<PartialMediaCategory>();
+    const [selected, setSelected] = useState<PartialPortfolioCategory>();
 
-    const handleSelect = (value: PartialMediaCategory) => {
+    const handleSelect = (value: PartialPortfolioCategory) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 

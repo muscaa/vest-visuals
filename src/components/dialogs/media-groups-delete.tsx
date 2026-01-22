@@ -1,7 +1,7 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { PartialMediaGroup } from "@type/media/groups";
+import { PartialPortfolioGroup } from "@type/portfolio/groups";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useState } from "react";
 import { Label } from "../ui/label";
@@ -14,7 +14,7 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: PartialMediaGroup;
+    value: PartialPortfolioGroup;
 }
 
 function ValidDialog(props: ValidProps) {
@@ -23,15 +23,11 @@ function ValidDialog(props: ValidProps) {
     const { removeMediaContents } = useMediaContents();
 
     const submit = async () => {
-        if (all && props.value.mediaContentIds.length > 0) {
-            await removeMediaContents.mutateAsync({
-                ids: props.value.mediaContentIds,
-            });
+        if (all && props.value.portfolioMediaIds.length > 0) {
+            await removeMediaContents.mutateAsync(props.value.portfolioMediaIds);
         }
 
-        return await removeMediaGroups.mutateAsync({
-            ids: [props.value.id],
-        });
+        return await removeMediaGroups.mutateAsync([props.value.id]);
     };
 
     const handleReset = () => {
@@ -69,7 +65,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: PartialMediaGroup;
+    value?: PartialPortfolioGroup;
 }
 
 export function MediaGroupsDeleteDialog(props: Props) {

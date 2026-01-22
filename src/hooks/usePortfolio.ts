@@ -1,20 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@client/http";
-import * as types from "@type/api/portfolio";
+import * as portfolio from "@/actions/portfolio";
 
 export function usePortfolio(category: string) {
     return useQuery({
         queryKey: ["portfolio", category, "media"],
         queryFn: async () => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/portfolio", {
-                category,
-            });
+            const [status, result] = await portfolio.get(category);
+            if (status !== "OK") return [];
 
-            if (!data.success) return [];
-
-            return data.values || [];
+            return result || [];
         },
     });
 }

@@ -5,7 +5,7 @@ import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { PartialMediaCategory } from "@type/media/categories";
+import { PartialPortfolioCategory } from "@type/portfolio/categories";
 
 interface CommonProps {
     onEdit?: () => void;
@@ -13,18 +13,18 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: PartialMediaCategory;
+    value: PartialPortfolioCategory;
 }
 
 function ValidDialog(props: ValidProps) {
-    const [category, setCategory] = useState<string>(props.value.category);
+    const [category, setCategory] = useState<string>(props.value.tag);
     const { updateMediaCategory } = useMediaCategories();
 
     const submit = async () => {
         return updateMediaCategory.mutateAsync({
             id: props.value.id,
             value: {
-                category,
+                tag: category,
             },
         });
     };
@@ -53,7 +53,7 @@ function ValidDialog(props: ValidProps) {
                     id="category"
                     type="text"
                     placeholder="category"
-                    defaultValue={props.value.category}
+                    defaultValue={props.value.tag}
                     required
                     onChange={(e) => setCategory(e.target.value)}
                 />
@@ -63,7 +63,7 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: PartialMediaCategory;
+    value?: PartialPortfolioCategory;
 }
 
 export function MediaCategoriesEditDialog(props: Props) {

@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
     devIndicators: {
         position: "top-right",
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: "100mb"
+        },
+        proxyClientMaxBodySize: "100mb",
+    },
 };
 
 export default nextConfig;

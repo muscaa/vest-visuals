@@ -3,7 +3,7 @@
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaCategory } from "@type/media/categories";
+import { PortfolioCategory } from "@type/portfolio/categories";
 import { useState } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
-    parent?: MediaCategory;
+    parent?: PortfolioCategory;
 }
 
 export function MediaGroupsCreateDialog(props: Props) {
@@ -23,9 +23,7 @@ export function MediaGroupsCreateDialog(props: Props) {
 
     const submit = async () => {
         const result = await createMediaGroup.mutateAsync({
-            value: {
-                description,
-            },
+            description,
         });
 
         if (props.parent) {
@@ -33,16 +31,14 @@ export function MediaGroupsCreateDialog(props: Props) {
                 await updateMediaCategory.mutateAsync({
                     id: props.parent.id,
                     value: {
-                        mediaGroups: {
-                            set: top ? [result.id, ...props.parent.mediaGroups.map((group) => group.id)] : undefined,
+                        portfolioGroups: {
+                            set: top ? [result.id, ...props.parent.portfolioGroups.map((group) => group.id)] : undefined,
                             append: top ? undefined : [result.id],
                         },
                     },
                 });
             } catch (error) {
-                await removeMediaGroups.mutateAsync({
-                    ids: [result.id],
-                });
+                await removeMediaGroups.mutateAsync([result.id]);
 
                 throw error;
             }
