@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { dateToString } from "@shared/snippets";
-import { SimpleList } from "./simple";
+import { SimpleList } from "../simple";
 import { PartialPortfolioCategory } from "@type/portfolio/categories";
-import { MediaCategoriesCreateDialog } from "@/components/dialogs/media-categories-create";
-import { MediaCategoriesEditDialog } from "@/components/dialogs/media-categories-edit";
-import { MediaCategoriesDeleteDialog } from "@/components/dialogs/media-categories-delete";
+import { PortfolioCategoriesCreateDialog } from "@/components/dialogs/portfolio/portfolio-categories-create";
+import { PortfolioCategoriesEditDialog } from "@/components/dialogs/portfolio/portfolio-categories-edit";
+import { PortfolioCategoriesDeleteDialog } from "@/components/dialogs/portfolio/portfolio-categories-delete";
 
 interface ListEntryProps {
     value: PartialPortfolioCategory;
@@ -39,12 +39,12 @@ function ListEntry(props: ListEntryProps) {
     );
 }
 
-interface MediaGroupsListProps {
+interface ListProps {
     data: PartialPortfolioCategory[];
     onUpdate?: () => void;
 }
 
-export function MediaCategoriesList(props: MediaGroupsListProps) {
+export function PortfolioCategoriesList(props: ListProps) {
     const router = useRouter();
     const [selected, setSelected] = useState<PartialPortfolioCategory>();
 
@@ -65,7 +65,7 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
             isSelected={(value) => selected?.id == value.id}
             onSelect={handleSelect}
         >
-            <MediaCategoriesCreateDialog
+            <PortfolioCategoriesCreateDialog
                 onCreate={handleUpdate}
             >
                 <Button
@@ -73,7 +73,7 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
                 >
                     New
                 </Button>
-            </MediaCategoriesCreateDialog>
+            </PortfolioCategoriesCreateDialog>
             <Button
                 variant="secondary"
                 disabled={!selected}
@@ -82,7 +82,7 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
             >
                 Open
             </Button>
-            <MediaCategoriesEditDialog
+            <PortfolioCategoriesEditDialog
                 value={selected}
                 onEdit={handleUpdate}
             >
@@ -93,8 +93,8 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
                 >
                     Edit
                 </Button>
-            </MediaCategoriesEditDialog>
-            <MediaCategoriesDeleteDialog
+            </PortfolioCategoriesEditDialog>
+            <PortfolioCategoriesDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}
             >
@@ -105,7 +105,7 @@ export function MediaCategoriesList(props: MediaGroupsListProps) {
                 >
                     Delete
                 </Button>
-            </MediaCategoriesDeleteDialog>
+            </PortfolioCategoriesDeleteDialog>
         </SimpleList>
     );
 }

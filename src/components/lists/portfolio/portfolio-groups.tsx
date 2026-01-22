@@ -10,19 +10,19 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
-import { SortableList } from "./sortable";
+import { SortableList } from "../sortable";
 import { PartialPortfolioGroup } from "@type/portfolio/groups";
 import { PortfolioCategory } from "@type/portfolio/categories";
-import { MediaGroupsCreateDialog } from "@/components/dialogs/media-groups-create";
-import { MediaGroupsDeleteDialog } from "@/components/dialogs/media-groups-delete";
-import { useMediaContents } from "@/hooks/useMediaContents";
 import { GripVertical } from "lucide-react";
-import { useMediaCategories } from "@/hooks/useMediaCategories";
-import { MediaGroupsEditDialog } from "../dialogs/media-groups-edit";
 import {
     DndSortable,
     arrayMove,
 } from "@client/dnd";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
+import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
+import { PortfolioGroupsCreateDialog } from "@/components/dialogs/portfolio/portfolio-groups-create";
+import { PortfolioGroupsEditDialog } from "@/components/dialogs/portfolio/portfolio-groups-edit";
+import { PortfolioGroupsDeleteDialog } from "@/components/dialogs/portfolio/portfolio-groups-delete";
 
 interface ListEntryProps {
     value: PartialPortfolioGroup;
@@ -31,8 +31,8 @@ interface ListEntryProps {
 }
 
 function ListEntry(props: ListEntryProps) {
-    const { useMediaContent } = useMediaContents();
-    const { data } = useMediaContent(props.value.portfolioMediaIds.length > 0 ? props.value.portfolioMediaIds[0] : "null");
+    const { usePortfolioMedia: useMedia } = usePortfolioMedia();
+    const { data } = useMedia(props.value.portfolioMediaIds.length > 0 ? props.value.portfolioMediaIds[0] : "null");
     const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [data]);
 
     return (
@@ -90,7 +90,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
     useEffect(() => setData(props.data), [props.data]);
 
     const [selected, setSelected] = useState<PartialPortfolioGroup>();
-    const { updateMediaCategory } = useMediaCategories();
+    const { updatePortfolioCategory } = usePortfolioCategories();
 
     const handleSelect = (value: PartialPortfolioGroup) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -108,7 +108,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
         setData((prev) => arrayMove(prev, from, to));
         const order = arrayMove(props.data.map((group) => group.id), from, to);
 
-        await updateMediaCategory.mutateAsync({
+        await updatePortfolioCategory.mutateAsync({
             id: props.parent.id,
             value: {
                 portfolioGroups: {
@@ -136,7 +136,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
             onSelect={handleSelect}
             disabled={!props.parent}
         >
-            <MediaGroupsCreateDialog
+            <PortfolioGroupsCreateDialog
                 onCreate={handleUpdate}
                 parent={props.parent}
             >
@@ -145,7 +145,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
                 >
                     New
                 </Button>
-            </MediaGroupsCreateDialog>
+            </PortfolioGroupsCreateDialog>
             <Button
                 variant="secondary"
                 disabled={!selected}
@@ -154,7 +154,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
             >
                 Open
             </Button>
-            <MediaGroupsEditDialog
+            <PortfolioGroupsEditDialog
                 value={selected}
                 onEdit={handleUpdate}
             >
@@ -165,8 +165,8 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
                 >
                     Edit
                 </Button>
-            </MediaGroupsEditDialog>
-            <MediaGroupsDeleteDialog
+            </PortfolioGroupsEditDialog>
+            <PortfolioGroupsDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}
             >
@@ -177,7 +177,7 @@ export function MediaGroupsList(props: MediaGroupsListProps) {
                 >
                     Delete
                 </Button>
-            </MediaGroupsDeleteDialog>
+            </PortfolioGroupsDeleteDialog>
         </SortableList>
     );
 }

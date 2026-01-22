@@ -12,17 +12,17 @@ import {
     Img,
 } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
-import { SortableList } from "./sortable";
+import { SortableList } from "../sortable";
 import { PortfolioMedia } from "@type/portfolio/media";
 import { PortfolioGroup } from "@type/portfolio/groups";
-import { MediaContentsDeleteDialog } from "@/components/dialogs/media-contents-delete";
-import { MediaContentsUploadDialog } from "@/components/dialogs/media-contents-upload";
 import { GripVertical } from "lucide-react";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
 import {
     DndSortable,
     arrayMove,
 } from "@client/dnd";
+import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
+import { PortfolioMediaUploadDialog } from "@/components/dialogs/portfolio/portfolio-media-upload";
+import { PortfolioMediaDeleteDialog } from "@/components/dialogs/portfolio/portfolio-media-delete";
 
 interface ListEntryProps {
     value: PortfolioMedia;
@@ -100,7 +100,7 @@ export function MediaContentsList(props: MediaContentsListProps) {
     useEffect(() => setData(props.data), [props.data]);
 
     const [selected, setSelected] = useState<PortfolioMedia>();
-    const { updateMediaGroup } = useMediaGroups();
+    const { updatePortfolioGroup } = usePortfolioGroups();
 
     const handleSelect = (value: PortfolioMedia) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -118,7 +118,7 @@ export function MediaContentsList(props: MediaContentsListProps) {
         setData((prev) => arrayMove(prev, from, to));
         const order = arrayMove(props.data.map((content) => content.id), from, to);
 
-        await updateMediaGroup.mutateAsync({
+        await updatePortfolioGroup.mutateAsync({
             id: props.parent.id,
             value: {
                 portfolioMedia: {
@@ -146,7 +146,7 @@ export function MediaContentsList(props: MediaContentsListProps) {
             onSelect={handleSelect}
             disabled={!props.parent}
         >
-            <MediaContentsUploadDialog
+            <PortfolioMediaUploadDialog
                 onCreate={handleUpdate}
                 parent={props.parent}
             >
@@ -155,8 +155,8 @@ export function MediaContentsList(props: MediaContentsListProps) {
                 >
                     Upload
                 </Button>
-            </MediaContentsUploadDialog>
-            <MediaContentsDeleteDialog
+            </PortfolioMediaUploadDialog>
+            <PortfolioMediaDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}
             >
@@ -167,7 +167,7 @@ export function MediaContentsList(props: MediaContentsListProps) {
                 >
                     Delete
                 </Button>
-            </MediaContentsDeleteDialog>
+            </PortfolioMediaDeleteDialog>
         </SortableList>
     );
 }
