@@ -32,7 +32,7 @@ interface ListEntryProps {
 
 function ListEntry(props: ListEntryProps) {
     const { useMediaContent } = useMediaContents();
-    const { data } = useMediaContent(props.value.portfolioMediaIds?.length > 0 ? props.value.portfolioMediaIds[0] : "null");
+    const { data } = useMediaContent(props.value.portfolioMediaIds.length > 0 ? props.value.portfolioMediaIds[0] : "null");
     const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [data]);
 
     return (
@@ -54,7 +54,7 @@ function ListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.portfolioMediaIds?.length || "no"}</p>
+                        <p>{props.value.portfolioMediaIds.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
