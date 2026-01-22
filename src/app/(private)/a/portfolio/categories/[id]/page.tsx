@@ -2,8 +2,8 @@
 
 import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useParams } from "next/navigation";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { MediaContentsList } from "@/components/lists/media-contents";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
+import { PortfolioGroupsList } from "@/components/lists/portfolio/portfolio-groups";
 import {
     Loading,
     NotFound,
@@ -11,16 +11,16 @@ import {
 
 export default function Page() {
     const params = useParams<{ id: string }>();
-    const { useMediaGroup } = useMediaGroups();
-    const { data } = useMediaGroup(params.id);
+    const { usePortfolioCategory } = usePortfolioCategories();
+    const { data } = usePortfolioCategory(params.id);
 
     return (
         <MainSidebarProvider
             breadcrumbs={{
                 path: [
                     {
-                        href: "/a/media/groups",
-                        text: "Media Groups",
+                        href: "/a/media/categories",
+                        text: "Media Categories",
                     }
                 ],
                 page: params.id,
@@ -29,8 +29,8 @@ export default function Page() {
         >
             {
                 data && (
-                    <MediaContentsList
-                        data={data.portfolioMedia}
+                    <PortfolioGroupsList
+                        data={data.portfolioGroups}
                         parent={data}
                     />
                 ) || data === null && (
@@ -39,6 +39,6 @@ export default function Page() {
                     <Loading />
                 )
             }
-        </MainSidebarProvider>
+        </MainSidebarProvider >
     );
 }

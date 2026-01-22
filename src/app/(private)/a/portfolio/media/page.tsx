@@ -1,13 +1,13 @@
 "use client";
 
 import { MainSidebarProvider } from "@/components/sidebar/main";
-import { useMediaContents } from "@/hooks/useMediaContents";
+import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 import { Loading } from "@/components/status";
-import { MediaContentsList } from "@/components/lists/media-contents";
+import { PortfolioMediaList } from "@/components/lists/portfolio/portfolio-media";
 
 export default function Page() {
-    const { useAllMediaContents } = useMediaContents();
-    const { data } = useAllMediaContents();
+    const { useAllPortfolioMedia } = usePortfolioMedia();
+    const { data } = useAllPortfolioMedia();
 
     return (
         <MainSidebarProvider
@@ -18,7 +18,7 @@ export default function Page() {
         >
             {
                 data && (
-                    <MediaContentsList
+                    <PortfolioMediaList
                         data={data}
                     />
                 ) || (

@@ -77,13 +77,13 @@ function ListEntry(props: ListEntryProps) {
     );
 }
 
-interface MediaGroupsListProps {
+interface ListProps {
     data: PartialPortfolioGroup[];
     onUpdate?: () => void;
     parent?: PortfolioCategory;
 }
 
-export function MediaGroupsList(props: MediaGroupsListProps) {
+export function PortfolioGroupsList(props: ListProps) {
     const router = useRouter();
 
     const [data, setData] = useState<PartialPortfolioGroup[]>(props.data);

@@ -89,13 +89,13 @@ function ListEntry(props: ListEntryProps) {
     );
 }
 
-interface MediaContentsListProps {
+interface ListProps {
     data: PortfolioMedia[];
     onUpdate?: () => void;
     parent?: PortfolioGroup;
 }
 
-export function MediaContentsList(props: MediaContentsListProps) {
+export function PortfolioMediaList(props: ListProps) {
     const [data, setData] = useState<PortfolioMedia[]>(props.data);
     useEffect(() => setData(props.data), [props.data]);
 

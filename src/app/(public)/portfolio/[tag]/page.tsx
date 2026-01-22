@@ -4,7 +4,7 @@ import { Main } from "@/components/main";
 import { Masonry } from "@/components/masonry";
 import { useParams } from "next/navigation";
 import { PreviewImage } from "@/components/preview-image";
-import { usePortfolio } from "@/hooks/usePortfolio";
+import { usePortfolio } from "@/hooks/portfolio/usePortfolio";
 import { useState } from "react";
 import { Reveal } from "@/components/animations/reveal";
 import { Img } from "@/components/snippets";
@@ -21,8 +21,8 @@ import {
 import { cn } from "@shared/shadcn/lib/utils";
 
 export default function Page() {
-    const { category } = useParams<{ category: string; }>();
-    const { data } = usePortfolio(category);
+    const { tag } = useParams<{ tag: string; }>();
+    const { data } = usePortfolio(tag);
     const [open, setOpen] = useState<boolean>();
     const [api, setApi] = useState<CarouselApi>();
 

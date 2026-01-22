@@ -1,24 +1,24 @@
 "use client";
 
 import { MainSidebarProvider } from "@/components/sidebar/main";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
 import { Loading } from "@/components/status";
-import { MediaGroupsList } from "@/components/lists/media-groups";
+import { PortfolioCategoriesList } from "@/components/lists/portfolio/portfolio-categories";
 
 export default function Page() {
-    const { useAllMediaGroups } = useMediaGroups();
-    const { data } = useAllMediaGroups();
+    const { useAllPortfolioCategories } = usePortfolioCategories();
+    const { data } = useAllPortfolioCategories();
 
     return (
         <MainSidebarProvider
             breadcrumbs={{
-                page: "Media Groups",
+                page: "Media Categories",
             }}
             extraClassName="overflow-hidden"
         >
             {
                 data && (
-                    <MediaGroupsList
+                    <PortfolioCategoriesList
                         data={data}
                     />
                 ) || (
