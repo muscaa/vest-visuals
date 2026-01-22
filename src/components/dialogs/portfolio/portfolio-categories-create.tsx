@@ -4,49 +4,49 @@ import { useState } from "react";
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
 
 interface Props {
     onCreate?: () => void;
     children?: React.ReactNode;
 }
 
-export function MediaCategoriesCreateDialog(props: Props) {
-    const [category, setCategory] = useState<string>("");
-    const { createMediaCategory } = useMediaCategories();
+export function PortfolioCategoriesCreateDialog(props: Props) {
+    const [tag, setTag] = useState<string>("");
+    const { createPortfolioCategory } = usePortfolioCategories();
 
     const submit = async () => {
-        return await createMediaCategory.mutateAsync({
-            tag: category,
+        return await createPortfolioCategory.mutateAsync({
+            tag,
         });
     };
 
     const handleReset = () => {
-        setCategory("");
+        setTag("");
     };
 
     return (
         <SimpleDialog
             submit={submit}
-            title="New Media Category"
-            description="Create a new media category."
+            title="New Portfolio Category"
+            description="Create a new portfolio category."
             submitText={{
                 default: "Create",
                 sending: "Creating...",
             }}
-            submitDisabled={!category}
+            submitDisabled={!tag}
             onSuccess={props.onCreate}
             onReset={handleReset}
             trigger={props.children}
         >
             <div className="flex flex-col gap-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="tag">Tag</Label>
                 <Input
-                    id="category"
+                    id="tag"
                     type="text"
-                    placeholder="category"
+                    placeholder="tag"
                     required
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => setTag(e.target.value)}
                 />
             </div>
         </SimpleDialog>

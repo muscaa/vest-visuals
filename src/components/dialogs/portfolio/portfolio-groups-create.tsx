@@ -1,13 +1,13 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { useMediaCategories } from "@/hooks/useMediaCategories";
 import { PortfolioCategory } from "@type/portfolio/categories";
 import { useState } from "react";
-import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
-import { Input } from "../ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
+import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
 
 interface Props {
     onCreate?: () => void;
@@ -15,20 +15,20 @@ interface Props {
     parent?: PortfolioCategory;
 }
 
-export function MediaGroupsCreateDialog(props: Props) {
+export function PortfolioGroupsCreateDialog(props: Props) {
     const [description, setDescription] = useState<string>("");
     const [top, setTop] = useState(true);
-    const { createMediaGroup, removeMediaGroups } = useMediaGroups();
-    const { updateMediaCategory } = useMediaCategories();
+    const { updatePortfolioCategory } = usePortfolioCategories();
+    const { createPortfolioGroup, removePortfolioGroups } = usePortfolioGroups();
 
     const submit = async () => {
-        const result = await createMediaGroup.mutateAsync({
+        const result = await createPortfolioGroup.mutateAsync({
             description,
         });
 
         if (props.parent) {
             try {
-                await updateMediaCategory.mutateAsync({
+                await updatePortfolioCategory.mutateAsync({
                     id: props.parent.id,
                     value: {
                         portfolioGroups: {
@@ -38,7 +38,7 @@ export function MediaGroupsCreateDialog(props: Props) {
                     },
                 });
             } catch (error) {
-                await removeMediaGroups.mutateAsync([result.id]);
+                await removePortfolioGroups.mutateAsync([result.id]);
 
                 throw error;
             }
@@ -55,8 +55,8 @@ export function MediaGroupsCreateDialog(props: Props) {
     return (
         <SimpleDialog
             submit={submit}
-            title="New Media Group"
-            description="Create a new media group."
+            title="New Portfolio Group"
+            description="Create a new portfolio group."
             submitText={{
                 default: "Create",
                 sending: "Creating...",

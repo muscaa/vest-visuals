@@ -2,11 +2,11 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { PartialPortfolioGroup } from "@type/portfolio/groups";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { useState } from "react";
-import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
-import { useMediaContents } from "@/hooks/useMediaContents";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
+import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -19,15 +19,15 @@ interface ValidProps extends CommonProps {
 
 function ValidDialog(props: ValidProps) {
     const [all, setAll] = useState(false);
-    const { removeMediaGroups } = useMediaGroups();
-    const { removeMediaContents } = useMediaContents();
+    const { removePortfolioGroups } = usePortfolioGroups();
+    const { removePortfolioMedia } = usePortfolioMedia();
 
     const submit = async () => {
         if (all && props.value.portfolioMediaIds.length > 0) {
-            await removeMediaContents.mutateAsync(props.value.portfolioMediaIds);
+            await removePortfolioMedia.mutateAsync(props.value.portfolioMediaIds);
         }
 
-        return await removeMediaGroups.mutateAsync([props.value.id]);
+        return await removePortfolioGroups.mutateAsync([props.value.id]);
     };
 
     const handleReset = () => {
@@ -37,10 +37,10 @@ function ValidDialog(props: ValidProps) {
     return (
         <SimpleDialog
             submit={submit}
-            title="Remove Media Group"
+            title="Remove Portfolio Group"
             description={
                 <>
-                    Are you sure you want to delete media group <strong>&quot;{props.value.id}&quot;</strong>?
+                    Are you sure you want to delete portfolio group <strong>&quot;{props.value.id}&quot;</strong>?
                 </>
             }
             submitText={{
@@ -58,7 +58,7 @@ function ValidDialog(props: ValidProps) {
                     checked={all}
                     onCheckedChange={(state) => setAll(state != false)}
                 />
-                <Label htmlFor="all">Remove Contents</Label>
+                <Label htmlFor="all">Remove Media</Label>
             </div>
         </SimpleDialog>
     );
@@ -68,7 +68,7 @@ interface Props extends CommonProps {
     value?: PartialPortfolioGroup;
 }
 
-export function MediaGroupsDeleteDialog(props: Props) {
+export function PortfolioGroupsDeleteDialog(props: Props) {
     if (!props.value) return (
         <>
             {props.children}

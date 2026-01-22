@@ -1,8 +1,8 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { useMediaCategories } from "@/hooks/useMediaCategories";
 import { PartialPortfolioCategory } from "@type/portfolio/categories";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -14,19 +14,19 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
-    const { removeMediaCategories } = useMediaCategories();
+    const { removePortfolioCategories } = usePortfolioCategories();
 
     const submit = async () => {
-        return await removeMediaCategories.mutateAsync([props.value.id]);
+        return await removePortfolioCategories.mutateAsync([props.value.id]);
     };
 
     return (
         <SimpleDialog
             submit={submit}
-            title="Remove Media Category"
+            title="Remove Portfolio Category"
             description={
                 <>
-                    Are you sure you want to delete media category <strong>&quot;{props.value.tag}&quot;</strong>?
+                    Are you sure you want to delete portfolio category <strong>&quot;{props.value.tag}&quot;</strong>?
                 </>
             }
             submitText={{
@@ -44,7 +44,7 @@ interface Props extends CommonProps {
     value?: PartialPortfolioCategory;
 }
 
-export function MediaCategoriesDeleteDialog(props: Props) {
+export function PortfolioCategoriesDeleteDialog(props: Props) {
     if (!props.value) return (
         <>
             {props.children}

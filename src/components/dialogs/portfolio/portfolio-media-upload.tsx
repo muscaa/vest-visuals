@@ -1,13 +1,13 @@
 "use client";
 
 import { SimpleDialog } from "@/components/dialogs/simple";
-import { useMediaContents } from "@/hooks/useMediaContents";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
 import { PortfolioGroup } from "@type/portfolio/groups";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
+import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
+import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 
 interface Props {
     onCreate?: () => void;
@@ -15,13 +15,13 @@ interface Props {
     parent?: PortfolioGroup;
 }
 
-export function MediaContentsUploadDialog(props: Props) {
+export function PortfolioMediaUploadDialog(props: Props) {
     const [files, setFiles] = useState<File[]>([]);
-    const { uploadMediaContents, uploadProgress } = useMediaContents();
-    const { updateMediaGroup } = useMediaGroups();
+    const { updatePortfolioGroup } = usePortfolioGroups();
+    const { uploadPortfolioMedia, uploadProgress } = usePortfolioMedia();
 
     const submit = async () => {
-        const result = await uploadMediaContents.mutateAsync({
+        const result = await uploadPortfolioMedia.mutateAsync({
             files,
             configs: Array.from(files).map(() => ({
                 processor: {
@@ -56,7 +56,7 @@ export function MediaContentsUploadDialog(props: Props) {
         });
 
         if (props.parent) {
-            await updateMediaGroup.mutateAsync({
+            await updatePortfolioGroup.mutateAsync({
                 id: props.parent.id,
                 value: {
                     portfolioMedia: {
@@ -76,8 +76,8 @@ export function MediaContentsUploadDialog(props: Props) {
     return (
         <SimpleDialog
             submit={submit}
-            title="New Media Contents"
-            description="Upload new media contents."
+            title="Upload Portfolio Media"
+            description="Upload new portfolio media."
             submitText={{
                 default: "Upload",
                 sending: "Uploading...",

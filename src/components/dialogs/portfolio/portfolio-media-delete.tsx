@@ -2,7 +2,7 @@
 
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { PortfolioMedia } from "@type/portfolio/media";
-import { useMediaContents } from "@/hooks/useMediaContents";
+import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 
 interface CommonProps {
     onDelete?: () => void;
@@ -14,19 +14,19 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
-    const { removeMediaContents } = useMediaContents();
+    const { removePortfolioMedia } = usePortfolioMedia();
 
     const submit = async () => {
-        return await removeMediaContents.mutateAsync([props.value.id]);
+        return await removePortfolioMedia.mutateAsync([props.value.id]);
     };
 
     return (
         <SimpleDialog
             submit={submit}
-            title="Remove Media Content"
+            title="Remove Portfolio Media"
             description={
                 <>
-                    Are you sure you want to delete media content <strong>&quot;{props.value.id}&quot;</strong>?
+                    Are you sure you want to delete portfolio media <strong>&quot;{props.value.id}&quot;</strong>?
                 </>
             }
             submitText={{
@@ -44,7 +44,7 @@ interface Props extends CommonProps {
     value?: PortfolioMedia;
 }
 
-export function MediaContentsDeleteDialog(props: Props) {
+export function PortfolioMediaDeleteDialog(props: Props) {
     if (!props.value) return (
         <>
             {props.children}

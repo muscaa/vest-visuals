@@ -4,8 +4,8 @@ import { useState } from "react";
 import { SimpleDialog } from "@/components/dialogs/simple";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMediaGroups } from "@/hooks/useMediaGroups";
-import { PartialPortfolioGroup } from "@type/portfolio/groups";
+import { PartialPortfolioCategory } from "@type/portfolio/categories";
+import { usePortfolioCategories } from "@/hooks/portfolio/usePortfolioCategories";
 
 interface CommonProps {
     onEdit?: () => void;
@@ -13,48 +13,49 @@ interface CommonProps {
 }
 
 interface ValidProps extends CommonProps {
-    value: PartialPortfolioGroup;
+    value: PartialPortfolioCategory;
 }
 
 function ValidDialog(props: ValidProps) {
-    const [description, setDescription] = useState<string>(props.value.description || "");
-    const { updateMediaGroup } = useMediaGroups();
+    const [tag, setTag] = useState<string>(props.value.tag);
+    const { updatePortfolioCategory } = usePortfolioCategories();
 
     const submit = async () => {
-        return updateMediaGroup.mutateAsync({
+        return updatePortfolioCategory.mutateAsync({
             id: props.value.id,
             value: {
-                description: description || null,
+                tag,
             },
         });
     };
 
     const handleReset = () => {
-        setDescription("");
+        setTag("");
     };
 
     return (
         <SimpleDialog
             submit={submit}
-            title="Edit Media Group"
-            description="Update a media group."
+            title="Edit Portfolio Category"
+            description="Update a portfolio category."
             submitText={{
                 default: "Update",
                 sending: "Updating...",
             }}
+            submitDisabled={!tag}
             onSuccess={props.onEdit}
             onReset={handleReset}
             trigger={props.children}
         >
             <div className="flex flex-col gap-2">
-                <Label htmlFor="description">Description (optional)</Label>
+                <Label htmlFor="tag">Tag</Label>
                 <Input
-                    id="description"
+                    id="tag"
                     type="text"
-                    placeholder="description"
-                    defaultValue={props.value.description}
+                    placeholder="tag"
+                    defaultValue={props.value.tag}
                     required
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => setTag(e.target.value)}
                 />
             </div>
         </SimpleDialog>
@@ -62,10 +63,10 @@ function ValidDialog(props: ValidProps) {
 }
 
 interface Props extends CommonProps {
-    value?: PartialPortfolioGroup;
+    value?: PartialPortfolioCategory;
 }
 
-export function MediaGroupsEditDialog(props: Props) {
+export function PortfolioCategoriesEditDialog(props: Props) {
     if (!props.value) return (
         <>
             {props.children}
