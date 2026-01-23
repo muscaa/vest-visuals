@@ -6,9 +6,8 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { authClient } from "@client/auth";
-import { apiClient } from "@client/http";
-import * as types from "@type/api/minio";
 import { openNewTab } from "@client/snippets";
+import { getLoginUrl } from "@/actions/minio";
 
 export function useAdmin() {
     const queryClient = useQueryClient();
@@ -30,11 +29,11 @@ export function useAdmin() {
 
     const openMinio = useMutation({
         mutationFn: async () => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/minio", {});
-            if (!data.success) throw new Error(data.error);
+            const [status, result] = await getLoginUrl();
+            if (status !== "OK") throw new Error(result as string);
 
-            openNewTab(data.url);
-            return data.url;
+            openNewTab(result);
+            return result;
         },
     });
 
