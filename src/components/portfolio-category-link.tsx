@@ -13,7 +13,7 @@ export function PortfolioCategoryLink(props: PortfolioCategoryLinkProps) {
             href={props.href ?? props.category.href}
             className="
                 relative rounded-xl shadow-sm overflow-hidden
-                w-full h-40 max-w-128 group
+                w-full h-40 max-w-128 group cut-corners-10
             "
         >
             <div className="absolute size-full overflow-hidden">

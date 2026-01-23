@@ -223,7 +223,8 @@
     --onyx-2: #3a3c40ff;
     --outer-space: #414449ff;
 
-    --radius: 0.625rem;
+    /* --radius: 0.625rem; */
+    --radius: 0;
 
     @apply theme-light;
 }
