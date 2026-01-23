@@ -11,11 +11,13 @@ import {
     Terminal,
     Box,
     Users,
+    FileSymlink,
     Image,
     FileBox,
     Library,
 } from "lucide-react";
 import {
+    A_ASSETS,
     A_CLI,
     A_PORTFOLIO_CATEGORIES,
     A_PORTFOLIO_GROUPS,
@@ -47,6 +49,11 @@ export function SidebarNavAdmin(props: SidebarNavAdminProps) {
                 href={A_USERS}
                 text="Users"
                 icon={Users}
+            />
+            <SimpleSidebarItem
+                href={A_ASSETS}
+                text="Assets"
+                icon={FileSymlink}
             />
             <SimpleSidebarMenu
                 title="Portfolio"

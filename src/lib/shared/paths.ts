@@ -15,6 +15,7 @@ export const U_PREFERENCES = `${U}/preferences`;
 export const A = "/a";
 export const A_CLI = `${A}/cli`;
 export const A_USERS = `${A}/users`;
+export const A_ASSETS = `${A}/assets`;
 const A_PORTFOLIO = `${A}/portfolio`;
 export const A_PORTFOLIO_CATEGORIES = `${A_PORTFOLIO}/categories`;
 export const A_PORTFOLIO_CATEGORIES_$ID = (id: string) => `${A_PORTFOLIO_CATEGORIES}/${id}`;
