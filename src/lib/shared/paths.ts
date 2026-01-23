@@ -24,3 +24,6 @@ export const A_PORTFOLIO_MEDIA = `${A_PORTFOLIO}/media`;
 export const A_REGISTRIES = `${A}/registries`;
 
 // api
+
+// assets
+export const PLACEHOLDER = "/placeholder.jpg"

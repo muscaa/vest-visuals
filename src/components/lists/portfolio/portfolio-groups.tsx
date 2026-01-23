@@ -23,7 +23,10 @@ import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
 import { PortfolioGroupsCreateDialog } from "@/components/dialogs/portfolio/portfolio-groups-create";
 import { PortfolioGroupsEditDialog } from "@/components/dialogs/portfolio/portfolio-groups-edit";
 import { PortfolioGroupsDeleteDialog } from "@/components/dialogs/portfolio/portfolio-groups-delete";
-import { A_PORTFOLIO_GROUPS_$ID } from "@shared/paths";
+import {
+    A_PORTFOLIO_GROUPS_$ID,
+    PLACEHOLDER,
+} from "@shared/paths";
 
 interface ListEntryProps {
     value: PartialPortfolioGroup;
@@ -34,7 +37,7 @@ interface ListEntryProps {
 function ListEntry(props: ListEntryProps) {
     const { usePortfolioMedia: useMedia } = usePortfolioMedia();
     const { data } = useMedia(props.value.portfolioMediaIds.length > 0 ? props.value.portfolioMediaIds[0] : "null");
-    const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [data]);
+    const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">

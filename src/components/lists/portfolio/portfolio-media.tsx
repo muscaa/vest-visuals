@@ -23,6 +23,7 @@ import {
 import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
 import { PortfolioMediaUploadDialog } from "@/components/dialogs/portfolio/portfolio-media-upload";
 import { PortfolioMediaDeleteDialog } from "@/components/dialogs/portfolio/portfolio-media-delete";
+import { PLACEHOLDER } from "@shared/paths";
 
 interface ListEntryProps {
     value: PortfolioMedia;
@@ -31,7 +32,7 @@ interface ListEntryProps {
 }
 
 function ListEntry(props: ListEntryProps) {
-    const image = useMemo(() => props.value.portfolioMediaVariants.length > 0 ? props.value.portfolioMediaVariants[0].fileUrl : "/placeholder0.png", [props.value]);
+    const image = useMemo(() => props.value.portfolioMediaVariants.length > 0 ? props.value.portfolioMediaVariants[0].fileUrl : PLACEHOLDER, [props.value]);
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
