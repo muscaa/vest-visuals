@@ -1,7 +1,7 @@
 "use server";
 
 import { ActionResponse } from "@type/http";
-import * as types from "@type/api/portfolio";
+import * as types from "@type/portfolio";
 import * as categories from "@server/portfolio/categories";
 
 export async function get(tag: string): ActionResponse<types.PortfolioEntry[]> {
