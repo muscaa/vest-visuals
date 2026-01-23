@@ -1,5 +1,5 @@
 import { createRegistry } from "..";
-import * as mediaVariants from "@server/portfolio/mediaVariants";
+import * as mediaVariants from "@server/assets/mediaVariants";
 
 export const parallax = await createRegistry("parallax", {
     default: [],
