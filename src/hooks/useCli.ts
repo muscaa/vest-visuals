@@ -1,16 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@client/http";
-import * as types from "@type/api/cli";
+import { executeCommand } from "@/actions/cli";
 
 export function useCli() {
     const execute = useMutation({
         mutationFn: async (input: string) => {
-            const { data } = await apiClient.post<types.PostResponse, types.PostRequest>("/cli", {
-                input,
-            });
-            if (!data.success) throw new Error(data.error);
+            const [status, result] = await executeCommand(input);
+            if (status !== "OK") throw new Error(result as string);
 
-            return data.output;
+            return result;
         },
     });
 
