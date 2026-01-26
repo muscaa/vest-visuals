@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {
+    Inter,
+    Geist,
+    Geist_Mono,
+} from "next/font/google";
 import ThemeProvider from "../theme/theme-provider";
 import { ClientLayout } from "./client";
 
@@ -22,7 +26,7 @@ export function createMetadata(props: MetadataProps): Metadata {
             follow: true,
         },
         title: `Vest Visuals | ${props.routeName}`,
-        description: "Servicii profesionale de fotografie și videografie în Timișoara, Arad și Oradea.",
+        description: "Servicii profesionale de fotografie și videografie în Timișoara, Arad și Oradea.", // TODO
         keywords: [
             // english
             "photography studio", "videography studio", "photo studio", "video production", "event photography",
@@ -54,11 +58,17 @@ export function createMetadata(props: MetadataProps): Metadata {
     };
 }
 
-// export const figtree = Figtree({
-//     subsets: ["latin"],
-// });
 export const inter = Inter({
     subsets: ["latin"],
+    variable: "--font-sans",
+});
+export const geistSans = Geist({
+    subsets: ["latin"],
+    variable: "--font-geist-sans",
+});
+export const geistMono = Geist_Mono({
+    subsets: ["latin"],
+    variable: "--font-geist-mono",
 });
 
 export interface LayoutProps {
@@ -77,7 +87,7 @@ export function RootLayout(props: LayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${inter.className} antialiased flex flex-col w-screen h-screen`}
+                className={`${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-screen h-screen`}
             >
                 <ThemeProvider
                     attribute="class"

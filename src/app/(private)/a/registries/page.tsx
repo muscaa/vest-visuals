@@ -68,8 +68,8 @@ export default function Page() {
         }
     };
 
-    const handleLoad = (key: RegistryKey) => {
-        setKey(key);
+    const handleLoad = (key: RegistryKey | null) => {
+        setKey(key || undefined);
         toast.success("Registry loaded");
     };
 
@@ -90,13 +90,15 @@ export default function Page() {
                             Save
                         </Button>
                         <Dialog>
-                            <DialogTrigger asChild>
-                                <Button
-                                    variant="secondary"
-                                    disabled={!key}
-                                >
-                                    View Schema
-                                </Button>
+                            <DialogTrigger
+                                render={
+                                    <Button
+                                        variant="secondary"
+                                        disabled={!key}
+                                    />
+                                }
+                            >
+                                View Schema
                             </DialogTrigger>
                             <DialogContent className="max-h-screen">
                                 <DialogHeader>

@@ -17,8 +17,8 @@ export default function Page() {
         <Main>
             <div className="flex flex-col justify-center items-center size-full p-8">
                 <Accordion
-                    type="single"
-                    collapsible
+                    // type="single"
+                    // collapsible
                     className="w-full max-w-3xl"
                 >
                     {

@@ -33,6 +33,7 @@ import {
     Breadcrumbs,
     BreadcrumbsProps,
 } from "../breadcrumbs";
+import { splitRender } from "@client/snippets";
 
 interface SimpleSidebarMenuItemProps {
     href?: string;
@@ -45,26 +46,24 @@ interface SimpleSidebarMenuItemProps {
 export function SimpleSidebarMenuItem(props: SimpleSidebarMenuItemProps) {
     return (
         <SidebarMenuSubItem>
-            <SidebarMenuSubButton asChild>
-                {
-                    props.href && (
-                        <Link href={props.href}>
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </Link>
-                    ) || props.onClick && (
-                        <div
-                            className="cursor-pointer"
-                            onClick={props.onClick}
-                        >
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </div>
-                    ) || (
-                        props.children
-                    )
-                }
-            </SidebarMenuSubButton>
+            <SidebarMenuSubButton {...splitRender(
+                props.href && (
+                    <Link href={props.href}>
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </Link>
+                ) || props.onClick && (
+                    <div
+                        className="cursor-pointer"
+                        onClick={props.onClick}
+                    >
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </div>
+                ) || (
+                    props.children
+                )
+            )} />
         </SidebarMenuSubItem>
     );
 }
@@ -78,23 +77,19 @@ interface SimpleSidebarMenuProps {
 export function SimpleSidebarMenu(props: SimpleSidebarMenuProps) {
     return (
         <Collapsible
-            asChild
+            render={<SidebarMenuItem />}
             className="group/collapsible"
         >
-            <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={props.title}>
-                        {props.icon && <props.icon />}
-                        <span>{props.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                    </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                    <SidebarMenuSub>
-                        {props.children}
-                    </SidebarMenuSub>
-                </CollapsibleContent>
-            </SidebarMenuItem>
+            <CollapsibleTrigger render={<SidebarMenuButton tooltip={props.title} />}>
+                {props.icon && <props.icon />}
+                <span>{props.title}</span>
+                <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+                <SidebarMenuSub>
+                    {props.children}
+                </SidebarMenuSub>
+            </CollapsibleContent>
         </Collapsible>
     );
 }
@@ -110,26 +105,24 @@ interface SimpleSidebarItemProps {
 export function SimpleSidebarItem(props: SimpleSidebarItemProps) {
     return (
         <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-                {
-                    props.href && (
-                        <Link href={props.href}>
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </Link>
-                    ) || props.onClick && (
-                        <div
-                            className="cursor-pointer"
-                            onClick={props.onClick}
-                        >
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </div>
-                    ) || (
-                        props.children
-                    )
-                }
-            </SidebarMenuButton>
+            <SidebarMenuButton {...splitRender(
+                props.href && (
+                    <Link href={props.href}>
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </Link>
+                ) || props.onClick && (
+                    <div
+                        className="cursor-pointer"
+                        onClick={props.onClick}
+                    >
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </div>
+                ) || (
+                    props.children
+                )
+            )} />
         </SidebarMenuItem>
     );
 }
@@ -165,11 +158,9 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                            asChild
+                            render={<LogoLink />}
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
-                        >
-                            <LogoLink />
-                        </SidebarMenuButton>
+                        />
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>

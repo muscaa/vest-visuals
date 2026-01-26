@@ -36,5 +36,4 @@ export function Img(props: ImgHTMLAttributes<HTMLImageElement>) {
             {...props}
         />
     );
-
 }

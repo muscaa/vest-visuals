@@ -57,19 +57,19 @@ export function SidebarNavUser(props: SidebarNavUserProps) {
         <SidebarMenu>
             <SidebarMenuItem>
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger render={
                         <SidebarMenuButton
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                        >
-                            <User
-                                {...(props.user ?? {
-                                    name: "unknown",
-                                    email: "m@example.com",
-                                })}
-                            />
-                            <ChevronsUpDown className="ml-auto size-4" />
-                        </SidebarMenuButton>
+                        />
+                    }>
+                        <User
+                            {...(props.user ?? {
+                                name: "unknown",
+                                email: "m@example.com",
+                            })}
+                        />
+                        <ChevronsUpDown className="ml-auto size-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
