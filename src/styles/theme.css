@@ -106,7 +106,7 @@
     --accent: var(--secondary);
     --accent-foreground: var(--primary);
 
-    --border: oklch(0 0 0 / 10%);
+    --border: oklch(0 0 0 / 15%);
     --input: var(--border);
     --ring: var(--primary);
 
@@ -156,7 +156,7 @@
     --accent: var(--secondary);
     --accent-foreground: var(--primary);
 
-    --border: oklch(1 0 0 / 10%);
+    --border: oklch(1 0 0 / 15%);
     --input: var(--border);
     --ring: var(--primary);
 
