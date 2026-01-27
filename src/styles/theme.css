@@ -118,10 +118,8 @@
     --sidebar-accent-foreground: var(--foreground);
     --sidebar-border: var(--border);
     --sidebar-ring: var(--ring);
-}
 
-.theme-light {
-    @apply scheme-light theme-light text-foreground;
+    @apply scheme-light text-foreground;
 }
 
 @utility theme-dark {
@@ -170,10 +168,8 @@
     --sidebar-accent-foreground: var(--foreground);
     --sidebar-border: var(--border);
     --sidebar-ring: var(--ring);
-}
 
-.theme-dark {
-    @apply scheme-dark theme-dark text-foreground;
+    @apply scheme-dark text-foreground;
 }
 
 :root {
