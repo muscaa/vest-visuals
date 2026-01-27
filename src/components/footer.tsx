@@ -107,7 +107,7 @@ export function FooterLarge() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center bg-keppel">
+            <div className="flex justify-center items-center bg-success">
                 <FooterBase />
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">

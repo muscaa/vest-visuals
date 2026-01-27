@@ -42,7 +42,7 @@ export function SectionParallax(props: Props) {
                             <h1 className="font-medium text-center">FOTO & VIDEO</h1>
                         </Reveal>
                         <Reveal delay={800} duration={1000} direction="left">
-                            <h2 className="font-light text-center italic text-foreground32">TIMISOARA | ARAD | ORADEA</h2>
+                            <h2 className="font-light text-center italic text-foreground">TIMISOARA | ARAD | ORADEA</h2>
                         </Reveal>
                     </div>
                     <Reveal delay={1300} duration={1000} direction="up">

@@ -1,9 +1,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --color-background0: var(--background0);
-    --color-foreground0: var(--foreground0);
-
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
@@ -15,6 +12,9 @@
 
     --color-background4: var(--background4);
     --color-foreground4: var(--foreground4);
+
+    --color-background5: var(--background5);
+    --color-foreground5: var(--foreground5);
 
     --font-sans: var(--font-sans);
     --font-mono: var(--font-geist-mono);
@@ -38,6 +38,9 @@
     --color-input: var(--input);
     --color-border: var(--border);
 
+    --color-informative: var(--informative);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
     --color-destructive: var(--destructive);
 
     --color-accent-foreground: var(--accent-foreground);
@@ -70,9 +73,6 @@
 }
 
 @utility theme-light {
-    --background0: var(--light1);
-    --foreground0: var(--dark1);
-
     --background: var(--light1);
     --foreground: var(--dark1);
 
@@ -84,6 +84,9 @@
 
     --background4: var(--light4);
     --foreground4: var(--dark4);
+
+    --background5: var(--light5);
+    --foreground5: var(--dark5);
 
     --card: var(--light2);
     --card-foreground: var(--foreground);
@@ -122,9 +125,6 @@
 }
 
 @utility theme-dark {
-    --background0: var(--dark1);
-    --foreground0: var(--light1);
-
     --background: var(--dark1);
     --foreground: var(--light1);
 
@@ -136,6 +136,9 @@
 
     --background4: var(--dark4);
     --foreground4: var(--light4);
+
+    --background5: var(--dark5);
+    --foreground5: var(--light5);
 
     --card: var(--dark2);
     --card-foreground: var(--foreground);

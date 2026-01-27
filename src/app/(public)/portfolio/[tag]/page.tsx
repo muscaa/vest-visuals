@@ -63,7 +63,7 @@ export default function Page() {
                     }}
                     onClick={() => setOpen(false)}
                     className="
-                        fixed inset-0 z-50 flex justify-center items-center bg-raisin-black/95
+                        fixed inset-0 z-50 flex justify-center items-center bg-black/95
                         transition-all opacity-100
                     "
                 >
