@@ -3,7 +3,10 @@
 import Image from "next/image";
 import logo from ":/logos/vest-visuals-slim.svg";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import {
+    Button,
+    buttonVariants,
+} from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useState } from "react";
@@ -14,38 +17,130 @@ import {
 import { ButtonLink } from "@/components/snippets";
 import {
     CONTACT,
-    FAQ,
+    HOME,
     PORTFOLIO,
 } from "@shared/paths";
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDownIcon } from "lucide-react";
+import { cn } from "@shared/shadcn/lib/utils";
 
-export function LogoSegment() {
-    return (
-        <Link href="/?more">
-            <Image
-                src={logo}
-                alt="Logo"
-                className="size-16"
-            />
-        </Link>
-    );
-}
+type NavEndpoint = {
+    title: string;
+    href: string;
+};
 
-export function MenuSegment() {
-    return (
-        <>
-            <ButtonLink href="/?more" variant="navbar">ACASA</ButtonLink>
-            <ButtonLink href={PORTFOLIO} variant="navbar">PORTOFOLIU</ButtonLink>
-            <ButtonLink href="/services" variant="navbar">SERVICII</ButtonLink>
-            <ButtonLink href={FAQ} variant="navbar">FAQ</ButtonLink>
-            <ButtonLink href={CONTACT} variant="navbar">CONTACT</ButtonLink>
-            <ThemeToggle />
-        </>
-    );
-}
+type NavLink = {
+    type: "list";
+    title: string;
+    endpoints: NavEndpoint[];
+} | ({
+    type: "endpoint";
+} & NavEndpoint);
 
-export interface NavbarProps {
-    logo?: React.ReactNode;
-    menu?: React.ReactNode;
+const navLinks: NavLink[] = [
+    {
+        type: "list",
+        title: "EVENIMENTE",
+        endpoints: [
+            {
+                title: "NUNTA",
+                href: CONTACT,
+            },
+            {
+                title: "BOTEZ",
+                href: CONTACT,
+            },
+            {
+                title: "ANIVERSARE",
+                href: CONTACT,
+            },
+            {
+                title: "MAJORAT",
+                href: CONTACT,
+            },
+            {
+                title: "BUSINESS / CORPORATE",
+                href: CONTACT,
+            },
+        ],
+    },
+    {
+        type: "list",
+        title: "PORTRETE",
+        endpoints: [
+            {
+                title: "PORTRETE OFICIALE",
+                href: CONTACT,
+            },
+            {
+                title: "ALBUME ABSOLVIRE",
+                href: CONTACT,
+            },
+            {
+                title: "MATERNITATE",
+                href: CONTACT,
+            },
+            {
+                title: "NOU-NASCUTI",
+                href: CONTACT,
+            },
+            {
+                title: "STUDIO",
+                href: CONTACT,
+            },
+            {
+                title: "LUMINA NATURALA (OUTDOOR)",
+                href: CONTACT,
+            },
+        ],
+    },
+    {
+        type: "list",
+        title: "COMERCIAL",
+        endpoints: [
+            {
+                title: "IMOBILIARE (REAL ESTATE)",
+                href: CONTACT,
+            },
+            {
+                title: "AUTOMOTIVE",
+                href: CONTACT,
+            },
+            {
+                title: "PRODUSE E-COMMERCE",
+                href: CONTACT,
+            },
+            {
+                title: "PROMOVARE FIRME",
+                href: CONTACT,
+            },
+        ],
+    },
+    {
+        type: "endpoint",
+        title: "PORTOFOLIU",
+        href: PORTFOLIO,
+    },
+    {
+        type: "endpoint",
+        title: "CONTACT",
+        href: CONTACT,
+    },
+];
+
+interface NavbarProps {
 }
 
 export function Navbar(props: NavbarProps) {
@@ -55,11 +150,13 @@ export function Navbar(props: NavbarProps) {
     return (
         <nav className="flex flex-col w-full h-16 justify-center items-center bg-background4 relative shadow-sm">
             <div className="flex size-full max-w-6xl justify-between items-center p-2">
-                {
-                    props.logo ?? (
-                        <LogoSegment />
-                    )
-                }
+                <Link href={HOME}>
+                    <Image
+                        src={logo}
+                        alt="Logo"
+                        className="size-16"
+                    />
+                </Link>
                 <div className="flex items-center gap-2">
                     {
                         isMobile == true && (
@@ -75,21 +172,85 @@ export function Navbar(props: NavbarProps) {
                                 </Button>
                             </>
                         ) || isMobile == false && (
-                            props.menu ?? (
-                                <MenuSegment />
-                            )
+                            <NavigationMenu>
+                                <NavigationMenuList>
+                                    {
+                                        navLinks.map((link, index) => (
+                                            <NavigationMenuItem key={index}>
+                                                {
+                                                    link.type === "list" && (
+                                                        <>
+                                                            <NavigationMenuTrigger>{link.title}</NavigationMenuTrigger>
+                                                            <NavigationMenuContent>
+                                                                <ul className="grid">
+                                                                    {
+                                                                        link.endpoints.map((endpoint, index) => (
+                                                                            <li key={index}>
+                                                                                <NavigationMenuLink render={
+                                                                                    <Link
+                                                                                        href={endpoint.href}
+                                                                                        className="flex-row items-center gap-2"
+                                                                                    >
+                                                                                        {endpoint.title}
+                                                                                    </Link>
+                                                                                } />
+                                                                            </li>
+                                                                        ))
+                                                                    }
+                                                                </ul>
+                                                            </NavigationMenuContent>
+                                                        </>
+                                                    ) || link.type === "endpoint" && (
+                                                        <NavigationMenuLink base="trigger" variant="ghost" render={
+                                                            <Link href={link.href}>
+                                                                {link.title}
+                                                            </Link>
+                                                        } />
+                                                    )
+                                                }
+                                            </NavigationMenuItem>
+                                        ))
+                                    }
+                                    <ThemeToggle />
+                                </NavigationMenuList>
+                            </NavigationMenu>
                         )
                     }
                 </div>
             </div>
             {
                 isMobile == true && menuOpen &&
-                <div className="absolute z-50 top-full flex flex-col gap-2 w-full max-w-6xl justify-center items-center p-2 bg-secondary border-t border-primary shadow-sm">
+                <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-secondary border-t border-b shadow-sm">
                     {
-                        props.menu ?? (
-                            <MenuSegment />
-                        )
+                        navLinks.map((link, index) => (
+                            link.type === "list" && (
+                                <Collapsible key={index} className="w-full text-center">
+                                    <CollapsibleTrigger className={cn(buttonVariants({ variant: "navbar", className: "group/collapsible-trigger group data-panel-open:text-primary" }))}>
+                                        {link.title}
+                                        <ChevronDownIcon className="transition duration-300 group-data-panel-open/collapsible-trigger:rotate-180" />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent className="border-t border-b border-primary">
+                                        <ul className="grid">
+                                            {
+                                                link.endpoints.map((endpoint, index) => (
+                                                    <li key={index}>
+                                                        <ButtonLink variant="navbar" href={endpoint.href}>
+                                                            {endpoint.title}
+                                                        </ButtonLink>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            ) || link.type === "endpoint" && (
+                                <ButtonLink key={index} variant="navbar" href={link.href}>
+                                    {link.title}
+                                </ButtonLink>
+                            )
+                        ))
                     }
+                    <ThemeToggle />
                 </div>
             }
         </nav>

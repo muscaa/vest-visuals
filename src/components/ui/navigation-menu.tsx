@@ -1,5 +1,5 @@
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
-import { cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@shared/shadcn/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
@@ -53,23 +53,42 @@ function NavigationMenuItem({
     )
 }
 
-const navigationMenuTriggerStyle = cva(
-    "bg-background hover:bg-muted focus:bg-muted data-open:hover:bg-muted data-open:focus:bg-muted data-open:bg-muted/50 focus-visible:ring-ring/50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted rounded-2xl px-4.5 py-2.5 text-sm font-medium transition-all focus-visible:ring-[3px] focus-visible:outline-1 disabled:opacity-50 group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center disabled:pointer-events-none outline-none"
+const navigationMenuStyle = cva(
+    "items-center p transition-all focus-visible:ring-[3px] focus-visible:outline-1 outline-none",
+    {
+        variants: {
+            base: {
+                trigger: "rounded-2xl px-4.5 py-2.5 font-medium disabled:opacity-50 group/navigation-menu-trigger inline-flex h-9 w-max justify-center disabled:pointer-events-none group",
+                link: "flex gap-1.5 rounded-xl p-3 [&_svg:not([class*='size-'])]:size-4",
+            },
+            variant: {
+                // default: "bg-background hover:bg-muted focus:bg-muted data-open:hover:bg-muted data-open:focus:bg-muted data-open:bg-muted/50 focus-visible:ring-ring/50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted",
+                ghost: "text-foreground hover:text-primary focus:text-primary data-open:hover:text-primary data-open:focus:text-primary data-open:text-primary focus-visible:ring-ring/50 data-popup-open:text-primary data-popup-open:hover:text-primary",
+                muted: "data-[active=true]:focus:bg-muted data-[active=true]:hover:bg-muted data-[active=true]:bg-muted/50 focus-visible:ring-ring/50 hover:bg-muted focus:bg-muted",
+            },
+        },
+        defaultVariants: {
+            base: "trigger",
+            variant: "ghost",
+        },
+    }
 )
 
 function NavigationMenuTrigger({
     className,
+    base = "trigger",
+    variant = "ghost",
     children,
     ...props
-}: NavigationMenuPrimitive.Trigger.Props) {
+}: NavigationMenuPrimitive.Trigger.Props & VariantProps<typeof navigationMenuStyle>) {
     return (
         <NavigationMenuPrimitive.Trigger
             data-slot="navigation-menu-trigger"
-            className={cn(navigationMenuTriggerStyle(), "group", className)}
+            className={cn(navigationMenuStyle({ base, variant, className }))}
             {...props}
         >
             {children}{" "}
-            <ChevronDownIcon className="relative top-[1px] ml-1 size-3 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180 group-data-popup-open/navigation-menu-trigger:rotate-180" aria-hidden="true" />
+            <ChevronDownIcon className="relative ml-1 size-4 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180 group-data-popup-open/navigation-menu-trigger:rotate-180" aria-hidden="true" />
         </NavigationMenuPrimitive.Trigger>
     )
 }
@@ -121,12 +140,14 @@ function NavigationMenuPositioner({
 
 function NavigationMenuLink({
     className,
+    base = "link",
+    variant = "muted",
     ...props
-}: NavigationMenuPrimitive.Link.Props) {
+}: NavigationMenuPrimitive.Link.Props & VariantProps<typeof navigationMenuStyle>) {
     return (
         <NavigationMenuPrimitive.Link
             data-slot="navigation-menu-link"
-            className={cn("data-[active=true]:focus:bg-muted data-[active=true]:hover:bg-muted data-[active=true]:bg-muted/50 focus-visible:ring-ring/50 hover:bg-muted focus:bg-muted flex items-center gap-1.5 rounded-xl p-3 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4", className)}
+            className={cn(navigationMenuStyle({ base, variant, className }))}
             {...props}
         />
     )
@@ -158,6 +179,6 @@ export {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
+    navigationMenuStyle,
     NavigationMenuPositioner,
 }

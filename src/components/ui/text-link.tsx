@@ -10,8 +10,8 @@ const textLinkVariants = cva(
     {
         variants: {
             variant: {
-                default: "text-accent-foreground hover:underline font-semibold",
-                ghost: "hover:underline hover:text-accent-foreground",
+                default: "underline-offset-4 text-accent-foreground hover:underline font-semibold",
+                ghost: "underline-offset-4 hover:underline hover:text-accent-foreground",
             },
             size: {
                 default: "h-9 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",

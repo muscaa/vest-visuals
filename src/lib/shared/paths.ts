@@ -1,5 +1,5 @@
 // public
-export const HOME = "/";
+export const HOME = "/?more";
 export const CONTACT = "/contact";
 export const FAQ = "/faq";
 export const PORTFOLIO = "/portfolio";
