@@ -76,21 +76,22 @@ interface SimpleSidebarMenuProps {
 
 export function SimpleSidebarMenu(props: SimpleSidebarMenuProps) {
     return (
-        <Collapsible
-            render={<SidebarMenuItem />}
-            className="group/collapsible"
-        >
-            <CollapsibleTrigger render={<SidebarMenuButton tooltip={props.title} />}>
-                {props.icon && <props.icon />}
-                <span>{props.title}</span>
-                <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-                <SidebarMenuSub>
-                    {props.children}
-                </SidebarMenuSub>
-            </CollapsibleContent>
-        </Collapsible>
+        <Collapsible render={
+            <SidebarMenuItem className="group/collapsible">
+                <CollapsibleTrigger render={
+                    <SidebarMenuButton tooltip={props.title}>
+                        {props.icon && <props.icon />}
+                        <span>{props.title}</span>
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                } />
+                <CollapsibleContent>
+                    <SidebarMenuSub>
+                        {props.children}
+                    </SidebarMenuSub>
+                </CollapsibleContent>
+            </SidebarMenuItem>
+        } />
     );
 }
 

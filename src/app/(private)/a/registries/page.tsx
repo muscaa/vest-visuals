@@ -90,16 +90,14 @@ export default function Page() {
                             Save
                         </Button>
                         <Dialog>
-                            <DialogTrigger
-                                render={
-                                    <Button
-                                        variant="secondary"
-                                        disabled={!key}
-                                    />
-                                }
-                            >
-                                View Schema
-                            </DialogTrigger>
+                            <DialogTrigger render={
+                                <Button
+                                    variant="secondary"
+                                    disabled={!key}
+                                >
+                                    View Schema
+                                </Button>
+                            } />
                             <DialogContent className="max-h-screen">
                                 <DialogHeader>
                                     <DialogTitle>Schema</DialogTitle>

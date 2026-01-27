@@ -100,10 +100,10 @@ export function SimpleDialog<V>(props: Props<V>) {
                                 <Button
                                     variant="outline"
                                     className="grow"
-                                />
-                            }>
-                                Cancel
-                            </DialogClose>
+                                >
+                                    Cancel
+                                </Button>
+                            } />
                             <Button
                                 type="submit"
                                 variant={props.destructive ? "destructive" : "default"}
