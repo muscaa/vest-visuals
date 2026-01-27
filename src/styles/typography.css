@@ -1,0 +1,27 @@
+@utility h1 {
+    @apply text-4xl lg:text-5xl font-extrabold;
+}
+
+@utility h2 {
+    @apply text-3xl font-semibold;
+}
+
+@utility h3 {
+    @apply text-2xl font-medium;
+}
+
+@utility h4 {
+    @apply text-xl;
+}
+
+@utility h5 {
+    @apply text-sm;
+}
+
+@utility h6 {
+    @apply text-xs;
+}
+
+@utility p {
+    @apply text-base;
+}

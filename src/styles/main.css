@@ -4,5 +4,6 @@
 @import "shadcn/tailwind.css";
 
 @import "./theme.css";
+@import "./typography.css";
 @import "./utilities.css";
 @import "./base.css";

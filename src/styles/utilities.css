@@ -1,31 +1,3 @@
-@utility h1 {
-    @apply scroll-m-20 text-4xl lg:text-5xl font-extrabold tracking-tight;
-}
-
-@utility h2 {
-    @apply scroll-m-20 text-3xl font-semibold tracking-tight;
-}
-
-@utility h3 {
-    @apply scroll-m-20 text-2xl font-medium tracking-tight;
-}
-
-@utility h4 {
-    @apply scroll-m-20 text-xl tracking-tight;
-}
-
-@utility h5 {
-    @apply scroll-m-20 text-sm tracking-tight;
-}
-
-@utility h6 {
-    @apply scroll-m-20 text-xs tracking-tight;
-}
-
-@utility p {
-    @apply text-base;
-}
-
 @utility cut-corners-* {
     clip-path: polygon(calc(var(--spacing) * --value(number) / sqrt(3)) 0,
             100% 0,
