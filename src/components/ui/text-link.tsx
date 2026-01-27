@@ -1,10 +1,7 @@
 "use client"
 
-import {
-    useRender,
-    mergeProps,
-} from "@base-ui/react";
 import { cva, type VariantProps } from "class-variance-authority"
+import Link from "next/link"
 
 import { cn } from "@shared/shadcn/lib/utils"
 
@@ -37,21 +34,16 @@ const textLinkVariants = cva(
 
 function TextLink({
     className,
-    render,
     variant = "default",
     size = "none",
     ...props
-}: useRender.ComponentProps<"a"> & VariantProps<typeof textLinkVariants>) {
-    return useRender({
-        defaultTagName: "a",
-        props: mergeProps<"a">(
-            {
-                className: cn(textLinkVariants({ variant, size, className })),
-            },
-            props
-        ),
-        render,
-    })
+}: React.ComponentProps<typeof Link> & VariantProps<typeof textLinkVariants>) {
+    return (
+        <Link
+            className={cn(textLinkVariants({ variant, size, className }))}
+            {...props}
+        />
+    )
 }
 
 export { TextLink, textLinkVariants }
