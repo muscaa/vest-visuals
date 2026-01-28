@@ -1,6 +1,5 @@
 "use client";
 
-import { Main } from "@/components/main";
 import { Masonry } from "@/components/masonry";
 import { useParams } from "next/navigation";
 import { PreviewImage } from "@/components/preview-image";
@@ -27,7 +26,7 @@ export default function Page() {
     const [api, setApi] = useState<CarouselApi>();
 
     return (
-        <Main>
+        <>
             <div className="flex justify-center size-full p-2">
                 {
                     data && (
@@ -114,6 +113,6 @@ export default function Page() {
                     </div>
                 </Carousel>
             </Reveal>
-        </Main>
+        </>
     );
 }

@@ -1,5 +1,5 @@
 import {
-    BaseLayout,
+    NavbarLayout,
     createMetadata,
 } from "@/components/layout";
 import { PORTFOLIO } from "@shared/paths";
@@ -9,4 +9,4 @@ export const metadata = createMetadata({
     routeName: "Portofoliu",
 });
 
-export default BaseLayout;
+export default NavbarLayout;

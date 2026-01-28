@@ -8,6 +8,8 @@ import ThemeProvider from "../theme/theme-provider";
 import { ClientLayout } from "./client";
 
 import "@/styles/main.css";
+import { NavbarLayoutProvider } from "./providers/navbar";
+import { SidebarLayoutProvider } from "./providers/sidebar";
 
 export interface MetadataProps {
     route: string;
@@ -75,14 +77,6 @@ export interface LayoutProps {
     children: React.ReactNode;
 }
 
-export function BaseLayout(props: LayoutProps) {
-    return (
-        <>
-            {props.children}
-        </>
-    );
-}
-
 export function RootLayout(props: LayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
@@ -96,10 +90,34 @@ export function RootLayout(props: LayoutProps) {
                     disableTransitionOnChange
                 >
                     <ClientLayout>
-                        <BaseLayout {...props} />
+                        {props.children}
                     </ClientLayout>
                 </ThemeProvider>
             </body>
         </html>
+    );
+}
+
+export function BaseLayout(props: LayoutProps) {
+    return (
+        <>
+            {props.children}
+        </>
+    );
+}
+
+export function NavbarLayout(props: LayoutProps) {
+    return (
+        <NavbarLayoutProvider>
+            <BaseLayout {...props} />
+        </NavbarLayoutProvider>
+    );
+}
+
+export function SidebarLayout(props: LayoutProps) {
+    return (
+        <SidebarLayoutProvider>
+            <BaseLayout {...props} />
+        </SidebarLayoutProvider>
     );
 }

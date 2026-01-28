@@ -1,6 +1,5 @@
 "use client";
 
-import { MainSidebarProvider } from "@/components/sidebar/main";
 import { useRegistries } from "@/hooks/useRegistries";
 import {
     useState,
@@ -30,12 +29,17 @@ import {
     Registries,
 } from "@type/registries";
 import { zodToString } from "@shared/snippets";
+import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 
 export default function Page() {
     const { useRegistryIn, update } = useRegistries();
     const [key, setKey] = useState<RegistryKey>();
     const [value, setValue] = useState<string>();
     const { data } = useRegistryIn(key);
+
+    useBreadcrumbs([
+        "Registries",
+    ]);
 
     useEffect(() => {
         if (!data) return;
@@ -74,72 +78,63 @@ export default function Page() {
     };
 
     return (
-        <MainSidebarProvider
-            breadcrumbs={{
-                page: "Registries",
-            }}
-            extraClassName="overflow-hidden"
-        >
-            {
-                <div className="flex flex-col size-full gap-2">
-                    <div className="flex gap-2">
+        <div className="flex flex-col size-full gap-2">
+            <div className="flex gap-2">
+                <Button
+                    disabled={!key}
+                    onClick={handleSave}
+                >
+                    Save
+                </Button>
+                <Dialog>
+                    <DialogTrigger render={
                         <Button
+                            variant="secondary"
                             disabled={!key}
-                            onClick={handleSave}
                         >
-                            Save
+                            View Schema
                         </Button>
-                        <Dialog>
-                            <DialogTrigger render={
-                                <Button
-                                    variant="secondary"
-                                    disabled={!key}
-                                >
-                                    View Schema
-                                </Button>
-                            } />
-                            <DialogContent className="max-h-screen">
-                                <DialogHeader>
-                                    <DialogTitle>Schema</DialogTitle>
-                                </DialogHeader>
-                                <CodeEditor
-                                    extensions={[javascript()]}
-                                    value={key && zodToString(Registries[key].in)}
-                                    readOnly
-                                    className="max-h-[70vh]"
-                                />
-                                <p>Transforms To:</p>
-                                <CodeEditor
-                                    extensions={[javascript()]}
-                                    value={key && zodToString(Registries[key].out)}
-                                    readOnly
-                                    className="max-h-[70vh]"
-                                />
-                            </DialogContent>
-                        </Dialog>
-                        <Select
-                            value={key}
-                            onValueChange={handleLoad}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Registry" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {
-                                    Object.entries(Registries).map(([key, _], index) => (
-                                        <SelectItem key={index} value={key}>{key}</SelectItem>
-                                    ))
-                                }
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <CodeEditor
-                        extensions={[json()]}
-                        value={value}
-                        onChange={(value) => setValue(value)}
-                    />
-                </div>
-            }
-        </MainSidebarProvider>
+                    } />
+                    <DialogContent className="max-h-screen">
+                        <DialogHeader>
+                            <DialogTitle>Schema</DialogTitle>
+                        </DialogHeader>
+                        <CodeEditor
+                            extensions={[javascript()]}
+                            value={key && zodToString(Registries[key].in)}
+                            readOnly
+                            className="max-h-[70vh]"
+                        />
+                        <p>Transforms To:</p>
+                        <CodeEditor
+                            extensions={[javascript()]}
+                            value={key && zodToString(Registries[key].out)}
+                            readOnly
+                            className="max-h-[70vh]"
+                        />
+                    </DialogContent>
+                </Dialog>
+                <Select
+                    value={key}
+                    onValueChange={handleLoad}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Registry" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {
+                            Object.entries(Registries).map(([key, _], index) => (
+                                <SelectItem key={index} value={key}>{key}</SelectItem>
+                            ))
+                        }
+                    </SelectContent>
+                </Select>
+            </div>
+            <CodeEditor
+                extensions={[json()]}
+                value={value}
+                onChange={(value) => setValue(value)}
+            />
+        </div>
     );
 }

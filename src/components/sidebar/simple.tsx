@@ -2,9 +2,6 @@
 
 import {
     Sidebar,
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
@@ -23,16 +20,10 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Separator } from "@/components/ui/separator";
 import { ChevronRight } from "lucide-react";
 import { Icon } from "../snippets";
 import { LogoLink } from "../logo";
 import Link from "next/link";
-import { cn } from "@shared/shadcn/lib/utils";
-import {
-    Breadcrumbs,
-    BreadcrumbsProps,
-} from "../breadcrumbs";
 import { splitRender } from "@client/snippets";
 
 interface SimpleSidebarMenuItemProps {
@@ -173,46 +164,5 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
-    );
-}
-
-export interface SimpleSidebarProviderProps {
-    sidebar: React.ReactNode;
-    breadcrumbs?: BreadcrumbsProps;
-    className?: string;
-    extraClassName?: string;
-    children?: React.ReactNode;
-}
-
-export function SimpleSidebarProvider(props: SimpleSidebarProviderProps) {
-    return (
-        <SidebarProvider>
-            {props.sidebar}
-            <SidebarInset className="overflow-hidden">
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
-                        <SidebarTrigger className="-ml-1" />
-                        {
-                            props.breadcrumbs && (
-                                <>
-                                    <Separator
-                                        orientation="vertical"
-                                        className="mr-2 data-[orientation=vertical]:h-4"
-                                    />
-                                    <Breadcrumbs
-                                        {...props.breadcrumbs}
-                                    />
-                                </>
-                            )
-                        }
-                    </div>
-                </header>
-                <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
-                    <main className={cn("grow p-4 pt-0", props.extraClassName)}>
-                        {props.children}
-                    </main>
-                </div>
-            </SidebarInset>
-        </SidebarProvider>
     );
 }

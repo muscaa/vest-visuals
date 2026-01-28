@@ -1,20 +1,16 @@
 "use client";
 
-import {
-    SimpleSidebar,
-    SimpleSidebarProvider,
-    SimpleSidebarProviderProps,
-} from "./simple";
+import { SimpleSidebar } from "./simple";
+import { useAuth } from "@/hooks/useAuth";
 import { SidebarNavUser } from "./nav/user";
 import { SidebarNavSettings } from "./nav/settings";
-import { useAuth } from "@/hooks/useAuth";
 import { SidebarNavAdmin } from "./nav/admin";
 
-interface MainSidebarProps {
+interface DashboardSidebarProps {
 
 }
 
-export function MainSidebar(props: MainSidebarProps) {
+export function DashboardSidebar(props: DashboardSidebarProps) {
     const { logout, profile, isAdmin } = useAuth();
 
     return (
@@ -37,16 +33,5 @@ export function MainSidebar(props: MainSidebarProps) {
                 )
             }
         </SimpleSidebar>
-    );
-}
-
-type MainSidebarProviderProps = Omit<SimpleSidebarProviderProps, "sidebar">;
-
-export function MainSidebarProvider(props: MainSidebarProviderProps) {
-    return (
-        <SimpleSidebarProvider
-            {...props}
-            sidebar={<MainSidebar />}
-        />
     );
 }

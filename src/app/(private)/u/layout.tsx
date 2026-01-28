@@ -1,5 +1,5 @@
 import {
-    BaseLayout,
+    SidebarLayout,
     LayoutProps,
     createMetadata,
 } from "@/components/layout";
@@ -26,6 +26,6 @@ export default async function Layout(props: LayoutProps) {
     }
 
     return (
-        <BaseLayout {...props} />
+        <SidebarLayout {...props} />
     );
 }

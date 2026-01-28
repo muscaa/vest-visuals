@@ -1,5 +1,5 @@
 import {
-    BaseLayout,
+    NavbarLayout,
     createMetadata,
 } from "@/components/layout";
 import { EVENIMENTE_NUNTA } from "@shared/paths";
@@ -9,4 +9,4 @@ export const metadata = createMetadata({
     routeName: "Evenimente | Nunta",
 });
 
-export default BaseLayout;
+export default NavbarLayout;

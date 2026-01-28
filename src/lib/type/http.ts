@@ -12,13 +12,13 @@ export type Status5xx = "INTERNAL_SERVER_ERROR" | "NOT_IMPLEMENTED" | "BAD_GATEW
 export type Status = Status2xx | Status3xx | Status4xx | Status5xx;
 
 export type ActionResponse<T> = Promise<[
-    Status4xx | Status5xx,
-    string,
+    status: Status4xx | Status5xx,
+    result: string,
 ] | (
         [T] extends [void] ? [
-            Status2xx | Status3xx,
+            status: Status2xx | Status3xx,
         ] : [
-            Status2xx | Status3xx,
-            T,
+            status: Status2xx | Status3xx,
+            result: T,
         ]
     )>;

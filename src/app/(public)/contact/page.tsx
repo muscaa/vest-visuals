@@ -1,6 +1,5 @@
 "use client";
 
-import { Main } from "@/components/main";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -183,17 +182,15 @@ export default function Page() {
         <GoogleReCaptchaProvider
             reCaptchaKey={clientConfig.env.RECAPTCHA_KEY_SITE}
         >
-            <Main>
-                <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
-                    <Reveal>
-                        <ContactForm />
-                    </Reveal>
-                    <Reveal direction="none">
-                        <h4>SAU</h4>
-                    </Reveal>
-                    <ContactOther />
-                </div>
-            </Main>
+            <div className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
+                <Reveal>
+                    <ContactForm />
+                </Reveal>
+                <Reveal direction="none">
+                    <h4>SAU</h4>
+                </Reveal>
+                <ContactOther />
+            </div>
         </GoogleReCaptchaProvider>
     );
 }

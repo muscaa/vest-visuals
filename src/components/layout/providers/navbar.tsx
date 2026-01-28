@@ -1,3 +1,5 @@
+"use client";
+
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { cn } from "@shared/shadcn/lib/utils";
@@ -10,7 +12,7 @@ export interface MainProps {
     extraClassName?: string;
 }
 
-export function Main(props: MainProps) {
+export function NavbarLayoutProvider(props: MainProps) {
     return (
         <>
             {

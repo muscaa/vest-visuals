@@ -1,5 +1,5 @@
 import {
-    BaseLayout,
+    NavbarLayout,
     createMetadata,
 } from "@/components/layout";
 import { CONTACT } from "@shared/paths";
@@ -9,4 +9,4 @@ export const metadata = createMetadata({
     routeName: "Contact",
 });
 
-export default BaseLayout;
+export default NavbarLayout;

@@ -1,7 +1,7 @@
 "use client";
 
-import { MainSidebarProvider } from "@/components/sidebar/main";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 
 function ThemeOption() {
     return (
@@ -13,15 +13,13 @@ function ThemeOption() {
 }
 
 export default function Page() {
+    useBreadcrumbs([
+        "Preferences",
+    ]);
+
     return (
-        <MainSidebarProvider
-            breadcrumbs={{
-                page: "Preferences",
-            }}
-        >
-            <div className="flex flex-col size-full">
-                <ThemeOption />
-            </div>
-        </MainSidebarProvider>
+        <div className="flex flex-col size-full">
+            <ThemeOption />
+        </div>
     );
 }

@@ -1,6 +1,6 @@
 import {
-    BaseLayout,
     LayoutProps,
+    SidebarLayout,
     createMetadata,
 } from "@/components/layout";
 import { redirect } from "next/navigation";
@@ -28,7 +28,7 @@ export default async function Layout(props: LayoutProps) {
 
     return (
         <DndContextProvider>
-            <BaseLayout {...props} />
+            <SidebarLayout {...props} />
         </DndContextProvider>
     );
 }
