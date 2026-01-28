@@ -140,10 +140,91 @@ const navLinks: NavLink[] = [
     },
 ];
 
-interface NavbarProps {
+function WideMenu() {
+    return (
+        <NavigationMenu>
+            <NavigationMenuList>
+                {
+                    navLinks.map((link, index) => (
+                        <NavigationMenuItem key={index}>
+                            {
+                                link.type === "list" && (
+                                    <>
+                                        <NavigationMenuTrigger>{link.title}</NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <ul className="grid">
+                                                {
+                                                    link.endpoints.map((endpoint, index) => (
+                                                        <li key={index}>
+                                                            <NavigationMenuLink render={
+                                                                <Link
+                                                                    href={endpoint.href}
+                                                                    className="flex-row items-center gap-2"
+                                                                >
+                                                                    {endpoint.title}
+                                                                </Link>
+                                                            } />
+                                                        </li>
+                                                    ))
+                                                }
+                                            </ul>
+                                        </NavigationMenuContent>
+                                    </>
+                                ) || link.type === "endpoint" && (
+                                    <NavigationMenuLink base="trigger" variant="ghost" render={
+                                        <Link href={link.href}>
+                                            {link.title}
+                                        </Link>
+                                    } />
+                                )
+                            }
+                        </NavigationMenuItem>
+                    ))
+                }
+                <ThemeToggle />
+            </NavigationMenuList>
+        </NavigationMenu>
+    );
 }
 
-export function Navbar(props: NavbarProps) {
+function MobileMenu() {
+    return (
+        <>
+            {
+                navLinks.map((link, index) => (
+                    link.type === "list" && (
+                        <Collapsible key={index} className="w-full text-center">
+                            <CollapsibleTrigger className={cn(buttonVariants({ variant: "navbar", className: "group/collapsible-trigger group data-panel-open:text-primary" }))}>
+                                {link.title}
+                                <ChevronDownIcon className="transition duration-300 group-data-panel-open/collapsible-trigger:rotate-180" />
+                            </CollapsibleTrigger>
+                            <CollapsibleContent className="border-t border-b border-primary">
+                                <ul className="grid">
+                                    {
+                                        link.endpoints.map((endpoint, index) => (
+                                            <li key={index}>
+                                                <ButtonLink variant="navbar" href={endpoint.href}>
+                                                    {endpoint.title}
+                                                </ButtonLink>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </CollapsibleContent>
+                        </Collapsible>
+                    ) || link.type === "endpoint" && (
+                        <ButtonLink key={index} variant="navbar" href={link.href}>
+                            {link.title}
+                        </ButtonLink>
+                    )
+                ))
+            }
+            <ThemeToggle />
+        </>
+    );
+}
+
+export function Navbar() {
     const isMobile = useIsMobile();
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -172,48 +253,7 @@ export function Navbar(props: NavbarProps) {
                                 </Button>
                             </>
                         ) || isMobile == false && (
-                            <NavigationMenu>
-                                <NavigationMenuList>
-                                    {
-                                        navLinks.map((link, index) => (
-                                            <NavigationMenuItem key={index}>
-                                                {
-                                                    link.type === "list" && (
-                                                        <>
-                                                            <NavigationMenuTrigger>{link.title}</NavigationMenuTrigger>
-                                                            <NavigationMenuContent>
-                                                                <ul className="grid">
-                                                                    {
-                                                                        link.endpoints.map((endpoint, index) => (
-                                                                            <li key={index}>
-                                                                                <NavigationMenuLink render={
-                                                                                    <Link
-                                                                                        href={endpoint.href}
-                                                                                        className="flex-row items-center gap-2"
-                                                                                    >
-                                                                                        {endpoint.title}
-                                                                                    </Link>
-                                                                                } />
-                                                                            </li>
-                                                                        ))
-                                                                    }
-                                                                </ul>
-                                                            </NavigationMenuContent>
-                                                        </>
-                                                    ) || link.type === "endpoint" && (
-                                                        <NavigationMenuLink base="trigger" variant="ghost" render={
-                                                            <Link href={link.href}>
-                                                                {link.title}
-                                                            </Link>
-                                                        } />
-                                                    )
-                                                }
-                                            </NavigationMenuItem>
-                                        ))
-                                    }
-                                    <ThemeToggle />
-                                </NavigationMenuList>
-                            </NavigationMenu>
+                            <WideMenu />
                         )
                     }
                 </div>
@@ -221,36 +261,7 @@ export function Navbar(props: NavbarProps) {
             {
                 isMobile == true && menuOpen &&
                 <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-secondary border-t border-b shadow-sm">
-                    {
-                        navLinks.map((link, index) => (
-                            link.type === "list" && (
-                                <Collapsible key={index} className="w-full text-center">
-                                    <CollapsibleTrigger className={cn(buttonVariants({ variant: "navbar", className: "group/collapsible-trigger group data-panel-open:text-primary" }))}>
-                                        {link.title}
-                                        <ChevronDownIcon className="transition duration-300 group-data-panel-open/collapsible-trigger:rotate-180" />
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent className="border-t border-b border-primary">
-                                        <ul className="grid">
-                                            {
-                                                link.endpoints.map((endpoint, index) => (
-                                                    <li key={index}>
-                                                        <ButtonLink variant="navbar" href={endpoint.href}>
-                                                            {endpoint.title}
-                                                        </ButtonLink>
-                                                    </li>
-                                                ))
-                                            }
-                                        </ul>
-                                    </CollapsibleContent>
-                                </Collapsible>
-                            ) || link.type === "endpoint" && (
-                                <ButtonLink key={index} variant="navbar" href={link.href}>
-                                    {link.title}
-                                </ButtonLink>
-                            )
-                        ))
-                    }
-                    <ThemeToggle />
+                    <MobileMenu />
                 </div>
             }
         </nav>
