@@ -25,6 +25,7 @@ import { useState } from "react";
 import { clientConfig } from "@client/config";
 import { Reveal } from "@/components/animations/reveal";
 import { useContact } from "@/hooks/useContact";
+import { ButtonLink } from "@/components/snippets";
 
 type ContactStatus = "sending" | "success" | "error";
 
@@ -134,17 +135,15 @@ interface CardLinkProps {
 
 function CardLink(props: CardLinkProps) {
     return (
-        <Link href={props.href} target="_blank">
-            <Button variant="card" size="none" className="cursor-pointer">
-                <div className="flex gap-4 items-center">
-                    <props.icon size={32} strokeWidth={1.5} className="size-8" />
-                    <div className="flex flex-col">
-                        <h4>{props.title}</h4>
-                        <p className="text-muted-foreground">{props.text}</p>
-                    </div>
+        <ButtonLink href={props.href} target="_blank" variant="card" size="none">
+            <div className="flex gap-4 items-center">
+                <props.icon size={32} strokeWidth={1.5} className="size-8" />
+                <div className="flex flex-col">
+                    <h4>{props.title}</h4>
+                    <p className="text-muted-foreground">{props.text}</p>
                 </div>
-            </Button>
-        </Link>
+            </div>
+        </ButtonLink>
     );
 }
 

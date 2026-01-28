@@ -18,7 +18,7 @@ const buttonVariants = cva(
                 link: "text-primary underline-offset-4 hover:underline",
                 // TODO
                 navbar: "underline-offset-4 hover:text-primary",
-                card: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 p-4 w-full justify-start text-start",
+                card: "border-border bg-card hover:bg-accent text-card-foreground hover:text-accent-foreground w-full justify-start text-start overflow-hidden rounded-2xl p-4 has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl group/card",
                 neutral: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
                 transparent: "bg-secondary/60 text-secondary-foreground shadow-xs hover:bg-secondary/80",
                 // TODO

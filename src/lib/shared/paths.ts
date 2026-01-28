@@ -7,6 +7,8 @@ export const PORTFOLIO_$TAG = (tag: string) => `${PORTFOLIO}/${tag}`;
 export const LOGIN = "/login";
 export const LOGIN_VERIFY = `${LOGIN}/verify`;
 export const REGISTER = "/register";
+const EVENIMENTE = "/evenimente";
+export const EVENIMENTE_NUNTA = `${EVENIMENTE}/nunta`;
 
 // private
 export const U = "/u";
