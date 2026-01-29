@@ -2,10 +2,10 @@ import {
     NavbarLayout,
     createMetadata,
 } from "@/components/layout";
-import { EVENIMENTE_NUNTA } from "@shared/paths";
+import { EVENTS_WEDDING } from "@shared/paths";
 
 export const metadata = createMetadata({
-    route: EVENIMENTE_NUNTA,
+    route: EVENTS_WEDDING,
     routeName: "Evenimente | Nunta",
 });
 
