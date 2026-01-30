@@ -48,7 +48,7 @@ function CarouselControls() {
                 size="icon-lg"
                 className="relative inset-0 translate-y-0"
             />
-            <p className="font-mono">{at}/{max}</p>
+            <p className="font-mono">{String(at).padStart(String(max).length, "0")}/{max}</p>
             <CarouselNext
                 variant="transparent"
                 size="icon-lg"
@@ -72,7 +72,7 @@ export function SectionPreview(props: Props) {
             >
                 <CarouselContent className="m-0">
                     {
-                        Array.from({ length: 5 }).map((_, index) => ( // TODO
+                        Array.from({ length: 5000 }).map((_, index) => ( // TODO
                             <CarouselItem key={index} className="p-0">
                                 <Img
                                     src="http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large"
