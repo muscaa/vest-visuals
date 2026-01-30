@@ -17,7 +17,7 @@ import {
 import { ButtonLink } from "@/components/snippets";
 import {
     CONTACT,
-    EVENTS_WEDDING,
+    SERVICES_WEDDING,
     HOME,
     PORTFOLIO,
 } from "@shared/paths";
@@ -57,7 +57,7 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "NUNTA",
-                href: EVENTS_WEDDING,
+                href: SERVICES_WEDDING,
             },
             {
                 title: "BOTEZ",

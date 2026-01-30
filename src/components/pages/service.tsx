@@ -1,8 +1,10 @@
-"use client";
+import { SectionOffers } from "../sections/offers";
 
-import { SectionOffers } from "@/components/sections/offers";
+interface Props {
 
-export default function Page() {
+}
+
+export function ServicePage(props: Props) {
     return (
         <div className="flex flex-col justify-center items-center size-full p-8">
             <SectionOffers />
