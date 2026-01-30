@@ -16,8 +16,8 @@
     --color-background5: var(--background5);
     --color-foreground5: var(--foreground5);
 
-    --font-sans: var(--font-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-inter);
+    --font-mono: var(--font-jetbrains-mono);
 
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);

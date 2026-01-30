@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import {
     Inter,
-    Geist,
-    Geist_Mono,
+    JetBrains_Mono,
 } from "next/font/google";
 import ThemeProvider from "../theme/theme-provider";
 import { ClientLayout } from "./client";
@@ -62,15 +61,11 @@ export function createMetadata(props: MetadataProps): Metadata {
 
 export const inter = Inter({
     subsets: ["latin"],
-    variable: "--font-sans",
+    variable: "--font-inter",
 });
-export const geistSans = Geist({
+export const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
-    variable: "--font-geist-sans",
-});
-export const geistMono = Geist_Mono({
-    subsets: ["latin"],
-    variable: "--font-geist-mono",
+    variable: "--font-jetbrains-mono",
 });
 
 export interface LayoutProps {
@@ -81,7 +76,7 @@ export function RootLayout(props: LayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-screen h-screen`}
+                className={`${inter.className} ${jetbrainsMono.variable} antialiased flex flex-col w-screen h-screen`}
             >
                 <ThemeProvider
                     attribute="class"
