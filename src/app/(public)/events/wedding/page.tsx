@@ -1,11 +1,11 @@
 "use client";
 
-import { SectionTestimonials } from "@/components/sections/testimonials";
+import { SectionOffers } from "@/components/sections/offers";
 
 export default function Page() {
     return (
         <div className="flex flex-col justify-center items-center size-full p-8">
-            <SectionTestimonials />
+            <SectionOffers />
         </div>
     );
 }
