@@ -48,7 +48,7 @@ function CarouselControls() {
                 size="icon-lg"
                 className="relative inset-0 translate-y-0"
             />
-            <p className="font-mono">{String(at).padStart(String(max).length, "0")}/{max}</p>
+            <span className="font-mono theme-dark text-shadow-lg">{String(at).padStart(String(max).length, "0")}/{max}</span>
             <CarouselNext
                 variant="transparent"
                 size="icon-lg"
@@ -64,7 +64,7 @@ interface Props {
 
 export function SectionPreview(props: Props) {
     return (
-        <section id="preview" className={cn("flex w-full h-[calc(100dvh-4rem)] h-vh", props.className)}>
+        <section id="preview" className={cn("relative flex w-full h-[calc(100dvh-4rem)]", props.className)}>
             <Carousel
                 opts={{
                     loop: true,
@@ -72,7 +72,7 @@ export function SectionPreview(props: Props) {
             >
                 <CarouselContent className="m-0">
                     {
-                        Array.from({ length: 5000 }).map((_, index) => ( // TODO
+                        Array.from({ length: 5 }).map((_, index) => ( // TODO
                             <CarouselItem key={index} className="p-0">
                                 <Img
                                     src="http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large"
@@ -84,7 +84,10 @@ export function SectionPreview(props: Props) {
                 </CarouselContent>
                 <CarouselControls />
             </Carousel>
-            {/* TODO: add title & description */}
+            <div className="absolute size-full flex flex-col justify-center items-center gap-8 text-center text-shadow-lg pointer-events-none theme-dark">
+                <h1 className="font-mono">Fotograf de Evenimente și Povești Autentice</h1>
+                <p>Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.</p>
+            </div>
         </section>
     );
 }
