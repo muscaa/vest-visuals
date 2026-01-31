@@ -5,11 +5,27 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 
-interface OffersCardProps {
+interface ExtraCardProps {
 
 }
 
-function OffersCard(props: OffersCardProps) {
+function ExtraCard(props: ExtraCardProps) {
+    return (
+        <InfoCard className="flex justify-between p-4 border-l-4 border-primary">
+            <p className="">FOTOGRAF SECUNDAR</p>
+            <div className="flex items-end">
+                <p className="font-extrabold">400</p>
+                <p className="font-light">€</p>
+            </div>
+        </InfoCard>
+    );
+}
+
+interface OfferCardProps {
+
+}
+
+function OfferCard(props: OfferCardProps) {
     return (
         <InfoCard>
             <Video className="text-primary size-16 mb-2" />
@@ -48,13 +64,23 @@ interface Props {
 
 export function SectionOffers(props: Props) {
     return (
-        <section id="testimonials" className="flex justify-center items-center gap-8 px-2 py-16">
-            <OffersCard>
-            </OffersCard>
-            <OffersCard>
-            </OffersCard>
-            <OffersCard>
-            </OffersCard>
+        <section id="offers" className="flex flex-col justify-center items-center gap-8 px-2 py-16">
+            <div className="flex gap-8">
+                <OfferCard />
+                <OfferCard />
+                <OfferCard />
+            </div>
+            <h2 className="font-mono">Extra</h2>
+            <div className="flex flex-wrap max-w-8xl justify-center gap-4">
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+                <ExtraCard />
+            </div>
         </section>
     );
 }
