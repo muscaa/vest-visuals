@@ -1,3 +1,5 @@
+import { SectionContact } from "../sections/contact";
+import { SectionFAQ } from "../sections/faq";
 import { SectionOffers } from "../sections/offers";
 import { SectionPreview } from "../sections/preview";
 
@@ -10,6 +12,8 @@ export function ServicePage(props: Props) {
         <div className="flex flex-col justify-center items-center size-full">
             <SectionPreview />
             <SectionOffers />
+            <SectionFAQ />
+            <SectionContact />
         </div>
     );
 }
