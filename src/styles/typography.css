@@ -1,27 +1,55 @@
-@utility h1 {
-    @apply text-4xl lg:text-5xl font-extrabold;
+/* paragraphs */
+
+@utility p1 {
+    @apply text-3xl lg:text-4xl;
 }
 
-@utility h2 {
-    @apply text-3xl font-semibold;
+@utility p2 {
+    @apply text-2xl lg:text-3xl;
 }
 
-@utility h3 {
-    @apply text-2xl font-medium;
+@utility p3 {
+    @apply text-xl lg:text-2xl;
 }
 
-@utility h4 {
-    @apply text-xl;
-}
-
-@utility h5 {
-    @apply text-sm;
-}
-
-@utility h6 {
-    @apply text-xs;
+@utility p4 {
+    @apply text-lg lg:text-xl;
 }
 
 @utility p {
     @apply text-base;
+}
+
+@utility p5 {
+    @apply text-sm;
+}
+
+@utility p6 {
+    @apply text-xs;
+}
+
+/* headings */
+
+@utility h1 {
+    @apply p1 font-extrabold;
+}
+
+@utility h2 {
+    @apply p2 font-bold;
+}
+
+@utility h3 {
+    @apply p3 font-semibold;
+}
+
+@utility h4 {
+    @apply p4 font-medium;
+}
+
+@utility h5 {
+    @apply p5 font-light;
+}
+
+@utility h6 {
+    @apply p6 font-extralight;
 }
