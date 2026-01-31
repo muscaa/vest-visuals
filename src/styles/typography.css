@@ -1,5 +1,9 @@
 /* paragraphs */
 
+@utility p0 {
+    @apply text-4xl lg:text-5xl;
+}
+
 @utility p1 {
     @apply text-3xl lg:text-4xl;
 }
@@ -29,6 +33,10 @@
 }
 
 /* headings */
+
+@utility h0 {
+    @apply p0 font-extrabold;
+}
 
 @utility h1 {
     @apply p1 font-extrabold;
