@@ -18,7 +18,7 @@ export function SectionFAQ(props: Props) {
     }));
 
     return (
-        <section id="faq" className="flex flex-col justify-center items-center gap-8 size-full">
+        <section id="faq" className="flex flex-col justify-center items-center gap-8">
             <h1>FAQ</h1>
             <Accordion
                 className="w-full max-w-6xl flex-row flex-wrap justify-center border-b-0"
