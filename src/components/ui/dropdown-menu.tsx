@@ -64,7 +64,7 @@ function DropdownMenuLabel({
         <MenuPrimitive.GroupLabel
             data-slot="dropdown-menu-label"
             data-inset={inset}
-            className={cn("text-muted-foreground px-3 py-2.5 h6 data-[inset]:pl-8", className)}
+            className={cn("text-muted-foreground px-3 py-2.5 p6 data-[inset]:pl-8", className)}
             {...props}
         />
     )
@@ -229,7 +229,7 @@ function DropdownMenuShortcut({
     return (
         <span
             data-slot="dropdown-menu-shortcut"
-            className={cn("text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground ml-auto h6 tracking-widest", className)}
+            className={cn("text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground ml-auto p6 tracking-widest", className)}
             {...props}
         />
     )

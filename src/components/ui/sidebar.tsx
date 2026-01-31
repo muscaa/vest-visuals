@@ -488,7 +488,7 @@ const sidebarMenuButtonVariants = cva(
             },
             size: {
                 default: "h-10 p",
-                sm: "h-8 h6",
+                sm: "h-8 p6",
                 lg: "h-14 p group-data-[collapsible=icon]:p-0!",
             },
         },
@@ -592,7 +592,7 @@ function SidebarMenuBadge({
             data-slot="sidebar-menu-badge"
             data-sidebar="menu-badge"
             className={cn(
-                "text-sidebar-foreground peer-hover/menu-button:text-sidebar-accent-foreground peer-data-active/menu-button:text-sidebar-accent-foreground pointer-events-none absolute right-1 h-5 min-w-5 rounded-md px-1 h6 font-medium peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 flex items-center justify-center tabular-nums select-none group-data-[collapsible=icon]:hidden",
+                "text-sidebar-foreground peer-hover/menu-button:text-sidebar-accent-foreground peer-data-active/menu-button:text-sidebar-accent-foreground pointer-events-none absolute right-1 h-5 min-w-5 rounded-md px-1 p6 font-medium peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 flex items-center justify-center tabular-nums select-none group-data-[collapsible=icon]:hidden",
                 className
             )}
             {...props}

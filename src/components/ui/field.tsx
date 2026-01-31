@@ -26,7 +26,7 @@ function FieldLegend({
         <legend
             data-slot="field-legend"
             data-variant={variant}
-            className={cn("mb-3 font-medium data-[variant=label]:p data-[variant=legend]:h4", className)}
+            className={cn("mb-3 font-medium data-[variant=label]:p data-[variant=legend]:p4", className)}
             {...props}
         />
     )
