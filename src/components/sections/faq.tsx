@@ -20,7 +20,7 @@ export function SectionFAQ(props: SectionFAQProps) {
             id="faq"
             className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
         >
-            <h2 className="font-mono">{props.title}</h2>
+            <h2 className="font-mono text-center">{props.title}</h2>
             <Accordion className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2">
                 {
                     props.qna.map(([question, answer], index) => (

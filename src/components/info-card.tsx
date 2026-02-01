@@ -14,8 +14,8 @@ interface Props {
 
 export function InfoCard(props: Props) {
     return (
-        <Card className={cn("p-0 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300", props.extraClassName)}>
-            <CardContent className={cn("p-10 w-sm", props.className)}>
+        <Card className={cn("p-0 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-visible", props.extraClassName)}>
+            <CardContent className={cn("relative flex p-10 w-sm", props.className)}>
                 {props.children}
             </CardContent>
         </Card>
