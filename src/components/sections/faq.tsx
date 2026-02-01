@@ -5,34 +5,24 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 
-interface Props {
+type FAQ = [question: string, answer: React.ReactNode];
 
+export interface SectionFAQProps {
+    title: string;
+    qna: FAQ[];
 }
 
-export function SectionFAQ(props: Props) {
-    const data = Array.from({ length: 6 }).map((_, index) => ({
-        title: `${index + 1}. Cate fotografii vom primi si in cat timp?`,
-        lines: [
-            "Cate fotografii vom primi si in cat timp",
-        ],
-    }));
-
+export function SectionFAQ(props: SectionFAQProps) {
     return (
-        <section id="faq" className="flex flex-col justify-center items-center gap-8">
-            <h1>FAQ</h1>
-            <Accordion
-                className="w-full max-w-6xl flex-row flex-wrap justify-center border-b-0"
-            >
+        <section id="faq" className="flex flex-col justify-center items-center gap-8 p-8 w-full">
+            <h2 className="font-mono">{props.title}</h2>
+            <Accordion className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2">
                 {
-                    data && data.map((faq, index) => (
-                        <AccordionItem key={index} value={`item-${index}`} className="grow last:border-b">
-                            <AccordionTrigger  >{faq.title}</AccordionTrigger>
+                    props.qna.map(([question, answer], index) => (
+                        <AccordionItem key={index} value={`item-${index}`} className="md:nth-last-2:odd:border-b-0 md:last:odd:col-span-2">
+                            <AccordionTrigger>{question}</AccordionTrigger>
                             <AccordionContent className="flex flex-col text-balance">
-                                {
-                                    faq.lines.map((line, index) => (
-                                        <p key={index}>{line || "\u00A0"}</p>
-                                    ))
-                                }
+                                {answer}
                             </AccordionContent>
                         </AccordionItem>
                     ))
