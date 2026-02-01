@@ -11,7 +11,7 @@ interface ExtraCardProps {
 
 function ExtraCard(props: ExtraCardProps) {
     return (
-        <InfoCard className="flex justify-between p-4 border-l-4 border-primary">
+        <InfoCard className="flex justify-between p-4 border-l-4 border-l-primary">
             <p className="">FOTOGRAF SECUNDAR</p>
             <div className="flex items-end">
                 <p className="font-extrabold">400</p>
@@ -22,12 +22,12 @@ function ExtraCard(props: ExtraCardProps) {
 }
 
 interface OfferCardProps {
-
+    accent?: boolean;
 }
 
 function OfferCard(props: OfferCardProps) {
     return (
-        <InfoCard>
+        <InfoCard extraClassName={`${props.accent ? "ring-2 ring-primary" : ""}`}>
             <Video className="text-primary size-16 mb-2" />
             <h3 className="mb-6 text-primary font-bold">VIDEOGRAFIE 4K</h3>
             <div className="flex items-end w-full my-4">
@@ -51,7 +51,7 @@ function OfferCard(props: OfferCardProps) {
                     ))
                 }
             </div>
-            <Button variant="default" size="lg" className="mt-6 w-full">
+            <Button variant={props.accent ? "default" : "secondary"} size="lg" className="mt-6 w-full">
                 Rezerva Videograful
             </Button>
         </InfoCard>
@@ -67,7 +67,7 @@ export function SectionOffers(props: Props) {
         <section id="offers" className="flex flex-col justify-center items-center gap-8 px-2 py-16">
             <div className="flex gap-8">
                 <OfferCard />
-                <OfferCard />
+                <OfferCard accent />
                 <OfferCard />
             </div>
             <h2 className="font-mono">Extra</h2>

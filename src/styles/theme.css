@@ -73,22 +73,22 @@
 }
 
 @utility theme-light {
-    --background: var(--light1);
+    --background: var(--light2);
     --foreground: var(--dark1);
 
-    --background2: var(--light2);
+    --background2: var(--light3);
     --foreground2: var(--dark2);
 
-    --background3: var(--light3);
+    --background3: var(--light4);
     --foreground3: var(--dark3);
 
-    --background4: var(--light4);
+    --background4: var(--light5);
     --foreground4: var(--dark4);
 
-    --background5: var(--light5);
+    --background5: var(--light1);
     --foreground5: var(--dark5);
 
-    --card: var(--light2);
+    --card: var(--light1);
     --card-foreground: var(--foreground);
 
     --popover: var(--card);
@@ -100,7 +100,7 @@
     --secondary: var(--light3);
     --secondary-foreground: var(--foreground);
 
-    --muted: var(--secondary);
+    --muted: var(--light4);
     --muted-foreground: var(--color5);
 
     --accent: var(--secondary);
@@ -114,7 +114,7 @@
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--primary);
     --sidebar-primary-foreground: var(--primary-foreground);
-    --sidebar-accent: var(--secondary);
+    --sidebar-accent: var(--accent);
     --sidebar-accent-foreground: var(--foreground);
     --sidebar-border: var(--border);
     --sidebar-ring: var(--ring);
@@ -147,10 +147,10 @@
     --primary: var(--color1);
     --primary-foreground: var(--light1);
 
-    --secondary: var(--dark3);
+    --secondary: var(--dark4);
     --secondary-foreground: var(--foreground);
 
-    --muted: var(--secondary);
+    --muted: var(--dark3);
     --muted-foreground: var(--color5);
 
     --accent: var(--secondary);
@@ -164,7 +164,7 @@
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--primary);
     --sidebar-primary-foreground: var(--primary-foreground);
-    --sidebar-accent: var(--secondary);
+    --sidebar-accent: var(--accent);
     --sidebar-accent-foreground: var(--foreground);
     --sidebar-border: var(--border);
     --sidebar-ring: var(--ring);
@@ -198,11 +198,11 @@
     --warning: var(--color3);
     --destructive: var(--color4);
 
-    --chart-1: oklch(0.83 0.10 230); /* TODO */
-    --chart-2: oklch(0.75 0.14 233); /* TODO */
+    --chart-1: color-mix(in oklab, white 30%, var(--color1));
+    --chart-2: color-mix(in oklab, white 15%, var(--color1));
     --chart-3: var(--color1);
-    --chart-4: oklch(0.59 0.14 242); /* TODO */
-    --chart-5: oklch(0.50 0.12 243); /* TODO */
+    --chart-4: color-mix(in oklab, black 15%, var(--color1));
+    --chart-5: color-mix(in oklab, black 30%, var(--color1));
 
     @apply theme-light;
 }

@@ -230,7 +230,7 @@ export function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <nav className="flex flex-col w-full h-16 justify-center items-center bg-background4 relative shadow-sm">
+        <nav className="flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50">
             <div className="flex size-full max-w-6xl justify-between items-center p-2">
                 <Link href={HOME}>
                     <Image
@@ -261,7 +261,7 @@ export function Navbar() {
             </div>
             {
                 isMobile == true && menuOpen &&
-                <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-secondary border-t border-b shadow-sm">
+                <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-popover border-t border-b shadow-sm">
                     <MobileMenu />
                 </div>
             }
