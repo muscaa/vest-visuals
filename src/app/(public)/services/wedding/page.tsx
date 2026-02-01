@@ -5,6 +5,14 @@ import { ServicePage } from "@/components/pages/service";
 export default function Page() {
     return (
         <ServicePage
+            preview={{
+                title: "Fotograf de Evenimente și Povești Autentice",
+                description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
+                images: [
+                    "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
+                    "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
+                ],
+            }}
             faq={{
                 title: "Intrebari Frecvente (FAQ)",
                 qna: [

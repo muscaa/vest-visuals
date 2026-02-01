@@ -56,11 +56,14 @@ function CarouselControls() {
     );
 }
 
-interface Props {
+export interface SectionPreviewProps {
+    title: string;
+    description: string;
+    images: string[];
     className?: string;
 }
 
-export function SectionPreview(props: Props) {
+export function SectionPreview(props: SectionPreviewProps) {
     return (
         <section
             id="preview"
@@ -73,10 +76,10 @@ export function SectionPreview(props: Props) {
             >
                 <CarouselContent className="m-0">
                     {
-                        Array.from({ length: 5 }).map((_, index) => ( // TODO
+                        props.images.map((image, index) => (
                             <CarouselItem key={index} className="p-0">
                                 <Img
-                                    src="http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large"
+                                    src={image}
                                     className="size-full object-cover"
                                 />
                             </CarouselItem>
@@ -86,8 +89,8 @@ export function SectionPreview(props: Props) {
                 <CarouselControls />
             </Carousel>
             <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-8 text-center text-shadow-lg pointer-events-none theme-dark">
-                <h1 className="font-mono">Fotograf de Evenimente și Povești Autentice</h1>
-                <p>Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.</p>
+                <h1 className="font-mono">{props.title}</h1>
+                <p>{props.description}</p>
             </div>
         </section>
     );
