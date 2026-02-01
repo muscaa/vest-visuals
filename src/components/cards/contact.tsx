@@ -48,7 +48,7 @@ export function ContactCard(props: Props) {
             submitDisabled={name.length == 0 || email.length == 0 || message.length == 0}
             onSuccess={props.onContact}
             footer={CardFooterReCaptchaHorizontal}
-            className="w-xs lg:w-md"
+            className="w-xs sm:w-md"
         >
             <FieldGroup>
                 <Field>
