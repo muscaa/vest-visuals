@@ -26,7 +26,7 @@ export default function Page() {
                             <div className="flex gap-2 items-center">
                                 <p>2FA: {profile.twoFactorEnabled ? "enabled ✅" : "disabled ❌"}</p>
                                 <TwoFactorDialog enabled={!!profile.twoFactorEnabled}>
-                                    <Button size="sm">Toggle 2FA</Button>
+                                    <Button>Toggle 2FA</Button>
                                 </TwoFactorDialog>
                             </div>
                         </div>

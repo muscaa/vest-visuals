@@ -51,7 +51,7 @@ function OfferCard(props: OfferCardProps) {
                     ))
                 }
             </div>
-            <Button variant="default" size="xl" className="mt-6 w-full">
+            <Button variant="default" size="lg" className="mt-6 w-full">
                 Rezerva Videograful
             </Button>
         </InfoCard>

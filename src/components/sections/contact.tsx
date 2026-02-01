@@ -11,6 +11,7 @@ import {
     Icon,
 } from "@/components/snippets";
 import { ContactCard } from "../cards/contact";
+import { cn } from "@shared/shadcn/lib/utils";
 
 interface OtherLinkProps {
     href: string;
@@ -65,12 +66,15 @@ function Other() {
 }
 
 interface Props {
-
+    className?: string;
 }
 
 export function SectionContact(props: Props) {
     return (
-        <section id="contact" className="flex flex-col lg:flex-row items-center justify-center size-full gap-8 py-8">
+        <section
+            id="contact"
+            className={cn("flex flex-col lg:flex-row items-center justify-center gap-8 py-8", props.className)}
+        >
             <Reveal>
                 <ContactCard />
             </Reveal>

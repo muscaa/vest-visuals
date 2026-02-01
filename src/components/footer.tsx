@@ -101,7 +101,7 @@ export function FooterLarge() {
                                 Iti raspundem intrebarilor legate de serviciile oferite de noi.
                             </p>
                             <div className="flex gap-4">
-                                <ButtonLink href={CONTACT} size="lg">CONTACT</ButtonLink>
+                                <ButtonLink href={CONTACT}>CONTACT</ButtonLink>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@ export function FooterLarge() {
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
                 <ButtonLink href="#start" variant="secondary" size="icon">
-                    <ChevronsUp size={32} strokeWidth={1.5} className="size-8" />
+                    <ChevronsUp className="size-8" />
                 </ButtonLink>
             </div>
         </footer>

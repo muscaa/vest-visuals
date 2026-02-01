@@ -49,7 +49,6 @@ export function SectionParallax(props: Props) {
                         <ButtonLink
                             href="/?more"
                             variant="neutral"
-                            size="lg"
                             className="theme-light"
                             onClick={() => props.setMore(true)}
                         >

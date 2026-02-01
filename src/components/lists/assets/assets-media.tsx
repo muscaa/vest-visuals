@@ -17,6 +17,7 @@ import { AssetsMedia } from "@type/assets/media";
 import { AssetsMediaUploadDialog } from "@/components/dialogs/assets/assets-media-upload";
 import { AssetsMediaDeleteDialog } from "@/components/dialogs/assets/assets-media-delete";
 import { PLACEHOLDER } from "@shared/paths";
+import { TextLink } from "@/components/ui/text-link";
 
 interface ListEntryProps {
     value: AssetsMedia;
@@ -40,15 +41,13 @@ function ListEntry(props: ListEntryProps) {
                         <div className="flex gap-2 items-center">
                             {
                                 props.value.assetsMediaVariants.map((variant, index) => (
-                                    <ButtonLink
+                                    <TextLink
                                         key={index}
                                         href={variant.fileUrl}
                                         target="_blank"
-                                        size="none"
-                                        variant="link"
                                     >
                                         {variant.tag}
-                                    </ButtonLink>
+                                    </TextLink>
                                 ))
                             }
                         </div>

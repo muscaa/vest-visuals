@@ -243,12 +243,12 @@ export function Navbar() {
                     {
                         isMobile == true && (
                             <>
-                                <Button variant="navbar" onClick={() => setMenuOpen(!menuOpen)}>
+                                <Button variant="navbar" size="icon" onClick={() => setMenuOpen(!menuOpen)}>
                                     {
                                         menuOpen && (
-                                            <X strokeWidth={1.5} className="size-6" />
+                                            <X />
                                         ) || (
-                                            <Menu strokeWidth={1.5} className="size-6" />
+                                            <Menu />
                                         )
                                     }
                                 </Button>

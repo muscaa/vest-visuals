@@ -67,12 +67,11 @@ function ListEntry(props: ListEntryProps) {
                 !props.disabled && (
                     <div className="flex flex-col items-center justify-center gap-2">
                         <Button
-                            size="none"
+                            size="icon-lg"
                             variant="link"
-                            className="w-10"
                             {...props.sortable.listeners}
                         >
-                            <GripVertical strokeWidth={1.5} className="size-10" />
+                            <GripVertical />
                         </Button>
                     </div>
                 )

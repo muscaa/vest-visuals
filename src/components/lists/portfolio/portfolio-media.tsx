@@ -24,6 +24,7 @@ import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
 import { PortfolioMediaUploadDialog } from "@/components/dialogs/portfolio/portfolio-media-upload";
 import { PortfolioMediaDeleteDialog } from "@/components/dialogs/portfolio/portfolio-media-delete";
 import { PLACEHOLDER } from "@shared/paths";
+import { TextLink } from "@/components/ui/text-link";
 
 interface ListEntryProps {
     value: PortfolioMedia;
@@ -49,15 +50,13 @@ function ListEntry(props: ListEntryProps) {
                         <div className="flex gap-2 items-center">
                             {
                                 props.value.portfolioMediaVariants.map((variant, index) => (
-                                    <ButtonLink
+                                    <TextLink
                                         key={index}
                                         href={variant.fileUrl}
                                         target="_blank"
-                                        size="none"
-                                        variant="link"
                                     >
                                         {variant.tag}
-                                    </ButtonLink>
+                                    </TextLink>
                                 ))
                             }
                         </div>
@@ -76,12 +75,11 @@ function ListEntry(props: ListEntryProps) {
                 !props.disabled && (
                     <div className="flex flex-col items-center justify-center gap-2">
                         <Button
-                            size="none"
+                            size="icon-lg"
                             variant="link"
-                            className="w-10"
                             {...props.sortable.listeners}
                         >
-                            <GripVertical strokeWidth={1.5} className="size-10" />
+                            <GripVertical />
                         </Button>
                     </div>
                 )

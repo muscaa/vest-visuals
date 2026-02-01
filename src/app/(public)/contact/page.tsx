@@ -6,7 +6,7 @@ import { SectionContact } from "@/components/sections/contact";
 export default function Page() {
     return (
         <ReCaptchaProvider>
-            <SectionContact />
+            <SectionContact className="size-full" />
         </ReCaptchaProvider>
     );
 }

@@ -108,7 +108,7 @@ export default function Page() {
                                 setOpen(false);
                             }}
                         >
-                            <X strokeWidth={1.5} className="size-6" />
+                            <X />
                         </Button>
                     </div>
                 </Carousel>

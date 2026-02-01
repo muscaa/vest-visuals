@@ -4,7 +4,6 @@ import { SimpleCard } from "./simple";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { useAuth } from "@/hooks/useAuth";
-import { ButtonLink } from "../snippets";
 import { REGISTER } from "@shared/paths";
 import { CardFooterReCaptchaVertical } from "./footers";
 import {
@@ -13,6 +12,7 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
+import { TextLink } from "../ui/text-link";
 
 interface Props {
     onLogin?: () => void;
@@ -79,9 +79,9 @@ export function LoginCard(props: Props) {
                 <Field>
                     <FieldDescription>
                         Don&apos;t have an account?{" "}
-                        <ButtonLink href={REGISTER} variant="link" size="none">
+                        <TextLink href={REGISTER}>
                             Register
-                        </ButtonLink>
+                        </TextLink>
                     </FieldDescription>
                 </Field>
             </FieldGroup>

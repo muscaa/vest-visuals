@@ -13,6 +13,7 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
+import { TextLink } from "../ui/text-link";
 
 interface Props {
     onLogin?: () => void;
@@ -79,9 +80,9 @@ export function RegisterCard(props: Props) {
                 <Field>
                     <FieldDescription>
                         Already have an account?{" "}
-                        <ButtonLink href={LOGIN} variant="link" size="none">
+                        <TextLink href={LOGIN}>
                             Login
-                        </ButtonLink>
+                        </TextLink>
                     </FieldDescription>
                 </Field>
             </FieldGroup>

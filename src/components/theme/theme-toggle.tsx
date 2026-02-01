@@ -12,8 +12,8 @@ export function ThemeToggle() {
 
     return (
         <Button variant="navbar" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-            <Sun strokeWidth={1.5} className="size-6 not-dark:hidden" />
-            <Moon strokeWidth={1.5} className="size-6 dark:hidden" />
+            <Sun className="not-dark:hidden" />
+            <Moon className="dark:hidden" />
         </Button>
     );
 }

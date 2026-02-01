@@ -45,13 +45,11 @@ function CarouselControls() {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
             <CarouselPrevious
                 variant="transparent"
-                size="icon-lg"
                 className="relative inset-0 translate-y-0"
             />
-            <span className="font-mono theme-dark text-shadow-lg">{String(at).padStart(String(max).length, "0")}/{max}</span>
+            <span className="tabular-nums theme-dark text-shadow-lg">{String(at).padStart(String(max).length, "0")}/{max}</span>
             <CarouselNext
                 variant="transparent"
-                size="icon-lg"
                 className="relative inset-0 translate-y-0"
             />
         </div>
@@ -84,7 +82,7 @@ export function SectionPreview(props: Props) {
                 </CarouselContent>
                 <CarouselControls />
             </Carousel>
-            <div className="absolute size-full flex flex-col justify-center items-center gap-8 text-center text-shadow-lg pointer-events-none theme-dark">
+            <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-4 text-center text-shadow-lg pointer-events-none theme-dark">
                 <h1 className="font-mono">Fotograf de Evenimente și Povești Autentice</h1>
                 <p>Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.</p>
             </div>
