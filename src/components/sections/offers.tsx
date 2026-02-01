@@ -4,6 +4,7 @@ import {
     CircleCheckBig,
 } from "lucide-react";
 import { Button } from "../ui/button";
+import { cn } from "@shared/shadcn/lib/utils";
 
 interface ExtraCardProps {
 
@@ -59,12 +60,15 @@ function OfferCard(props: OfferCardProps) {
 }
 
 interface Props {
-
+    className?: string;
 }
 
 export function SectionOffers(props: Props) {
     return (
-        <section id="offers" className="flex flex-col justify-center items-center gap-8 px-2 py-16">
+        <section
+            id="offers"
+            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
+        >
             <div className="flex gap-8">
                 <OfferCard />
                 <OfferCard accent />

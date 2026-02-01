@@ -1,3 +1,4 @@
+import { cn } from "@shared/shadcn/lib/utils";
 import { InfoCard } from "../info-card";
 
 interface TestimonialsCardProps {
@@ -13,12 +14,15 @@ function TestimonialsCard(props: TestimonialsCardProps) {
 }
 
 interface Props {
-
+    className?: string;
 }
 
 export function SectionTestimonials(props: Props) {
     return (
-        <section id="testimonials" className="flex justify-center items-center gap-8 px-2 py-16">
+        <section
+            id="testimonials"
+            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
+        >
             <TestimonialsCard>
             </TestimonialsCard>
             <TestimonialsCard>

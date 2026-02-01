@@ -73,7 +73,7 @@ export function SectionContact(props: Props) {
     return (
         <section
             id="contact"
-            className={cn("flex flex-col lg:flex-row items-center justify-center gap-8 py-8", props.className)}
+            className={cn("flex flex-col lg:flex-row justify-center items-center gap-8 p-8 w-full", props.className)}
         >
             <Reveal>
                 <ContactCard />
