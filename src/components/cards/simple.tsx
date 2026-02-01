@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@shared/shadcn/lib/utils";
 import {
     Card,
     CardContent,
@@ -10,6 +11,10 @@ import {
     CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+    CardFooterDefault,
+    CardFooterProps,
+} from "./footers";
 
 interface Props<V> {
     submit: (event: React.FormEvent) => Promise<V>;
@@ -26,7 +31,8 @@ interface Props<V> {
     onSuccess?: (result: V) => void;
     onError?: () => void;
     children?: React.ReactNode;
-    footer?: React.ReactNode;
+    footer?: (props: CardFooterProps) => React.ReactNode;
+    className?: string;
 }
 
 export function SimpleCard<V>(props: Props<V>) {
@@ -58,8 +64,10 @@ export function SimpleCard<V>(props: Props<V>) {
         }
     };
 
+    const Footer = props.footer ?? CardFooterDefault;
+
     return (
-        <Card className="max-w-sm w-full">
+        <Card className={cn("w-full", props.className)}>
             <CardHeader>
                 <CardTitle>{props.title}</CardTitle>
                 <CardDescription>{props.description}</CardDescription>
@@ -72,23 +80,24 @@ export function SimpleCard<V>(props: Props<V>) {
                 </form>
             </CardContent>
             <CardFooter>
-                <div className="flex flex-col size-full gap-2">
-                    {
+                <Footer
+                    button={(
+                        <Button
+                            type="submit"
+                            variant={props.destructive ? "destructive" : "default"}
+                            disabled={status == "sending" || status == "success" || props.submitDisabled}
+                            onClick={handleSubmit}
+                            className="grow"
+                        >
+                            {props.submitText[status || "default"] || props.submitText.default}
+                        </Button>
+                    )}
+                    error={(
                         errorMessage && (
                             <p className="text-destructive text-center">{errorMessage}</p>
                         )
-                    }
-                    <Button
-                        type="submit"
-                        variant={props.destructive ? "destructive" : "default"}
-                        disabled={status == "sending" || status == "success" || props.submitDisabled}
-                        onClick={handleSubmit}
-                        className="grow"
-                    >
-                        {props.submitText[status || "default"] || props.submitText.default}
-                    </Button>
-                    {props.footer}
-                </div>
+                    )}
+                />
             </CardFooter>
         </Card>
     );
