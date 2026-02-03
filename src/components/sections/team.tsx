@@ -13,43 +13,58 @@ import { cn } from "@shared/shadcn/lib/utils";
 
 function Member(props: TeamMember) {
     return (
-        <div className="flex not-md:flex-col p-8 justify-center items-center w-full">
-            <div className="relative flex flex-col gap-4 shrink-0">
-                <Img
-                    src={props.image}
-                    alt={props.name}
-                    width={512}
-                    height={512}
-                    className="size-64 sm:size-96 border-4 border-primary"
-                />
-                <div className="md:absolute md:top-8 md:right-8 md:translate-x-full flex not-md:flex-col justify-center items-center pl-8 md:pl-16 pr-8 py-2 bg-primary theme-dark">
-                    <span className="font-mono text-center h1 md:mr-8">{props.name}</span>
+        <div
+            className="
+                bg-primary/10 flex w-full group
+                not-sm:flex-col
+                sm:even:flex-row-reverse
+            "
+        >
+            <Img
+                src={props.image}
+                alt={props.name}
+                width={512}
+                height={512}
+                className="size-64 lg:size-96 border-4 border-primary shrink-0"
+            />
+            <div
+                className="
+                    flex flex-col grow
+                    sm:p-4 sm:gap-4
+                    lg:p-8 lg:gap-8
+                "
+            >
+                <div
+                    className="
+                        bg-primary theme-dark flex justify-between items-center
+                        shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300
+                        sm:group-even:flex-row-reverse
+                        sm:h-10 sm:px-4 sm:group-odd:pl-8 sm:group-even:pr-8 sm:group-odd:-ml-8 sm:group-even:-mr-8
+                        lg:h-16 lg:px-8 lg:group-odd:pl-16 lg:group-even:pr-16 lg:group-odd:-ml-16 lg:group-even:-mr-16
+                    "
+                >
+                    <h3 className="font-mono text-center h1">{props.name}</h3>
                     <div className="flex">
                         <ButtonLink
                             href="#"
-                            size="icon-lg"
-                            className=""
+                            size="icon-responsive"
                         >
                             <SiInstagram />
                         </ButtonLink>
                         <ButtonLink
                             href="#"
-                            size="icon-lg"
-                            className=""
+                            size="icon-responsive"
                         >
                             <SiFacebook />
                         </ButtonLink>
                         <ButtonLink
                             href="#"
-                            size="icon-lg"
-                            className=""
+                            size="icon-responsive"
                         >
                             <Linkedin />
                         </ButtonLink>
                     </div>
                 </div>
-            </div>
-            <div className="grow md:h-96 p-8 md:pt-32 bg-primary/10">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mollis tellus vitae
                     vestibulum porta. Aliquam tempor gravida feugiat. Nulla ex mi, tincidunt eget ante
