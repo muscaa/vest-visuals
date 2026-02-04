@@ -7,7 +7,7 @@ import {
     Button,
     buttonVariants,
 } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useState } from "react";
 import {

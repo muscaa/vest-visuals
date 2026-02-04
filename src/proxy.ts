@@ -5,6 +5,10 @@ import {
 import { getUrlString } from "@server/http";
 import { getSessionCookie } from "better-auth/cookies";
 import { LOGIN } from "@shared/paths";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+
+const i18nMiddleware = createMiddleware(routing);
 
 export async function proxy(request: NextRequest) {
     const url = request.nextUrl;
@@ -15,8 +19,13 @@ export async function proxy(request: NextRequest) {
         "/a",
     ];
 
-    if (!guarded.includes(pathname) && !guarded.find(p => pathname.startsWith(p + "/"))) {
-        return NextResponse.next();
+    const guardedPathnames = guarded.map((path) => [
+        path,
+        ...routing.locales.map((locale) => `/${locale}${path}`),
+    ]).flat();
+
+    if (!guardedPathnames.includes(pathname) && !guardedPathnames.find(p => pathname.startsWith(p + "/"))) {
+        return i18nMiddleware(request);
     }
 
     const cookie = getSessionCookie(request);
@@ -25,19 +34,11 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(getUrlString(request, LOGIN));
     }
 
-    return NextResponse.next();
+    return i18nMiddleware(request);
 }
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
-         * Feel free to modify this pattern to include more paths.
-         */
-        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+        "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
     ],
 };
