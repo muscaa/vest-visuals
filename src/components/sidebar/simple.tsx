@@ -23,8 +23,8 @@ import {
 import { ChevronRight } from "lucide-react";
 import { Icon } from "../snippets";
 import { LogoLink } from "../logo";
-import Link from "next/link";
 import { splitRender } from "@client/snippets";
+import { Link } from "@shared/i18n";
 
 interface SimpleSidebarMenuItemProps {
     href?: string;

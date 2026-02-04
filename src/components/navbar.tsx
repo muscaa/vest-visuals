@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import logo from ":/logos/vest-visuals-slim.svg";
-import Link from "next/link";
 import {
     Button,
     buttonVariants,
@@ -16,11 +15,12 @@ import {
 } from "lucide-react";
 import { ButtonLink } from "@/components/snippets";
 import {
+    Link,
     CONTACT,
     SERVICES_WEDDING,
     HOME,
     PORTFOLIO,
-} from "@shared/paths";
+} from "@shared/i18n";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -57,23 +57,23 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "NUNTA",
-                href: SERVICES_WEDDING,
+                href: SERVICES_WEDDING(),
             },
             {
                 title: "BOTEZ",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "ANIVERSARE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "MAJORAT",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "BUSINESS / CORPORATE",
-                href: CONTACT,
+                href: CONTACT(),
             },
         ],
     },
@@ -83,27 +83,27 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "PORTRETE OFICIALE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "ALBUME ABSOLVIRE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "MATERNITATE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "NOU-NASCUTI",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "STUDIO",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "LUMINA NATURALA (OUTDOOR)",
-                href: CONTACT,
+                href: CONTACT(),
             },
         ],
     },
@@ -113,31 +113,31 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "IMOBILIARE (REAL ESTATE)",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "AUTOMOTIVE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "PRODUSE E-COMMERCE",
-                href: CONTACT,
+                href: CONTACT(),
             },
             {
                 title: "PROMOVARE FIRME",
-                href: CONTACT,
+                href: CONTACT(),
             },
         ],
     },
     {
         type: "endpoint",
         title: "PORTOFOLIU",
-        href: PORTFOLIO,
+        href: PORTFOLIO(),
     },
     {
         type: "endpoint",
         title: "CONTACT",
-        href: CONTACT,
+        href: CONTACT(),
     },
 ];
 
@@ -232,7 +232,7 @@ export function Navbar() {
     return (
         <nav className="flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50">
             <div className="flex size-full max-w-6xl justify-between items-center p-2">
-                <Link href={HOME}>
+                <Link href={HOME()}>
                     <Image
                         src={logo}
                         alt="Logo"

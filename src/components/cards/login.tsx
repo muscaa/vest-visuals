@@ -4,7 +4,7 @@ import { SimpleCard } from "./simple";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { useAuth } from "@/hooks/useAuth";
-import { REGISTER } from "@shared/paths";
+import { REGISTER } from "@shared/i18n";
 import { CardFooterReCaptchaVertical } from "./footers";
 import {
     Field,
@@ -79,7 +79,7 @@ export function LoginCard(props: Props) {
                 <Field>
                     <FieldDescription>
                         Don&apos;t have an account?{" "}
-                        <TextLink href={REGISTER}>
+                        <TextLink href={REGISTER()}>
                             Register
                         </TextLink>
                     </FieldDescription>

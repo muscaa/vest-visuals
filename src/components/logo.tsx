@@ -1,7 +1,10 @@
 import logo from ":/logos/vest-visuals-slim.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { cn } from "@shared/shadcn/lib/utils";
+import {
+    Link,
+    HOME,
+} from "@shared/i18n";
 
 interface LogoProps {
     className?: string;
@@ -19,7 +22,7 @@ export function Logo(props: LogoProps) {
 
 export function LogoLink(props: LogoProps) {
     return (
-        <Link href="/?more">
+        <Link href={HOME()}>
             <Logo
                 {...props}
             />

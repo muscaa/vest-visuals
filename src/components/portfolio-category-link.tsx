@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { PortfolioCategory } from "@type/registries/portfolio-categories";
 import { Img } from "./snippets";
+import { Link } from "@shared/i18n";
 
 interface PortfolioCategoryLinkProps {
     category: PortfolioCategory;

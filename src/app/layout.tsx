@@ -3,22 +3,9 @@ import {
     Inter,
     JetBrains_Mono,
 } from "next/font/google";
-import {
-    LayoutProps,
-    createInfo,
-} from "@/components/layout";
-import { HOME } from "@shared/paths";
+import { LayoutProps } from "@/components/layout";
 import { NextIntlClientProvider } from "next-intl";
 import { ClientLayout } from "@/components/layout/client";
-
-export const {
-    generateMetadata,
-} = createInfo({
-    metadata: (t) => ({
-        route: HOME,
-        routeName: "Acasă",
-    }),
-});
 
 export const inter = Inter({
     subsets: ["latin"],

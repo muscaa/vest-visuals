@@ -1,8 +1,17 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { U_ACCOUNT } from "@shared/paths";
+import { LocaleLayoutProps } from "@/components/layout";
+import { getLocale } from "@server/i18n";
+import {
+    redirect,
+    U_ACCOUNT,
+} from "@shared/i18n";
 
-export default async function Page() {
-    redirect(U_ACCOUNT);
+export default async function Page(props: LocaleLayoutProps) {
+    const locale = await getLocale(props);
+
+    redirect({
+        locale,
+        href: U_ACCOUNT(),
+    });
 }

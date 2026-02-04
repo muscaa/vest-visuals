@@ -1,14 +1,16 @@
 import "@/styles/main.css";
 import {
-    LayoutProps,
+    LocaleLayoutProps,
     BaseLayout,
     createInfo,
 } from "@/components/layout";
-import { HOME } from "@shared/paths";
+import {
+    locales,
+    HOME,
+} from "@shared/i18n";
 import {
     hasLocale,
 } from "next-intl";
-import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 
@@ -17,28 +19,20 @@ export const {
     generateMetadata,
 } = createInfo({
     metadata: (t) => ({
-        route: HOME,
+        route: HOME(),
         routeName: "Acasă",
     }),
 });
 
-interface Props extends LayoutProps {
-    params: Promise<{ locale: string; }>;
-}
-
-export default async function Layout(props: Props) {
-    // Ensure that the incoming `locale` is valid
+export default async function Layout(props: LocaleLayoutProps) {
     const { locale } = await props.params;
-    if (!hasLocale(routing.locales, locale)) {
+    if (!hasLocale(locales, locale)) {
         notFound();
     }
 
-    // Enable static rendering
     setRequestLocale(locale);
 
     return (
-        <BaseLayout>
-            {props.children}
-        </BaseLayout>
+        <BaseLayout {...props} />
     );
 }

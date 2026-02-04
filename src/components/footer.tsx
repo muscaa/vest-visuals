@@ -16,10 +16,7 @@ import { TextLink } from "@/components/ui/text-link";
 import {
     ChevronsUp
 } from "lucide-react";
-import {
-    CONTACT,
-    FAQ,
-} from "@shared/paths";
+import { CONTACT } from "@shared/i18n";
 
 function FooterBase() {
     return (
@@ -63,7 +60,6 @@ export function FooterLarge() {
         { name: "Termeni si conditii", href: "/terms" },
         { name: "Politica de confidentialitate", href: "/privacy" },
         { name: "Politica de cookie-uri", href: "/cookies" },
-        { name: "FAQ", href: FAQ },
     ];
 
     return (
@@ -101,7 +97,7 @@ export function FooterLarge() {
                                 Iti raspundem intrebarilor legate de serviciile oferite de noi.
                             </p>
                             <div className="flex gap-4">
-                                <ButtonLink href={CONTACT}>CONTACT</ButtonLink>
+                                <ButtonLink href={CONTACT()}>CONTACT</ButtonLink>
                             </div>
                         </div>
                     </div>

@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { NavbarLayoutProvider } from "./providers/navbar";
 import { SidebarLayoutProvider } from "./providers/sidebar";
-import {
-    LocaleProp,
-    Props,
-} from "../page";
 import { getTranslations } from "next-intl/server";
 import {
     _Translator,
 } from "next-intl";
-import { routing } from "@/i18n/routing";
+import { locales } from "@shared/i18n";
 
 export interface MetadataProps {
     route: string;
@@ -21,13 +17,13 @@ export interface InfoProps {
 }
 
 export interface Info {
-    generateStaticParams: () => LocaleProp[];
-    generateMetadata: (props: Props) => Promise<Metadata>;
+    generateStaticParams: () => { locale: string; }[];
+    generateMetadata: (props: LocaleLayoutProps) => Promise<Metadata>;
 }
 
 export function createInfo(info: InfoProps): Info {
     return {
-        generateStaticParams: () => routing.locales.map((locale) => ({ locale })),
+        generateStaticParams: () => locales.map((locale) => ({ locale })),
         generateMetadata: async (props) => {
             const { locale } = await props.params;
             const t = await getTranslations({ locale, namespace: "Metadata" });
@@ -81,6 +77,12 @@ export function createInfo(info: InfoProps): Info {
 
 export interface LayoutProps {
     children: React.ReactNode;
+}
+
+export interface LocaleLayoutProps extends LayoutProps {
+    params: Promise<{
+        locale: string;
+    }>
 }
 
 export function BaseLayout(props: LayoutProps) {

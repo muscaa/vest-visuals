@@ -8,6 +8,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Link } from "@shared/i18n";
 import { Fragment } from "react";
 
 export type BreadcrumbsPage = [name: string, href: string];
@@ -25,9 +26,11 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
                     props.list.slice(0, -1).map(([name, href], index) => (
                         <Fragment key={index}>
                             <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href={href}>
-                                    {name}
-                                </BreadcrumbLink>
+                                <BreadcrumbLink render={
+                                    <Link href={href}>
+                                        {name}
+                                    </Link>
+                                }/>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                         </Fragment>

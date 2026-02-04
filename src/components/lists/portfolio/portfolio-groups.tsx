@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/navigation";
 import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
@@ -24,9 +23,10 @@ import { PortfolioGroupsCreateDialog } from "@/components/dialogs/portfolio/port
 import { PortfolioGroupsEditDialog } from "@/components/dialogs/portfolio/portfolio-groups-edit";
 import { PortfolioGroupsDeleteDialog } from "@/components/dialogs/portfolio/portfolio-groups-delete";
 import {
+    useRouter,
     A_PORTFOLIO_GROUPS_$ID,
     PLACEHOLDER,
-} from "@shared/paths";
+} from "@shared/i18n";
 
 interface ListEntryProps {
     value: PartialPortfolioGroup;

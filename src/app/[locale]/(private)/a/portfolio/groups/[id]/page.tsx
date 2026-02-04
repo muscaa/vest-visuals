@@ -7,7 +7,7 @@ import {
     Loading,
     NotFound,
 } from "@/components/status";
-import { A_PORTFOLIO_GROUPS } from "@shared/paths";
+import { A_PORTFOLIO_GROUPS } from "@shared/i18n";
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
     const { data } = usePortfolioGroup(params.id);
 
     useBreadcrumbs([
-        ["Portfolio Groups", A_PORTFOLIO_GROUPS],
+        ["Portfolio Groups", A_PORTFOLIO_GROUPS()],
         params.id,
     ]);
 

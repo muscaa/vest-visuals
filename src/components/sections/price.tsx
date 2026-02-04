@@ -1,7 +1,7 @@
 import { InfoCard } from "../info-card";
 import { cn } from "@shared/shadcn/lib/utils";
 import { ButtonLink, Icon } from "../snippets";
-import { CONTACT } from "@shared/paths";
+import { CONTACT } from "@shared/i18n";
 
 interface ExtraCardProps {
     title: string;
@@ -72,7 +72,7 @@ function OfferCard(props: OfferCardProps) {
                 }
             </div>
             <ButtonLink
-                href={CONTACT}
+                href={CONTACT()}
                 variant={props.accent ? "default" : "secondary"}
                 size="lg"
                 className="mt-6 w-full"

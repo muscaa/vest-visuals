@@ -4,9 +4,11 @@ import {
 } from "next/server";
 import { getUrlString } from "@server/http";
 import { getSessionCookie } from "better-auth/cookies";
-import { LOGIN } from "@shared/paths";
+import {
+    routing,
+    LOGIN,
+} from "@shared/i18n";
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
 
 const i18nMiddleware = createMiddleware(routing);
 
@@ -31,7 +33,7 @@ export async function proxy(request: NextRequest) {
     const cookie = getSessionCookie(request);
 
     if (!cookie) {
-        return NextResponse.redirect(getUrlString(request, LOGIN));
+        return NextResponse.redirect(getUrlString(request, LOGIN()));
     }
 
     return i18nMiddleware(request);

@@ -2,14 +2,14 @@ import {
     NavbarLayout,
     createInfo,
 } from "@/components/layout";
-import { CONTACT } from "@shared/paths";
+import { CONTACT } from "@shared/i18n";
 
 export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
     metadata: (t) => ({
-        route: CONTACT,
+        route: CONTACT(),
         routeName: "Contact",
     }),
 });

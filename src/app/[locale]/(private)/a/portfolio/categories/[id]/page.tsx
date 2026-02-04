@@ -7,7 +7,7 @@ import {
     Loading,
     NotFound,
 } from "@/components/status";
-import { A_PORTFOLIO_CATEGORIES } from "@shared/paths";
+import { A_PORTFOLIO_CATEGORIES } from "@shared/i18n";
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
     const { data } = usePortfolioCategory(params.id);
 
     useBreadcrumbs([
-        ["Portfolio Categories", A_PORTFOLIO_CATEGORIES],
+        ["Portfolio Categories", A_PORTFOLIO_CATEGORIES()],
         params.id,
     ]);
 

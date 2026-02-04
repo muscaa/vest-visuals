@@ -23,7 +23,7 @@ import {
 import { usePortfolioGroups } from "@/hooks/portfolio/usePortfolioGroups";
 import { PortfolioMediaUploadDialog } from "@/components/dialogs/portfolio/portfolio-media-upload";
 import { PortfolioMediaDeleteDialog } from "@/components/dialogs/portfolio/portfolio-media-delete";
-import { PLACEHOLDER } from "@shared/paths";
+import { PLACEHOLDER } from "@shared/i18n";
 import { TextLink } from "@/components/ui/text-link";
 
 interface ListEntryProps {

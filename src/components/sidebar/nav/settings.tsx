@@ -11,7 +11,7 @@ import {
 import {
     U_ACCOUNT,
     U_PREFERENCES,
-} from "@shared/paths";
+} from "@shared/i18n";
 
 interface SidebarNavSettingsProps {
 
@@ -21,12 +21,12 @@ export function SidebarNavSettings(props: SidebarNavSettingsProps) {
     return (
         <SimpleSidebarGroup title="Settings">
             <SimpleSidebarItem
-                href={U_ACCOUNT}
+                href={U_ACCOUNT()}
                 text="Account"
                 icon={User}
             />
             <SimpleSidebarItem
-                href={U_PREFERENCES}
+                href={U_PREFERENCES()}
                 text="Preferences"
                 icon={Settings2}
             />

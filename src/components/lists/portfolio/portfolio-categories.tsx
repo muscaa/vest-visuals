@@ -3,14 +3,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/navigation";
 import { dateToString } from "@shared/snippets";
 import { SimpleList } from "../simple";
 import { PartialPortfolioCategory } from "@type/portfolio/categories";
 import { PortfolioCategoriesCreateDialog } from "@/components/dialogs/portfolio/portfolio-categories-create";
 import { PortfolioCategoriesEditDialog } from "@/components/dialogs/portfolio/portfolio-categories-edit";
 import { PortfolioCategoriesDeleteDialog } from "@/components/dialogs/portfolio/portfolio-categories-delete";
-import { A_PORTFOLIO_CATEGORIES_$ID } from "@shared/paths";
+import {
+    useRouter,
+    A_PORTFOLIO_CATEGORIES_$ID,
+} from "@shared/i18n";
 
 interface ListEntryProps {
     value: PartialPortfolioCategory;
