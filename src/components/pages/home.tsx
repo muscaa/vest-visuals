@@ -11,6 +11,10 @@ import {
     SectionPortfolioProps,
 } from "../sections/portfolio";
 import {
+    SectionBenefits,
+    SectionBenefitsProps,
+} from "../sections/benefits";
+import {
     SectionTeam,
     SectionTeamProps,
 } from "@/components/sections/team";
@@ -19,6 +23,7 @@ interface Props {
     preview: SectionPreviewProps;
     // about: SectionAboutProps;
     portfolio: SectionPortfolioProps;
+    benefits: SectionBenefitsProps;
     team: SectionTeamProps;
 }
 
@@ -28,6 +33,7 @@ export function HomePage(props: Props) {
             <SectionPreview {...props.preview} />
             <SectionAbout />
             <SectionPortfolio {...props.portfolio} />
+            <SectionBenefits {...props.benefits} />
             <SectionTeam {...props.team} />
         </div>
     );

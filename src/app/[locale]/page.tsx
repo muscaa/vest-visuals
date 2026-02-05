@@ -2,6 +2,7 @@
 
 import { NavbarLayout } from "@/components/layout";
 import { HomePage } from "@/components/pages/home";
+import { Heart } from "lucide-react";
 
 export default function Page() {
     return (
@@ -42,6 +43,26 @@ export default function Page() {
                             name: "business",
                             href: "/portfolio/business",
                             cover: "https://s3.vestvisuals.ro/public/media/clip1232mungg5cc67o2ssap/medium",
+                        },
+                    ],
+                }}
+                benefits={{
+                    title: "De ce sa ne alegi?",
+                    perks: [
+                        {
+                            icon: Heart,
+                            title: "Sunt nerăbdăror să aflu povestea voastră ",
+                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
+                        },
+                        {
+                            icon: Heart,
+                            title: "Sunt nerăbdăror să aflu povestea voastră ",
+                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
+                        },
+                        {
+                            icon: Heart,
+                            title: "Sunt nerăbdăror să aflu povestea voastră ",
+                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
                         },
                     ],
                 }}
