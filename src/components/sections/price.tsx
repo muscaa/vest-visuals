@@ -17,7 +17,7 @@ function ExtraCard(props: ExtraCardProps) {
     return (
         <InfoCard className="flex flex-row justify-between w-xs sm:w-sm p-4 rounded-lg border-l-4 border-l-primary">
             <span>{props.title}</span>
-            <div className="items-end">
+            <div className="items-end text-right">
                 <span className="font-extrabold tabular-nums">{props.price}</span>
                 <span className="font-light">{props.currency}</span>
             </div>
@@ -51,7 +51,7 @@ function OfferCard(props: OfferCardProps) {
                 <props.icon className="text-primary size-16" />
                 <h3 className="text-primary font-bold font-mono text-center">{props.title}</h3>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col grow">
                 <div className="flex items-end w-full my-4">
                     {
                         props.oldPrice && (
@@ -80,6 +80,7 @@ function OfferCard(props: OfferCardProps) {
                         ))
                     }
                 </div>
+                <div className="grow"></div>
                 <ButtonLink
                     href={CONTACT()}
                     variant={props.accent ? "default" : "secondary"}

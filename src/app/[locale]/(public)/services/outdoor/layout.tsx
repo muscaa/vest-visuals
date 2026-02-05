@@ -2,15 +2,15 @@ import {
     NavbarLayout,
     createInfo,
 } from "@/components/layout";
-import { SERVICES_WEDDING } from "@shared/i18n";
+import { SERVICES_OUTDOOR } from "@shared/i18n";
 
 export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
     metadata: (t) => ({
-        route: SERVICES_WEDDING(),
-        routeName: t("Metadata.services-wedding.title"),
+        route: SERVICES_OUTDOOR(),
+        routeName: t("Metadata.services-outdoor.title"),
     }),
 });
 

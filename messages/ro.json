@@ -15,23 +15,44 @@
         "register": {
             "title": "Inregistrare"
         },
+        "services-wedding": {
+            "title": "Evenimente | Nunta"
+        },
+        "services-christening": {
+            "title": "Evenimente | Botez"
+        },
+        "services-18th-birthday": {
+            "title": "Evenimente | Majorat"
+        },
+        "services-outdoor": {
+            "title": "Portrete | Sedinta Foto"
+        },
+        "services-real-estate": {
+            "title": "Comercial | Imobiliare"
+        },
+        "services-automotive": {
+            "title": "Comercial | Automotive"
+        },
+        "services-marketing": {
+            "title": "Comercial | Promovare Firme"
+        },
         "locations-timisoara": {
-            "title": "Timisoara"
+            "title": "Locatii | Timisoara"
         },
         "locations-arad": {
-            "title": "Arad"
+            "title": "Locatii | Arad"
         },
         "locations-oradea": {
-            "title": "Oradea"
+            "title": "Locatii | Oradea"
         },
         "locations-drobeta-turnu-severin": {
-            "title": "Drobeta Turnu-Severin"
+            "title": "Locatii | Drobeta Turnu-Severin"
         },
         "locations-cluj-napoca": {
-            "title": "Cluj-Napoca"
+            "title": "Locatii | Cluj-Napoca"
         },
         "locations-bucuresti": {
-            "title": "Bucuresti"
+            "title": "Locatii | Bucuresti"
         },
         "privacy-policy": {
             "title": "Politica de Confidentialitate"

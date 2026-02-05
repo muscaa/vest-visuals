@@ -53,6 +53,30 @@ export const SERVICES_WEDDING = lp(() => `${SERVICES()}/wedding`, {
     en: `${SERVICES.en}/wedding`,
     ro: `${SERVICES.ro}/nunta`,
 });
+export const SERVICES_CHRISTENING = lp(() => `${SERVICES()}/christening`, {
+    en: `${SERVICES.en}/christening`,
+    ro: `${SERVICES.ro}/botez`,
+});
+export const SERVICES_18TH_BIRTHDAY = lp(() => `${SERVICES()}/18th-birthday`, {
+    en: `${SERVICES.en}/18th-birthday`,
+    ro: `${SERVICES.ro}/majorat`,
+});
+export const SERVICES_OUTDOOR = lp(() => `${SERVICES()}/outdoor`, {
+    en: `${SERVICES.en}/photography-session`,
+    ro: `${SERVICES.ro}/sedinta-foto`,
+});
+export const SERVICES_REAL_ESTATE = lp(() => `${SERVICES()}/real-estate`, {
+    en: `${SERVICES.en}/real-estate`,
+    ro: `${SERVICES.ro}/imobiliare`,
+});
+export const SERVICES_AUTOMOTIVE = lp(() => `${SERVICES()}/automotive`, {
+    en: `${SERVICES.en}/automotive`,
+    ro: `${SERVICES.ro}/automotive`,
+});
+export const SERVICES_MARKETING = lp(() => `${SERVICES()}/marketing`, {
+    en: `${SERVICES.en}/marketing`,
+    ro: `${SERVICES.ro}/promovare-firme`,
+});
 const LOCATIONS = lp(() => "/locations", {
     en: "/locations",
     ro: "/locatii",
@@ -173,6 +197,12 @@ export const pathnames = [
     LOGIN_VERIFY,
     REGISTER,
     SERVICES_WEDDING,
+    SERVICES_CHRISTENING,
+    SERVICES_18TH_BIRTHDAY,
+    SERVICES_OUTDOOR,
+    SERVICES_REAL_ESTATE,
+    SERVICES_AUTOMOTIVE,
+    SERVICES_MARKETING,
     LOCATIONS_TIMISOARA,
     LOCATIONS_ARAD,
     LOCATIONS_ORADEA,

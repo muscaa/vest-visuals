@@ -16,10 +16,15 @@ import {
 import { ButtonLink } from "@/components/snippets";
 import {
     Link,
+    HOME,
     CONTACT,
     SERVICES_WEDDING,
-    HOME,
-    PORTFOLIO,
+    SERVICES_CHRISTENING,
+    SERVICES_18TH_BIRTHDAY,
+    SERVICES_OUTDOOR,
+    SERVICES_REAL_ESTATE,
+    SERVICES_AUTOMOTIVE,
+    SERVICES_MARKETING,
 } from "@shared/i18n";
 import {
     NavigationMenu,
@@ -61,49 +66,49 @@ const navLinks: NavLink[] = [
             },
             {
                 title: "BOTEZ",
-                href: CONTACT(),
+                href: SERVICES_CHRISTENING(),
             },
-            {
-                title: "ANIVERSARE",
-                href: CONTACT(),
-            },
+            // {
+            //     title: "ANIVERSARE",
+            //     href: CONTACT(),
+            // },
             {
                 title: "MAJORAT",
-                href: CONTACT(),
+                href: SERVICES_18TH_BIRTHDAY(),
             },
-            {
-                title: "BUSINESS / CORPORATE",
-                href: CONTACT(),
-            },
+            // {
+            //     title: "BUSINESS / CORPORATE",
+            //     href: CONTACT(),
+            // },
         ],
     },
     {
         type: "list",
         title: "PORTRETE",
         endpoints: [
+            // {
+            //     title: "PORTRETE OFICIALE",
+            //     href: CONTACT(),
+            // },
+            // {
+            //     title: "ALBUME ABSOLVIRE",
+            //     href: CONTACT(),
+            // },
+            // {
+            //     title: "MATERNITATE",
+            //     href: CONTACT(),
+            // },
+            // {
+            //     title: "NOU-NASCUTI",
+            //     href: CONTACT(),
+            // },
+            // {
+            //     title: "STUDIO",
+            //     href: CONTACT(),
+            // },
             {
-                title: "PORTRETE OFICIALE",
-                href: CONTACT(),
-            },
-            {
-                title: "ALBUME ABSOLVIRE",
-                href: CONTACT(),
-            },
-            {
-                title: "MATERNITATE",
-                href: CONTACT(),
-            },
-            {
-                title: "NOU-NASCUTI",
-                href: CONTACT(),
-            },
-            {
-                title: "STUDIO",
-                href: CONTACT(),
-            },
-            {
-                title: "LUMINA NATURALA (OUTDOOR)",
-                href: CONTACT(),
+                title: "SEDINTA FOTO", // LUMINA NATURALA (OUTDOOR)
+                href: SERVICES_OUTDOOR(),
             },
         ],
     },
@@ -113,19 +118,19 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "IMOBILIARE (REAL ESTATE)",
-                href: CONTACT(),
+                href: SERVICES_REAL_ESTATE(),
             },
             {
                 title: "AUTOMOTIVE",
-                href: CONTACT(),
+                href: SERVICES_AUTOMOTIVE(),
             },
+            // {
+            //     title: "PRODUSE E-COMMERCE",
+            //     href: CONTACT(),
+            // },
             {
-                title: "PRODUSE E-COMMERCE",
-                href: CONTACT(),
-            },
-            {
-                title: "PROMOVARE FIRME",
-                href: CONTACT(),
+                title: "PROMOVARE FIRME (MARKETING)",
+                href: SERVICES_MARKETING(),
             },
         ],
     },
