@@ -53,6 +53,34 @@ export const SERVICES_WEDDING = lp(() => `${SERVICES()}/wedding`, {
     en: `${SERVICES.en}/wedding`,
     ro: `${SERVICES.ro}/nunta`,
 });
+const LOCATIONS = lp(() => "/locations", {
+    en: "/locations",
+    ro: "/locatii",
+});
+export const LOCATIONS_TIMISOARA = lp(() => `${LOCATIONS()}/timisoara`, {
+    en: `${LOCATIONS.en}/timisoara`,
+    ro: `${LOCATIONS.ro}/timisoara`,
+});
+export const LOCATIONS_ARAD = lp(() => `${LOCATIONS()}/arad`, {
+    en: `${LOCATIONS.en}/arad`,
+    ro: `${LOCATIONS.ro}/arad`,
+});
+export const LOCATIONS_ORADEA = lp(() => `${LOCATIONS()}/oradea`, {
+    en: `${LOCATIONS.en}/oradea`,
+    ro: `${LOCATIONS.ro}/oradea`,
+});
+export const LOCATIONS_DROBETA_TURNU_SEVERIN = lp(() => `${LOCATIONS()}/drobeta-turnu-severin`, {
+    en: `${LOCATIONS.en}/drobeta-turnu-severin`,
+    ro: `${LOCATIONS.ro}/drobeta-turnu-severin`,
+});
+export const LOCATIONS_CLUJ_NAPOCA = lp(() => `${LOCATIONS()}/cluj-napoca`, {
+    en: `${LOCATIONS.en}/cluj-napoca`,
+    ro: `${LOCATIONS.ro}/cluj-napoca`,
+});
+export const LOCATIONS_BUCURESTI = lp(() => `${LOCATIONS()}/bucuresti`, {
+    en: `${LOCATIONS.en}/bucuresti`,
+    ro: `${LOCATIONS.ro}/bucuresti`,
+});
 export const PRIVACY_POLICY = lp(() => "/privacy-policy", {
     en: "/privacy-policy",
     ro: "/politica-de-confidentialitate",
@@ -145,6 +173,12 @@ export const pathnames = [
     LOGIN_VERIFY,
     REGISTER,
     SERVICES_WEDDING,
+    LOCATIONS_TIMISOARA,
+    LOCATIONS_ARAD,
+    LOCATIONS_ORADEA,
+    LOCATIONS_DROBETA_TURNU_SEVERIN,
+    LOCATIONS_CLUJ_NAPOCA,
+    LOCATIONS_BUCURESTI,
     PRIVACY_POLICY,
     TERMS_OF_SERVICE,
     COOKIE_POLICY,

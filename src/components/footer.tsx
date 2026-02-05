@@ -19,8 +19,14 @@ import {
 import {
     CONTACT,
     COOKIE_POLICY,
+    LOCATIONS_ARAD,
+    LOCATIONS_CLUJ_NAPOCA,
+    LOCATIONS_ORADEA,
+    LOCATIONS_TIMISOARA,
+    LOCATIONS_DROBETA_TURNU_SEVERIN,
     PRIVACY_POLICY,
     TERMS_OF_SERVICE,
+    LOCATIONS_BUCURESTI,
 } from "@shared/i18n";
 
 function FooterBase() {
@@ -56,9 +62,12 @@ export function Footer() {
 
 export function FooterLarge() {
     const locations = [
-        { name: "Timisoara", href: "/timisoara" },
-        { name: "Arad", href: "/arad" },
-        { name: "Oradea", href: "/oradea" },
+        { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
+        { name: "Arad", href: LOCATIONS_ARAD() },
+        { name: "Oradea", href: LOCATIONS_ORADEA() },
+        { name: "Drobeta Turnu-Severin", href: LOCATIONS_DROBETA_TURNU_SEVERIN() },
+        { name: "Cluj-Napoca", href: LOCATIONS_CLUJ_NAPOCA() },
+        { name: "Bucuresti", href: LOCATIONS_BUCURESTI() },
     ];
 
     const pages = [

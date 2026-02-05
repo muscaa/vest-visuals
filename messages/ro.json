@@ -15,6 +15,24 @@
         "register": {
             "title": "Inregistrare"
         },
+        "locations-timisoara": {
+            "title": "Timisoara"
+        },
+        "locations-arad": {
+            "title": "Arad"
+        },
+        "locations-oradea": {
+            "title": "Oradea"
+        },
+        "locations-drobeta-turnu-severin": {
+            "title": "Drobeta Turnu-Severin"
+        },
+        "locations-cluj-napoca": {
+            "title": "Cluj-Napoca"
+        },
+        "locations-bucuresti": {
+            "title": "Bucuresti"
+        },
         "privacy-policy": {
             "title": "Politica de Confidentialitate"
         },
