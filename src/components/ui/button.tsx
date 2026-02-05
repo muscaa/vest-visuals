@@ -6,19 +6,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@shared/shadcn/lib/utils"
 
 const buttonVariants = cva(
-    "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 rounded-4xl border border-transparent bg-clip-padding p font-medium focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center justify-center whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none group/button",
+    "shadow-sm focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 rounded-lg border-transparent bg-clip-padding p font-medium focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center justify-center whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none group/button",
     {
         variants: {
             variant: {
                 default: "bg-primary text-primary-foreground hover:bg-primary/80",
-                outline: "border-border bg-input/30 hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+                outline: "border border-border bg-input/30 hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
                 secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
                 ghost: "hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground",
-                destructive: "bg-destructive/20 hover:bg-destructive/30 focus-visible:ring-destructive/40 focus-visible:border-destructive/40 text-destructive",
-                link: "text-primary underline-offset-4 hover:underline",
+                destructive: "border bg-destructive/20 hover:bg-destructive/30 focus-visible:ring-destructive/40 focus-visible:border-destructive/40 text-destructive",
+                link: "shadow-none text-primary underline-offset-4 hover:underline",
                 // TODO
-                navbar: "underline-offset-4 hover:text-primary",
-                card: "border-border bg-card hover:bg-accent text-card-foreground hover:text-accent-foreground w-full justify-start text-start overflow-hidden rounded-2xl p-4 has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl group/card",
+                navbar: "shadow-none underline-offset-4 hover:text-primary",
+                card: "border border-border bg-card hover:bg-accent text-card-foreground hover:text-accent-foreground w-full justify-start text-start overflow-hidden rounded-2xl p-4 has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl group/card",
                 neutral: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
                 transparent: "bg-secondary/60 text-secondary-foreground shadow-xs hover:bg-secondary/80",
                 // TODO

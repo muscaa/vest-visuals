@@ -73,7 +73,6 @@ export function SidebarNavUser(props: SidebarNavUserProps) {
                         </SidebarMenuButton>
                     } />
                     <DropdownMenuContent
-                        className="min-w-56 rounded-lg"
                         side={isMobile ? "bottom" : "right"}
                         align="end"
                         sideOffset={4}

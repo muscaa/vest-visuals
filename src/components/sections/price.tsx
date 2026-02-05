@@ -12,7 +12,8 @@ interface ExtraCardProps {
 function ExtraCard(props: ExtraCardProps) {
     return (
         <InfoCard
-            className="flex justify-between w-xs sm:w-sm p-4 border-l-4 border-l-primary"
+            extraClassName="border-l-4 border-l-primary rounded-lg"
+            className="flex justify-between w-xs sm:w-sm p-4"
         >
             <span>{props.title}</span>
             <div className="items-end">
@@ -42,7 +43,7 @@ function OfferCard(props: OfferCardProps) {
         >
             {
                 props.highlight && (
-                    <span className={`absolute left-1/2 -translate-x-1/2 -top-2.5 h-5 p5 px-3 bg-primary text-primary-foreground`}>
+                    <span className={`absolute left-1/2 -translate-x-1/2 -top-2.5 h-5 p5 px-3 bg-primary text-primary-foreground rounded-full`}>
                         {props.highlight}
                     </span>
                 )

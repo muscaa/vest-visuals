@@ -174,7 +174,7 @@
 }
 
 :root {
-    --radius: 0;
+    --radius: 0.625rem;
 
     --color1: #4b71d8ff;
     --color2: #2ac1a8ff;

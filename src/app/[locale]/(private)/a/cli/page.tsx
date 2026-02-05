@@ -22,7 +22,7 @@ export default function Page() {
 
     return (
         <div className="flex flex-col size-full gap-2">
-            <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background2 rounded-md shadow-sm whitespace-pre-wrap">
+            <div className="flex flex-col max-h-full h-full overflow-y-auto p-2 bg-background2 rounded-2xl shadow-sm whitespace-pre-wrap">
                 <div className="flex flex-col grow">
                     {
                         output.map((line, index) => (
