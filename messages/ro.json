@@ -15,6 +15,15 @@
         "register": {
             "title": "Inregistrare"
         },
+        "privacy-policy": {
+            "title": "Politica de Confidentialitate"
+        },
+        "terms-of-service": {
+            "title": "Termeni si Conditii"
+        },
+        "cookie-policy": {
+            "title": "Politica de Cookie"
+        },
         "user": {
             "title": "Utilizator"
         },

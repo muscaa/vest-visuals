@@ -16,7 +16,12 @@ import { TextLink } from "@/components/ui/text-link";
 import {
     ChevronsUp
 } from "lucide-react";
-import { CONTACT } from "@shared/i18n";
+import {
+    CONTACT,
+    COOKIE_POLICY,
+    PRIVACY_POLICY,
+    TERMS_OF_SERVICE,
+} from "@shared/i18n";
 
 function FooterBase() {
     return (
@@ -57,9 +62,9 @@ export function FooterLarge() {
     ];
 
     const pages = [
-        { name: "Termeni si conditii", href: "/terms" },
-        { name: "Politica de confidentialitate", href: "/privacy" },
-        { name: "Politica de cookie-uri", href: "/cookies" },
+        { name: "Termeni si conditii", href: TERMS_OF_SERVICE() },
+        { name: "Politica de confidentialitate", href: PRIVACY_POLICY() },
+        { name: "Politica de cookie-uri", href: COOKIE_POLICY() },
     ];
 
     return (

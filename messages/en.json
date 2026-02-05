@@ -15,6 +15,15 @@
         "register": {
             "title": "Register"
         },
+        "privacy-policy": {
+            "title": "Privacy Policy"
+        },
+        "terms-of-service": {
+            "title": "Terms of Service"
+        },
+        "cookie-policy": {
+            "title": "Cookie Policy"
+        },
         "user": {
             "title": "User"
         },

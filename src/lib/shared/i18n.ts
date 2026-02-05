@@ -53,6 +53,18 @@ export const SERVICES_WEDDING = lp(() => `${SERVICES()}/wedding`, {
     en: `${SERVICES.en}/wedding`,
     ro: `${SERVICES.ro}/nunta`,
 });
+export const PRIVACY_POLICY = lp(() => "/privacy-policy", {
+    en: "/privacy-policy",
+    ro: "/politica-de-confidentialitate",
+});
+export const TERMS_OF_SERVICE = lp(() => "/terms-of-service", {
+    en: "/terms-of-service",
+    ro: "/termeni-si-conditii",
+});
+export const COOKIE_POLICY = lp(() => "/cookie-policy", {
+    en: "/cookie-policy",
+    ro: "/politica-de-cookie",
+});
 
 //
 // private
@@ -133,6 +145,9 @@ export const pathnames = [
     LOGIN_VERIFY,
     REGISTER,
     SERVICES_WEDDING,
+    PRIVACY_POLICY,
+    TERMS_OF_SERVICE,
+    COOKIE_POLICY,
     // private
     U,
     U_ACCOUNT,
