@@ -76,6 +76,7 @@ function Member(props: TeamMember) {
 }
 
 export interface SectionTeamProps {
+    title: string;
     members: TeamMember[];
     className?: string;
 }
@@ -86,7 +87,7 @@ export function SectionTeam(props: SectionTeamProps) {
             id="team"
             className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
         >
-            <h2 className="font-mono text-center">Echipa</h2>
+            <h2 className="font-mono text-center my-8">{props.title}</h2>
             <div className="flex flex-wrap max-w-6xl w-full justify-evenly gap-8">
                 {
                     props.members.map((member, index) => (

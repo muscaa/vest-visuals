@@ -46,6 +46,7 @@ export default function Page() {
                     ],
                 }}
                 team={{
+                    title: "Echipa",
                     members: [
                         {
                             name: "David",
