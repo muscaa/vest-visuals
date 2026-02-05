@@ -129,11 +129,11 @@ const navLinks: NavLink[] = [
             },
         ],
     },
-    {
-        type: "endpoint",
-        title: "PORTOFOLIU",
-        href: PORTFOLIO(),
-    },
+    // {
+    //     type: "endpoint",
+    //     title: "PORTOFOLIU",
+    //     href: PORTFOLIO(),
+    // },
     {
         type: "endpoint",
         title: "CONTACT",
