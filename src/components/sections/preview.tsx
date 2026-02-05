@@ -67,7 +67,7 @@ export function SectionPreview(props: SectionPreviewProps) {
     return (
         <section
             id="preview"
-            className={cn("relative flex w-full h-[calc(100dvh-4rem)]", props.className)}
+            className={cn("relative flex w-full h-screen-no-nav", props.className)}
         >
             <Carousel
                 opts={{

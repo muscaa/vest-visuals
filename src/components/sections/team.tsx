@@ -5,7 +5,6 @@ import {
 import Linkedin from "@/components/svg/linkedin";
 import { Img } from "@/components/snippets";
 import { TeamMember } from "@type/registries/team-members";
-import { useRegistries } from "@/hooks/useRegistries";
 import { cn } from "@shared/shadcn/lib/utils";
 import {
     Card,
@@ -77,13 +76,11 @@ function Member(props: TeamMember) {
 }
 
 export interface SectionTeamProps {
+    members: TeamMember[];
     className?: string;
 }
 
 export function SectionTeam(props: SectionTeamProps) {
-    const { useRegistry } = useRegistries();
-    const { data } = useRegistry("team_members");
-
     return (
         <section
             id="team"
@@ -92,7 +89,7 @@ export function SectionTeam(props: SectionTeamProps) {
             <h2 className="font-mono text-center">Echipa</h2>
             <div className="flex flex-wrap max-w-6xl w-full justify-evenly gap-8">
                 {
-                    data && data.map((member, index) => (
+                    props.members.map((member, index) => (
                         <Member
                             key={index}
                             {...member}

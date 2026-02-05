@@ -19,7 +19,7 @@ export function SectionsMain(props: SectionsMainProps) {
 
     return (
         <div className={`fixed w-screen h-screen transition-all duration-500 ${more ? "-top-[100vh]" : "top-0"}`}>
-            <NavbarLayoutProvider
+            {/* <NavbarLayoutProvider
                 footer={(
                     <FooterLarge />
                 )}
@@ -36,7 +36,7 @@ export function SectionsMain(props: SectionsMainProps) {
                     <SectionAbout />
                     <SectionTeam />
                 </div>
-            </NavbarLayoutProvider>
+            </NavbarLayoutProvider> */}
         </div>
     );
 }
