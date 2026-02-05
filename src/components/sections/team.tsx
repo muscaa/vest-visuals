@@ -7,16 +7,16 @@ import { Img } from "@/components/snippets";
 import { TeamMember } from "@type/registries/team-members";
 import { cn } from "@shared/shadcn/lib/utils";
 import {
-    Card,
     CardContent,
     CardHeader,
 } from "../ui/card";
 import { TextLink } from "../ui/text-link";
 import { Separator } from "../ui/separator";
+import { InfoCard } from "../info-card";
 
-function Member(props: TeamMember) {
+function MemberCard(props: TeamMember) {
     return (
-        <Card className="shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-xs sm:w-sm">
+        <InfoCard className="w-xs sm:w-sm">
             <Img
                 src={props.image}
                 alt={props.name}
@@ -71,7 +71,7 @@ function Member(props: TeamMember) {
             <CardContent className="flex flex-col gap-4">
                 <span className="text-muted-foreground">{props.roles.join(" | ")}</span>
             </CardContent>
-        </Card>
+        </InfoCard>
     );
 }
 
@@ -91,7 +91,7 @@ export function SectionTeam(props: SectionTeamProps) {
             <div className="flex flex-wrap max-w-6xl w-full justify-evenly gap-8">
                 {
                     props.members.map((member, index) => (
-                        <Member
+                        <MemberCard
                             key={index}
                             {...member}
                         />
