@@ -16,6 +16,10 @@ export default function Page() {
                         "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
                     ],
                 }}
+                about={{
+                    title: "Cine suntem noi?",
+                    description: "Suntem o echipă pasionată de fotografie și videografie, dedicată să transformăm momentele speciale în amintiri de neuitat. Cu o abordare creativă și atenție la detalii, spunem povești vizuale autentice, indiferent că este vorba de o nuntă, un eveniment corporate sau ceva personal. Credem în emoție, naturalețe și profesionalism.",
+                }}
                 portfolio={{
                     title: "Portofoliu",
                     categories: [

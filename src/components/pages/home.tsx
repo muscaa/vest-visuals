@@ -4,7 +4,7 @@ import {
 } from "../sections/preview";
 import {
     SectionAbout,
-    // SectionAboutProps,
+    SectionAboutProps,
 } from "@/components/sections/about";
 import {
     SectionPortfolio,
@@ -21,7 +21,7 @@ import {
 
 interface Props {
     preview: SectionPreviewProps;
-    // about: SectionAboutProps;
+    about: SectionAboutProps;
     portfolio: SectionPortfolioProps;
     benefits: SectionBenefitsProps;
     team: SectionTeamProps;
@@ -31,7 +31,7 @@ export function HomePage(props: Props) {
     return (
         <div className="flex flex-col justify-center items-center min-h-screen-no-nav">
             <SectionPreview {...props.preview} />
-            <SectionAbout />
+            <SectionAbout {...props.about} />
             <SectionPortfolio {...props.portfolio} />
             <SectionBenefits {...props.benefits} />
             <SectionTeam {...props.team} />
