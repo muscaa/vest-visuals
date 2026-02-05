@@ -10,7 +10,7 @@ export const {
 } = createInfo({
     metadata: (t) => ({
         route: PORTFOLIO(),
-        routeName: t("portfolio.title"),
+        routeName: t("Metadata.portfolio.title"),
     }),
 });
 

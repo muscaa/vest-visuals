@@ -10,7 +10,7 @@ export const {
 } = createInfo({
     metadata: (t) => ({
         route: CONTACT(),
-        routeName: t("contact.title"),
+        routeName: t("Metadata.contact.title"),
     }),
 });
 

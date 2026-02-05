@@ -13,7 +13,7 @@ export interface MetadataProps {
 }
 
 export interface InfoProps {
-    metadata: (t: _Translator<Record<string, any>, "Metadata">) => MetadataProps;
+    metadata: (t: _Translator<Record<string, any>, never>) => MetadataProps;
 }
 
 export interface Info {
@@ -26,7 +26,7 @@ export function createInfo(info: InfoProps): Info {
         generateStaticParams: () => locales.map((locale) => ({ locale })),
         generateMetadata: async (props) => {
             const { locale } = await props.params;
-            const t = await getTranslations({ locale, namespace: "Metadata" });
+            const t = await getTranslations({ locale });
 
             const meta = info.metadata(t);
 
