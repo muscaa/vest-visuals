@@ -17,6 +17,7 @@ interface ValidProps extends CommonProps {
 }
 
 function ValidDialog(props: ValidProps) {
+    const [location, setLocation] = useState<string>(props.value.location || "");
     const [description, setDescription] = useState<string>(props.value.description || "");
     const { updatePortfolioGroup } = usePortfolioGroups();
 
@@ -24,6 +25,7 @@ function ValidDialog(props: ValidProps) {
         return updatePortfolioGroup.mutateAsync({
             id: props.value.id,
             value: {
+                location: location || null,
                 description: description || null,
             },
         });
@@ -47,13 +49,22 @@ function ValidDialog(props: ValidProps) {
             trigger={props.children}
         >
             <div className="flex flex-col gap-2">
+                <Label htmlFor="location">Location (optional)</Label>
+                <Input
+                    id="location"
+                    type="text"
+                    placeholder="location"
+                    defaultValue={props.value.location}
+                    onChange={(e) => setLocation(e.target.value)}
+                />
+            </div>
+            <div className="flex flex-col gap-2">
                 <Label htmlFor="description">Description (optional)</Label>
                 <Input
                     id="description"
                     type="text"
                     placeholder="description"
                     defaultValue={props.value.description}
-                    required
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>

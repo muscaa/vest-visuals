@@ -38,6 +38,7 @@ const groupMediaTable = PORTFOLIO_GROUP_MEDIA;
 export function format<T extends SelectProps>(props: T): AutoGroup<T> {
     return {
         id: props.id,
+        location: props.location,
         description: props.description,
         portfolioMediaIds: props.portfolioGroupMedia.map((value) => value.mediaId),
         portfolioMedia: props.portfolioGroupMedia.every((value) => value.portfolioMedia != undefined)
@@ -112,9 +113,31 @@ export async function get(id: string): Promise<Group | undefined> {
     return result ? format(result) : undefined;
 }
 
+export async function getByLocation(location: string): Promise<Group[]> {
+    const result = await groupsQuery.findMany({
+        where: (fields, operators) => operators.eq(fields.location, location),
+        with: {
+            portfolioGroupMedia: {
+                orderBy: (fields, operators) => operators.asc(fields.order),
+                with: {
+                    portfolioMedia: {
+                        with: {
+                            portfolioMediaVariants: {
+                                orderBy: (fields, operators) => operators.asc(fields.order),
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+    return result.map(format);
+}
+
 export async function create(props: types.CreateProps): Promise<PartialGroup | undefined> {
     const result = await db.insert(groupsTable)
         .values({
+            location: props.location,
             description: props.description,
         })
         .returning()
@@ -145,6 +168,13 @@ export async function create(props: types.CreateProps): Promise<PartialGroup | u
 }
 
 export async function update(id: string, props: types.UpdateProps): Promise<PartialGroup | undefined> {
+    if (props.location || props.location === null) {
+        await db.update(groupsTable)
+            .set({
+                location: props.location,
+            })
+            .where(eq(groupsTable.id, id));
+    }
     if (props.description || props.description === null) {
         await db.update(groupsTable)
             .set({

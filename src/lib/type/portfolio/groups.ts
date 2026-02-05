@@ -6,6 +6,7 @@ import * as media from "./media";
 
 export type PartialPortfolioGroup = {
     id: string;
+    location?: string;
     description?: string;
     portfolioMediaIds: string[];
     portfolioMedia?: media.PartialPortfolioMedia[];
@@ -15,9 +16,11 @@ export type PartialPortfolioGroup = {
 export type PortfolioGroup = Replace<PartialPortfolioGroup, { portfolioMedia: media.PortfolioMedia[]; }>;
 export type CreateProps = {
     description?: string;
+    location?: string;
     portfolioMedia?: string[];
 };
 export type UpdateProps = {
     description?: string | null;
+    location?: string | null;
     portfolioMedia?: ListProps<string>;
 };

@@ -2,6 +2,7 @@ import {
     sqliteTable,
     text,
     integer,
+    index,
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
@@ -11,6 +12,7 @@ export const PORTFOLIO_GROUPS = sqliteTable("portfolio_groups", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
+    location: text("location"),
     description: text("description"),
     createdAt: integer("created_at", { mode: "timestamp" })
         .$defaultFn(() => new Date())
@@ -18,7 +20,9 @@ export const PORTFOLIO_GROUPS = sqliteTable("portfolio_groups", {
     updatedAt: integer("updated_at", { mode: "timestamp" })
         .$defaultFn(() => new Date())
         .notNull(),
-});
+}, (table) => ([
+    index("portfolio_groups_location_idx").on(table.location),
+]));
 
 export const PORTFOLIO_GROUP_MEDIA = sqliteTable("portfolio_group_media", {
     groupId: text("group_id")

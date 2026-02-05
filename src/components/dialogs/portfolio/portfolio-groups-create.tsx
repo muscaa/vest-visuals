@@ -16,6 +16,7 @@ interface Props {
 }
 
 export function PortfolioGroupsCreateDialog(props: Props) {
+    const [location, setLocation] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [top, setTop] = useState(true);
     const { updatePortfolioCategory } = usePortfolioCategories();
@@ -23,7 +24,8 @@ export function PortfolioGroupsCreateDialog(props: Props) {
 
     const submit = async () => {
         const result = await createPortfolioGroup.mutateAsync({
-            description,
+            location: location || undefined,
+            description: description || undefined,
         });
 
         if (props.parent) {
@@ -66,12 +68,20 @@ export function PortfolioGroupsCreateDialog(props: Props) {
             trigger={props.children}
         >
             <div className="flex flex-col gap-2">
+                <Label htmlFor="location">Location (optional)</Label>
+                <Input
+                    id="location"
+                    type="text"
+                    placeholder="location"
+                    onChange={(e) => setLocation(e.target.value)}
+                />
+            </div>
+            <div className="flex flex-col gap-2">
                 <Label htmlFor="description">Description (optional)</Label>
                 <Input
                     id="description"
                     type="text"
                     placeholder="description"
-                    required
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>

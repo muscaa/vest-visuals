@@ -51,7 +51,15 @@ function ListEntry(props: ListEntryProps) {
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
-                        <p>{props.value.description}</p>
+                        <div className="flex gap-2">
+                            <span className="p5">{props.value.location}</span>
+                            {
+                                props.value.location && props.value.description && (
+                                    <Separator orientation="vertical" />
+                                )
+                            }
+                            <span className="p5">{props.value.description}</span>
+                        </div>
                         <div className="flex flex-col">
                             <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
                             <h6>Created: {dateToString(props.value.createdAt)}</h6>
