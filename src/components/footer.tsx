@@ -20,7 +20,7 @@ import { CONTACT } from "@shared/i18n";
 
 function FooterBase() {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
             <div className="flex items-center justify-center sm:justify-start gap-4">
                 <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
                 <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
@@ -63,7 +63,7 @@ export function FooterLarge() {
     ];
 
     return (
-        <footer className="flex flex-col relative">
+        <footer className="flex flex-col relative mt-4.5">
             <div className="flex justify-center items-center bg-background2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
@@ -103,11 +103,11 @@ export function FooterLarge() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center bg-success">
+            <div className="flex justify-center items-center bg-background3">
                 <FooterBase />
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-                <ButtonLink href="#start" variant="secondary" size="icon">
+                <ButtonLink href="#top" variant="default" size="icon" prefetch={false}>
                     <ChevronsUp className="size-8" />
                 </ButtonLink>
             </div>

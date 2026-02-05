@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { FooterLarge } from "@/components/footer";
 import { cn } from "@shared/shadcn/lib/utils";
 
 export interface MainProps {
@@ -20,13 +20,13 @@ export function NavbarLayoutProvider(props: MainProps) {
                     <Navbar />
                 )
             }
-            <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
+            <div className={cn("flex flex-col max-h-full overflow-y-auto", props.className)}>
                 <main className={cn("grow", props.extraClassName)}>
                     {props.children}
                 </main>
                 {
                     props.footer ?? (
-                        <Footer />
+                        <FooterLarge />
                     )
                 }
             </div>

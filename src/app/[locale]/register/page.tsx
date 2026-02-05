@@ -9,7 +9,7 @@ export default function Page() {
         <GoogleReCaptchaProvider
             reCaptchaKey={clientConfig.env.RECAPTCHA_KEY_SITE}
         >
-            <div className="flex flex-col justify-center items-center size-full p-8">
+            <div className="flex flex-col justify-center items-center size-full p-8 min-h-screen-no-nav">
                 <RegisterCard />
             </div>
         </GoogleReCaptchaProvider>

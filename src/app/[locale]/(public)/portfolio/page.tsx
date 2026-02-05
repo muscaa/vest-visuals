@@ -9,7 +9,7 @@ export default function Page() {
     const { data } = useRegistry("portfolio_categories");
 
     return (
-        <div className="flex justify-center items-center size-full p-2">
+        <div className="flex justify-center items-center size-full p-8 min-h-screen-no-nav">
             <div className="flex flex-wrap justify-center items-center w-full gap-2">
                 {
                     data && data.map((category, index) => (

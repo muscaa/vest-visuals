@@ -11,7 +11,7 @@ export default function Page() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center size-full p-8">
+        <div className="flex flex-col justify-center items-center size-full p-8 min-h-screen-no-nav">
             <OTPCard
                 onSubmit={handleSubmit}
             />
