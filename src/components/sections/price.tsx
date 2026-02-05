@@ -39,7 +39,7 @@ interface OfferCardProps {
 
 function OfferCard(props: OfferCardProps) {
     return (
-        <InfoCard className={`relative w-xs sm:w-sm overflow-visible ${props.accent ? "ring-2 ring-primary" : ""}`}>
+        <InfoCard className={`relative w-xs sm:w-sm overflow-visible ${props.accent ? "ring-2 ring-primary bg-primary/10" : ""}`}>
             {
                 props.highlight && (
                     <span className={`absolute left-1/2 -translate-x-1/2 -top-2.5 h-5 p5 px-3 bg-primary text-primary-foreground rounded-full`}>
@@ -64,7 +64,7 @@ function OfferCard(props: OfferCardProps) {
                     <span className="h1 tabular-nums">{props.price}</span>
                     <span className="p2 font-light">{props.currency}</span>
                 </div>
-                <div className="flex flex-col gap-4 w-full my-6 font-light">
+                <div className="flex flex-col gap-4 w-full my-6">
                     {
                         props.features.map(([description, Icon], index) => (
                             <div key={index}>
