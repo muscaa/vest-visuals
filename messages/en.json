@@ -1,11 +1,28 @@
 {
     "Metadata": {
-        
+        "home": {
+            "title": "Home"
+        },
+        "contact": {
+            "title": "Contact"
+        },
+        "portfolio": {
+            "title": "Portfolio"
+        },
+        "login": {
+            "title": "Login"
+        },
+        "register": {
+            "title": "Register"
+        },
+        "user": {
+            "title": "User"
+        },
+        "admin": {
+            "title": "Admin"
+        }
     },
     "Basic": {
         "not-found": "We're sorry, but the page was not found"
-    },
-    "HomePage": {
-        "title": "Hello world!"
     }
 }

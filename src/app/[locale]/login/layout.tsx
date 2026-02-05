@@ -18,7 +18,7 @@ export const {
 } = createInfo({
     metadata: (t) => ({
         route: LOGIN(),
-        routeName: "Login",
+        routeName: t("login.title"),
     }),
 });
 

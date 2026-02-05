@@ -1,11 +1,28 @@
 {
     "Metadata": {
-        
+        "home": {
+            "title": "Acasă"
+        },
+        "contact": {
+            "title": "Contact"
+        },
+        "portfolio": {
+            "title": "Portofoliu"
+        },
+        "login": {
+            "title": "Autentificare"
+        },
+        "register": {
+            "title": "Inregistrare"
+        },
+        "user": {
+            "title": "Utilizator"
+        },
+        "admin": {
+            "title": "Admin"
+        }
     },
     "Basic": {
         "not-found": "Ne pare rau, dar pagina nu a fost gasita"
-    },
-    "HomePage": {
-        "title": "Preturi si oferte!"
     }
 }
