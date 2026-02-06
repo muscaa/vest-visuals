@@ -25,7 +25,7 @@ function CarouselControls() {
         const onSelect = (api: CarouselApi) => {
             if (!api) return;
 
-            setAt(api.selectedScrollSnap() + 1);
+            setAt(Math.min(api.selectedScrollSnap() + 1, api.slideNodes().length));
             setMax(api.slideNodes().length);
         };
 
@@ -73,6 +73,7 @@ export function SectionPreview(props: SectionPreviewProps) {
                 opts={{
                     loop: true,
                 }}
+                className="w-full"
             >
                 <CarouselContent className="m-0">
                     {
