@@ -57,6 +57,11 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
     {
+        type: "endpoint",
+        title: "ACASA",
+        href: HOME(),
+    },
+    {
         type: "list",
         title: "EVENIMENTE",
         endpoints: [
