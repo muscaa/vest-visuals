@@ -3,76 +3,95 @@ import {
     SiInstagram,
 } from "@icons-pack/react-simple-icons";
 import Linkedin from "@/components/svg/linkedin";
-import { IconLink } from "@/components/snippets";
-import { Separator } from "@/components/ui/separator";
-import { Reveal } from "@/components/animations/reveal";
-import { TextLink } from "@/components/ui/text-link";
 import { Img } from "@/components/snippets";
 import { TeamMember } from "@type/registries/team-members";
-import { useRegistries } from "@/hooks/useRegistries";
+import { cn } from "@shared/shadcn/lib/utils";
+import {
+    CardContent,
+    CardHeader,
+} from "../ui/card";
+import { TextLink } from "../ui/text-link";
+import { Separator } from "../ui/separator";
+import { InfoCard } from "../info-card";
 
-function Member(props: TeamMember) {
+function MemberCard(props: TeamMember) {
     return (
-        <div className="flex flex-col p-8 justify-center items-center gap-4">
-            <Reveal duration={1000}>
-                <Img
-                    src={props.image}
-                    alt={props.name}
-                    width={512}
-                    height={512}
-                    className="size-64 sm:size-96 xl:size-128 rounded-full"
-                />
-            </Reveal>
-            <div className="flex flex-col justify-center items-center gap-1">
-                <Reveal delay={300}>
-                    <h2>{props.name}</h2>
-                </Reveal>
-                <Reveal delay={500}>
-                    <div className="flex flex-wrap justify-center items-center gap-2">
+        <InfoCard className="w-xs sm:w-sm">
+            <Img
+                src={props.image}
+                alt={props.name}
+            />
+            <CardHeader>
+                <div className="flex justify-between items-center">
+                    <h3 className="font-mono h1">{props.name}</h3>
+                    <div className="flex">
                         {
-                            props.roles.map((role, index) => (
-                                <div key={index} className="flex h-6 items-center gap-2">
-                                    <h4 className="text-muted-foreground">{role}</h4>
-                                    {
-                                        index < props.roles.length - 1 && (
-                                            <Separator orientation="vertical" />
-                                        )
-                                    }
-                                </div>
-                            ))
+                            props.socials.instagram && (
+                                <TextLink
+                                    href={props.socials.instagram}
+                                    variant="ghost"
+                                    size="icon-responsive"
+                                >
+                                    <SiInstagram />
+                                </TextLink>
+                            )
+                        }
+                        {
+                            props.socials.facebook && (
+                                <TextLink
+                                    href={props.socials.facebook}
+                                    variant="ghost"
+                                    size="icon-responsive"
+                                >
+                                    <SiFacebook />
+                                </TextLink>
+                            )
+                        }
+                        {
+                            props.socials.linkedin && (
+                                <TextLink
+                                    href={props.socials.linkedin}
+                                    variant="ghost"
+                                    size="icon-responsive"
+                                >
+                                    <Linkedin />
+                                </TextLink>
+                            )
                         }
                     </div>
-                </Reveal>
-                <Reveal delay={700}>
-                    <TextLink href={`mailto:${props.email}`} className="h4">
-                        {props.email}
-                    </TextLink>
-                </Reveal>
-            </div>
-            <Reveal delay={900}>
-                <div className="flex items-center justify-center gap-4">
-                    {props.socials.instagram && <IconLink href={props.socials.instagram} icon={SiInstagram} />}
-                    {props.socials.facebook && <IconLink href={props.socials.facebook} icon={SiFacebook} />}
-                    {props.socials.linkedin && <IconLink href={props.socials.linkedin} icon={Linkedin} />}
                 </div>
-            </Reveal>
-        </div>
+                <TextLink
+                    href={`mailto:${props.email}`}
+                    className="w-min"
+                >
+                    {props.email}
+                </TextLink>
+                <Separator />
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4">
+                <span className="text-muted-foreground">{props.roles.join(" | ")}</span>
+            </CardContent>
+        </InfoCard>
     );
 }
 
-export function SectionTeam() {
-    const { useRegistry } = useRegistries();
-    const { data } = useRegistry("team_members");
+export interface SectionTeamProps {
+    title: string;
+    members: TeamMember[];
+    className?: string;
+}
 
+export function SectionTeam(props: SectionTeamProps) {
     return (
-        <section id="team" className="flex flex-col justify-center items-center px-2 py-8">
-            <Reveal delay={200}>
-                <h1>Cunoaste echipa</h1>
-            </Reveal>
-            <div className="flex flex-wrap w-full max-w-8xl justify-evenly gap-8">
+        <section
+            id="team"
+            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
+        >
+            <h2 className="font-mono text-center my-8">{props.title}</h2>
+            <div className="flex flex-wrap max-w-6xl w-full justify-evenly gap-8">
                 {
-                    data && data.map((member, index) => (
-                        <Member
+                    props.members.map((member, index) => (
+                        <MemberCard
                             key={index}
                             {...member}
                         />

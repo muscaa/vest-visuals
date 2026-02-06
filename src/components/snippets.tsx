@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ImgHTMLAttributes } from "react";
+import { Link } from "@shared/i18n";
 
 export interface IconProps {
     size?: number;
@@ -36,5 +36,4 @@ export function Img(props: ImgHTMLAttributes<HTMLImageElement>) {
             {...props}
         />
     );
-
 }

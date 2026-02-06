@@ -8,6 +8,11 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import {
+    Field,
+    FieldGroup,
+    FieldLabel,
+} from "../ui/field";
 
 interface Props {
     onSubmit: (code: string) => Promise<void>;
@@ -39,25 +44,30 @@ export function OTPCard(props: Props) {
             }}
             submitDisabled={code.length != length}
             onSuccess={props.onSuccess}
+            className="max-w-sm text-center"
         >
-            <div className="flex flex-col items-center gap-2">
-                <InputOTP
-                    ref={(element) => element?.focus()}
-                    maxLength={length}
-                    pattern={REGEXP_ONLY_DIGITS}
-                    required
-                    value={code}
-                    onChange={(value) => setCode(value)}
-                >
-                    <InputOTPGroup>
-                        {
-                            Array.from({ length }).map((_, index) => (
-                                <InputOTPSlot key={index} index={index} />
-                            ))
-                        }
-                    </InputOTPGroup>
-                </InputOTP>
-            </div>
+            <FieldGroup>
+                <Field orientation="none" className="flex flex-col items-center">
+                    <FieldLabel htmlFor="otp">Code</FieldLabel>
+                    <InputOTP
+                        ref={(element) => element?.focus()}
+                        id="otp"
+                        maxLength={length}
+                        pattern={REGEXP_ONLY_DIGITS}
+                        required
+                        value={code}
+                        onChange={(value) => setCode(value)}
+                    >
+                        <InputOTPGroup>
+                            {
+                                Array.from({ length }).map((_, index) => (
+                                    <InputOTPSlot key={index} index={index} />
+                                ))
+                            }
+                        </InputOTPGroup>
+                    </InputOTP>
+                </Field>
+            </FieldGroup>
         </SimpleCard>
     );
 }

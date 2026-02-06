@@ -1,0 +1,76 @@
+{
+    "Metadata": {
+        "home": {
+            "title": "Home"
+        },
+        "contact": {
+            "title": "Contact"
+        },
+        "portfolio": {
+            "title": "Portfolio"
+        },
+        "login": {
+            "title": "Login"
+        },
+        "register": {
+            "title": "Register"
+        },
+        "services-wedding": {
+            "title": "Events | Wedding"
+        },
+        "services-christening": {
+            "title": "Events | Christening"
+        },
+        "services-18th-birthday": {
+            "title": "Events | 18th Birthday"
+        },
+        "services-outdoor": {
+            "title": "Portraits | Photography Session"
+        },
+        "services-real-estate": {
+            "title": "Commercial | Real Estate"
+        },
+        "services-automotive": {
+            "title": "Commercial | Automotive"
+        },
+        "services-marketing": {
+            "title": "Commercial | Marketing"
+        },
+        "locations-timisoara": {
+            "title": "Locations | Timisoara"
+        },
+        "locations-arad": {
+            "title": "Locations | Arad"
+        },
+        "locations-oradea": {
+            "title": "Locations | Oradea"
+        },
+        "locations-drobeta-turnu-severin": {
+            "title": "Locations | Drobeta Turnu-Severin"
+        },
+        "locations-cluj-napoca": {
+            "title": "Locations | Cluj-Napoca"
+        },
+        "locations-bucuresti": {
+            "title": "Locations | Bucuresti"
+        },
+        "privacy-policy": {
+            "title": "Privacy Policy"
+        },
+        "terms-of-service": {
+            "title": "Terms of Service"
+        },
+        "cookie-policy": {
+            "title": "Cookie Policy"
+        },
+        "user": {
+            "title": "User"
+        },
+        "admin": {
+            "title": "Admin"
+        }
+    },
+    "Basic": {
+        "not-found": "We're sorry, but the page was not found"
+    }
+}

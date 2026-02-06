@@ -16,10 +16,22 @@ import { TextLink } from "@/components/ui/text-link";
 import {
     ChevronsUp
 } from "lucide-react";
+import {
+    CONTACT,
+    COOKIE_POLICY,
+    LOCATIONS_ARAD,
+    LOCATIONS_CLUJ_NAPOCA,
+    LOCATIONS_ORADEA,
+    LOCATIONS_TIMISOARA,
+    LOCATIONS_DROBETA_TURNU_SEVERIN,
+    PRIVACY_POLICY,
+    TERMS_OF_SERVICE,
+    LOCATIONS_BUCURESTI,
+} from "@shared/i18n";
 
 function FooterBase() {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
             <div className="flex items-center justify-center sm:justify-start gap-4">
                 <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
                 <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
@@ -50,20 +62,22 @@ export function Footer() {
 
 export function FooterLarge() {
     const locations = [
-        { name: "Timisoara", href: "/timisoara" },
-        { name: "Arad", href: "/arad" },
-        { name: "Oradea", href: "/oradea" },
+        { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
+        { name: "Arad", href: LOCATIONS_ARAD() },
+        { name: "Oradea", href: LOCATIONS_ORADEA() },
+        { name: "Drobeta Turnu-Severin", href: LOCATIONS_DROBETA_TURNU_SEVERIN() },
+        { name: "Cluj-Napoca", href: LOCATIONS_CLUJ_NAPOCA() },
+        { name: "Bucuresti", href: LOCATIONS_BUCURESTI() },
     ];
 
     const pages = [
-        { name: "Termeni si conditii", href: "/terms" },
-        { name: "Politica de confidentialitate", href: "/privacy" },
-        { name: "Politica de cookie-uri", href: "/cookies" },
-        { name: "FAQ", href: "/faq" },
+        { name: "Termeni si conditii", href: TERMS_OF_SERVICE() },
+        { name: "Politica de confidentialitate", href: PRIVACY_POLICY() },
+        { name: "Politica de cookie-uri", href: COOKIE_POLICY() },
     ];
 
     return (
-        <footer className="flex flex-col relative">
+        <footer className="flex flex-col relative mt-4.5">
             <div className="flex justify-center items-center bg-background2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
@@ -97,18 +111,18 @@ export function FooterLarge() {
                                 Iti raspundem intrebarilor legate de serviciile oferite de noi.
                             </p>
                             <div className="flex gap-4">
-                                <ButtonLink href="/contact" size="lg">CONTACT</ButtonLink>
+                                <ButtonLink href={CONTACT()}>CONTACT</ButtonLink>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center bg-keppel">
+            <div className="flex justify-center items-center bg-background3">
                 <FooterBase />
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-                <ButtonLink href="#start" variant="secondary" size="icon">
-                    <ChevronsUp size={32} strokeWidth={1.5} className="size-8" />
+                <ButtonLink href="#top" variant="default" size="icon" prefetch={false}>
+                    <ChevronsUp className="size-8" />
                 </ButtonLink>
             </div>
         </footer>

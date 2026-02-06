@@ -1,13 +1,13 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Main } from "../main";
 import { useState } from "react";
 import { FooterLarge } from "../footer";
 import { SectionParallax } from "./parallax";
 import { SectionAbout } from "./about";
 import { SectionCarousel } from "./carousel";
 import { SectionTeam } from "./team";
+import { NavbarLayoutProvider } from "../layout/providers/navbar";
 
 interface SectionsMainProps {
 
@@ -19,7 +19,7 @@ export function SectionsMain(props: SectionsMainProps) {
 
     return (
         <div className={`fixed w-screen h-screen transition-all duration-500 ${more ? "-top-[100vh]" : "top-0"}`}>
-            <Main
+            {/* <NavbarLayoutProvider
                 footer={(
                     <FooterLarge />
                 )}
@@ -36,7 +36,7 @@ export function SectionsMain(props: SectionsMainProps) {
                     <SectionAbout />
                     <SectionTeam />
                 </div>
-            </Main>
+            </NavbarLayoutProvider> */}
         </div>
     );
 }

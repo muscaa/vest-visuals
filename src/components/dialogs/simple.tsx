@@ -12,6 +12,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { splitRender } from "@client/snippets";
 
 interface Props<V> {
     submit: (event: React.FormEvent) => Promise<V>;
@@ -45,7 +46,7 @@ export function SimpleDialog<V>(props: Props<V>) {
 
         try {
             const result = await props.submit(event);
-            
+
             props.onSuccess?.(result);
 
             setStatus("success");
@@ -76,9 +77,7 @@ export function SimpleDialog<V>(props: Props<V>) {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger asChild>
-                {props.trigger}
-            </DialogTrigger>
+            <DialogTrigger {...splitRender(props.trigger)} />
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>{props.title}</DialogTitle>
@@ -97,14 +96,14 @@ export function SimpleDialog<V>(props: Props<V>) {
                             )
                         }
                         <div className="flex gap-2">
-                            <DialogClose asChild>
+                            <DialogClose render={
                                 <Button
                                     variant="outline"
                                     className="grow"
                                 >
                                     Cancel
                                 </Button>
-                            </DialogClose>
+                            } />
                             <Button
                                 type="submit"
                                 variant={props.destructive ? "destructive" : "default"}

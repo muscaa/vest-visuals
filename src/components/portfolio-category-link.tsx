@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { PortfolioCategory } from "@type/registries/portfolio-categories";
 import { Img } from "./snippets";
+import { Link } from "@shared/i18n";
 
 interface PortfolioCategoryLinkProps {
     category: PortfolioCategory;
@@ -12,8 +12,8 @@ export function PortfolioCategoryLink(props: PortfolioCategoryLinkProps) {
         <Link
             href={props.href ?? props.category.href}
             className="
-                relative rounded-xl shadow-sm overflow-hidden
-                w-full h-40 max-w-128 group
+                relative shadow-sm overflow-hidden
+                w-full h-40 max-w-128 group cut-corners-10
             "
         >
             <div className="absolute size-full overflow-hidden">

@@ -4,7 +4,6 @@ import {
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { authClient } from "@client/auth";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
@@ -12,6 +11,12 @@ import {
     useContext,
 } from "react";
 import { Auth } from "@/contexts/auth";
+import {
+    useRouter,
+    LOGIN,
+    LOGIN_VERIFY,
+    U_ACCOUNT,
+} from "@shared/i18n";
 
 export function useAuth() {
     const router = useRouter();
@@ -40,10 +45,10 @@ export function useAuth() {
                 const { error } = await authClient.twoFactor.sendOtp();
                 if (error) throw new Error(error.message);
 
-                router.push("/login/verify");
+                router.push(LOGIN_VERIFY());
             } else {
                 await queryClient.invalidateQueries({ queryKey: ["profile"] });
-                router.push("/u/account");
+                router.push(U_ACCOUNT());
             }
 
             return true;
@@ -59,7 +64,7 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
-            router.push("/u/account");
+            router.push(U_ACCOUNT());
 
             return true;
         },
@@ -82,7 +87,7 @@ export function useAuth() {
             });
             if (error) throw new Error(error.message);
 
-            router.push("/login");
+            router.push(LOGIN());
 
             return true;
         },
@@ -94,7 +99,7 @@ export function useAuth() {
             if (error) throw new Error(error.message);
 
             await queryClient.invalidateQueries({ queryKey: ["profile"] });
-            router.push("/login");
+            router.push(LOGIN());
 
             return true;
         },

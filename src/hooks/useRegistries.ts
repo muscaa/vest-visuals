@@ -5,41 +5,25 @@ import {
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import { apiClient } from "@client/http";
 import {
     RegistryKey,
     RegistryIn,
     RegistryOut,
 } from "@type/registries";
-import * as types_in from "@type/api/registries/in";
-import * as types_out from "@type/api/registries/out";
-import * as types_update from "@type/api/registries/update";
+import * as registries from "@/actions/registries";
 
 export function useRegistries() {
     const queryClient = useQueryClient();
-
-    const update = useMutation({
-        mutationFn: async (props: types_update.PostRequest) => {
-            const { data } = await apiClient.post<types_update.PostResponse, types_update.PostRequest>("/registries/update", props);
-            if (!data.success) throw new Error(data.error);
-
-            await queryClient.invalidateQueries({ queryKey: [`reg-${props.key}`] });
-
-            return true;
-        },
-    });
 
     const useRegistry = <K extends RegistryKey>(key: K | undefined) => useQuery({
         queryKey: [`reg-${key}`, "out"],
         queryFn: async () => {
             if (!key) return null;
 
-            const { data } = await apiClient.post<types_out.PostResponse, types_out.PostRequest>("/registries/out", {
-                key,
-            });
-            if (!data.success) return null;
+            const [status, result] = await registries.getOutput(key);
+            if (status !== "OK") return null;
 
-            return data.value as RegistryOut<K>;
+            return result as RegistryOut<K>;
         },
     });
 
@@ -48,18 +32,27 @@ export function useRegistries() {
         queryFn: async () => {
             if (!key) return null;
 
-            const { data } = await apiClient.post<types_in.PostResponse, types_in.PostRequest>("/registries/in", {
-                key,
-            });
-            if (!data.success) return null;
+            const [status, result] = await registries.getInput(key);
+            if (status !== "OK") return null;
 
-            return data.value as RegistryIn<K>;
+            return result as RegistryIn<K>;
+        },
+    });
+
+    const update = useMutation({
+        mutationFn: async (props: { key: RegistryKey; value: RegistryIn<RegistryKey>; }) => {
+            const [status, result] = await registries.update(props.key, props.value);
+            if (status !== "OK") throw new Error(result as string);
+
+            await queryClient.invalidateQueries({ queryKey: [`reg-${props.key}`] });
+
+            return true;
         },
     });
 
     return {
-        update,
         useRegistry,
         useRegistryIn,
+        update,
     };
 }

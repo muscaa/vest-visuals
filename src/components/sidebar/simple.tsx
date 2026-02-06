@@ -2,9 +2,6 @@
 
 import {
     Sidebar,
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
@@ -23,16 +20,11 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Separator } from "@/components/ui/separator";
 import { ChevronRight } from "lucide-react";
 import { Icon } from "../snippets";
 import { LogoLink } from "../logo";
-import Link from "next/link";
-import { cn } from "@shared/shadcn/lib/utils";
-import {
-    Breadcrumbs,
-    BreadcrumbsProps,
-} from "../breadcrumbs";
+import { splitRender } from "@client/snippets";
+import { Link } from "@shared/i18n";
 
 interface SimpleSidebarMenuItemProps {
     href?: string;
@@ -45,26 +37,24 @@ interface SimpleSidebarMenuItemProps {
 export function SimpleSidebarMenuItem(props: SimpleSidebarMenuItemProps) {
     return (
         <SidebarMenuSubItem>
-            <SidebarMenuSubButton asChild>
-                {
-                    props.href && (
-                        <Link href={props.href}>
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </Link>
-                    ) || props.onClick && (
-                        <div
-                            className="cursor-pointer"
-                            onClick={props.onClick}
-                        >
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </div>
-                    ) || (
-                        props.children
-                    )
-                }
-            </SidebarMenuSubButton>
+            <SidebarMenuSubButton {...splitRender(
+                props.href && (
+                    <Link href={props.href}>
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </Link>
+                ) || props.onClick && (
+                    <div
+                        className="cursor-pointer"
+                        onClick={props.onClick}
+                    >
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </div>
+                ) || (
+                    props.children
+                )
+            )} />
         </SidebarMenuSubItem>
     );
 }
@@ -77,25 +67,22 @@ interface SimpleSidebarMenuProps {
 
 export function SimpleSidebarMenu(props: SimpleSidebarMenuProps) {
     return (
-        <Collapsible
-            asChild
-            className="group/collapsible"
-        >
-            <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
+        <Collapsible render={
+            <SidebarMenuItem className="group/collapsible">
+                <CollapsibleTrigger render={
                     <SidebarMenuButton tooltip={props.title}>
                         {props.icon && <props.icon />}
                         <span>{props.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
-                </CollapsibleTrigger>
+                } />
                 <CollapsibleContent>
                     <SidebarMenuSub>
                         {props.children}
                     </SidebarMenuSub>
                 </CollapsibleContent>
             </SidebarMenuItem>
-        </Collapsible>
+        } />
     );
 }
 
@@ -110,26 +97,24 @@ interface SimpleSidebarItemProps {
 export function SimpleSidebarItem(props: SimpleSidebarItemProps) {
     return (
         <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-                {
-                    props.href && (
-                        <Link href={props.href}>
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </Link>
-                    ) || props.onClick && (
-                        <div
-                            className="cursor-pointer"
-                            onClick={props.onClick}
-                        >
-                            {props.icon && <props.icon />}
-                            <span>{props.text}</span>
-                        </div>
-                    ) || (
-                        props.children
-                    )
-                }
-            </SidebarMenuButton>
+            <SidebarMenuButton {...splitRender(
+                props.href && (
+                    <Link href={props.href}>
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </Link>
+                ) || props.onClick && (
+                    <div
+                        className="cursor-pointer"
+                        onClick={props.onClick}
+                    >
+                        {props.icon && <props.icon />}
+                        <span>{props.text}</span>
+                    </div>
+                ) || (
+                    props.children
+                )
+            )} />
         </SidebarMenuItem>
     );
 }
@@ -165,11 +150,9 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                            asChild
+                            render={<LogoLink />}
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
-                        >
-                            <LogoLink />
-                        </SidebarMenuButton>
+                        />
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
@@ -181,46 +164,5 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
-    );
-}
-
-export interface SimpleSidebarProviderProps {
-    sidebar: React.ReactNode;
-    breadcrumbs?: BreadcrumbsProps;
-    className?: string;
-    extraClassName?: string;
-    children?: React.ReactNode;
-}
-
-export function SimpleSidebarProvider(props: SimpleSidebarProviderProps) {
-    return (
-        <SidebarProvider>
-            {props.sidebar}
-            <SidebarInset className="overflow-hidden">
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
-                        <SidebarTrigger className="-ml-1" />
-                        {
-                            props.breadcrumbs && (
-                                <>
-                                    <Separator
-                                        orientation="vertical"
-                                        className="mr-2 data-[orientation=vertical]:h-4"
-                                    />
-                                    <Breadcrumbs
-                                        {...props.breadcrumbs}
-                                    />
-                                </>
-                            )
-                        }
-                    </div>
-                </header>
-                <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
-                    <main className={cn("grow p-4 pt-0", props.extraClassName)}>
-                        {props.children}
-                    </main>
-                </div>
-            </SidebarInset>
-        </SidebarProvider>
     );
 }
