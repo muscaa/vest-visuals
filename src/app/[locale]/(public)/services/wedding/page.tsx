@@ -1,7 +1,7 @@
 "use client";
 
 import { ServicePage } from "@/components/pages/service";
-import { CalendarCheck, Camera, Clapperboard, Clock, Cloud, Drone, FileImage, FileVideoCamera, Film, Hourglass, Image, Images, Pencil, SwitchCamera, Video, Zap } from "lucide-react";
+import { Camera, Clapperboard, Clock, Cloud, Drone, Film, Hourglass, Image, SwitchCamera, Video, Zap } from "lucide-react";
 
 export default function Page() {
     return (
@@ -26,7 +26,7 @@ export default function Page() {
                         features: [
                             ["Prezența unui fotograf pe toată durata nunții (max. 15 ore)", Clock],
                             ["Fotografii disponibile 12 luni într-un album digital", Cloud],
-                            ["Între 500 și 1200 de fotografii editate", Image],
+                            ["Între 500 și 1500 de fotografii editate", Image],
                             ["Same Day Edit: 25 fotografii", Zap],
                             ["Predare în 30 de zile", Hourglass],
                         ],
@@ -40,7 +40,7 @@ export default function Page() {
                         features: [
                             ["Prezența unui videograf pe toată durata nunții (max. 15 ore)", Clock],
                             ["Videoclipuri disponibile 12 luni într-un album digital", Cloud],
-                            ["Videoclip lung (3 ore+) sau scurt-metraj cinematic (30 min+)", Film],
+                            ["Videoclip lung (3 ore+) sau scurtmetraj cinematic (30 min)", Film],
                             ["Videoclip scurt tip highlights/best-moments (2-4 min)", Clapperboard],
                             ["Cadre aeriene din dronă", Drone],
                             ["Predare în 30 de zile", Hourglass],
@@ -56,9 +56,9 @@ export default function Page() {
                         features: [
                             ["Prezența unei echipe formată dintr-un fotograf și un videograf pe toată durata nunții (max. 15 ore)", Clock],
                             ["Fotografii și videoclipuri disponibile 12 luni într-un album digital", Cloud],
-                            ["Între 500 și 1200 de fotografii editate", Image],
+                            ["Între 500 și 1500 de fotografii editate", Image],
                             ["Same Day Edit: 25 fotografii", Zap],
-                            ["Videoclip lung (3 ore+) sau scurt-metraj cinematic (30 min+)", Film],
+                            ["Videoclip lung (3 ore+) sau scurtmetraj cinematic (30 min)", Film],
                             ["Videoclip scurt tip highlights/best-moments (2-4 min)", Clapperboard],
                             ["Cadre aeriene din dronă", Drone],
                             ["Predare în 30 de zile", Hourglass],
