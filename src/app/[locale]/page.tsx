@@ -55,18 +55,8 @@ export default function Page() {
                     perks: [
                         {
                             icon: Heart,
-                            title: "Sunt nerăbdăror să aflu povestea voastră ",
-                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
-                        },
-                        {
-                            icon: Heart,
-                            title: "Sunt nerăbdăror să aflu povestea voastră ",
-                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
-                        },
-                        {
-                            icon: Heart,
-                            title: "Sunt nerăbdăror să aflu povestea voastră ",
-                            description: "Emoția și momentul sunt rețeta perfectă. Pentru că îmi place să creez povestea prin fotografii care să ajungă direct la suflet, să transmită emoții pure care să te facă să zâmbești mereu.",
+                            title: "Suntem nerăbdărori să aflăm povestea voastră ",
+                            description: "Pentru noi, totul pornește de la emoție. Transformăm momentele voastre în povești fotografice care transmit bucurie pură și te fac să retrăiești fiecare zâmbet, de fiecare dată.",
                         },
                     ],
                 }}
