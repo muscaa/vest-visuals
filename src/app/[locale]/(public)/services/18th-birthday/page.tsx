@@ -70,7 +70,7 @@ export default function Page() {
                     title: "Extra (Optional)",
                     offers: [
                         {
-                            title: "FOTOGRAF SECUNDAR",
+                            title: "Fotograf secundar",
                             price: "100",
                             currency: "€",
                         },
