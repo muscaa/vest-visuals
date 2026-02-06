@@ -1,9 +1,4 @@
-export type Response<T> = {
-    success: false;
-    error: string;
-} | ({
-    success: true;
-} & T);
+import type { NextResponse } from "next/server";
 
 export type Status2xx = "OK" | "CREATED" | "ACCEPTED" | "NO_CONTENT";
 export type Status3xx = "MULTIPLE_CHOICES" | "MOVED_PERMANENTLY" | "FOUND" | "SEE_OTHER" | "NOT_MODIFIED" | "TEMPORARY_REDIRECT";
@@ -11,7 +6,7 @@ export type Status4xx = "BAD_REQUEST" | "UNAUTHORIZED" | "PAYMENT_REQUIRED" | "F
 export type Status5xx = "INTERNAL_SERVER_ERROR" | "NOT_IMPLEMENTED" | "BAD_GATEWAY" | "SERVICE_UNAVAILABLE" | "GATEWAY_TIMEOUT" | "HTTP_VERSION_NOT_SUPPORTED" | "VARIANT_ALSO_NEGOTIATES" | "INSUFFICIENT_STORAGE" | "LOOP_DETECTED" | "NOT_EXTENDED" | "NETWORK_AUTHENTICATION_REQUIRED";
 export type Status = Status2xx | Status3xx | Status4xx | Status5xx;
 
-export type ActionResponse<T> = Promise<[
+export type ResponseBody<T> = [
     status: Status4xx | Status5xx,
     result: string,
 ] | (
@@ -21,4 +16,7 @@ export type ActionResponse<T> = Promise<[
             status: Status2xx | Status3xx,
             result: T,
         ]
-    )>;
+    );
+
+export type ActionResponse<T> = Promise<ResponseBody<T>>;
+export type Response<T> = Promise<NextResponse<ResponseBody<T>>>;
