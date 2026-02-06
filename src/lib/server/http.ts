@@ -2,6 +2,7 @@ import {
     NextRequest,
     NextResponse,
 } from "next/server";
+import { ResponseBody } from "@type/http";
 
 export async function safeJSON<T>(input: NextRequest | string, validate?: (json: T) => any) {
     try {
@@ -36,8 +37,8 @@ export function getUrlString(request: NextRequest, path?: string) {
     return url.toString();
 }
 
-export function responseJSON<T>(status: number, body: T) {
-    return NextResponse.json<T>(body, {
-        status,
+export function response<T>(body: ResponseBody<T>): NextResponse<ResponseBody<T>> {
+    return NextResponse.json<ResponseBody<T>>(body, {
+        status: 200,
     });
 }
