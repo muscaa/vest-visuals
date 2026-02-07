@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { Response } from "@type/http";
 import { response } from "@server/http";
 import { isAdmin } from "@server/auth/permissions";
 import * as types from "@type/portfolio/media";
@@ -8,7 +9,7 @@ import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
 import { ProcessorValue } from "@server/media/processor/base";
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Response<types.PartialPortfolioMedia> {
     const admin = await isAdmin({ request });
     if (!admin) {
         return response(["UNAUTHORIZED", "Unauthorized"]);

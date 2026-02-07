@@ -9,6 +9,7 @@ import {
 import * as types from "@type/assets/media";
 import * as media from "@/actions/assets/media";
 import { API_ASSETS } from "@shared/i18n";
+import { ResponseBody } from "@type/http";
 
 interface UploadProgress {
     at: number;
@@ -59,17 +60,13 @@ export function useAssetsMedia() {
                     formData.append(types.UploadFormData.file, file);
                     formData.append(types.UploadFormData.config, JSON.stringify(config));
 
-                    // --
                     const response = await fetch(API_ASSETS, {
                         method: "PUT",
                         body: formData,
                     });
                     if (!response.ok) throw new Error("Server error");
 
-                    const [status, result] = await response.json();
-                    // --
-
-                    // const [status, result] = await media.upload(formData);
+                    const [status, result]: ResponseBody<types.PartialAssetsMedia> = await response.json();
                     if (status !== "OK") throw new Error(result as string);
 
                     await queryClient.invalidateQueries({ queryKey: ["assets"] });

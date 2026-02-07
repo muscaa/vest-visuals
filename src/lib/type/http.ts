@@ -19,4 +19,4 @@ export type ResponseBody<T> = [
     );
 
 export type ActionResponse<T> = Promise<ResponseBody<T>>;
-export type Response<T> = Promise<NextResponse<ResponseBody<T>>>;
+export type Response<T> = Promise<NextResponse<ResponseBody<T | string>>>;
