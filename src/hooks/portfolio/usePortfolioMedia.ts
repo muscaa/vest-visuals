@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import * as types from "@type/portfolio/media";
 import * as media from "@/actions/portfolio/media";
+import { API_PORTFOLIO } from "@shared/i18n";
 
 interface UploadProgress {
     at: number;
@@ -59,7 +60,7 @@ export function usePortfolioMedia() {
                     formData.append(types.UploadFormData.config, JSON.stringify(config));
 
                     // --
-                    const response = await fetch("/api/portfolio", {
+                    const response = await fetch(API_PORTFOLIO, {
                         method: "PUT",
                         body: formData,
                     });

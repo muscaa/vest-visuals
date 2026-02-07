@@ -181,6 +181,8 @@ export const A_REGISTRIES = lp(() => `${A()}/registries`, {
 //
 // api
 //
+export const API_ASSETS = "/api/assets";
+export const API_PORTFOLIO = "/api/portfolio";
 
 //
 // assets

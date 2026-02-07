@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import * as types from "@type/assets/media";
 import * as media from "@/actions/assets/media";
+import { API_ASSETS } from "@shared/i18n";
 
 interface UploadProgress {
     at: number;
@@ -59,7 +60,7 @@ export function useAssetsMedia() {
                     formData.append(types.UploadFormData.config, JSON.stringify(config));
 
                     // --
-                    const response = await fetch("/api/assets", {
+                    const response = await fetch(API_ASSETS, {
                         method: "PUT",
                         body: formData,
                     });
