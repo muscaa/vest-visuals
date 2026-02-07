@@ -58,7 +58,17 @@ export function usePortfolioMedia() {
                     formData.append(types.UploadFormData.file, file);
                     formData.append(types.UploadFormData.config, JSON.stringify(config));
 
-                    const [status, result] = await media.upload(formData);
+                    // --
+                    const response = await fetch("/api/portfolio", {
+                        method: "PUT",
+                        body: formData,
+                    });
+                    if (!response.ok) throw new Error("Server error");
+
+                    const [status, result] = await response.json();
+                    // --
+
+                    // const [status, result] = await media.upload(formData);
                     if (status !== "OK") throw new Error(result as string);
 
                     await queryClient.invalidateQueries({ queryKey: ["portfolio"] });
