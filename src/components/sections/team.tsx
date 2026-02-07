@@ -29,6 +29,7 @@ function MemberCard(props: TeamMember) {
                             props.socials.instagram && (
                                 <TextLink
                                     href={props.socials.instagram}
+                                    target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
                                 >
@@ -40,6 +41,7 @@ function MemberCard(props: TeamMember) {
                             props.socials.facebook && (
                                 <TextLink
                                     href={props.socials.facebook}
+                                    target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
                                 >
@@ -51,6 +53,7 @@ function MemberCard(props: TeamMember) {
                             props.socials.linkedin && (
                                 <TextLink
                                     href={props.socials.linkedin}
+                                    target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
                                 >
@@ -62,6 +65,7 @@ function MemberCard(props: TeamMember) {
                 </div>
                 <TextLink
                     href={`mailto:${props.email}`}
+                    target="_blank"
                     className="w-min"
                 >
                     {props.email}
