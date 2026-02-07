@@ -12,7 +12,7 @@ export default function Page() {
                     title: "Fotograf de Evenimente și Povești Autentice",
                     description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
                     images: [
-                        // "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
+                        "https://s3.vestvisuals.ro/portfolio/zz9zwk8shj6zvb0esbwq3z0q/large",
                     ],
                 }}
                 about={{
@@ -29,13 +29,13 @@ export default function Page() {
                         },
                         {
                             name: "portrete",
-                            href: "/portfolio/portrete",
-                            cover: "https://s3.vestvisuals.ro/public/media/cd8m1bfe6oufkiyid6fi5ds9/medium",
+                            href: "/portfolio/outdoor",
+                            cover: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
                         },
                         {
                             name: "automotive",
                             href: "/portfolio/automotive",
-                            cover: "https://s3.vestvisuals.ro/public/media/ppudsek2ua9vitncc9tsbhc8/medium",
+                            cover: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
                         },
                         {
                             name: "real estate",
@@ -64,7 +64,7 @@ export default function Page() {
                     members: [
                         {
                             name: "David",
-                            image: "https://s3.vestvisuals.ro/public/media/uo7rqysv9ick53seuo9yelyx/medium",
+                            image: "https://s3.vestvisuals.ro/assets/b5aper1c72hhuu0do4wcr1gs/medium",
                             roles: [
                                 "videograf",
                                 "fotograf",
@@ -74,11 +74,12 @@ export default function Page() {
                             socials: {
                                 instagram: "https://www.instagram.com/david.bostina/",
                                 facebook: "https://www.facebook.com/david.bostina/",
+                                linkedin: "https://www.linkedin.com/in/david-bostinas-a52989390/",
                             },
                         },
                         {
                             name: "Mihail",
-                            image: "https://s3.vestvisuals.ro/public/media/qbw9108bwpie9l7mxuu2nwea/medium",
+                            image: "https://s3.vestvisuals.ro/assets/sea7b5p5ozm5iupyd3qc57rm/medium",
                             roles: [
                                 "fotograf",
                                 "editor foto",
