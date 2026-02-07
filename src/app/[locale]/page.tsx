@@ -12,7 +12,11 @@ export default function Page() {
                     title: "Fotograf de Evenimente și Povești Autentice",
                     description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
                     images: [
-                        "https://s3.vestvisuals.ro/portfolio/zz9zwk8shj6zvb0esbwq3z0q/large",
+                        "https://s3.vestvisuals.ro/portfolio/enr3qepjk5vqijs1zhc1ya0c/large", // majorate
+                        "https://s3.vestvisuals.ro/portfolio/a8rm9fhczl4px321ladxwrft/large", // outdoor
+                        "https://s3.vestvisuals.ro/portfolio/zz9zwk8shj6zvb0esbwq3z0q/large", // automotive
+                        "https://s3.vestvisuals.ro/portfolio/y4g068yl6ce1o3bspivi5r5p/large", // real estate
+                        "https://s3.vestvisuals.ro/portfolio/z42sd0lf54pzm9abaomt9ybb/large", // marketing
                     ],
                 }}
                 about={{
@@ -24,8 +28,8 @@ export default function Page() {
                     categories: [
                         {
                             name: "majorate",
-                            href: "/portfolio/majorate",
-                            cover: "https://s3.vestvisuals.ro/public/media/bz4jjbrb93t152zefgi4fzqn/medium",
+                            href: "/portfolio/18th-birthday",
+                            cover: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
                         },
                         {
                             name: "portrete",
@@ -38,14 +42,14 @@ export default function Page() {
                             cover: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
                         },
                         {
-                            name: "real estate",
+                            name: "imobiliare (real estate)",
                             href: "/portfolio/real-estate",
-                            cover: "https://s3.vestvisuals.ro/public/media/c90y98x999s1rp9zaru4i82i/medium",
+                            cover: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
                         },
                         {
-                            name: "business",
-                            href: "/portfolio/business",
-                            cover: "https://s3.vestvisuals.ro/public/media/clip1232mungg5cc67o2ssap/medium",
+                            name: "promovare firme (marketing)",
+                            href: "/portfolio/marketing",
+                            cover: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
                         },
                     ],
                 }}
