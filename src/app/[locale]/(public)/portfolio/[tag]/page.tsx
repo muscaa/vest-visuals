@@ -27,7 +27,7 @@ export default function Page() {
 
     return (
         <>
-            <div className="flex justify-center size-full p-2">
+            <div className="flex justify-center size-full p-2 min-h-screen-no-nav">
                 {
                     data && (
                         <Masonry

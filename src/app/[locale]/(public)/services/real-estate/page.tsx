@@ -10,7 +10,9 @@ export default function Page() {
                 title: "Fotograf de Evenimente și Povești Autentice",
                 description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
                 images: [
-                    // "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
+                    "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/large",
+                    "https://s3.vestvisuals.ro/portfolio/hwktjt5gmgoefmt69q3fckiv/large",
+                    "https://s3.vestvisuals.ro/portfolio/dl07n8adsot5whobspse96kv/large",
                 ],
             }}
             price={{
