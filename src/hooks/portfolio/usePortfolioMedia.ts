@@ -8,6 +8,8 @@ import {
 } from "@tanstack/react-query";
 import * as types from "@type/portfolio/media";
 import * as media from "@/actions/portfolio/media";
+import { API_PORTFOLIO } from "@shared/i18n";
+import { ResponseBody } from "@type/http";
 
 interface UploadProgress {
     at: number;
@@ -58,7 +60,13 @@ export function usePortfolioMedia() {
                     formData.append(types.UploadFormData.file, file);
                     formData.append(types.UploadFormData.config, JSON.stringify(config));
 
-                    const [status, result] = await media.upload(formData);
+                    const response = await fetch(API_PORTFOLIO, {
+                        method: "PUT",
+                        body: formData,
+                    });
+                    if (!response.ok) throw new Error("Server error");
+
+                    const [status, result]: ResponseBody<types.PartialPortfolioMedia> = await response.json();
                     if (status !== "OK") throw new Error(result as string);
 
                     await queryClient.invalidateQueries({ queryKey: ["portfolio"] });

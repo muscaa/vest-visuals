@@ -2,14 +2,14 @@ import { NextRequest } from "next/server";
 import { Response } from "@type/http";
 import { response } from "@server/http";
 import { isAdmin } from "@server/auth/permissions";
-import * as types from "@type/assets/media";
-import * as media from "@server/assets/media";
+import * as types from "@type/portfolio/media";
+import * as media from "@server/portfolio/media";
 import { safeJSON } from "@server/http";
 import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
 import { ProcessorValue } from "@server/media/processor/base";
 
-export async function PUT(request: NextRequest): Response<types.PartialAssetsMedia> {
+export async function PUT(request: NextRequest): Response<types.PartialPortfolioMedia> {
     const admin = await isAdmin({ request });
     if (!admin) {
         return response(["UNAUTHORIZED", "Unauthorized"]);
@@ -46,7 +46,7 @@ export async function PUT(request: NextRequest): Response<types.PartialAssetsMed
     }
 
     const result = await media.create({
-        assetsMediaVariants: values.map((value) => ({
+        portfolioMediaVariants: values.map((value) => ({
             tag: value.tag,
             order: value.order,
             blob: new Blob([Buffer.from(value.buffer)], { type: value.mimeType }),
