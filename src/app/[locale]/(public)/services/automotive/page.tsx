@@ -1,7 +1,7 @@
 "use client";
 
 import { ServicePage } from "@/components/pages/service";
-import { CalendarCheck, Camera, Clock, Hourglass, Images, Video, Zap } from "lucide-react";
+import { CalendarCheck, Camera, Clock, Cloud, Film, Hourglass, Image, Images, SwitchCamera, Video, Zap } from "lucide-react";
 
 export default function Page() {
     return (
@@ -21,47 +21,64 @@ export default function Page() {
             price={{
                 title: "Preturi si Oferte 2026",
                 offers: [
-                    // {
-                    //     icon: Camera,
-                    //     title: "Fotografie",
-                    //     price: "800",
-                    //     currency: "€",
-                    //     button: "Rezerva Fotograf",
-                    //     highlight: "RECOMANDAT",
-                    //     accent: true,
-                    //     features: [
-                    //         ["Prezența unui fotograf pe toată durata nunții, max 15 ore", Clock],
-                    //         ["Galerie online customizabilă", Images],
-                    //         ["Fotografii disponibile cel putin 12 luni", CalendarCheck],
-                    //         ["Same Day Edit 25 fotografii", Zap],
-                    //         ["Predare in 30 zile", Hourglass],
-                    //     ],
-                    // },
-                    // {
-                    //     icon: Video,
-                    //     title: "Videografie",
-                    //     price: "800",
-                    //     currency: "€",
-                    //     button: "Rezerva Videograf",
-                    //     features: [
-                    //         ["Prezența unui fotograf pe toată durata nunții, max 15 ore"],
-                    //         ["Galerie online customizabilă", Images],
-                    //         ["Fotografii disponibile cel putin 12 luni", CalendarCheck],
-                    //         ["Same Day Edit 25 fotografii"],
-                    //         ["Predare in 30 zile", Hourglass],
-                    //     ],
-                    // },
+                    {
+                        icon: Camera,
+                        title: "Fotograf",
+                        price: "100",
+                        currency: "€/mașină",
+                        button: "Rezerva Fotograf",
+                        features: [
+                            ["Durată: 1 oră", Clock],
+                            ["Fotografii disponibile 1 lună într-un album digital", Cloud],
+                            ["Între 10 și 30 de fotografii editate", Image],
+                            ["Predare în 7 zile", Hourglass],
+                        ],
+                    },
+                    {
+                        icon: Video,
+                        title: "Videograf",
+                        price: "100",
+                        currency: "€/mașină",
+                        button: "Rezerva Videograf",
+                        features: [
+                            ["Durată: 1 oră", Clock],
+                            ["Videoclipuri disponibile 1 lună într-un album digital", Cloud],
+                            ["Videoclip lung stil trailer/teaser (1-3 minute) sau 2 videoclipuri scurte tip Reels/TikTok", Film],
+                            ["Predare în 7 zile", Hourglass],
+                        ],
+                    },
+                    {
+                        icon: SwitchCamera,
+                        title: "Fotograf + Videograf",
+                        price: "190",
+                        currency: "€/mașină",
+                        button: "Rezerva Pachet",
+                        features: [
+                            ["Durată: 1 oră", Clock],
+                            ["Fotografii și videoclipuri disponibile 1 lună într-un album digital", Cloud],
+                            ["Între 10 și 30 de fotografii editate", Image],
+                            ["Videoclip lung stil trailer/teaser (1-3 minute) sau 2 videoclipuri scurte tip Reels/TikTok", Film],
+                            ["Predare în 7 zile", Hourglass],
+                        ],
+                        highlight: "RECOMANDAT",
+                        accent: true,
+                    },
                 ],
-                // extra: {
-                //     title: "Extra (Optional)",
-                //     offers: [
-                //         {
-                //             title: "FOTOGRAF SECUNDAR",
-                //             price: "400",
-                //             currency: "€",
-                //         },
-                //     ],
-                // },
+                extra: {
+                    title: "Extra (Optional)",
+                    offers: [
+                        {
+                            title: "Livrare rapidă (24-48 de ore)",
+                            price: "20",
+                            currency: "% din pret",
+                        },
+                        {
+                            title: "Dronă 4K",
+                            price: "100",
+                            currency: "€",
+                        },
+                    ],
+                },
             }}
             faq={{
                 title: "Intrebari Frecvente (FAQ)",
