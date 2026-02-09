@@ -41,7 +41,7 @@ export default function Page() {
                         button: "Rezerva Videograf",
                         features: [
                             ["Durată: 2 ore", Clock],
-                            ["Fotografii și videoclipuri disponibile 1 lună într-un album digital", Cloud],
+                            ["Videoclipuri disponibile 1 lună într-un album digital", Cloud],
                             ["Videoclip lung stil trailer/teaser (2-4 minute) sau 3 videoclipuri scurte tip Reels/TikTok", Film],
                             ["Predare în 7 zile", Hourglass],
                         ],
