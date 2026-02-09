@@ -63,17 +63,38 @@ export default function Page() {
             faq={{
                 title: "Intrebari Frecvente (FAQ)",
                 qna: [
-                    // [
-                    //     "Cat de devreme ar trebui sa rezervam data nuntii?",
-                    //     <>
-                    //         <p>
-                    //             Recomandarea noastră este să rezervați serviciile foto
-                    //             **cu cel puțin 12-18 luni înainte**, mai ales dacă nunta
-                    //             are loc într-un sezon de vârf (mai-septembrie).
-                    //             Datele populare se ocupă rapid!
-                    //         </p>
-                    //     </>
-                    // ],
+                    [
+                        "Câte fotografii vom primi și în cât timp?",
+                        <>
+                            <p>
+                                Numărul de fotografii variază în funcție de pachetul ales și durata ședinței, dar în medie livrăm între 10-40 de fotografii editate în termen de 7 zile, in functie de dimensiunile proprietatii.
+                            </p>
+                        </>
+                    ],
+                    [
+                        "Oferiți și filmare?",
+                        <>
+                            <p>
+                                In functie de pachetul selectat, oferim 1-3 videoclipuri (verticale - excelente pentru promovarea pe social media sau orizontale).
+                            </p>
+                        </>
+                    ],
+                    [
+                        "Cum ar trebui sa imi pregatesc imobilul pentru sedinta foto?",
+                        <>
+                            <p>
+                                Pentru poze excelente recomandam ca imobilul sa fie curat, aranjat, lenejrie alba de pat (preferabil), iar obiectele personale sa nu fie vizibile.
+                            </p>
+                        </>
+                    ],
+                    [
+                        "Oferiti discount pentru mai multe proprietati?",
+                        <>
+                            <p>
+                                Desigur, pentru mai multe proprietati oferim discount incepand cu 10%. Pentru oferte personalizate, va rugam sa ne contactati.
+                            </p>
+                        </>
+                    ],
                 ],
             }}
         />
