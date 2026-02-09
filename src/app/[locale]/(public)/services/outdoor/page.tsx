@@ -65,7 +65,7 @@ export default function Page() {
                         {
                             title: "Livrare rapidă (24-48 ore)",
                             price: "20",
-                            currency: "€",
+                            currency: "% din total",
                         },
                         {
                             title: "Album foto",
@@ -99,14 +99,14 @@ export default function Page() {
                             </p>
                         </>
                     ],
-                    [
-                        "Călătoriți în alt oraș/țară?",
-                        <>
-                            <p>
-                                Absolut! Suntem disponibili în toată țara și în străinătate. Pentru anumite orașe din vest nu se cer costuri de transport (ex: Timișoara, Arad, Caransebeș, Lugoj etc.). Pentru alte locații mai îndepărtate, costurile de deplasare și/sau cazare vor fi adăugate la pachetul ales și discutate transparent de la început.
-                            </p>
-                        </>
-                    ],
+                    // [
+                    //     "Călătoriți în alt oraș/țară?",
+                    //     <>
+                    //         <p>
+                    //             Absolut! Suntem disponibili în toată țara și în străinătate. Pentru anumite orașe din vest nu se cer costuri de transport (ex: Timișoara, Arad, Caransebeș, Lugoj etc.). Pentru alte locații mai îndepărtate, costurile de deplasare și/sau cazare vor fi adăugate la pachetul ales și discutate transparent de la început.
+                    //         </p>
+                    //     </>
+                    // ],
                 ],
             }}
         />
