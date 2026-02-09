@@ -60,6 +60,11 @@ export default function Page() {
                             price: "100",
                             currency: "€",
                         },
+                        {
+                            title: "Deplasare în afara Timișoarei",
+                            price: "Negociabil în funcție de locație",
+                            currency: "",
+                        },
                     ],
                 },
             }}
