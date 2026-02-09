@@ -18,6 +18,7 @@ import {
     SectionTeam,
     SectionTeamProps,
 } from "@/components/sections/team";
+import { Separator } from "../ui/separator";
 
 interface Props {
     preview: SectionPreviewProps;
@@ -32,8 +33,9 @@ export function HomePage(props: Props) {
         <div className="flex flex-col justify-center items-center min-h-screen-no-nav">
             <SectionPreview {...props.preview} />
             <SectionAbout {...props.about} />
+            <Separator />
             <SectionPortfolio {...props.portfolio} />
-            <SectionBenefits {...props.benefits} />
+            <SectionBenefits {...props.benefits} className="bg-background2" />
             <SectionTeam {...props.team} />
         </div>
     );
