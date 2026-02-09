@@ -3,6 +3,11 @@
 import { ActionResponse } from "@type/http";
 import { serverConfig } from "@server/config";
 
+interface ReCaptchaData {
+    success: boolean;
+    score: number;
+}
+
 export async function sendContact(token: string, name: string, email: string, message: string): ActionResponse<void> {
     try {
         if (!token || !name || !email || !message) {
@@ -17,7 +22,7 @@ export async function sendContact(token: string, name: string, email: string, me
             body: `secret=${serverConfig.env.RECAPTCHA_KEY_SECRET}&response=${token}`,
         });
 
-        const recaptchaData = await recaptchaRes.json();
+        const recaptchaData: ReCaptchaData = await recaptchaRes.json();
 
         if (!recaptchaData.success || recaptchaData.score < 0.5) {
             return ["FORBIDDEN", "reCAPTCHA verification failed"];
