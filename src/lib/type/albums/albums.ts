@@ -19,5 +19,7 @@ export type CreateProps = {
     cover?: string;
 };
 export type UpdateProps = {
-    // albumsMediaVariants?: ListProps<CreateAlbumsMediaVariantProps, CreateAlbumsMediaVariantProps, string>;
+    title?: string;
+    description?: string;
+    cover?: string;
 };
