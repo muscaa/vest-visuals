@@ -1,19 +1,24 @@
-import { SelectRequired } from "@type/utils";
 import * as media from "./media";
 import * as directories from "./directories";
 
-export type PartialAlbumsContent = {
+type AlbumsContentBase = {
     id: string;
     albumId: string;
     path: string;
-    type: "media" | "directory";
     order: number;
-    albumsMedia?: media.PartialAlbumsMedia;
-    albumsDirectory?: directories.AlbumsDirectory;
     createdAt: Date;
     updatedAt: Date;
+}
+type AlbumsContentType = {
+    type: "media";
+    albumsMedia?: media.PartialAlbumsMedia;
+} | {
+    type: "directory";
+    albumsDirectory?: directories.AlbumsDirectory;
 };
-export type AlbumsContent = SelectRequired<PartialAlbumsContent, "albumsMedia" | "albumsDirectory">;
+
+export type PartialAlbumsContent = AlbumsContentBase & AlbumsContentType;
+export type AlbumsContent = AlbumsContentBase & Required<AlbumsContentType>;
 type CreateAlbumsMediaProps = Omit<media.CreateProps, "contentId">;
 type CreateAlbumsDirectoryProps = Omit<directories.CreateProps, "contentId">;
 export type CreateProps = {

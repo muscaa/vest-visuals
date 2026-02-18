@@ -7,19 +7,11 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { MediaInfo } from "@type/media/info";
-import { createId } from "@paralleldrive/cuid2";
 import { ALBUMS_CONTENTS } from "./contents";
 
 export const ALBUMS_MEDIA = sqliteTable("albums_media", {
     contentId: text("content_id")
-        .$defaultFn(() => createId())
         .primaryKey(),
-    createdAt: integer("created_at", { mode: "timestamp" })
-        .$defaultFn(() => new Date())
-        .notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp" })
-        .$defaultFn(() => new Date())
-        .notNull(),
 });
 
 export const ALBUMS_MEDIA_VARIANTS = sqliteTable("albums_media_variants", {
