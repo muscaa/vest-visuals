@@ -177,6 +177,14 @@ export const A_REGISTRIES = lp(() => `${A()}/registries`, {
     en: `${A.en}/registries`,
     ro: `${A.ro}/registri`,
 });
+export const A_ALBUMS = lp(() => `${A()}/albums`, {
+    en: `${A.en}/albums`,
+    ro: `${A.ro}/albume`,
+});
+export const A_ALBUMS_$ID = lp((id: string) => `${A_ALBUMS()}/${id}`, {
+    en: `${A_ALBUMS.en}/[id]`,
+    ro: `${A_ALBUMS.ro}/[id]`,
+});
 
 //
 // api
@@ -228,6 +236,8 @@ export const pathnames = [
     A_PORTFOLIO_GROUPS_$ID,
     A_PORTFOLIO_MEDIA,
     A_REGISTRIES,
+    A_ALBUMS,
+    A_ALBUMS_$ID,
 ] as const;
 
 // export type Pathnames = {
