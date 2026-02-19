@@ -11,7 +11,7 @@ import { A_ALBUMS } from "@shared/i18n";
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 
 export default function Page() {
-    const params = useParams<{ id: string }>();
+    const params = useParams<{ id: string; path?: string[]; }>();
     const { useAlbum } = useAlbums();
     const { data } = useAlbum(params.id);
 
