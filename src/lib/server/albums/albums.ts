@@ -1,10 +1,6 @@
 import { db } from "@server/db";
 import { ALBUMS } from "@server/db/schema";
-import {
-    eq,
-    inArray,
-    sql,
-} from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import * as contents from "./contents";
 import * as types from "@type/albums/albums";
 
@@ -47,14 +43,7 @@ export async function getAll(): Promise<Album[]> {
     const result = await albumsQuery.findMany({
         with: {
             albumsContents: {
-                orderBy: (fields, operators) => [
-                    sql`CASE
-                        WHEN ${fields.type} = 'directory' THEN 1
-                        WHEN ${fields.type} = 'file' THEN 2
-                        ELSE 3
-                    END`,
-                    operators.asc(fields.order),
-                ],
+                orderBy: (fields, operators) => operators.asc(fields.order),
                 with: {
                     albumsMedia: {
                         with: {
@@ -83,14 +72,7 @@ export async function get(id: string): Promise<Album | undefined> {
         where: (fields, operators) => operators.eq(fields.id, id),
         with: {
             albumsContents: {
-                orderBy: (fields, operators) => [
-                    sql`CASE
-                        WHEN ${fields.type} = 'directory' THEN 1
-                        WHEN ${fields.type} = 'file' THEN 2
-                        ELSE 3
-                    END`,
-                    operators.asc(fields.order),
-                ],
+                orderBy: (fields, operators) => operators.asc(fields.order),
                 with: {
                     albumsMedia: {
                         with: {
@@ -116,36 +98,29 @@ export async function create(props: types.CreateProps): Promise<PartialAlbum | u
         })
         .returning()
         .get();
-    if (!result) {
-        return undefined;
-    }
-
-    return await getPartial(result.id);
+    return result ? format(result) : undefined;
 }
 
 export async function update(id: string, props: types.UpdateProps): Promise<PartialAlbum | undefined> {
-    await db.update(albumsTable)
+    const result = await db.update(albumsTable)
         .set({
             title: props.title,
             description: props.description,
             cover: props.cover,
         })
-        .where(eq(albumsTable.id, id));
-
-    return await getPartial(id);
+        .where(eq(albumsTable.id, id))
+        .returning()
+        .get();
+    return format(result);
 }
 
 export async function remove(id: string): Promise<number> {
     const query = await getPartial(id);
     if (!query) return 0;
 
+    // TODO remove contents & related things
+
     const result = await db.delete(albumsTable)
         .where(eq(albumsTable.id, id));
-    return result.rowsAffected;
-}
-
-export async function removeList(ids: string[]): Promise<number> {
-    const result = await db.delete(albumsTable)
-        .where(inArray(albumsTable.id, ids));
     return result.rowsAffected;
 }

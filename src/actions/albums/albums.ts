@@ -3,7 +3,7 @@
 import { ActionResponse } from "@type/http";
 import { isAdmin } from "@server/auth/permissions";
 import * as types from "@type/albums/albums";
-import * as categories from "@server/albums/albums";
+import * as albums from "@server/albums/albums";
 
 export async function get(id: string): ActionResponse<types.Album> {
     const admin = await isAdmin({ next: true });
@@ -12,12 +12,12 @@ export async function get(id: string): ActionResponse<types.Album> {
     }
 
     if (!id) {
-        return ["BAD_REQUEST", "Missing category ID"];
+        return ["BAD_REQUEST", "Missing album ID"];
     }
 
-    const result = await categories.get(id);
+    const result = await albums.get(id);
     if (!result) {
-        return ["NOT_FOUND", "Category not found"];
+        return ["NOT_FOUND", "Album not found"];
     }
 
     return ["OK", result];
@@ -29,9 +29,9 @@ export async function getAll(): ActionResponse<types.PartialAlbum[]> {
         return ["UNAUTHORIZED", "Unauthorized"];
     }
 
-    const result = await categories.getAllPartial();
+    const result = await albums.getAllPartial();
     if (!result) {
-        return ["INTERNAL_SERVER_ERROR", "Could not retrieve categories"];
+        return ["INTERNAL_SERVER_ERROR", "Could not retrieve albums"];
     }
 
     return ["OK", result];
@@ -44,12 +44,12 @@ export async function create(value: types.CreateProps): ActionResponse<types.Par
     }
 
     if (!value) {
-        return ["BAD_REQUEST", "Missing category properties"];
+        return ["BAD_REQUEST", "Missing album properties"];
     }
 
-    const result = await categories.create(value);
+    const result = await albums.create(value);
     if (!result) {
-        return ["INTERNAL_SERVER_ERROR", "Could not create category"];
+        return ["INTERNAL_SERVER_ERROR", "Could not create album"];
     }
 
     return ["OK", result];
@@ -62,30 +62,30 @@ export async function update(id: string, value: types.UpdateProps): ActionRespon
     }
 
     if (!id || !value) {
-        return ["BAD_REQUEST", "Missing category ID or properties"];
+        return ["BAD_REQUEST", "Missing album ID or properties"];
     }
 
-    const result = await categories.update(id, value);
+    const result = await albums.update(id, value);
     if (!result) {
-        return ["INTERNAL_SERVER_ERROR", "Could not update category"];
+        return ["INTERNAL_SERVER_ERROR", "Could not update album"];
     }
 
     return ["OK"];
 }
 
-export async function remove(ids: string[]): ActionResponse<void> {
+export async function remove(id: string): ActionResponse<void> {
     const admin = await isAdmin({ next: true });
     if (!admin) {
         return ["UNAUTHORIZED", "Unauthorized"];
     }
 
-    if (!ids || ids.length === 0) {
-        return ["BAD_REQUEST", "No category IDs provided"];
+    if (!id) {
+        return ["BAD_REQUEST", "Missing album ID"];
     }
 
-    const result = categories.removeList(ids);
+    const result = albums.remove(id);
     if (!result) {
-        return ["NOT_FOUND", "Categories not found"];
+        return ["NOT_FOUND", "Album not found"];
     }
 
     return ["OK"];

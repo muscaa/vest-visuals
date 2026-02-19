@@ -17,7 +17,7 @@ function ValidDialog(props: ValidProps) {
     const { removeAlbum } = useAlbums();
 
     const submit = async () => {
-        return await removeAlbum.mutateAsync([props.value.id]);
+        return await removeAlbum.mutateAsync(props.value.id);
     };
 
     return (

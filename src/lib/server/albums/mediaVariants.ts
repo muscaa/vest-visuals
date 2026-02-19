@@ -25,16 +25,16 @@ export type MediaVariant = types.AlbumsMediaVariant;
 const bucket = buckets.albums;
 const mediaVariantsTable = ALBUMS_MEDIA_VARIANTS;
 
-function filePath(mediaId: string, tag: string) {
-    return `${mediaId}/${tag}`;
+function filePath(albumId: string, mediaId: string, tag: string) {
+    return `${albumId}/${mediaId}/${tag}`;
 }
 
-export function format(props: SelectProps): MediaVariant {
+export function format(albumId: string, props: SelectProps): MediaVariant {
     return {
         mediaId: props.mediaId,
         tag: props.tag,
         order: props.order,
-        fileUrl: `${serverConfig.env.S3_URL}/${bucket}/${filePath(props.mediaId, props.tag)}`,
+        fileUrl: `${serverConfig.env.S3_URL}/${bucket}/${filePath(albumId, props.mediaId, props.tag)}`,
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -42,27 +42,27 @@ export function format(props: SelectProps): MediaVariant {
     };
 }
 
-export async function getAll(): Promise<MediaVariant[]> {
-    const result = await db.select()
-        .from(mediaVariantsTable)
-        .orderBy(
-            asc(mediaVariantsTable.mediaId),
-            asc(mediaVariantsTable.order),
-        )
-        .all();
-    return result.map(format);
-}
+// export async function getAll(): Promise<MediaVariant[]> {
+//     const result = await db.select()
+//         .from(mediaVariantsTable)
+//         .orderBy(
+//             asc(mediaVariantsTable.mediaId),
+//             asc(mediaVariantsTable.order),
+//         )
+//         .all();
+//     return result.map(format);
+// }
 
-export async function getList(mediaId: string): Promise<MediaVariant[]> {
+export async function getList(albumId: string, mediaId: string): Promise<MediaVariant[]> {
     const result = await db.select()
         .from(mediaVariantsTable)
         .where(eq(mediaVariantsTable.mediaId, mediaId))
         .orderBy(asc(mediaVariantsTable.order))
         .all();
-    return result.map(format);
+    return result.map((value) => format(albumId, value));
 }
 
-export async function get(mediaId: string, tag: string): Promise<MediaVariant | undefined> {
+export async function get(albumId: string, mediaId: string, tag: string): Promise<MediaVariant | undefined> {
     const result = await db.select()
         .from(mediaVariantsTable)
         .where(
@@ -72,14 +72,14 @@ export async function get(mediaId: string, tag: string): Promise<MediaVariant | 
             )
         )
         .get();
-    return result ? format(result) : undefined;
+    return result ? format(albumId, result) : undefined;
 }
 
-async function exists(mediaId: string, tag: string): Promise<boolean> {
+async function exists(albumId: string, mediaId: string, tag: string): Promise<boolean> {
     try {
         const command = new HeadObjectCommand({
             Bucket: bucket,
-            Key: filePath(mediaId, tag),
+            Key: filePath(albumId, mediaId, tag),
         });
         await s3.send(command);
 
@@ -88,14 +88,14 @@ async function exists(mediaId: string, tag: string): Promise<boolean> {
     return false;
 }
 
-async function upload(mediaId: string, tag: string, blob: Blob): Promise<boolean> {
+async function upload(albumId: string, mediaId: string, tag: string, blob: Blob): Promise<boolean> {
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
         const command = new PutObjectCommand({
             Bucket: bucket,
-            Key: filePath(mediaId, tag),
+            Key: filePath(albumId, mediaId, tag),
             Body: buffer,
             ContentType: blob.type,
         });
@@ -106,10 +106,10 @@ async function upload(mediaId: string, tag: string, blob: Blob): Promise<boolean
     return false;
 }
 
-export async function create(props: types.CreateProps): Promise<MediaVariant | undefined> {
-    if (await exists(props.mediaId, props.tag)) return undefined;
+export async function create(albumId: string, props: types.CreateProps): Promise<MediaVariant | undefined> {
+    if (await exists(albumId, props.mediaId, props.tag)) return undefined;
 
-    const uploaded = await upload(props.mediaId, props.tag, props.blob);
+    const uploaded = await upload(albumId, props.mediaId, props.tag, props.blob);
     if (!uploaded) return undefined;
 
     const result = await db.insert(mediaVariantsTable)
@@ -122,14 +122,14 @@ export async function create(props: types.CreateProps): Promise<MediaVariant | u
         })
         .returning()
         .get();
-    return result ? format(result) : undefined;
+    return result ? format(albumId, result) : undefined;
 }
 
-export async function remove(mediaId: string, tag: string): Promise<number> {
+export async function remove(albumId: string, mediaId: string, tag: string): Promise<number> {
     try {
         const command = new DeleteObjectCommand({
             Bucket: bucket,
-            Key: filePath(mediaId, tag),
+            Key: filePath(albumId, mediaId, tag),
         });
         await s3.send(command);
     } catch (error) { }
@@ -144,13 +144,13 @@ export async function remove(mediaId: string, tag: string): Promise<number> {
     return result.rowsAffected;
 }
 
-export async function removeList(mediaId: string, tags?: string[]): Promise<number> {
+export async function removeList(albumId: string, mediaId: string, tags?: string[]): Promise<number> {
     if (tags) {
         try {
             await Promise.all(tags.map((tag) => {
                 const command = new DeleteObjectCommand({
                     Bucket: bucket,
-                    Key: filePath(mediaId, tag),
+                    Key: filePath(albumId, mediaId, tag),
                 });
                 return s3.send(command);
             }));
@@ -166,13 +166,13 @@ export async function removeList(mediaId: string, tags?: string[]): Promise<numb
         return result.rowsAffected;
     }
 
-    const list = await getList(mediaId);
+    const list = await getList(albumId, mediaId);
 
     try {
         await Promise.all(list.map((value) => {
             const command = new DeleteObjectCommand({
                 Bucket: bucket,
-                Key: filePath(value.mediaId, value.tag),
+                Key: filePath(albumId, value.mediaId, value.tag),
             });
             return s3.send(command);
         }));

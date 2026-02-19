@@ -54,8 +54,8 @@ export function useAlbums() {
     });
 
     const removeAlbum = useMutation({
-        mutationFn: async (ids: string[]) => {
-            const [status, result] = await albums.remove(ids);
+        mutationFn: async (id: string) => {
+            const [status, result] = await albums.remove(id);
             if (status !== "OK") throw new Error(result as string);
 
             await queryClient.invalidateQueries({ queryKey: ["albums"] });

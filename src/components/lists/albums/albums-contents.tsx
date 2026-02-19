@@ -12,7 +12,10 @@ import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { PartialAlbumsContent } from "@type/albums/contents";
 import { Album } from "@type/albums/albums";
-import { GripVertical } from "lucide-react";
+import {
+    Folder,
+    GripVertical,
+} from "lucide-react";
 import {
     DndSortable,
     arrayMove,
@@ -42,32 +45,32 @@ function ListEntry(props: ListEntryProps) {
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
-            <Img
-                src={image}
-                alt="Preview"
-                className="size-32 object-contain"
-            />
+            {
+                props.value.type === "media" && (
+                    <Img
+                        src={image}
+                        alt="Preview"
+                        className="size-32 object-contain"
+                    />
+                ) || props.value.type === "directory" && (
+                    <Folder
+                        className="size-32 object-contain"
+                    />
+                )
+            }
             <div className="flex flex-col gap-1 grow text-foreground">
                 <h4>{props.value.id}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
-                        <div className="flex gap-2">
-                            <span className="p5">{props.value.location}</span>
-                            {
-                                props.value.location && props.value.description && (
-                                    <Separator orientation="vertical" />
-                                )
-                            }
-                            <span className="p5">{props.value.description}</span>
-                        </div>
+                        <span className="p5">{props.value.path}</span>
                         <div className="flex flex-col">
                             <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
                             <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{props.value.portfolioMediaIds.length || "no"}</p>
+                        <p>{"no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>

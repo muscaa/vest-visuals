@@ -8,8 +8,6 @@ import { MediaProcessor } from "@type/media/processor";
 export type PartialAlbumsMedia = {
     contentId: string;
     albumsMediaVariants?: mediaVariants.AlbumsMediaVariant[];
-    createdAt: Date;
-    updatedAt: Date;
 };
 export type AlbumsMedia = SelectRequired<PartialAlbumsMedia, "albumsMediaVariants">;
 type CreateAlbumsMediaVariantProps = Omit<mediaVariants.CreateProps, "mediaId">;

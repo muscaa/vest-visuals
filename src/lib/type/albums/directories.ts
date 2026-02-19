@@ -2,8 +2,6 @@ export type AlbumsDirectory = {
     contentId: string;
     name: string;
     cover?: string;
-    createdAt: Date;
-    updatedAt: Date;
 };
 export type CreateProps = {
     contentId: string;

@@ -19,19 +19,26 @@ type AlbumsContentType = {
 
 export type PartialAlbumsContent = AlbumsContentBase & AlbumsContentType;
 export type AlbumsContent = AlbumsContentBase & Required<AlbumsContentType>;
-type CreateAlbumsMediaProps = Omit<media.CreateProps, "contentId">;
-type CreateAlbumsDirectoryProps = Omit<directories.CreateProps, "contentId">;
 export type CreateProps = {
     albumId: string;
     path: string;
-    order?: number;
+    order: number;
 } & ({
     type: "media";
-    albumsMedia: CreateAlbumsMediaProps;
+    albumsMedia: Omit<media.CreateProps, "contentId">;
 } | {
     type: "directory";
-    albumsDirectory: CreateAlbumsDirectoryProps;
+    albumsDirectory: Omit<directories.CreateProps, "contentId">;
 });
 export type UpdateProps = {
-    // albumsMediaVariants?: ListProps<CreateAlbumsMediaVariantProps, CreateAlbumsMediaVariantProps, string>;
-};
+    path?: string;
+    order?: number;
+} & ({
+    type?: never;
+} | {
+    type: "media";
+    albumsMedia: media.UpdateProps;
+} | {
+    type: "directory";
+    albumsDirectory: directories.UpdateProps;
+});

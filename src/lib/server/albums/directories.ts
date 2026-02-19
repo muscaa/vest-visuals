@@ -12,29 +12,27 @@ export type Directory = types.AlbumsDirectory;
 const directoriesTable = ALBUMS_DIRECTORIES;
 const directoriesQuery = db.query.ALBUMS_DIRECTORIES;
 
-export function format<T extends SelectProps>(props: T): Directory {
+export function format<T extends SelectProps>(albumId: string, props: T): Directory {
     return {
         contentId: props.contentId,
         name: props.name,
         cover: props.cover,
-        // createdAt: props.createdAt,
-        // updatedAt: props.updatedAt,
     } as Directory;
 }
 
-export async function getAll(): Promise<Directory[]> {
-    const result = await directoriesQuery.findMany({});
-    return result.map(format);
-}
+// export async function getAll(): Promise<Directory[]> {
+//     const result = await directoriesQuery.findMany({});
+//     return result.map(format);
+// }
 
-export async function get(id: string): Promise<Directory | undefined> {
+export async function get(albumId: string, contentId: string): Promise<Directory | undefined> {
     const result = await directoriesQuery.findFirst({
-        where: (fields, operators) => operators.eq(fields.contentId, id),
+        where: (fields, operators) => operators.eq(fields.contentId, contentId),
     });
-    return result ? format(result) : undefined;
+    return result ? format(albumId, result) : undefined;
 }
 
-export async function create(props: types.CreateProps): Promise<Directory | undefined> {
+export async function create(albumId: string, props: types.CreateProps): Promise<Directory | undefined> {
     const result = await db.insert(directoriesTable)
         .values({
             contentId: props.contentId,
@@ -43,35 +41,23 @@ export async function create(props: types.CreateProps): Promise<Directory | unde
         })
         .returning()
         .get();
-    if (!result) {
-        return undefined;
-    }
-
-    return await get(result.contentId);
+    return result ? format(albumId, result) : undefined;
 }
 
-export async function update(id: string, props: types.UpdateProps): Promise<Directory | undefined> {
-    await db.update(directoriesTable)
+export async function update(albumId: string, contentId: string, props: types.UpdateProps): Promise<Directory | undefined> {
+    const result = await db.update(directoriesTable)
         .set({
             name: props.name,
             cover: props.cover,
         })
-        .where(eq(directoriesTable.contentId, id));
-
-    return await get(id);
+        .where(eq(directoriesTable.contentId, contentId))
+        .returning()
+        .get();
+    return result ? format(albumId, result) : undefined;
 }
 
-export async function remove(id: string): Promise<number> {
-    const query = await get(id);
-    if (!query) return 0;
-
+export async function remove(albumId: string, contentId: string): Promise<number> {
     const result = await db.delete(directoriesTable)
-        .where(eq(directoriesTable.contentId, id));
-    return result.rowsAffected;
-}
-
-export async function removeList(ids: string[]): Promise<number> {
-    const result = await db.delete(directoriesTable)
-        .where(inArray(directoriesTable.contentId, ids));
+        .where(eq(directoriesTable.contentId, contentId));
     return result.rowsAffected;
 }
