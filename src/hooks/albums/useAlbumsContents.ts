@@ -31,10 +31,10 @@ export function useAlbumsContents() {
         },
     });
 
-    const useAlbumsContentByPath = (path: string) => useQuery({
-        queryKey: ["albums", path],
+    const useAlbumsContentByPath = (albumId: string, path?: string[]) => useQuery({
+        queryKey: ["albums", albumId, path],
         queryFn: async () => {
-            const [status, result] = await contents.getByPath(path);
+            const [status, result] = await contents.getByPath(albumId, path);
             if (status !== "OK") return null;
 
             return result || null;
@@ -77,6 +77,7 @@ export function useAlbumsContents() {
     return {
         useAllAlbumsContents,
         useAlbumsContent,
+        useAlbumsContentByPath,
         createAlbumsContent,
         updateAlbumsContent,
         removeAlbumsContent,

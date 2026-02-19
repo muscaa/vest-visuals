@@ -62,11 +62,14 @@ export async function getAll(): Promise<Content[]> {
     return result.map(format);
 }
 
-export async function getByPath(path: string): Promise<Content[]> {
+export async function getByPath(albumId: string, path?: string[]): Promise<Content[]> {
+    const pathname = path && path.length > 0 ? path.join("/") : "";
+
     const result = await contentsQuery.findMany({
         where: (fields, operators) => operators.and(
-            operators.like(fields.path, `${path}/%`),
-            operators.notLike(fields.path, `${path}/%/%`),
+            operators.eq(fields.albumId, albumId),
+            operators.like(fields.path, `${pathname}/%`),
+            operators.notLike(fields.path, `${pathname}/%/%`),
         ),
         orderBy: (fields, operators) => operators.asc(fields.order),
         with: {
