@@ -11,7 +11,6 @@ import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { PartialAlbumsContent } from "@type/albums/contents";
-import { Album } from "@type/albums/albums";
 import {
     Folder,
     GripVertical,
@@ -21,13 +20,12 @@ import {
     arrayMove,
 } from "@client/dnd";
 import { useAlbums } from "@/hooks/albums/useAlbums";
-// import { usePortfolioMedia } from "@/hooks/portfolio/usePortfolioMedia";
-// import { PortfolioGroupsCreateDialog } from "@/components/dialogs/portfolio/portfolio-groups-create";
-// import { PortfolioGroupsEditDialog } from "@/components/dialogs/portfolio/portfolio-groups-edit";
-// import { PortfolioGroupsDeleteDialog } from "@/components/dialogs/portfolio/portfolio-groups-delete";
+import { AlbumsContentsCreateDialog } from "@/components/dialogs/albums/albums-contents-create";
+import { AlbumsContentsEditDialog } from "@/components/dialogs/albums/albums-contents-edit";
+import { AlbumsContentsDeleteDialog } from "@/components/dialogs/albums/albums-contents-delete";
 import {
     useRouter,
-    // A_PORTFOLIO_GROUPS_$ID,
+    A_ALBUMS_$ID_$PATH,
     PLACEHOLDER,
 } from "@shared/i18n";
 
@@ -44,7 +42,7 @@ function ListEntry(props: ListEntryProps) {
     const image = PLACEHOLDER;
 
     return (
-        <div className="flex flex-wrap gap-4 size-full whitespace-normal">
+        <div className="flex flex-wrap items-center gap-4 size-full whitespace-normal">
             {
                 props.value.type === "media" && (
                     <Img
@@ -54,7 +52,7 @@ function ListEntry(props: ListEntryProps) {
                     />
                 ) || props.value.type === "directory" && (
                     <Folder
-                        className="size-32 object-contain"
+                        className="size-16 text-muted-foreground"
                     />
                 )
             }
@@ -95,7 +93,8 @@ function ListEntry(props: ListEntryProps) {
 interface ListProps {
     data: PartialAlbumsContent[];
     onUpdate?: () => void;
-    parent?: Album;
+    albumId: string;
+    path?: string[];
 }
 
 export function AlbumsContentsList(props: ListProps) {
@@ -118,19 +117,21 @@ export function AlbumsContentsList(props: ListProps) {
     };
 
     const handleMove = async (from: number, to: number) => {
-        if (!props.parent) return;
+        // if (!props.parent) return;
 
         setData((prev) => arrayMove(prev, from, to));
         const order = arrayMove(props.data.map((group) => group.id), from, to);
 
-        await updateAlbum.mutateAsync({
-            id: props.parent.id,
-            value: {
-                // portfolioGroups: {
-                //     set: order,
-                // },
-            },
-        });
+        // TODO set order individually for each content by id
+
+        // await updateAlbum.mutateAsync({
+        //     id: props.parent.id,
+        //     value: {
+        //         portfolioGroups: {
+        //             set: order,
+        //         },
+        //     },
+        // });
 
         handleUpdate();
     };
@@ -142,36 +143,37 @@ export function AlbumsContentsList(props: ListProps) {
                 <ListEntry
                     value={value}
                     sortable={sortable}
-                    disabled={!props.parent}
                 />
             )}
             entryToId={(value, index) => value.id}
             move={handleMove}
             isSelected={(value) => selected?.id == value.id}
             onSelect={handleSelect}
-            disabled={!props.parent}
         >
-            {/* <PortfolioGroupsCreateDialog
+            <AlbumsContentsCreateDialog
                 onCreate={handleUpdate}
-                parent={props.parent}
+                albumId={props.albumId}
+                parentPath={props.path}
             >
                 <Button
                     className="grow"
                 >
                     New
                 </Button>
-            </PortfolioGroupsCreateDialog>
+            </AlbumsContentsCreateDialog>
             <Button
                 variant="secondary"
                 disabled={!selected}
-                onClick={() => router.push(A_PORTFOLIO_GROUPS_$ID(selected!.id))}
+                onClick={() => router.push(A_ALBUMS_$ID_$PATH(props.albumId, selected!.path.split("/")))}
                 className="grow"
             >
                 Open
             </Button>
-            <PortfolioGroupsEditDialog
+            <AlbumsContentsEditDialog
                 value={selected}
                 onEdit={handleUpdate}
+                albumId={props.albumId}
+                parentPath={props.path}
             >
                 <Button
                     variant="secondary"
@@ -180,8 +182,8 @@ export function AlbumsContentsList(props: ListProps) {
                 >
                     Edit
                 </Button>
-            </PortfolioGroupsEditDialog>
-            <PortfolioGroupsDeleteDialog
+            </AlbumsContentsEditDialog>
+            <AlbumsContentsDeleteDialog
                 value={selected}
                 onDelete={handleUpdate}
             >
@@ -192,7 +194,7 @@ export function AlbumsContentsList(props: ListProps) {
                 >
                     Delete
                 </Button>
-            </PortfolioGroupsDeleteDialog> */}
+            </AlbumsContentsDeleteDialog>
         </SortableList>
     );
 }

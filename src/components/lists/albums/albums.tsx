@@ -11,7 +11,7 @@ import { AlbumsEditDialog } from "@/components/dialogs/albums/albums-edit";
 import { AlbumsDeleteDialog } from "@/components/dialogs/albums/albums-delete";
 import {
     useRouter,
-    A_ALBUMS_$ID,
+    A_ALBUMS_$ID_$PATH,
 } from "@shared/i18n";
 
 interface ListEntryProps {
@@ -84,7 +84,7 @@ export function AlbumsList(props: ListProps) {
             <Button
                 variant="secondary"
                 disabled={!selected}
-                onClick={() => router.push(A_ALBUMS_$ID(selected!.id))}
+                onClick={() => router.push(A_ALBUMS_$ID_$PATH(selected!.id))}
                 className="grow"
             >
                 Open

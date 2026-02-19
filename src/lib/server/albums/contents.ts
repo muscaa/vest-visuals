@@ -63,13 +63,13 @@ export async function getAll(): Promise<Content[]> {
 }
 
 export async function getByPath(albumId: string, path?: string[]): Promise<Content[]> {
-    const pathname = path && path.length > 0 ? path.join("/") : "";
+    const pathname = path ? path.join("/") + "/" : "";
 
     const result = await contentsQuery.findMany({
         where: (fields, operators) => operators.and(
             operators.eq(fields.albumId, albumId),
-            operators.like(fields.path, `${pathname}/%`),
-            operators.notLike(fields.path, `${pathname}/%/%`),
+            operators.like(fields.path, `${pathname}%`),
+            operators.notLike(fields.path, `${pathname}%/%`),
         ),
         orderBy: (fields, operators) => operators.asc(fields.order),
         with: {
@@ -114,7 +114,7 @@ export async function create(props: types.CreateProps): Promise<PartialContent |
     const result = await db.insert(contentsTable)
         .values({
             albumId: props.albumId,
-            path: props.path,
+            path: props.path.join("/"),
             type: props.type,
             order: props.order,
         })
@@ -147,7 +147,7 @@ export async function update(id: string, props: types.UpdateProps): Promise<Part
     if (props.path || props.order) {
         await db.update(contentsTable)
             .set({
-                path: props.path,
+                path: props.path?.join("/"),
                 order: props.order,
             })
             .where(eq(contentsTable.id, id));
@@ -162,6 +162,7 @@ export async function update(id: string, props: types.UpdateProps): Promise<Part
                 break;
 
             case "directory":
+                console.log(id, props.albumsDirectory);
                 await directories.update(content.albumId, id, props.albumsDirectory);
                 break;
         }

@@ -181,9 +181,9 @@ export const A_ALBUMS = lp(() => `${A()}/albums`, {
     en: `${A.en}/albums`,
     ro: `${A.ro}/albume`,
 });
-export const A_ALBUMS_$ID = lp((id: string) => `${A_ALBUMS()}/${id}`, {
-    en: `${A_ALBUMS.en}/[id]`,
-    ro: `${A_ALBUMS.ro}/[id]`,
+export const A_ALBUMS_$ID_$PATH = lp((id: string, path?: string[]) => `${A_ALBUMS()}/${id}/${path ? path.join("/") : ""}`, {
+    en: `${A_ALBUMS.en}/[id]/[...path]`,
+    ro: `${A_ALBUMS.ro}/[id]/[...path]`,
 });
 
 //
@@ -237,7 +237,7 @@ export const pathnames = [
     A_PORTFOLIO_MEDIA,
     A_REGISTRIES,
     A_ALBUMS,
-    A_ALBUMS_$ID,
+    A_ALBUMS_$ID_$PATH,
 ] as const;
 
 // export type Pathnames = {
