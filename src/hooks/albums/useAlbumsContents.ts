@@ -31,6 +31,16 @@ export function useAlbumsContents() {
         },
     });
 
+    const useAlbumsContentByPath = (path: string) => useQuery({
+        queryKey: ["albums", path],
+        queryFn: async () => {
+            const [status, result] = await contents.getByPath(path);
+            if (status !== "OK") return null;
+
+            return result || null;
+        },
+    });
+
     const createAlbumsContent = useMutation({
         mutationFn: async (props: types.CreateProps) => {
             const [status, result] = await contents.create(props);

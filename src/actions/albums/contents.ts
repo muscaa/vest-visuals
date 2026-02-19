@@ -37,6 +37,20 @@ export async function getAll(): ActionResponse<types.PartialAlbumsContent[]> {
     return ["OK", result];
 }
 
+export async function getByPath(path: string): ActionResponse<types.AlbumsContent[]> {
+    const admin = await isAdmin({ next: true });
+    if (!admin) {
+        return ["UNAUTHORIZED", "Unauthorized"];
+    }
+
+    const result = await contents.getByPath(path);
+    if (!result) {
+        return ["INTERNAL_SERVER_ERROR", "Could not retrieve contents"];
+    }
+
+    return ["OK", result];
+}
+
 export async function create(value: types.CreateProps): ActionResponse<types.PartialAlbumsContent> {
     const admin = await isAdmin({ next: true });
     if (!admin) {

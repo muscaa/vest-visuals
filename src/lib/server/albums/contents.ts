@@ -62,6 +62,27 @@ export async function getAll(): Promise<Content[]> {
     return result.map(format);
 }
 
+export async function getByPath(path: string): Promise<Content[]> {
+    const result = await contentsQuery.findMany({
+        where: (fields, operators) => operators.and(
+            operators.like(fields.path, `${path}/%`),
+            operators.notLike(fields.path, `${path}/%/%`),
+        ),
+        orderBy: (fields, operators) => operators.asc(fields.order),
+        with: {
+            albumsMedia: {
+                with: {
+                    albumsMediaVariants: {
+                        orderBy: (fields, operators) => operators.asc(fields.order),
+                    },
+                },
+            },
+            albumsDirectory: true,
+        },
+    });
+    return result.map(format);
+}
+
 export async function getPartial(id: string): Promise<PartialContent | undefined> {
     const result = await contentsQuery.findFirst({
         where: (fields, operators) => operators.eq(fields.id, id),
