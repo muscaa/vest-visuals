@@ -118,7 +118,7 @@ export async function remove(id: string): Promise<number> {
     const query = await getPartial(id);
     if (!query) return 0;
 
-    // TODO remove contents & related things
+    await contents.removeByAlbumId(id);
 
     const result = await db.delete(albumsTable)
         .where(eq(albumsTable.id, id));

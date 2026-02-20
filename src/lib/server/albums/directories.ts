@@ -61,3 +61,9 @@ export async function remove(albumId: string, contentId: string): Promise<number
         .where(eq(directoriesTable.contentId, contentId));
     return result.rowsAffected;
 }
+
+export async function removeList(albumId: string, contentIds: string[]): Promise<number> {
+    const result = await db.delete(directoriesTable)
+        .where(inArray(directoriesTable.contentId, contentIds));
+    return result.rowsAffected;
+}

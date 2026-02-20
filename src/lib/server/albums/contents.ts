@@ -1,6 +1,6 @@
 import { db } from "@server/db";
 import { ALBUMS_CONTENTS } from "@server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import * as types from "@type/albums/contents";
 import * as media from "./media";
 import * as directories from "./directories";
@@ -58,6 +58,14 @@ export async function getAll(): Promise<Content[]> {
             },
             albumsDirectory: true,
         },
+    });
+    return result.map(format);
+}
+
+export async function getByAlbumId(albumId: string): Promise<PartialContent[]> {
+    const result = await contentsQuery.findMany({
+        where: (fields, operators) => operators.eq(fields.albumId, albumId),
+        orderBy: (fields, operators) => operators.asc(fields.order),
     });
     return result.map(format);
 }
@@ -182,5 +190,17 @@ export async function remove(id: string): Promise<number> {
 
     const result = await db.delete(contentsTable)
         .where(eq(contentsTable.id, id));
+    return result.rowsAffected;
+}
+
+export async function removeByAlbumId(albumId: string): Promise<number> {
+    const list = await getByAlbumId(albumId);
+    const ids = list.map((content) => content.id);
+
+    await media.removeList(albumId, ids);
+    await directories.removeList(albumId, ids);
+
+    const result = await db.delete(contentsTable)
+        .where(inArray(contentsTable.id, ids));
     return result.rowsAffected;
 }

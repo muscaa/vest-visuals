@@ -120,3 +120,10 @@ export async function remove(albumId: string, contentId: string): Promise<number
         .where(eq(mediaTable.contentId, contentId));
     return result.rowsAffected;
 }
+
+export async function removeList(albumId: string, contentIds: string[]): Promise<number> {
+    await Promise.all(contentIds.map((contentId) => mediaVariants.removeList(albumId, contentId)));
+    const result = await db.delete(mediaTable)
+        .where(inArray(mediaTable.contentId, contentIds));
+    return result.rowsAffected;
+}
