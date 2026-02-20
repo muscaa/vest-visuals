@@ -20,6 +20,7 @@ import {
     arrayMove,
 } from "@client/dnd";
 import { useAlbums } from "@/hooks/albums/useAlbums";
+import { useAlbumsMedia } from "@/hooks/albums/useAlbumsMedia";
 import { AlbumsContentsCreateDialog } from "@/components/dialogs/albums/albums-contents-create";
 import { AlbumsContentsEditDialog } from "@/components/dialogs/albums/albums-contents-edit";
 import { AlbumsContentsDeleteDialog } from "@/components/dialogs/albums/albums-contents-delete";
@@ -36,10 +37,10 @@ interface ListEntryProps {
 }
 
 function ListEntry(props: ListEntryProps) {
-    // const { usePortfolioMedia: useMedia } = usePortfolioMedia();
-    // const { data } = useMedia(props.value.portfolioMediaIds.length > 0 ? props.value.portfolioMediaIds[0] : "null");
-    // const image = useMemo(() => data && data.portfolioMediaVariants.length > 0 ? data.portfolioMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
-    const image = PLACEHOLDER;
+    const { useAlbumsMedia: useMedia } = useAlbumsMedia();
+    const { data } = useMedia(props.value.albumId, props.value.id);
+    // TODO use directory cover if available
+    const image = useMemo(() => data && data.albumsMediaVariants.length > 0 ? data.albumsMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
 
     return (
         <div className="flex flex-wrap items-center gap-4 size-full whitespace-normal">
@@ -57,11 +58,11 @@ function ListEntry(props: ListEntryProps) {
                 )
             }
             <div className="flex flex-col gap-1 grow text-foreground">
-                <h4>{props.value.id}</h4>
+                <h4>{props.value.path}</h4>
                 <Separator />
                 <div className="flex gap-2 text-muted-foreground">
                     <div className="flex flex-col gap-2 grow">
-                        <span className="p5">{props.value.path}</span>
+                        <span className="p5">{props.value.id}</span>
                         <div className="flex flex-col">
                             <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
                             <h6>Created: {dateToString(props.value.createdAt)}</h6>
@@ -163,7 +164,7 @@ export function AlbumsContentsList(props: ListProps) {
             </AlbumsContentsCreateDialog>
             <Button
                 variant="secondary"
-                disabled={!selected}
+                disabled={!selected || selected.type !== "directory"}
                 onClick={() => router.push(A_ALBUMS_$ID_$PATH(props.albumId, selected!.path.split("/")))}
                 className="grow"
             >
