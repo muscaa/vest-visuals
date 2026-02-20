@@ -189,8 +189,11 @@ export const A_ALBUMS_$ID_$PATH = lp((id: string, path?: string[]) => `${A_ALBUM
 //
 // api
 //
-export const API_ASSETS = "/api/assets";
-export const API_PORTFOLIO = "/api/portfolio";
+const API = "/api";
+export const API_ASSETS = `${API}/assets`;
+export const API_PORTFOLIO = `${API}/portfolio`;
+const API_ALBUMS = `${API}/albums`;
+export const API_ALBUMS_CONTENTS = `${API_ALBUMS}/contents`;
 
 //
 // assets

@@ -1,5 +1,6 @@
 import * as media from "./media";
 import * as directories from "./directories";
+import { MediaProcessor } from "@type/media/processor";
 
 type AlbumsContentBase = {
     id: string;
@@ -42,3 +43,26 @@ export type UpdateProps = {
     type: "directory";
     albumsDirectory: directories.UpdateProps;
 });
+
+export namespace CreateFormData {
+    export type content = {
+        albumId: string;
+        path: string[];
+        order: number;
+        type: "media" | "directory";
+    };
+    export const content = "content";
+
+    export type mediaFile = File;
+    export const mediaFile = "mediaFile";
+    export type mediaConfig = {
+        processor: MediaProcessor;
+    };
+    export const mediaConfig = "mediaConfig";
+
+    export type directory = {
+        name: string;
+        cover?: string;
+    };
+    export const directory = "directory";
+}

@@ -51,24 +51,6 @@ export async function getByPath(albumId: string, path?: string[]): ActionRespons
     return ["OK", result];
 }
 
-export async function create(value: types.CreateProps): ActionResponse<types.PartialAlbumsContent> {
-    const admin = await isAdmin({ next: true });
-    if (!admin) {
-        return ["UNAUTHORIZED", "Unauthorized"];
-    }
-
-    if (!value) {
-        return ["BAD_REQUEST", "Missing content properties"];
-    }
-
-    const result = await contents.create(value);
-    if (!result) {
-        return ["INTERNAL_SERVER_ERROR", "Could not create content"];
-    }
-
-    return ["OK", result];
-}
-
 export async function update(id: string, value: types.UpdateProps): ActionResponse<void> {
     const admin = await isAdmin({ next: true });
     if (!admin) {

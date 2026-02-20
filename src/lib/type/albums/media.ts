@@ -3,7 +3,6 @@ import {
     ListProps,
 } from "@type/utils";
 import * as mediaVariants from "./mediaVariants";
-import { MediaProcessor } from "@type/media/processor";
 
 export type PartialAlbumsMedia = {
     contentId: string;
@@ -18,12 +17,3 @@ export type CreateProps = {
 export type UpdateProps = {
     albumsMediaVariants?: ListProps<CreateAlbumsMediaVariantProps, CreateAlbumsMediaVariantProps, string>;
 };
-
-export namespace UploadFormData {
-    export type file = File;
-    export const file = "file";
-    export type config = {
-        processor: MediaProcessor;
-    };
-    export const config = "config";
-}

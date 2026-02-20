@@ -10,6 +10,7 @@ import {
     FieldLabel,
 } from "@/components/ui/field";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Progress } from "@/components/ui/progress";
 
 interface Props {
     albumId: string;
@@ -21,26 +22,71 @@ interface Props {
 export function AlbumsContentsCreateDialog(props: Props) {
     const [type, setType] = useState<"media" | "directory">("media");
     const [mediaFiles, setMediaFiles] = useState<File[]>([]);
-    const [directoryName, setDirectoryName] = useState<string>();
+    const [directoryName, setDirectoryName] = useState<string>("");
     const [directoryCover, setDirectoryCover] = useState<string>();
-    const { createAlbumsContent } = useAlbumsContents();
+    const { createAlbumsContentMedia, mediaUploadProgress, createAlbumsContentDirectory } = useAlbumsContents();
 
     const submit = async () => {
-        return await createAlbumsContent.mutateAsync({
-            albumId: props.albumId,
-            path: [...(props.parentPath ?? []), directoryName!],
-            order: 0,
-            type: "directory",
-            albumsDirectory: {
-                name: directoryName!,
-                cover: directoryCover,
-            },
-        });
+        if (type === "media") {
+            return await createAlbumsContentMedia.mutateAsync(Array.from(mediaFiles).map((mediaFile) => ({
+                content: {
+                    albumId: props.albumId,
+                    path: [...(props.parentPath ?? []), mediaFile.name],
+                    order: 0,
+                },
+                mediaFile,
+                mediaConfig: {
+                    processor: {
+                        id: "image-sharp-v1",
+                        variants: {
+                            small: {
+                                order: 100,
+                                qualityPercent: 70,
+                                size: {
+                                    scaleUnit: 360,
+                                },
+                            },
+                            medium: {
+                                order: 200,
+                                qualityPercent: 80,
+                                size: {
+                                    scaleUnit: 768,
+                                },
+                            },
+                            large: {
+                                order: 300,
+                                qualityPercent: 90,
+                                size: {
+                                    scaleUnit: 1080,
+                                },
+                            },
+                            original: {
+                                order: 400,
+                            },
+                        },
+                    },
+                },
+            })));
+        } else if (type === "directory") {
+            return await createAlbumsContentDirectory.mutateAsync({
+                content: {
+                    albumId: props.albumId,
+                    path: [...(props.parentPath ?? []), directoryName],
+                    order: 0,
+                },
+                directory: {
+                    name: directoryName,
+                    cover: directoryCover,
+                },
+            });
+        }
+
+        return undefined;
     };
 
     const handleReset = () => {
         setType("media");
-        setDirectoryName(undefined);
+        setDirectoryName("");
         setDirectoryCover(undefined);
     };
 
@@ -53,7 +99,7 @@ export function AlbumsContentsCreateDialog(props: Props) {
                 default: "Create",
                 sending: "Creating...",
             }}
-            submitDisabled={!directoryName}
+            submitDisabled={type === "media" && mediaFiles.length === 0 || type === "directory" && !directoryName}
             onSuccess={props.onCreate}
             onReset={handleReset}
             trigger={props.children}
@@ -84,6 +130,14 @@ export function AlbumsContentsCreateDialog(props: Props) {
                                     onChange={(e) => setMediaFiles((e.target.files || []) as File[])}
                                 />
                             </Field>
+                            {
+                                mediaUploadProgress && (
+                                    <Progress
+                                        value={mediaUploadProgress.at * 100 / mediaUploadProgress.max}
+                                        max={100}
+                                    />
+                                )
+                            }
                         </>
                     ) || type === "directory" && (
                         <>

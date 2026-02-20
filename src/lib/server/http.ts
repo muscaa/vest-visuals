@@ -19,7 +19,6 @@ export async function safeJSON<T>(input: NextRequest | string, validate?: (json:
         if (validate && !validate(json)) {
             return null;
         }
-        
         return json;
     } catch (error) {}
     return null;
