@@ -65,7 +65,7 @@ export function FooterLarge() {
         { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
         { name: "Arad", href: LOCATIONS_ARAD() },
         { name: "Oradea", href: LOCATIONS_ORADEA() },
-        { name: "Drobeta Turnu-Severin", href: LOCATIONS_DROBETA_TURNU_SEVERIN() },
+        { name: "Drobeta-Turnu Severin", href: LOCATIONS_DROBETA_TURNU_SEVERIN() },
         { name: "Cluj-Napoca", href: LOCATIONS_CLUJ_NAPOCA() },
         { name: "Bucuresti", href: LOCATIONS_BUCURESTI() },
     ];
