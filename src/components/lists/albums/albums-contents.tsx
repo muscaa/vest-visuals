@@ -29,6 +29,8 @@ import {
     A_ALBUMS_$ID_$PATH,
     PLACEHOLDER,
 } from "@shared/i18n";
+import { TextLink } from "@/components/ui/text-link";
+import { useAlbumsDirectories } from "@/hooks/albums/useAlbumsDirectories";
 
 interface ListEntryProps {
     value: PartialAlbumsContent;
@@ -36,18 +38,88 @@ interface ListEntryProps {
     disabled?: boolean;
 }
 
-function ListEntry(props: ListEntryProps) {
+function MediaListEntry(props: ListEntryProps) {
     const { useAlbumsMedia: useMedia } = useAlbumsMedia();
     const { data } = useMedia(props.value.albumId, props.value.id);
-    // TODO use directory cover if available
     const image = useMemo(() => data && data.albumsMediaVariants.length > 0 ? data.albumsMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
+
+    if (!data) {
+        return (
+            <span>Invalid media</span>
+        );
+    }
+
+    return (
+        <div className="flex flex-wrap gap-4 size-full whitespace-normal">
+            <Img
+                src={image}
+                alt="Preview"
+                className="size-32 object-contain"
+            />
+            <div className="flex flex-col gap-1 grow text-foreground">
+                <h4>{props.value.path}</h4>
+                <Separator />
+                <div className="flex gap-2 text-muted-foreground">
+                    <div className="flex flex-col gap-2 grow">
+                        <div className="flex gap-2 items-center">
+                            {
+                                data.albumsMediaVariants.map((variant, index) => (
+                                    <TextLink
+                                        key={index}
+                                        href={variant.fileUrl}
+                                        target="_blank"
+                                    >
+                                        {variant.tag}
+                                    </TextLink>
+                                ))
+                            }
+                        </div>
+                        <span className="p5">{props.value.id}</span>
+                        <div className="flex flex-col">
+                            <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
+                            <h6>Created: {dateToString(props.value.createdAt)}</h6>
+                        </div>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                        <p>{data.albumsMediaVariants?.length || "no"}</p>
+                        <h5>items</h5>
+                    </div>
+                </div>
+            </div>
+            {
+                !props.disabled && (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <Button
+                            size="icon-lg"
+                            variant="link"
+                            {...props.sortable.listeners}
+                        >
+                            <GripVertical />
+                        </Button>
+                    </div>
+                )
+            }
+        </div>
+    );
+}
+
+function DirectoryListEntry(props: ListEntryProps) {
+    const { useAlbumsDirectory } = useAlbumsDirectories();
+    const { data } = useAlbumsDirectory(props.value.albumId, props.value.id);
+    // const image = useMemo(() => data && data.albumsMediaVariants.length > 0 ? data.albumsMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
+
+    if (!data) {
+        return (
+            <span>Invalid directory</span>
+        );
+    }
 
     return (
         <div className="flex flex-wrap items-center gap-4 size-full whitespace-normal">
             {
                 props.value.type === "media" && (
                     <Img
-                        src={image}
+                        // src={image}
                         alt="Preview"
                         className="size-32 object-contain"
                     />
@@ -68,10 +140,10 @@ function ListEntry(props: ListEntryProps) {
                             <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
+                    {/* <div className="flex flex-col justify-center items-center">
                         <p>{"no"}</p>
                         <h5>items</h5>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {
@@ -141,10 +213,17 @@ export function AlbumsContentsList(props: ListProps) {
         <SortableList
             data={data}
             entry={(value, index, sortable) => (
-                <ListEntry
-                    value={value}
-                    sortable={sortable}
-                />
+                value.type === "media" && (
+                    <MediaListEntry
+                        value={value}
+                        sortable={sortable}
+                    />
+                ) || value.type === "directory" && (
+                    <DirectoryListEntry
+                        value={value}
+                        sortable={sortable}
+                    />
+                )
             )}
             entryToId={(value, index) => value.id}
             move={handleMove}
