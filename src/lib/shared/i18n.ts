@@ -105,6 +105,10 @@ export const LOCATIONS_BUCURESTI = lp(() => `${LOCATIONS()}/bucuresti`, {
     en: `${LOCATIONS.en}/bucuresti`,
     ro: `${LOCATIONS.ro}/bucuresti`,
 });
+
+//
+// legal
+//
 export const PRIVACY_POLICY = lp(() => "/privacy-policy", {
     en: "/privacy-policy",
     ro: "/politica-de-confidentialitate",
@@ -116,6 +120,18 @@ export const TERMS_OF_SERVICE = lp(() => "/terms-of-service", {
 export const COOKIE_POLICY = lp(() => "/cookie-policy", {
     en: "/cookie-policy",
     ro: "/politica-de-cookie",
+});
+
+//
+// other
+//
+export const ALBUMS = lp(() => "/albums", {
+    en: "/albums",
+    ro: "/albume",
+});
+export const ALBUMS_$ID_$PATH = lp((id: string, path?: string[]) => `${ALBUMS()}/${id}/${path ? path.join("/") : ""}`, {
+    en: `${ALBUMS.en}/[id]/[...path]`,
+    ro: `${ALBUMS.ro}/[id]/[...path]`,
 });
 
 //
@@ -222,9 +238,12 @@ export const pathnames = [
     LOCATIONS_DROBETA_TURNU_SEVERIN,
     LOCATIONS_CLUJ_NAPOCA,
     LOCATIONS_BUCURESTI,
+    // legal
     PRIVACY_POLICY,
     TERMS_OF_SERVICE,
     COOKIE_POLICY,
+    // other
+    ALBUMS_$ID_$PATH,
     // private
     U,
     U_ACCOUNT,
