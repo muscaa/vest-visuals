@@ -1,9 +1,6 @@
 "use client";
 
 import { Masonry } from "@/components/masonry";
-import { useParams } from "next/navigation";
-import { PreviewImage } from "@/components/preview-image";
-import { usePortfolio } from "@/hooks/portfolio/usePortfolio";
 import { useState } from "react";
 import { Reveal } from "@/components/animations/reveal";
 import { Img } from "@/components/snippets";
@@ -18,41 +15,77 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@shared/shadcn/lib/utils";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
-export function MediaWaterfall() {
-    const { tag } = useParams<{ tag: string; }>();
-    const { data } = usePortfolio(tag);
-    const [open, setOpen] = useState<boolean>();
+interface PreviewItem {
+    alt?: string;
+    preview: {
+        src: string;
+        width: number;
+        height: number;
+    };
+    full: {
+        src: string;
+        width: number;
+        height: number;
+    };
+}
+
+interface PreviewImageProps {
+    item: PreviewItem;
+    index: number;
+    onClick?: () => void;
+    className?: string;
+}
+
+function PreviewImage(props: PreviewImageProps) {
+    return (
+        <Reveal delay={props.index * 100} className="overflow-hidden">
+            <Img
+                src={props.item.preview.src}
+                alt={props.item.alt}
+                onClick={props.onClick}
+                className={`transition-all ease-out hover:opacity-75 hover:scale-105 size-full ${props.className}`}
+            />
+        </Reveal>
+    );
+}
+
+interface Props {
+    averageHeight: number;
+    fetchNext: (offset: number, limit: number) => void;
+}
+
+export function MediaWaterfall(props: Props) {
+    const size = useWindowSize();
     const [api, setApi] = useState<CarouselApi>();
+    const [open, setOpen] = useState<boolean>();
+    const [data, setData] = useState<PreviewItem[]>([]);
 
     return (
         <>
             <div className="flex justify-center size-full p-2 min-h-screen-no-nav">
-                {
-                    data && (
-                        <Masonry
-                            items={data}
-                            config={{
-                                columns: [2, 3, 4, 5],
-                                gap: [4, 4, 4, 4, 4],
-                                media: [640, 768, 1024, 1408],
-                                useBalancedLayout: true,
+                <Masonry
+                    items={data}
+                    config={{
+                        columns: [2, 3, 4, 5],
+                        gap: [4, 4, 4, 4, 4],
+                        media: [640, 768, 1024, 1408],
+                        useBalancedLayout: true,
+                    }}
+                    render={(item, index) => (
+                        <PreviewImage
+                            key={index}
+                            item={item}
+                            index={index}
+                            onClick={() => {
+                                api?.scrollTo(data.findIndex((value) => value === item), true);
+                                setOpen(true);
                             }}
-                            render={(item, index) => (
-                                <PreviewImage
-                                    key={index}
-                                    item={item}
-                                    index={index}
-                                    onClick={() => {
-                                        api?.scrollTo(data.findIndex((value) => value === item), true);
-                                        setOpen(true);
-                                    }}
-                                />
-                            )}
-                            getHeight={(item) => item.preview.height}
                         />
-                    )
-                }
+                    )}
+                    getHeight={(item) => item.preview.height}
+                />
             </div>
             <Reveal direction="none" duration={200} className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
                 <Carousel
@@ -68,7 +101,7 @@ export function MediaWaterfall() {
                 >
                     <CarouselContent>
                         {
-                            data && data.map((item, index) => (
+                            data.map((item, index) => (
                                 <CarouselItem key={index} className="relative flex justify-center items-center">
                                     <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
                                         <Img

@@ -28,6 +28,8 @@ import {
     TERMS_OF_SERVICE,
     LOCATIONS_BUCURESTI,
 } from "@shared/i18n";
+import { Button } from "./ui/button";
+import { useMain } from "@/hooks/useMain";
 
 function FooterBase() {
     return (
@@ -61,6 +63,8 @@ export function Footer() {
 }
 
 export function FooterLarge() {
+    const { ref } = useMain();
+
     const locations = [
         { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
         { name: "Arad", href: LOCATIONS_ARAD() },
@@ -121,9 +125,9 @@ export function FooterLarge() {
                 <FooterBase />
             </div>
             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-                <ButtonLink href="#top" variant="default" size="icon" prefetch={false}>
+                <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
                     <ChevronsUp className="size-8" />
-                </ButtonLink>
+                </Button>
             </div>
         </footer>
     );

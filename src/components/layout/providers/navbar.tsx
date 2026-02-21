@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/navbar";
 import { FooterLarge } from "@/components/footer";
 import { cn } from "@shared/shadcn/lib/utils";
+import { useMain } from "@/hooks/useMain";
 
 export interface MainProps {
     children: React.ReactNode;
@@ -13,6 +14,8 @@ export interface MainProps {
 }
 
 export function NavbarLayoutProvider(props: MainProps) {
+    const { ref } = useMain();
+
     return (
         <>
             {
@@ -20,7 +23,7 @@ export function NavbarLayoutProvider(props: MainProps) {
                     <Navbar />
                 )
             }
-            <div className={cn("flex flex-col max-h-full overflow-y-auto", props.className)}>
+            <div ref={ref} className={cn("flex flex-col max-h-full overflow-y-auto", props.className)}>
                 <main className={cn("grow", props.extraClassName)}>
                     {props.children}
                 </main>
