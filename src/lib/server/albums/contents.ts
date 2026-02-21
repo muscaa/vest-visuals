@@ -152,7 +152,7 @@ export async function create(props: types.CreateProps): Promise<PartialContent |
 }
 
 export async function update(id: string, props: types.UpdateProps): Promise<PartialContent | undefined> {
-    if (props.path || props.order) {
+    if (props.path !== undefined || props.order !== undefined) {
         await db.update(contentsTable)
             .set({
                 path: props.path?.join("/"),

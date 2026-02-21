@@ -19,7 +19,7 @@ import {
     DndSortable,
     arrayMove,
 } from "@client/dnd";
-import { useAlbums } from "@/hooks/albums/useAlbums";
+import { useAlbumsContents } from "@/hooks/albums/useAlbumsContents";
 import { useAlbumsMedia } from "@/hooks/albums/useAlbumsMedia";
 import { AlbumsContentsCreateDialog } from "@/components/dialogs/albums/albums-contents-create";
 import { AlbumsContentsEditDialog } from "@/components/dialogs/albums/albums-contents-edit";
@@ -177,7 +177,7 @@ export function AlbumsContentsList(props: ListProps) {
     useEffect(() => setData(props.data), [props.data]);
 
     const [selected, setSelected] = useState<PartialAlbumsContent>();
-    const { updateAlbum } = useAlbums();
+    const { updateAlbumsContent } = useAlbumsContents();
 
     const handleSelect = (value: PartialAlbumsContent) => {
         setSelected(selected?.id == value.id ? undefined : value);
@@ -190,21 +190,17 @@ export function AlbumsContentsList(props: ListProps) {
     };
 
     const handleMove = async (from: number, to: number) => {
-        // if (!props.parent) return;
-
         setData((prev) => arrayMove(prev, from, to));
-        const order = arrayMove(props.data.map((group) => group.id), from, to);
+        const order = arrayMove(props.data.map((content) => content.id), from, to);
 
-        // TODO set order individually for each content by id
-
-        // await updateAlbum.mutateAsync({
-        //     id: props.parent.id,
-        //     value: {
-        //         portfolioGroups: {
-        //             set: order,
-        //         },
-        //     },
-        // });
+        await Promise.all(order.map(async (id, index) => {
+            return await updateAlbumsContent.mutateAsync({
+                id,
+                value: {
+                    order: index,
+                },
+            });
+        }));
 
         handleUpdate();
     };
