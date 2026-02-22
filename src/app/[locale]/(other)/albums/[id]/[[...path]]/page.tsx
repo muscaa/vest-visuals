@@ -8,7 +8,7 @@ import {
 } from "@/components/status";
 import { useAlbumsContents } from "@/hooks/albums/useAlbumsContents";
 import { useMemo } from "react";
-import { DndContextProvider } from "@/contexts/dnd";
+import { MediaWaterfall } from "@/components/media/media-waterfall";
 
 export default function Page() {
     const params = useParams<{ id: string; path?: string[]; }>();
@@ -19,13 +19,14 @@ export default function Page() {
 
     return (
         data && (
-            <DndContextProvider>
-                <AlbumsContentsList
-                    data={data}
-                    albumId={params.id}
-                    path={path}
-                />
-            </DndContextProvider>
+            <MediaWaterfall
+
+            />
+            // <AlbumsContentsList
+            //     data={data}
+            //     albumId={params.id}
+            //     path={path}
+            // />
         ) || data === null && (
             <NotFound />
         ) || (

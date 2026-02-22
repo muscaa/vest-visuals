@@ -1,7 +1,10 @@
 "use client";
 
-import { Masonry } from "@/components/masonry";
-import { useState } from "react";
+import {
+    Masonry,
+    useMediaValues,
+} from "@/components/masonry";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Reveal } from "@/components/animations/reveal";
 import { Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
@@ -16,6 +19,7 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@shared/shadcn/lib/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useIntersectionObserver } from "@uidotdev/usehooks";
 
 interface PreviewItem {
     alt?: string;
@@ -52,25 +56,44 @@ function PreviewImage(props: PreviewImageProps) {
 }
 
 interface Props {
-    averageHeight: number;
-    fetchNext: (offset: number, limit: number) => void;
+    // averageHeight: number;
+    // fetchNext: (offset: number, limit: number) => void;
 }
 
 export function MediaWaterfall(props: Props) {
+    const columns = useMemo(() => [2, 3, 4, 5], []);
+    const gaps = useMemo(() => [4, 4, 4, 4], []);
+    const widths = useMemo(() => [640, 768, 1024, 1408], []);
+
+    const [reff, entry] = useIntersectionObserver({ threshold: 0 });
+    const ref = useRef<HTMLDivElement>(null);
     const size = useWindowSize();
+    const values = useMediaValues(widths, columns, gaps);
     const [api, setApi] = useState<CarouselApi>();
     const [open, setOpen] = useState<boolean>();
     const [data, setData] = useState<PreviewItem[]>([]);
+    const [width, setWidth] = useState<number>();
+    const [h, setH] = useState<number>(0);
+
+    useEffect(() => {
+        setWidth(ref.current?.offsetWidth);
+    }, [ref.current, ref.current?.offsetWidth]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setH((prev) => prev + 500);
+        }, 1000);
+    }, [entry?.isIntersecting]);
 
     return (
         <>
-            <div className="flex justify-center size-full p-2 min-h-screen-no-nav">
-                <Masonry
+            <div ref={ref} className="flex flex-col size-full p-2 min-h-screen-no-nav">
+                {/* <Masonry
                     items={data}
                     config={{
-                        columns: [2, 3, 4, 5],
-                        gap: [4, 4, 4, 4, 4],
-                        media: [640, 768, 1024, 1408],
+                        columns,
+                        gap: gaps,
+                        media: widths,
                         useBalancedLayout: true,
                     }}
                     render={(item, index) => (
@@ -78,16 +101,24 @@ export function MediaWaterfall(props: Props) {
                             key={index}
                             item={item}
                             index={index}
-                            onClick={() => {
-                                api?.scrollTo(data.findIndex((value) => value === item), true);
-                                setOpen(true);
-                            }}
+                            // onClick={() => {
+                            //     api?.scrollTo(data.findIndex((value) => value === item), true);
+                            //     setOpen(true);
+                            // }}
                         />
                     )}
                     getHeight={(item) => item.preview.height}
-                />
+                /> */}
+                <div className={`flex ${entry?.isIntersecting ? "bg-blue-950/20" : ""}`} style={{height: `${h}px`}}>
+                    {width}
+                    {" "}
+                    {values.columns}
+                </div>
+                <div ref={reff} className="h-6 bg-black">
+
+                </div>
             </div>
-            <Reveal direction="none" duration={200} className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
+            {/* <Reveal direction="none" duration={200} className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
                 <Carousel
                     setApi={setApi}
                     opts={{
@@ -145,7 +176,7 @@ export function MediaWaterfall(props: Props) {
                         </Button>
                     </div>
                 </Carousel>
-            </Reveal>
+            </Reveal> */}
         </>
     );
 }
