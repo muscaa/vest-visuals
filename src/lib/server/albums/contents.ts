@@ -71,7 +71,7 @@ export async function getByAlbumId(albumId: string): Promise<PartialContent[]> {
 }
 
 export async function getByPath(albumId: string, path?: string[]): Promise<Content[]> {
-    const pathname = path ? path.join("/") + "/" : "";
+    const pathname = path && path.length > 0 ? path.join("/") + "/" : "";
 
     const result = await contentsQuery.findMany({
         where: (fields, operators) => operators.and(
@@ -84,6 +84,33 @@ export async function getByPath(albumId: string, path?: string[]): Promise<Conte
             albumsMedia: {
                 with: {
                     albumsMediaVariants: {
+                        orderBy: (fields, operators) => operators.asc(fields.order),
+                    },
+                },
+            },
+            albumsDirectory: true,
+        },
+    });
+    return result.map(format);
+}
+
+export async function getPaginatedByPathAndTags(offset: number, limit: number, albumId: string, path: string[] | undefined, tags: string[]): Promise<Content[]> {
+    const pathname = path && path.length > 0 ? path.join("/") + "/" : "";
+
+    const result = await contentsQuery.findMany({
+        offset,
+        limit,
+        where: (fields, operators) => operators.and(
+            operators.eq(fields.albumId, albumId),
+            operators.like(fields.path, `${pathname}%`),
+            operators.notLike(fields.path, `${pathname}%/%`),
+        ),
+        orderBy: (fields, operators) => operators.asc(fields.order),
+        with: {
+            albumsMedia: {
+                with: {
+                    albumsMediaVariants: {
+                        where: (fields, operators) => operators.inArray(fields.tag, tags),
                         orderBy: (fields, operators) => operators.asc(fields.order),
                     },
                 },

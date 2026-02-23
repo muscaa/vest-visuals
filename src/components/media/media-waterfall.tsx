@@ -44,7 +44,7 @@ interface PreviewImageProps {
 
 function PreviewImage(props: PreviewImageProps) {
     return (
-        <Reveal delay={props.index * 100} className="overflow-hidden">
+        <Reveal /*delay={props.index * 100}*/ className="overflow-hidden">
             <Img
                 src={props.item.preview.src}
                 alt={props.item.alt}
@@ -56,8 +56,7 @@ function PreviewImage(props: PreviewImageProps) {
 }
 
 interface Props {
-    // averageHeight: number;
-    // fetchNext: (offset: number, limit: number) => void;
+    nextData: (offset: number, limit: number) => Promise<PreviewItem[]>;
 }
 
 export function MediaWaterfall(props: Props) {
@@ -65,30 +64,48 @@ export function MediaWaterfall(props: Props) {
     const gaps = useMemo(() => [4, 4, 4, 4], []);
     const widths = useMemo(() => [640, 768, 1024, 1408], []);
 
-    const [reff, entry] = useIntersectionObserver({ threshold: 0 });
     const ref = useRef<HTMLDivElement>(null);
+    const [nextRef, nextEntry] = useIntersectionObserver({ threshold: 0 });
     const size = useWindowSize();
     const values = useMediaValues(widths, columns, gaps);
     const [api, setApi] = useState<CarouselApi>();
     const [open, setOpen] = useState<boolean>();
+    const [limit, setLimit] = useState<number>();
     const [data, setData] = useState<PreviewItem[]>([]);
-    const [width, setWidth] = useState<number>();
-    const [h, setH] = useState<number>(0);
 
     useEffect(() => {
-        setWidth(ref.current?.offsetWidth);
-    }, [ref.current, ref.current?.offsetWidth]);
+        const element = ref.current;
+        if (!element || !size || !values.columns) return;
+
+        const width = element.offsetWidth;
+        const height = size.height; // TODO find visible height
+
+        const mediaWidth = width / values.columns;
+        const mediaHeight = mediaWidth;
+
+        const rows = Math.round(height / mediaHeight);
+
+        setLimit(values.columns * rows /** 2*/);
+    }, [ref.current, size, values]);
 
     useEffect(() => {
-        setTimeout(() => {
-            setH((prev) => prev + 500);
-        }, 1000);
-    }, [entry?.isIntersecting]);
+        if (!nextEntry?.isIntersecting || !limit) return;
+
+        const next = async () => {
+            const result = await props.nextData(data.length, limit);
+            if (result.length === 0) return;
+
+            setData((prev) => [...prev, ...result]);
+        };
+
+        next();
+
+    }, [nextEntry?.isIntersecting, data, limit]);
 
     return (
         <>
             <div ref={ref} className="flex flex-col size-full p-2 min-h-screen-no-nav">
-                {/* <Masonry
+                <Masonry
                     items={data}
                     config={{
                         columns,
@@ -108,15 +125,8 @@ export function MediaWaterfall(props: Props) {
                         />
                     )}
                     getHeight={(item) => item.preview.height}
-                /> */}
-                <div className={`flex ${entry?.isIntersecting ? "bg-blue-950/20" : ""}`} style={{height: `${h}px`}}>
-                    {width}
-                    {" "}
-                    {values.columns}
-                </div>
-                <div ref={reff} className="h-6 bg-black">
-
-                </div>
+                />
+                <div ref={nextRef}></div>
             </div>
             {/* <Reveal direction="none" duration={200} className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
                 <Carousel
