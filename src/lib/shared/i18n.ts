@@ -125,7 +125,7 @@ export const COOKIE_POLICY = lp(() => "/cookie-policy", {
 //
 // other
 //
-export const ALBUMS = lp(() => "/albums", {
+const ALBUMS = lp(() => "/albums", {
     en: "/albums",
     ro: "/albume",
 });

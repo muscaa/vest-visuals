@@ -8,7 +8,7 @@ export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
-    metadata: (t) => ({
+    metadata: async ({ t }) => ({
         route: LOCATIONS_ORADEA(),
         routeName: t("Metadata.locations-oradea.title"),
     }),

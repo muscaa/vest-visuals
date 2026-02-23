@@ -8,7 +8,7 @@ export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
-    metadata: (t) => ({
+    metadata: async ({ t }) => ({
         route: PRIVACY_POLICY(),
         routeName: t("Metadata.privacy-policy.title"),
     }),

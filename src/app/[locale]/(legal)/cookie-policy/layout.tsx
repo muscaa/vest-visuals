@@ -8,7 +8,7 @@ export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
-    metadata: (t) => ({
+    metadata: async ({ t }) => ({
         route: COOKIE_POLICY(),
         routeName: t("Metadata.cookie-policy.title"),
     }),

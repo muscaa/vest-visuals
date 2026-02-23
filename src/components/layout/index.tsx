@@ -7,13 +7,17 @@ import {
 } from "next-intl";
 import { locales } from "@shared/i18n";
 
-export interface MetadataProps {
+export type MetadataProps<T> = T & {
+    t: _Translator<Record<string, any>, never>;
+};
+
+export interface MetadataResult {
     route: string;
     routeName: string;
 }
 
-export interface InfoProps {
-    metadata: (t: _Translator<Record<string, any>, never>) => MetadataProps;
+export interface InfoProps<T> {
+    metadata: (props: MetadataProps<T>) => Promise<MetadataResult>;
 }
 
 export interface Info {
@@ -21,14 +25,17 @@ export interface Info {
     generateMetadata: (props: LocaleLayoutProps) => Promise<Metadata>;
 }
 
-export function createInfo(info: InfoProps): Info {
+export function createInfo<T>(info: InfoProps<T>): Info {
     return {
         generateStaticParams: () => locales.map((locale) => ({ locale })),
         generateMetadata: async (props) => {
             const { locale } = await props.params;
             const t = await getTranslations({ locale });
 
-            const meta = info.metadata(t);
+            const meta = await info.metadata({
+                ...props,
+                t,
+            } as unknown as MetadataProps<T>); // TODO improve this
 
             return {
                 applicationName: "Vest Visuals",
@@ -82,7 +89,7 @@ export interface LayoutProps {
 export interface LocaleLayoutProps extends LayoutProps {
     params: Promise<{
         locale: string;
-    }>
+    }>;
 }
 
 export function BaseLayout(props: LayoutProps) {
