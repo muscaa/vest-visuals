@@ -30,6 +30,16 @@ export function useAlbumsContents() {
         },
     });
 
+    const useAlbumsContentsByAlbumId = (albumId: string) => useQuery({
+        queryKey: ["albums", "contents", "by-id"],
+        queryFn: async () => {
+            const [status, result] = await contents.getByAlbumId(albumId);
+            if (status !== "OK") return [];
+
+            return result || [];
+        },
+    });
+
     const useAlbumsContent = (id: string) => useQuery({
         queryKey: ["albums", id],
         queryFn: async () => {
@@ -147,6 +157,7 @@ export function useAlbumsContents() {
 
     return {
         useAllAlbumsContents,
+        useAlbumsContentsByAlbumId,
         useAlbumsContent,
         useAlbumsContentByPath,
         createAlbumsContentMedia,

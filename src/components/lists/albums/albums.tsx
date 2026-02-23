@@ -13,12 +13,16 @@ import {
     useRouter,
     A_ALBUMS_$ID_$PATH,
 } from "@shared/i18n";
+import { useAlbumsContents } from "@/hooks/albums/useAlbumsContents";
 
 interface ListEntryProps {
     value: PartialAlbum;
 }
 
 function ListEntry(props: ListEntryProps) {
+    const { useAlbumsContentsByAlbumId } = useAlbumsContents();
+    const { data } = useAlbumsContentsByAlbumId(props.value.id);
+
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
             <div className="flex flex-col gap-1 grow">
@@ -37,7 +41,7 @@ function ListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{"no"}</p>
+                        <p>{data?.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
