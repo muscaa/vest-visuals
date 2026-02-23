@@ -5,7 +5,6 @@ import {
     useMediaValues,
 } from "@/components/masonry";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Reveal } from "@/components/animations/reveal";
 import { Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -20,43 +19,11 @@ import {
 import { cn } from "@shared/shadcn/lib/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
-
-interface PreviewItem {
-    alt?: string;
-    preview: {
-        src: string;
-        width: number;
-        height: number;
-    };
-    full: {
-        src: string;
-        width: number;
-        height: number;
-    };
-}
-
-interface PreviewImageProps {
-    item: PreviewItem;
-    index: number;
-    onClick?: () => void;
-    className?: string;
-}
-
-function PreviewImage(props: PreviewImageProps) {
-    return (
-        <Reveal /*delay={props.index * 100}*/ className="overflow-hidden">
-            <Img
-                src={props.item.preview.src}
-                alt={props.item.alt}
-                onClick={props.onClick}
-                className={`transition-all ease-out hover:opacity-75 hover:scale-105 size-full ${props.className}`}
-            />
-        </Reveal>
-    );
-}
+import { Media } from "@type/media";
+import { MediaPreview } from "./media-preview";
 
 interface Props {
-    nextData: (offset: number, limit: number) => Promise<PreviewItem[]>;
+    nextData: (offset: number, limit: number) => Promise<Media[]>;
 }
 
 export function MediaWaterfall(props: Props) {
@@ -69,9 +36,39 @@ export function MediaWaterfall(props: Props) {
     const size = useWindowSize();
     const values = useMediaValues(widths, columns, gaps);
     const [api, setApi] = useState<CarouselApi>();
+    const [at, setAt] = useState(0);
+    const [max, setMax] = useState(0);
     const [open, setOpen] = useState<boolean>();
     const [limit, setLimit] = useState<number>();
-    const [data, setData] = useState<PreviewItem[]>([]);
+    const [data, setData] = useState<Media[]>([]);
+
+    const handleNext = async () => {
+        if (!limit) return;
+
+        const result = await props.nextData(data.length, limit);
+        if (result.length === 0) return;
+
+        setData((prev) => [...prev, ...result]);
+    };
+
+    useEffect(() => {
+        if (!api) return;
+
+        const onSelect = (api: CarouselApi) => {
+            if (!api) return;
+
+            setAt(Math.min(api.selectedScrollSnap() + 1, api.slideNodes().length));
+            setMax(api.slideNodes().length);
+        };
+
+        onSelect(api);
+        api.on("reInit", onSelect);
+        api.on("select", onSelect);
+
+        return () => {
+            api.off("select", onSelect);
+        };
+    }, [api]);
 
     useEffect(() => {
         const element = ref.current;
@@ -91,16 +88,16 @@ export function MediaWaterfall(props: Props) {
     useEffect(() => {
         if (!nextEntry?.isIntersecting || !limit) return;
 
-        const next = async () => {
-            const result = await props.nextData(data.length, limit);
-            if (result.length === 0) return;
-
-            setData((prev) => [...prev, ...result]);
-        };
-
-        next();
-
+        handleNext();
     }, [nextEntry?.isIntersecting, data, limit]);
+
+    useEffect(() => {
+        if (!max || !limit) return;
+
+        if (at > max - limit / 2) {
+            handleNext();
+        }
+    }, [at, max, limit]);
 
     return (
         <>
@@ -114,21 +111,21 @@ export function MediaWaterfall(props: Props) {
                         useBalancedLayout: true,
                     }}
                     render={(item, index) => (
-                        <PreviewImage
+                        <MediaPreview
                             key={index}
-                            item={item}
+                            media={item}
                             index={index}
-                            // onClick={() => {
-                            //     api?.scrollTo(data.findIndex((value) => value === item), true);
-                            //     setOpen(true);
-                            // }}
+                            onClick={() => {
+                                api?.scrollTo(data.findIndex((value) => value === item), true);
+                                setOpen(true);
+                            }}
                         />
                     )}
                     getHeight={(item) => item.preview.height}
                 />
                 <div ref={nextRef}></div>
             </div>
-            {/* <Reveal direction="none" duration={200} className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
+            <div className={cn("fixed inset-0 z-50", open ? "block" : "hidden")}>
                 <Carousel
                     setApi={setApi}
                     opts={{
@@ -186,7 +183,7 @@ export function MediaWaterfall(props: Props) {
                         </Button>
                     </div>
                 </Carousel>
-            </Reveal> */}
+            </div>
         </>
     );
 }
