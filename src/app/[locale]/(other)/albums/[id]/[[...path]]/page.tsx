@@ -7,10 +7,13 @@ import { getPaginated } from "@/actions/albums";
 import { NavbarLayoutProvider } from "@/components/layout/providers/navbar";
 import { Navbar } from "@/components/navbar";
 import { Download, Share2 } from "lucide-react";
+import { useAlbums } from "@/hooks/albums/useAlbums";
 
 export default function Page() {
     const params = useParams<{ id: string; path?: string[]; }>();
     const path = useMemo(() => params.path?.map(decodeURIComponent), [params.path]);
+    const { useAlbum } = useAlbums();
+    const { data } = useAlbum(params.id);
 
     const handleNextData = async (offset: number, limit: number) => {
         const [status, result] = await getPaginated(offset, limit, params.id, path);
@@ -28,13 +31,18 @@ export default function Page() {
                         {
                             type: "endpoint",
                             title: "DOWNLOAD",
-                            onClick: () => { console.log("ceva 1"); },
+                            link: {
+                                href: `/albums/${data?.id}`,
+                                download: "ceva.txt",
+                            },
                             icon: Download,
                         },
                         {
                             type: "endpoint",
                             title: "SHARE",
-                            onClick: () => { console.log("ceva 2"); },
+                            button: {
+                                onClick: () => { console.log("ceva 2"); },
+                            },
                             icon: Share2,
                         },
                     ]}

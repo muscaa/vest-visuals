@@ -47,8 +47,8 @@ type NavEndpoint = {
     title: string;
     icon?: Icon;
 } & Single<{
-    href: string;
-    onClick: () => void;
+    link: React.ComponentProps<typeof Link>;
+    button: React.ComponentProps<typeof Button>;
 }>;
 
 type NavLink = {
@@ -63,7 +63,9 @@ const navLinks: NavLink[] = [
     {
         type: "endpoint",
         title: "ACASA",
-        href: HOME(),
+        link: {
+            href: HOME(),
+        },
     },
     {
         type: "list",
@@ -71,11 +73,15 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "NUNTA",
-                href: SERVICES_WEDDING(),
+                link: {
+                    href: SERVICES_WEDDING(),
+                },
             },
             {
                 title: "BOTEZ",
-                href: SERVICES_CHRISTENING(),
+                link: {
+                    href: SERVICES_CHRISTENING(),
+                },
             },
             // {
             //     title: "ANIVERSARE",
@@ -83,7 +89,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "MAJORAT",
-                href: SERVICES_18TH_BIRTHDAY(),
+                link: {
+                    href: SERVICES_18TH_BIRTHDAY(),
+                },
             },
             // {
             //     title: "BUSINESS / CORPORATE",
@@ -117,7 +125,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "SEDINTA FOTO", // LUMINA NATURALA (OUTDOOR)
-                href: SERVICES_OUTDOOR(),
+                link: {
+                    href: SERVICES_OUTDOOR(),
+                },
             },
         ],
     },
@@ -127,11 +137,15 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "IMOBILIARE (REAL ESTATE)",
-                href: SERVICES_REAL_ESTATE(),
+                link: {
+                    href: SERVICES_REAL_ESTATE(),
+                },
             },
             {
                 title: "AUTOMOTIVE",
-                href: SERVICES_AUTOMOTIVE(),
+                link: {
+                    href: SERVICES_AUTOMOTIVE(),
+                },
             },
             // {
             //     title: "PRODUSE E-COMMERCE",
@@ -139,7 +153,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "PROMOVARE FIRME (MARKETING)",
-                href: SERVICES_MARKETING(),
+                link: {
+                    href: SERVICES_MARKETING(),
+                },
             },
         ],
     },
@@ -151,7 +167,9 @@ const navLinks: NavLink[] = [
     {
         type: "endpoint",
         title: "CONTACT",
-        href: CONTACT(),
+        link: {
+            href: CONTACT(),
+        },
     },
 ];
 
@@ -176,8 +194,8 @@ function WideMenu(props: MenuProps) {
                                                     link.endpoints.map((endpoint, index) => (
                                                         <li key={index}>
                                                             <NavigationMenuLink render={ // TODO refactor
-                                                                endpoint.href && (
-                                                                    <Link href={endpoint.href}>
+                                                                endpoint.link && (
+                                                                    <Link {...endpoint.link}>
                                                                         {
                                                                             endpoint.icon && (
                                                                                 <endpoint.icon className="mr-2" />
@@ -185,8 +203,8 @@ function WideMenu(props: MenuProps) {
                                                                         }
                                                                         {endpoint.title}
                                                                     </Link>
-                                                                ) || endpoint.onClick && (
-                                                                    <Button onClick={endpoint.onClick}>
+                                                                ) || endpoint.button && (
+                                                                    <Button {...endpoint.button}>
                                                                         {
                                                                             endpoint.icon && (
                                                                                 <endpoint.icon className="mr-2" />
@@ -204,8 +222,8 @@ function WideMenu(props: MenuProps) {
                                     </>
                                 ) || link.type === "endpoint" && (
                                     <NavigationMenuLink base="trigger" variant="ghost" render={ // TODO refactor
-                                        link.href && (
-                                            <Link href={link.href}>
+                                        link.link && (
+                                            <Link {...link.link}>
                                                 {
                                                     link.icon && (
                                                         <link.icon className="mr-2" />
@@ -213,8 +231,8 @@ function WideMenu(props: MenuProps) {
                                                 }
                                                 {link.title}
                                             </Link>
-                                        ) || link.onClick && (
-                                            <Button variant="navbar" onClick={link.onClick}>
+                                        ) || link.button && (
+                                            <Button variant="navbar" {...link.button}>
                                                 {
                                                     link.icon && (
                                                         <link.icon className="mr-2" />
@@ -252,8 +270,8 @@ function MobileMenu(props: MenuProps) {
                                         link.endpoints.map((endpoint, index) => (
                                             <li key={index}>
                                                 { // TODO refactor
-                                                    endpoint.href && (
-                                                        <ButtonLink variant="navbar" href={endpoint.href}>
+                                                    endpoint.link && (
+                                                        <ButtonLink variant="navbar" {...endpoint.link}>
                                                             {
                                                                 endpoint.icon && (
                                                                     <endpoint.icon className="mr-2" />
@@ -261,8 +279,8 @@ function MobileMenu(props: MenuProps) {
                                                             }
                                                             {endpoint.title}
                                                         </ButtonLink>
-                                                    ) || endpoint.onClick && (
-                                                        <Button variant="navbar" onClick={endpoint.onClick}>
+                                                    ) || endpoint.button && (
+                                                        <Button variant="navbar" {...endpoint.button}>
                                                             {
                                                                 endpoint.icon && (
                                                                     <endpoint.icon className="mr-2" />
@@ -281,8 +299,8 @@ function MobileMenu(props: MenuProps) {
                     ) || link.type === "endpoint" && (
                         <Fragment key={index}>
                             { // TODO refactor
-                                link.href && (
-                                    <ButtonLink variant="navbar" href={link.href}>
+                                link.link && (
+                                    <ButtonLink variant="navbar" {...link.link}>
                                         {
                                             link.icon && (
                                                 <link.icon className="mr-2" />
@@ -290,8 +308,8 @@ function MobileMenu(props: MenuProps) {
                                         }
                                         {link.title}
                                     </ButtonLink>
-                                ) || link.onClick && (
-                                    <Button variant="navbar" onClick={link.onClick}>
+                                ) || link.button && (
+                                    <Button variant="navbar" {...link.button}>
                                         {
                                             link.icon && (
                                                 <link.icon className="mr-2" />
