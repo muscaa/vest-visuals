@@ -38,14 +38,14 @@ function LayoutHeader() {
     );
 }
 
-export interface SimpleSidebarProviderProps {
+export interface SidebarLayoutProviderProps {
     children: React.ReactNode;
     sidebar?: React.ReactNode;
     className?: string;
     extraClassName?: string;
 }
 
-export function SidebarLayoutProvider(props: SimpleSidebarProviderProps) {
+export function SidebarLayoutProvider(props: SidebarLayoutProviderProps) {
     const { ref } = useMain();
 
     return (
