@@ -1,6 +1,5 @@
 import {
-    NavbarLayout,
-    LocaleLayoutProps,
+    BaseLayout,
     createInfo,
 } from "@/components/layout";
 import {
@@ -29,8 +28,4 @@ export const {
     },
 });
 
-export default async function Layout(props: LocaleLayoutProps) {
-    return (
-        <NavbarLayout {...props} />
-    );
-}
+export default BaseLayout;
