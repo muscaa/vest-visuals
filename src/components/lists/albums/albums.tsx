@@ -12,6 +12,7 @@ import { AlbumsDeleteDialog } from "@/components/dialogs/albums/albums-delete";
 import {
     useRouter,
     A_ALBUMS_$ID_$PATH,
+    ALBUMS_$ID_$PATH,
 } from "@shared/i18n";
 import { useAlbumsContents } from "@/hooks/albums/useAlbumsContents";
 
@@ -85,6 +86,14 @@ export function AlbumsList(props: ListProps) {
                     New
                 </Button>
             </AlbumsCreateDialog>
+            <Button
+                variant="secondary"
+                disabled={!selected}
+                onClick={() => router.push(ALBUMS_$ID_$PATH(selected!.id))}
+                className="grow"
+            >
+                View
+            </Button>
             <Button
                 variant="secondary"
                 disabled={!selected}
