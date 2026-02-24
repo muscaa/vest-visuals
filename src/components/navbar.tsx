@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
     Menu,
     X
 } from "lucide-react";
-import { ButtonLink } from "@/components/snippets";
+import { ButtonLink, Icon } from "@/components/snippets";
 import {
     Link,
     HOME,
@@ -41,11 +41,15 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@shared/shadcn/lib/utils";
+import { Single } from "@type/utils";
 
 type NavEndpoint = {
     title: string;
+    icon?: Icon;
+} & Single<{
     href: string;
-};
+    onClick: () => void;
+}>;
 
 type NavLink = {
     type: "list";
@@ -151,12 +155,16 @@ const navLinks: NavLink[] = [
     },
 ];
 
-function WideMenu() {
+interface MenuProps {
+    links: NavLink[];
+}
+
+function WideMenu(props: MenuProps) {
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 {
-                    navLinks.map((link, index) => (
+                    props.links.map((link, index) => (
                         <NavigationMenuItem key={index}>
                             {
                                 link.type === "list" && (
@@ -167,13 +175,26 @@ function WideMenu() {
                                                 {
                                                     link.endpoints.map((endpoint, index) => (
                                                         <li key={index}>
-                                                            <NavigationMenuLink render={
-                                                                <Link
-                                                                    href={endpoint.href}
-                                                                    className="flex-row items-center gap-2"
-                                                                >
-                                                                    {endpoint.title}
-                                                                </Link>
+                                                            <NavigationMenuLink render={ // TODO refactor
+                                                                endpoint.href && (
+                                                                    <Link href={endpoint.href}>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </Link>
+                                                                ) || endpoint.onClick && (
+                                                                    <Button onClick={endpoint.onClick}>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </Button>
+                                                                )
                                                             } />
                                                         </li>
                                                     ))
@@ -182,10 +203,26 @@ function WideMenu() {
                                         </NavigationMenuContent>
                                     </>
                                 ) || link.type === "endpoint" && (
-                                    <NavigationMenuLink base="trigger" variant="ghost" render={
-                                        <Link href={link.href}>
-                                            {link.title}
-                                        </Link>
+                                    <NavigationMenuLink base="trigger" variant="ghost" render={ // TODO refactor
+                                        link.href && (
+                                            <Link href={link.href}>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </Link>
+                                        ) || link.onClick && (
+                                            <Button variant="navbar" onClick={link.onClick}>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </Button>
+                                        )
                                     } />
                                 )
                             }
@@ -198,11 +235,11 @@ function WideMenu() {
     );
 }
 
-function MobileMenu() {
+function MobileMenu(props: MenuProps) {
     return (
         <>
             {
-                navLinks.map((link, index) => (
+                props.links.map((link, index) => (
                     link.type === "list" && (
                         <Collapsible key={index} className="w-full text-center">
                             <CollapsibleTrigger className={cn(buttonVariants({ variant: "navbar", className: "group/collapsible-trigger group data-panel-open:text-primary" }))}>
@@ -214,9 +251,27 @@ function MobileMenu() {
                                     {
                                         link.endpoints.map((endpoint, index) => (
                                             <li key={index}>
-                                                <ButtonLink variant="navbar" href={endpoint.href}>
-                                                    {endpoint.title}
-                                                </ButtonLink>
+                                                { // TODO refactor
+                                                    endpoint.href && (
+                                                        <ButtonLink variant="navbar" href={endpoint.href}>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </ButtonLink>
+                                                    ) || endpoint.onClick && (
+                                                        <Button variant="navbar" onClick={endpoint.onClick}>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </Button>
+                                                    )
+                                                }
                                             </li>
                                         ))
                                     }
@@ -224,9 +279,29 @@ function MobileMenu() {
                             </CollapsibleContent>
                         </Collapsible>
                     ) || link.type === "endpoint" && (
-                        <ButtonLink key={index} variant="navbar" href={link.href}>
-                            {link.title}
-                        </ButtonLink>
+                        <Fragment key={index}>
+                            { // TODO refactor
+                                link.href && (
+                                    <ButtonLink variant="navbar" href={link.href}>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </ButtonLink>
+                                ) || link.onClick && (
+                                    <Button variant="navbar" onClick={link.onClick}>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </Button>
+                                )
+                            }
+                        </Fragment>
                     )
                 ))
             }
@@ -235,20 +310,30 @@ function MobileMenu() {
     );
 }
 
-export function Navbar() {
+export interface NavbarProps {
+    logo?: React.ReactNode;
+    links?: NavLink[];
+    className?: string;
+}
+
+export function Navbar(props: NavbarProps) {
     const isMobile = useIsMobile();
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
         <nav className="flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50">
-            <div className="flex size-full max-w-6xl justify-between items-center p-2">
-                <Link href={HOME()}>
-                    <Image
-                        src={logo}
-                        alt="Logo"
-                        className="size-16"
-                    />
-                </Link>
+            <div className={cn("flex size-full max-w-6xl justify-between items-center p-2", props.className)}>
+                {
+                    props.logo ?? (
+                        <Link href={HOME()}>
+                            <Image
+                                src={logo}
+                                alt="Logo"
+                                className="size-16"
+                            />
+                        </Link>
+                    )
+                }
                 <div className="flex items-center gap-2">
                     {
                         isMobile == true && (
@@ -264,7 +349,7 @@ export function Navbar() {
                                 </Button>
                             </>
                         ) || isMobile == false && (
-                            <WideMenu />
+                            <WideMenu links={props.links ?? navLinks} />
                         )
                     }
                 </div>
@@ -272,7 +357,7 @@ export function Navbar() {
             {
                 isMobile == true && menuOpen &&
                 <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-popover border-t border-b shadow-sm">
-                    <MobileMenu />
+                    <MobileMenu links={props.links ?? navLinks} />
                 </div>
             }
         </nav>
