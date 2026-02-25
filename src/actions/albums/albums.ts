@@ -5,7 +5,7 @@ import { isAdmin } from "@server/auth/permissions";
 import * as types from "@type/albums/albums";
 import * as albums from "@server/albums/albums";
 
-export async function get(id: string): ActionResponse<types.Album> {
+export async function getPartial(id: string): ActionResponse<types.PartialAlbum> {
     const admin = await isAdmin({ next: true });
     if (!admin) {
         return ["UNAUTHORIZED", "Unauthorized"];
@@ -15,7 +15,7 @@ export async function get(id: string): ActionResponse<types.Album> {
         return ["BAD_REQUEST", "Missing album ID"];
     }
 
-    const result = await albums.get(id);
+    const result = await albums.getPartial(id);
     if (!result) {
         return ["NOT_FOUND", "Album not found"];
     }

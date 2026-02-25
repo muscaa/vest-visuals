@@ -21,10 +21,10 @@ export function useAlbums() {
         },
     });
 
-    const useAlbum = (id: string) => useQuery({
+    const usePartialAlbum = (id: string) => useQuery({
         queryKey: ["albums", id],
         queryFn: async () => {
-            const [status, result] = await albums.get(id);
+            const [status, result] = await albums.getPartial(id);
             if (status !== "OK") return null;
 
             return result || null;
@@ -66,7 +66,7 @@ export function useAlbums() {
 
     return {
         useAllAlbums,
-        useAlbum,
+        usePartialAlbum,
         createAlbum,
         updateAlbum,
         removeAlbum,

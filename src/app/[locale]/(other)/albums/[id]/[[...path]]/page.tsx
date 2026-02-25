@@ -12,8 +12,8 @@ import { useAlbums } from "@/hooks/albums/useAlbums";
 export default function Page() {
     const params = useParams<{ id: string; path?: string[]; }>();
     const path = useMemo(() => params.path?.map(decodeURIComponent), [params.path]);
-    const { useAlbum } = useAlbums();
-    const { data } = useAlbum(params.id);
+    const { usePartialAlbum } = useAlbums();
+    const { data: album } = usePartialAlbum(params.id);
 
     const handleNextData = async (offset: number, limit: number) => {
         const [status, result] = await getPaginated(offset, limit, params.id, path);
@@ -27,13 +27,13 @@ export default function Page() {
             header={
                 <Navbar
                     // logo={<div></div>}
-                    links={[
+                    links={album ? [
                         {
                             type: "endpoint",
                             title: "DOWNLOAD",
                             link: {
-                                href: `/albums/${data?.id}`,
-                                download: "ceva.txt",
+                                href: album.downloadUrl,
+                                download: `${album.title}.zip`,
                             },
                             icon: Download,
                         },
@@ -45,7 +45,7 @@ export default function Page() {
                             },
                             icon: Share2,
                         },
-                    ]}
+                    ] : []}
                     className="max-w-none"
                 />
             }
