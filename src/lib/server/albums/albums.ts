@@ -3,6 +3,11 @@ import { ALBUMS } from "@server/db/schema";
 import { eq } from "drizzle-orm";
 import * as contents from "./contents";
 import * as types from "@type/albums/albums";
+import {
+    s3,
+    buckets,
+} from "@server/s3";
+import { HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 
 export type SelectProps =
     typeof ALBUMS.$inferSelect
@@ -19,6 +24,8 @@ type AutoAlbum<T extends SelectProps> =
 
 const albumsTable = ALBUMS;
 const albumsQuery = db.query.ALBUMS;
+const bucket = buckets.albums;
+const contentsZip = (id: string) => `${bucket}/${id}/contents.zip`;
 
 export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
     return {
@@ -26,6 +33,7 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
         title: props.title,
         description: props.description,
         cover: props.cover,
+        downloadUrl: contentsZip(props.id),
         deleteAt: props.deleteAt,
         locked: props.locked,
         albumsContents: props.albumsContents?.map((value) => contents.format(value)),
@@ -87,6 +95,37 @@ export async function get(id: string): Promise<Album | undefined> {
         },
     });
     return result ? format(result) : undefined;
+}
+
+async function exists(id: string): Promise<boolean> {
+    try {
+        const command = new HeadObjectCommand({
+            Bucket: bucket,
+            Key: contentsZip(id),
+        });
+        await s3.send(command);
+
+        return true;
+    } catch (error) { }
+    return false;
+}
+
+async function upload(id: string, blob: Blob): Promise<boolean> {
+    try {
+        const arrayBuffer = await blob.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        const command = new PutObjectCommand({
+            Bucket: bucket,
+            Key: contentsZip(id),
+            Body: buffer,
+            ContentType: blob.type,
+        });
+        await s3.send(command);
+
+        return true;
+    } catch (error) { }
+    return false;
 }
 
 export async function create(props: types.CreateProps): Promise<PartialAlbum | undefined> {
