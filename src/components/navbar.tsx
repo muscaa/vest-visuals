@@ -49,6 +49,7 @@ type NavEndpoint = {
 } & Single<{
     link: React.ComponentProps<typeof Link>;
     button: React.ComponentProps<typeof Button>;
+    component: React.ComponentType<{ children: React.ReactNode; }>;
 }>;
 
 type NavLink = {
@@ -212,6 +213,15 @@ function WideMenu(props: MenuProps) {
                                                                         }
                                                                         {endpoint.title}
                                                                     </Button>
+                                                                ) || endpoint.component && (
+                                                                    <endpoint.component>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </endpoint.component>
                                                                 )
                                                             } />
                                                         </li>
@@ -240,6 +250,15 @@ function WideMenu(props: MenuProps) {
                                                 }
                                                 {link.title}
                                             </Button>
+                                        ) || link.component && (
+                                            <link.component>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </link.component>
                                         )
                                     } />
                                 )
@@ -288,6 +307,15 @@ function MobileMenu(props: MenuProps) {
                                                             }
                                                             {endpoint.title}
                                                         </Button>
+                                                    ) || endpoint.component && (
+                                                        <endpoint.component>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </endpoint.component>
                                                     )
                                                 }
                                             </li>
@@ -317,6 +345,15 @@ function MobileMenu(props: MenuProps) {
                                         }
                                         {link.title}
                                     </Button>
+                                ) || link.component && (
+                                    <link.component>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </link.component>
                                 )
                             }
                         </Fragment>

@@ -8,6 +8,14 @@ import { NavbarLayoutProvider } from "@/components/layout/providers/navbar";
 import { Navbar } from "@/components/navbar";
 import { Download, Share2 } from "lucide-react";
 import { useAlbums } from "@/hooks/albums/useAlbums";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
     const params = useParams<{ id: string; path?: string[]; }>();
@@ -43,6 +51,28 @@ export default function Page() {
                             button: {
                                 onClick: () => { console.log("ceva 2"); },
                             },
+                            icon: Share2,
+                        },
+                        {
+                            type: "endpoint",
+                            title: "CEVA",
+                            component: (props) => (
+                                <Dialog>
+                                    <DialogTrigger render={
+                                        <Button variant="navbar">
+                                            {props.children}
+                                        </Button>
+                                    } />
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>Share</DialogTitle>
+                                        </DialogHeader>
+                                        <div className="flex flex-col">
+                                            something
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
+                            ),
                             icon: Share2,
                         },
                     ] : []}
