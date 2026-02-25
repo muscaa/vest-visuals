@@ -83,7 +83,7 @@ export async function remove(ids: string[]): ActionResponse<void> {
         return ["BAD_REQUEST", "No group IDs provided"];
     }
 
-    const result = groups.removeList(ids);
+    const result = await groups.removeList(ids);
     if (!result) {
         return ["NOT_FOUND", "Groups not found"];
     }

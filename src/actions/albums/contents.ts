@@ -93,7 +93,7 @@ export async function remove(id: string): ActionResponse<void> {
         return ["BAD_REQUEST", "Missing content ID"];
     }
 
-    const result = contents.remove(id);
+    const result = await contents.remove(id);
     if (!result) {
         return ["NOT_FOUND", "Content not found"];
     }

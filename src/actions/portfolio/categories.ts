@@ -83,7 +83,7 @@ export async function remove(ids: string[]): ActionResponse<void> {
         return ["BAD_REQUEST", "No category IDs provided"];
     }
 
-    const result = categories.removeList(ids);
+    const result = await categories.removeList(ids);
     if (!result) {
         return ["NOT_FOUND", "Categories not found"];
     }

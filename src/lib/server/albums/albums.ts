@@ -7,8 +7,13 @@ import {
     s3,
     buckets,
 } from "@server/s3";
-import { HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, HeadObjectCommand, PutObjectCommand, UploadPartCommand } from "@aws-sdk/client-s3";
 import { serverConfig } from "@server/config";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import {
+    MultipartUpload,
+    MultipartUploadPart,
+} from "@type/s3";
 
 export type SelectProps =
     typeof ALBUMS.$inferSelect
@@ -124,6 +129,51 @@ async function upload(id: string, blob: Blob): Promise<boolean> {
             ContentType: blob.type,
         });
         await s3.send(command);
+
+        return true;
+    } catch (error) { }
+    return false;
+}
+
+export async function startUpload(id: string, partCount: number): Promise<MultipartUpload | undefined> {
+    try {
+        const result = await s3.send(new CreateMultipartUploadCommand({
+            Bucket: bucket,
+            Key: contentsPath(id),
+            ContentType: "application/zip",
+        }));
+
+        const uploadId = result.UploadId;
+        if (!uploadId) return undefined;
+
+        const presignedUrls: string[] = [];
+        for (let i = 1; i <= partCount; i++) {
+            const url = await getSignedUrl(s3, new UploadPartCommand({
+                Bucket: bucket,
+                Key: contentsPath(id),
+                UploadId: uploadId,
+                PartNumber: i,
+            }), { expiresIn: 3600 });
+
+            presignedUrls.push(url);
+        }
+
+        return {
+            uploadId,
+            presignedUrls,
+        };
+    } catch (error) { }
+    return undefined;
+}
+
+export async function finishUpload(id: string, uploadId: string, parts: MultipartUploadPart[]): Promise<boolean> {
+    try {
+        await s3.send(new CompleteMultipartUploadCommand({
+            Bucket: bucket,
+            Key: contentsPath(id),
+            UploadId: uploadId,
+            MultipartUpload: { Parts: parts },
+        }));
 
         return true;
     } catch (error) { }
