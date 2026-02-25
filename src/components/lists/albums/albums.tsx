@@ -15,6 +15,7 @@ import {
     ALBUMS_$ID_$PATH,
 } from "@shared/i18n";
 import { useAlbumsContents } from "@/hooks/albums/useAlbumsContents";
+import { AlbumsUploadDialog } from "@/components/dialogs/albums/albums-upload";
 
 interface ListEntryProps {
     value: PartialAlbum;
@@ -102,6 +103,18 @@ export function AlbumsList(props: ListProps) {
             >
                 Open
             </Button>
+            <AlbumsUploadDialog
+                value={selected}
+                onUpload={handleUpdate}
+            >
+                <Button
+                    variant="secondary"
+                    disabled={!selected}
+                    className="grow"
+                >
+                    Upload
+                </Button>
+            </AlbumsUploadDialog>
             <AlbumsEditDialog
                 value={selected}
                 onEdit={handleUpdate}
