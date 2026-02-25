@@ -16,6 +16,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { BeautifulQRCode } from "@beautiful-qr-code/react";
 
 export default function Page() {
     const params = useParams<{ id: string; path?: string[]; }>();
@@ -48,14 +49,6 @@ export default function Page() {
                         {
                             type: "endpoint",
                             title: "SHARE",
-                            button: {
-                                onClick: () => { console.log("ceva 2"); },
-                            },
-                            icon: Share2,
-                        },
-                        {
-                            type: "endpoint",
-                            title: "CEVA",
                             component: (props) => (
                                 <Dialog>
                                     <DialogTrigger render={
@@ -63,12 +56,17 @@ export default function Page() {
                                             {props.children}
                                         </Button>
                                     } />
-                                    <DialogContent>
+                                    <DialogContent className="sm:max-w-md">
                                         <DialogHeader>
                                             <DialogTitle>Share</DialogTitle>
                                         </DialogHeader>
                                         <div className="flex flex-col">
-                                            something
+                                            <BeautifulQRCode
+                                                data={album.shareUrl}
+                                                foregroundColor="#000000"
+                                                backgroundColor="#ffffff"
+                                                radius={0}
+                                            />
                                         </div>
                                     </DialogContent>
                                 </Dialog>
