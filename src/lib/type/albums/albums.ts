@@ -7,6 +7,7 @@ export type PartialAlbum = {
     description?: string;
     cover?: string;
     downloadUrl: string;
+    shareUrl: string;
     deleteAt: Date;
     locked: boolean;
     albumsContents?: contents.PartialAlbumsContent[];
