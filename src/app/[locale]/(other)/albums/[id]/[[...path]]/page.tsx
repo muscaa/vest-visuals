@@ -1,7 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import {
+    useMemo,
+    useState,
+} from "react";
 import { MediaWaterfall } from "@/components/media/media-waterfall";
 import { getPaginated } from "@/actions/albums";
 import { Navbar } from "@/components/navbar";
@@ -23,6 +26,52 @@ import { useMain } from "@/hooks/useMain";
 import { FooterLarge } from "@/components/footer";
 import { Img } from "@/components/snippets";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { PartialAlbum } from "@type/albums/albums";
+
+interface ShareDialogProps {
+    album: PartialAlbum;
+    children: React.ReactNode;
+}
+
+function ShareDialog(props: ShareDialogProps) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(props.album.shareUrl)
+
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <Dialog>
+            <DialogTrigger render={
+                <Button variant="navbar">
+                    {props.children}
+                </Button>
+            } />
+            <DialogContent className="sm:max-w-xs">
+                <DialogHeader>
+                    <DialogTitle>Share</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col text-center gap-4">
+                    <BeautifulQRCode
+                        data={props.album.shareUrl}
+                        foregroundColor="#000000"
+                        backgroundColor="#ffffff"
+                        radius={0}
+                    />
+                    <p className="text-muted-foreground">OR</p>
+                    <Button disabled={copied} onClick={handleCopy}>
+                        {
+                            copied ? "Copied!" : "Copy Link"
+                        }
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+}
 
 export default function Page() {
     const { ref } = useMain();
@@ -81,26 +130,11 @@ export default function Page() {
                         type: "endpoint",
                         title: "SHARE",
                         component: (props) => (
-                            <Dialog>
-                                <DialogTrigger render={
-                                    <Button variant="navbar">
-                                        {props.children}
-                                    </Button>
-                                } />
-                                <DialogContent className="sm:max-w-md">
-                                    <DialogHeader>
-                                        <DialogTitle>Share</DialogTitle>
-                                    </DialogHeader>
-                                    <div className="flex flex-col">
-                                        <BeautifulQRCode
-                                            data={album.shareUrl}
-                                            foregroundColor="#000000"
-                                            backgroundColor="#ffffff"
-                                            radius={0}
-                                        />
-                                    </div>
-                                </DialogContent>
-                            </Dialog>
+                            <ShareDialog
+                                album={album}
+                            >
+                                {props.children}
+                            </ShareDialog>
                         ),
                         icon: Share2,
                     },
