@@ -73,7 +73,7 @@ export function SimpleSidebarMenu(props: SimpleSidebarMenuProps) {
                     <SidebarMenuButton tooltip={props.title}>
                         {props.icon && <props.icon />}
                         <span>{props.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
                     </SidebarMenuButton>
                 } />
                 <CollapsibleContent>

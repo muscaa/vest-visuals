@@ -1,24 +1,25 @@
 "use client";
 
-// import { useMediaCategories } from "@/hooks/useMediaCategories";
+import { AlbumsList } from "@/components/lists/albums/albums";
 import { Loading } from "@/components/status";
+import { useAlbums } from "@/hooks/albums/useAlbums";
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
-// import { MediaCategoriesList } from "@/components/lists/media-categories";
 
 export default function Page() {
-    // const { useAllMediaCategories } = useMediaCategories();
-    // const { data } = useAllMediaCategories();
+    const { useAllAlbums } = useAlbums();
+    const { data } = useAllAlbums();
+
     useBreadcrumbs([
         "Albums",
     ]);
 
     return (
-        // data && (
-        //     <MediaCategoriesList
-        //         data={data}
-        //     />
-        // ) || (
-        <Loading />
-        // )
+        data && (
+            <AlbumsList
+                data={data}
+            />
+        ) || (
+            <Loading />
+        )
     );
 }

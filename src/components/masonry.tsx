@@ -162,7 +162,7 @@ function useGridStyles(columns: number, gap: number) {
     );
 }
 
-function useMediaValues(
+export function useMediaValues(
     medias: number[] | undefined,
     columns: number[],
     gap: number[]

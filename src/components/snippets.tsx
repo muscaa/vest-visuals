@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ImgHTMLAttributes } from "react";
 import { Link } from "@shared/i18n";
+import { VariantProps } from "class-variance-authority";
+import { cn } from "@shared/shadcn/lib/utils";
 
 export interface IconProps {
     size?: number;
@@ -17,13 +19,12 @@ export function IconLink(props: { href: string, icon: Icon }) {
     );
 }
 
-export function ButtonLink({ href, target, prefetch, children, ...props }: { href: string, target?: string, prefetch?: boolean, children?: React.ReactNode } & React.ComponentProps<typeof Button>) {
+export function ButtonLink({ className, variant = "default", size = "default", ...props }: React.ComponentProps<typeof Link> & VariantProps<typeof buttonVariants>) {
     return (
-        <Link href={href} target={target} prefetch={prefetch}>
-            <Button {...props} className={`cursor-pointer ${props.className}`}>
-                {children}
-            </Button>
-        </Link>
+        <Link
+            className={cn("cursor-pointer", buttonVariants({ variant, size, className }))}
+            {...props}
+        />
     );
 }
 

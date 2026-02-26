@@ -63,6 +63,9 @@
         "cookie-policy": {
             "title": "Politica de Cookie"
         },
+        "albums": {
+            "title": "Albume"
+        },
         "user": {
             "title": "Utilizator"
         },

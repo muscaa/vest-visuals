@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { DashboardSidebar } from "@/components/sidebar/dashboard";
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 import { BreadcrumbsContextProvider } from "@/contexts/breadcrumbs";
+import { useMain } from "@/hooks/useMain";
 
 function LayoutHeader() {
     const { breadcrumbs } = useBreadcrumbs();
@@ -37,14 +38,16 @@ function LayoutHeader() {
     );
 }
 
-export interface SimpleSidebarProviderProps {
+export interface SidebarLayoutProviderProps {
     children: React.ReactNode;
     sidebar?: React.ReactNode;
     className?: string;
     extraClassName?: string;
 }
 
-export function SidebarLayoutProvider(props: SimpleSidebarProviderProps) {
+export function SidebarLayoutProvider(props: SidebarLayoutProviderProps) {
+    const { ref } = useMain();
+
     return (
         <BreadcrumbsContextProvider>
             <SidebarProvider>
@@ -55,7 +58,7 @@ export function SidebarLayoutProvider(props: SimpleSidebarProviderProps) {
                 }
                 <SidebarInset className="overflow-hidden">
                     <LayoutHeader />
-                    <div className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
+                    <div ref={ref} className={cn("flex flex-col max-h-full h-full overflow-y-auto", props.className)}>
                         <main className={cn("grow p-4 pt-0 overflow-hidden", props.extraClassName)}>
                             {props.children}
                         </main>

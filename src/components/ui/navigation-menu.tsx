@@ -54,12 +54,12 @@ function NavigationMenuItem({
 }
 
 const navigationMenuStyle = cva(
-    "items-center p transition-all focus-visible:ring-[3px] focus-visible:outline-1 outline-none",
+    "items-center p transition-all focus-visible:ring-[3px] focus-visible:outline-1 outline-none [&_svg:not([class*='size-'])]:size-6",
     {
         variants: {
             base: {
                 trigger: "rounded-2xl px-4.5 py-2.5 font-medium disabled:opacity-50 group/navigation-menu-trigger inline-flex h-9 w-max justify-center disabled:pointer-events-none group",
-                link: "flex gap-1.5 rounded-xl p-3 [&_svg:not([class*='size-'])]:size-4",
+                link: "flex gap-1.5 rounded-xl p-3",
             },
             variant: {
                 // default: "bg-background hover:bg-muted focus:bg-muted data-open:hover:bg-muted data-open:focus:bg-muted data-open:bg-muted/50 focus-visible:ring-ring/50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted",

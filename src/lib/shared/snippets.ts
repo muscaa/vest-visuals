@@ -43,3 +43,13 @@ export function zodToString(type: z.ZodType | z.core.$ZodType, indent = 0): stri
 
     return schema.def.type;
 }
+
+export function isPastDate(date: Date): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const d = new Date(date.getTime());
+    d.setHours(0, 0, 0, 0);
+
+    return d.getTime() < today.getTime();
+}

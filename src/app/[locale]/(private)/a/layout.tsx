@@ -17,7 +17,7 @@ export const {
     generateStaticParams,
     generateMetadata,
 } = createInfo({
-    metadata: (t) => ({
+    metadata: async ({ t }) => ({
         route: A(),
         routeName: t("Metadata.admin.title"),
     }),

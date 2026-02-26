@@ -105,6 +105,10 @@ export const LOCATIONS_BUCURESTI = lp(() => `${LOCATIONS()}/bucuresti`, {
     en: `${LOCATIONS.en}/bucuresti`,
     ro: `${LOCATIONS.ro}/bucuresti`,
 });
+
+//
+// legal
+//
 export const PRIVACY_POLICY = lp(() => "/privacy-policy", {
     en: "/privacy-policy",
     ro: "/politica-de-confidentialitate",
@@ -116,6 +120,18 @@ export const TERMS_OF_SERVICE = lp(() => "/terms-of-service", {
 export const COOKIE_POLICY = lp(() => "/cookie-policy", {
     en: "/cookie-policy",
     ro: "/politica-de-cookie",
+});
+
+//
+// other
+//
+const ALBUMS = lp(() => "/albums", {
+    en: "/albums",
+    ro: "/albume",
+});
+export const ALBUMS_$ID_$PATH = lp((id: string, path?: string[]) => `${ALBUMS()}/${id}/${path ? path.join("/") : ""}`, {
+    en: `${ALBUMS.en}/[id]/[...path]`,
+    ro: `${ALBUMS.ro}/[id]/[...path]`,
 });
 
 //
@@ -177,12 +193,23 @@ export const A_REGISTRIES = lp(() => `${A()}/registries`, {
     en: `${A.en}/registries`,
     ro: `${A.ro}/registri`,
 });
+export const A_ALBUMS = lp(() => `${A()}/albums`, {
+    en: `${A.en}/albums`,
+    ro: `${A.ro}/albume`,
+});
+export const A_ALBUMS_$ID_$PATH = lp((id: string, path?: string[]) => `${A_ALBUMS()}/${id}/${path ? path.join("/") : ""}`, {
+    en: `${A_ALBUMS.en}/[id]/[...path]`,
+    ro: `${A_ALBUMS.ro}/[id]/[...path]`,
+});
 
 //
 // api
 //
-export const API_ASSETS = "/api/assets";
-export const API_PORTFOLIO = "/api/portfolio";
+const API = "/api";
+export const API_ASSETS = `${API}/assets`;
+export const API_PORTFOLIO = `${API}/portfolio`;
+const API_ALBUMS = `${API}/albums`;
+export const API_ALBUMS_CONTENTS = `${API_ALBUMS}/contents`;
 
 //
 // assets
@@ -211,9 +238,12 @@ export const pathnames = [
     LOCATIONS_DROBETA_TURNU_SEVERIN,
     LOCATIONS_CLUJ_NAPOCA,
     LOCATIONS_BUCURESTI,
+    // legal
     PRIVACY_POLICY,
     TERMS_OF_SERVICE,
     COOKIE_POLICY,
+    // other
+    ALBUMS_$ID_$PATH,
     // private
     U,
     U_ACCOUNT,
@@ -228,6 +258,8 @@ export const pathnames = [
     A_PORTFOLIO_GROUPS_$ID,
     A_PORTFOLIO_MEDIA,
     A_REGISTRIES,
+    A_ALBUMS,
+    A_ALBUMS_$ID_$PATH,
 ] as const;
 
 // export type Pathnames = {

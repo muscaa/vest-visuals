@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
     Menu,
     X
 } from "lucide-react";
-import { ButtonLink } from "@/components/snippets";
+import { ButtonLink, Icon } from "@/components/snippets";
 import {
     Link,
     HOME,
@@ -41,11 +41,16 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@shared/shadcn/lib/utils";
+import { Single } from "@type/utils";
 
 type NavEndpoint = {
     title: string;
-    href: string;
-};
+    icon?: Icon;
+} & Single<{
+    link: React.ComponentProps<typeof Link>;
+    button: React.ComponentProps<typeof Button>;
+    component: React.ComponentType<{ children: React.ReactNode; }>;
+}>;
 
 type NavLink = {
     type: "list";
@@ -59,7 +64,9 @@ const navLinks: NavLink[] = [
     {
         type: "endpoint",
         title: "ACASA",
-        href: HOME(),
+        link: {
+            href: HOME(),
+        },
     },
     {
         type: "list",
@@ -67,11 +74,15 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "NUNTA",
-                href: SERVICES_WEDDING(),
+                link: {
+                    href: SERVICES_WEDDING(),
+                },
             },
             {
                 title: "BOTEZ",
-                href: SERVICES_CHRISTENING(),
+                link: {
+                    href: SERVICES_CHRISTENING(),
+                },
             },
             // {
             //     title: "ANIVERSARE",
@@ -79,7 +90,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "MAJORAT",
-                href: SERVICES_18TH_BIRTHDAY(),
+                link: {
+                    href: SERVICES_18TH_BIRTHDAY(),
+                },
             },
             // {
             //     title: "BUSINESS / CORPORATE",
@@ -113,7 +126,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "SEDINTA FOTO", // LUMINA NATURALA (OUTDOOR)
-                href: SERVICES_OUTDOOR(),
+                link: {
+                    href: SERVICES_OUTDOOR(),
+                },
             },
         ],
     },
@@ -123,11 +138,15 @@ const navLinks: NavLink[] = [
         endpoints: [
             {
                 title: "IMOBILIARE (REAL ESTATE)",
-                href: SERVICES_REAL_ESTATE(),
+                link: {
+                    href: SERVICES_REAL_ESTATE(),
+                },
             },
             {
                 title: "AUTOMOTIVE",
-                href: SERVICES_AUTOMOTIVE(),
+                link: {
+                    href: SERVICES_AUTOMOTIVE(),
+                },
             },
             // {
             //     title: "PRODUSE E-COMMERCE",
@@ -135,7 +154,9 @@ const navLinks: NavLink[] = [
             // },
             {
                 title: "PROMOVARE FIRME (MARKETING)",
-                href: SERVICES_MARKETING(),
+                link: {
+                    href: SERVICES_MARKETING(),
+                },
             },
         ],
     },
@@ -147,16 +168,22 @@ const navLinks: NavLink[] = [
     {
         type: "endpoint",
         title: "CONTACT",
-        href: CONTACT(),
+        link: {
+            href: CONTACT(),
+        },
     },
 ];
 
-function WideMenu() {
+interface MenuProps {
+    links: NavLink[];
+}
+
+function WideMenu(props: MenuProps) {
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 {
-                    navLinks.map((link, index) => (
+                    props.links.map((link, index) => (
                         <NavigationMenuItem key={index}>
                             {
                                 link.type === "list" && (
@@ -167,13 +194,35 @@ function WideMenu() {
                                                 {
                                                     link.endpoints.map((endpoint, index) => (
                                                         <li key={index}>
-                                                            <NavigationMenuLink render={
-                                                                <Link
-                                                                    href={endpoint.href}
-                                                                    className="flex-row items-center gap-2"
-                                                                >
-                                                                    {endpoint.title}
-                                                                </Link>
+                                                            <NavigationMenuLink render={ // TODO refactor
+                                                                endpoint.link && (
+                                                                    <Link {...endpoint.link}>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </Link>
+                                                                ) || endpoint.button && (
+                                                                    <Button {...endpoint.button}>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </Button>
+                                                                ) || endpoint.component && (
+                                                                    <endpoint.component>
+                                                                        {
+                                                                            endpoint.icon && (
+                                                                                <endpoint.icon className="mr-2" />
+                                                                            )
+                                                                        }
+                                                                        {endpoint.title}
+                                                                    </endpoint.component>
+                                                                )
                                                             } />
                                                         </li>
                                                     ))
@@ -182,10 +231,35 @@ function WideMenu() {
                                         </NavigationMenuContent>
                                     </>
                                 ) || link.type === "endpoint" && (
-                                    <NavigationMenuLink base="trigger" variant="ghost" render={
-                                        <Link href={link.href}>
-                                            {link.title}
-                                        </Link>
+                                    <NavigationMenuLink base="trigger" variant="ghost" render={ // TODO refactor
+                                        link.link && (
+                                            <Link {...link.link}>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </Link>
+                                        ) || link.button && (
+                                            <Button variant="navbar" {...link.button}>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </Button>
+                                        ) || link.component && (
+                                            <link.component>
+                                                {
+                                                    link.icon && (
+                                                        <link.icon className="mr-2" />
+                                                    )
+                                                }
+                                                {link.title}
+                                            </link.component>
+                                        )
                                     } />
                                 )
                             }
@@ -198,11 +272,11 @@ function WideMenu() {
     );
 }
 
-function MobileMenu() {
+function MobileMenu(props: MenuProps) {
     return (
         <>
             {
-                navLinks.map((link, index) => (
+                props.links.map((link, index) => (
                     link.type === "list" && (
                         <Collapsible key={index} className="w-full text-center">
                             <CollapsibleTrigger className={cn(buttonVariants({ variant: "navbar", className: "group/collapsible-trigger group data-panel-open:text-primary" }))}>
@@ -214,9 +288,36 @@ function MobileMenu() {
                                     {
                                         link.endpoints.map((endpoint, index) => (
                                             <li key={index}>
-                                                <ButtonLink variant="navbar" href={endpoint.href}>
-                                                    {endpoint.title}
-                                                </ButtonLink>
+                                                { // TODO refactor
+                                                    endpoint.link && (
+                                                        <ButtonLink variant="navbar" {...endpoint.link}>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </ButtonLink>
+                                                    ) || endpoint.button && (
+                                                        <Button variant="navbar" {...endpoint.button}>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </Button>
+                                                    ) || endpoint.component && (
+                                                        <endpoint.component>
+                                                            {
+                                                                endpoint.icon && (
+                                                                    <endpoint.icon className="mr-2" />
+                                                                )
+                                                            }
+                                                            {endpoint.title}
+                                                        </endpoint.component>
+                                                    )
+                                                }
                                             </li>
                                         ))
                                     }
@@ -224,9 +325,38 @@ function MobileMenu() {
                             </CollapsibleContent>
                         </Collapsible>
                     ) || link.type === "endpoint" && (
-                        <ButtonLink key={index} variant="navbar" href={link.href}>
-                            {link.title}
-                        </ButtonLink>
+                        <Fragment key={index}>
+                            { // TODO refactor
+                                link.link && (
+                                    <ButtonLink variant="navbar" {...link.link}>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </ButtonLink>
+                                ) || link.button && (
+                                    <Button variant="navbar" {...link.button}>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </Button>
+                                ) || link.component && (
+                                    <link.component>
+                                        {
+                                            link.icon && (
+                                                <link.icon className="mr-2" />
+                                            )
+                                        }
+                                        {link.title}
+                                    </link.component>
+                                )
+                            }
+                        </Fragment>
                     )
                 ))
             }
@@ -235,20 +365,31 @@ function MobileMenu() {
     );
 }
 
-export function Navbar() {
+export interface NavbarProps {
+    logo?: React.ReactNode;
+    links?: NavLink[];
+    className?: string;
+    extraClassName?: string;
+}
+
+export function Navbar(props: NavbarProps) {
     const isMobile = useIsMobile();
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <nav className="flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50">
-            <div className="flex size-full max-w-6xl justify-between items-center p-2">
-                <Link href={HOME()}>
-                    <Image
-                        src={logo}
-                        alt="Logo"
-                        className="size-16"
-                    />
-                </Link>
+        <nav className={cn("flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50", props.extraClassName)}>
+            <div className={cn("flex size-full max-w-6xl justify-between items-center p-2", props.className)}>
+                {
+                    props.logo ?? (
+                        <Link href={HOME()}>
+                            <Image
+                                src={logo}
+                                alt="Logo"
+                                className="size-16"
+                            />
+                        </Link>
+                    )
+                }
                 <div className="flex items-center gap-2">
                     {
                         isMobile == true && (
@@ -264,7 +405,7 @@ export function Navbar() {
                                 </Button>
                             </>
                         ) || isMobile == false && (
-                            <WideMenu />
+                            <WideMenu links={props.links ?? navLinks} />
                         )
                     }
                 </div>
@@ -272,7 +413,7 @@ export function Navbar() {
             {
                 isMobile == true && menuOpen &&
                 <div className="absolute z-50 top-full flex flex-col justify-center items-center gap-2 w-full max-w-6xl p-2 bg-popover border-t border-b shadow-sm">
-                    <MobileMenu />
+                    <MobileMenu links={props.links ?? navLinks} />
                 </div>
             }
         </nav>
