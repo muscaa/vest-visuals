@@ -39,10 +39,12 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
         title: props.title,
         description: props.description,
         cover: props.cover,
+        email: props.email,
+        phoneNumber: props.phoneNumber,
         downloadUrl: `${serverConfig.env.S3_URL}/${bucket}/${contentsPath(props.id)}`,
         shareUrl: `${serverConfig.env.URL}/albums/${props.id}`,
+        lockAt: props.lockAt,
         deleteAt: props.deleteAt,
-        locked: props.locked,
         albumsContents: props.albumsContents?.map((value) => contents.format(value)),
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,
@@ -186,6 +188,10 @@ export async function create(props: types.CreateProps): Promise<PartialAlbum | u
             title: props.title,
             description: props.description,
             cover: props.cover,
+            email: props.email,
+            phoneNumber: props.phoneNumber,
+            lockAt: props.lockAt,
+            deleteAt: props.deleteAt,
         })
         .returning()
         .get();
@@ -198,6 +204,10 @@ export async function update(id: string, props: types.UpdateProps): Promise<Part
             title: props.title,
             description: props.description,
             cover: props.cover,
+            email: props.email,
+            phoneNumber: props.phoneNumber,
+            lockAt: props.lockAt,
+            deleteAt: props.deleteAt,
         })
         .where(eq(albumsTable.id, id))
         .returning()

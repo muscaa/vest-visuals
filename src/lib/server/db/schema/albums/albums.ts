@@ -11,15 +11,15 @@ export const ALBUMS = sqliteTable("albums", {
     id: text("id")
         .$defaultFn(() => createId())
         .primaryKey(),
-    title: text("title"),
+    title: text("title")
+        .notNull(),
     description: text("description"),
     cover: text("cover"),
-    // TODO add user info (email, phone, pin etc)
-    deleteAt: integer("delete_at", { mode: "timestamp" })
-        .$defaultFn(() => new Date())
+    email: text("email"),
+    phoneNumber: text("phone_number"),
+    lockAt: integer("lock_at", { mode: "timestamp" })
         .notNull(),
-    locked: integer("locked", { mode: "boolean" })
-        .$defaultFn(() => false)
+    deleteAt: integer("delete_at", { mode: "timestamp" })
         .notNull(),
     createdAt: integer("created_at", { mode: "timestamp" })
         .$defaultFn(() => new Date())

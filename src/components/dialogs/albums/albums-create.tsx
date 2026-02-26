@@ -19,13 +19,26 @@ export function AlbumsCreateDialog(props: Props) {
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>();
     const [cover, setCover] = useState<string>();
+    const [email, setEmail] = useState<string>();
+    const [phoneNumber, setPhoneNumber] = useState<string>();
+    const [expires, setExpires] = useState<Date>();
     const { createAlbum } = useAlbums();
 
     const submit = async () => {
+        if (!title || !expires) return undefined;
+
+        const lockAt = expires;
+        const deleteAt = new Date(expires);
+        deleteAt.setDate(deleteAt.getDate() + 30);
+
         return await createAlbum.mutateAsync({
             title,
             description,
             cover,
+            email,
+            phoneNumber,
+            lockAt,
+            deleteAt,
         });
     };
 
@@ -44,7 +57,7 @@ export function AlbumsCreateDialog(props: Props) {
                 default: "Create",
                 sending: "Creating...",
             }}
-            // submitDisabled={!tag}
+            submitDisabled={!title || !expires}
             onSuccess={props.onCreate}
             onReset={handleReset}
             trigger={props.children}
@@ -57,6 +70,7 @@ export function AlbumsCreateDialog(props: Props) {
                         type="text"
                         placeholder="title"
                         onChange={(e) => setTitle(e.target.value)}
+                        required
                     />
                 </Field>
                 <Field>
@@ -72,6 +86,33 @@ export function AlbumsCreateDialog(props: Props) {
                     <FieldLabel htmlFor="cover">Cover</FieldLabel>
                     <Input
                         id="cover"
+                        type="text"
+                        placeholder="cover"
+                        onChange={(e) => setCover(e.target.value)}
+                    />
+                </Field>
+                <Field>
+                    <FieldLabel htmlFor="email">E-mail</FieldLabel>
+                    <Input
+                        id="email"
+                        type="email"
+                        placeholder="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </Field>
+                <Field>
+                    <FieldLabel htmlFor="phoneNumber">Phone Number</FieldLabel>
+                    <Input
+                        id="phoneNumber"
+                        type="tel"
+                        placeholder="+40"
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                </Field>
+                <Field>
+                    <FieldLabel htmlFor="expires">Expires</FieldLabel>
+                    <Input
+                        id="expires"
                         type="text"
                         placeholder="cover"
                         onChange={(e) => setCover(e.target.value)}
