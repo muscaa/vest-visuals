@@ -36,8 +36,12 @@ function ListEntry(props: ListEntryProps) {
                             <p>{props.value.title}</p>
                             <p>{props.value.description}</p>
                             <p>{props.value.cover}</p>
+                            <p>{props.value.email}</p>
+                            <p>{props.value.phoneNumber}</p>
                         </div>
                         <div className="flex flex-col">
+                            <h6>Locks At: {dateToString(props.value.lockAt)}</h6>
+                            <h6>Deletes At: {dateToString(props.value.deleteAt)}</h6>
                             <h6>Updated: {dateToString(props.value.updatedAt)}</h6>
                             <h6>Created: {dateToString(props.value.createdAt)}</h6>
                         </div>

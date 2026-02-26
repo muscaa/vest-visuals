@@ -9,6 +9,14 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
 interface Props {
     onCreate?: () => void;
@@ -111,12 +119,27 @@ export function AlbumsCreateDialog(props: Props) {
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="expires">Expires</FieldLabel>
-                    <Input
-                        id="expires"
-                        type="text"
-                        placeholder="cover"
-                        onChange={(e) => setCover(e.target.value)}
-                    />
+                    <Popover>
+                        <PopoverTrigger render={
+                            <Button id="expires" variant="outline" className="justify-start font-normal">
+                                {
+                                    expires && (
+                                        format(expires, "PPP")
+                                    ) || (
+                                        <span>Pick a date</span>
+                                    )
+                                }
+                            </Button>
+                        } />
+                        <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                                mode="single"
+                                selected={expires}
+                                onSelect={setExpires}
+                                defaultMonth={expires}
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </Field>
             </FieldGroup>
         </SimpleDialog>

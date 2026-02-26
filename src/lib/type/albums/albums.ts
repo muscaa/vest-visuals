@@ -6,8 +6,8 @@ export type PartialAlbum = {
     title: string;
     description?: string;
     cover?: string;
-    email: string;
-    phoneNumber: string;
+    email?: string;
+    phoneNumber?: string;
     downloadUrl: string;
     shareUrl: string;
     lockAt: Date;
