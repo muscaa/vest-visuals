@@ -14,6 +14,15 @@ export type MetadataProps<T> = T & {
 export interface MetadataResult {
     route: string;
     routeName: string;
+    openGraph?: {
+        description?: string;
+        image?: {
+            url?: string;
+            width?: number;
+            height?: number;
+            alt?: string;
+        };
+    };
 }
 
 export interface InfoProps<T> {
@@ -65,13 +74,13 @@ export function createInfo<T>(info: InfoProps<T>): Info {
                     siteName: "Vest Visuals",
                     url: meta.route,
                     title: `Vest Visuals | ${meta.routeName}`,
-                    description: "Servicii profesionale de fotografie și videografie în Timișoara, Arad și Oradea.",
+                    description: meta.openGraph?.description ?? "Servicii profesionale de fotografie și videografie în Timișoara, Arad și Oradea.",
                     images: [
                         {
-                            url: "opengraph-image.jpg",
-                            width: 1200,
-                            height: 630,
-                            alt: "OpenGraph Image",
+                            url: meta.openGraph?.image?.url ?? "opengraph-image.jpg",
+                            width: meta.openGraph?.image?.width ?? 1200,
+                            height: meta.openGraph?.image?.height ?? 630,
+                            alt: meta.openGraph?.image?.alt ?? "OpenGraph Image",
                         },
                     ],
                     locale: "ro_RO",

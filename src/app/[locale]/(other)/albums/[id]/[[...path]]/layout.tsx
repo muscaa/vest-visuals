@@ -5,7 +5,7 @@ import {
 import {
     ALBUMS_$ID_$PATH,
 } from "@shared/i18n";
-import { get } from "@server/albums/albums";
+import { getPartial } from "@server/albums/albums";
 
 export const {
     generateStaticParams,
@@ -19,11 +19,17 @@ export const {
     metadata: async ({ t, params }) => {
         const { id, path } = await params;
 
-        const album = await get(id);
+        const album = await getPartial(id);
 
         return {
             route: ALBUMS_$ID_$PATH(id, path?.map(decodeURIComponent)),
             routeName: album?.title || t("Metadata.albums.title"),
+            openGraph: {
+                description: album?.description,
+                image: {
+                    url: album?.coverUrl,
+                },
+            },
         };
     },
 });
