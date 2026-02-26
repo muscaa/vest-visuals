@@ -1,11 +1,11 @@
 "use server";
 
 import { ActionResponse } from "@type/http";
-import * as types from "@type/albums";
 import * as contents from "@server/albums/contents";
+import { Media } from "@type/media";
 
-export async function getPaginated(offset: number, limit: number, albumId: string, path?: string[]): ActionResponse<types.AlbumsContent[]> {
-    const result = await contents.getPaginatedByPathAndTags(offset, limit, albumId, path, ["small", "large"]);
+export async function getPaginated(offset: number, limit: number, albumId: string, path?: string[]): ActionResponse<Media[]> {
+    const result = await contents.getPaginatedByPathAndTags(offset, limit, albumId, path, ["small", "large", "original"]);
     if (!result) {
         return ["NOT_FOUND", "Content not found"];
     }
@@ -20,22 +20,29 @@ export async function getPaginated(offset: number, limit: number, albumId: strin
             return [];
         }
 
-        const first = mediaVariants[0];
-        const last = mediaVariants[mediaVariants.length - 1];
+        const preview = mediaVariants[0];
+        const full = mediaVariants[mediaVariants.length - 2];
+        const download = mediaVariants[mediaVariants.length - 1];
 
         return [
             {
+                alt: content.path.split("/").at(-1),
                 preview: {
-                    src: first.fileUrl,
-                    width: first.info?.width,
-                    height: first.info?.height,
+                    src: preview.fileUrl,
+                    width: preview.info?.width,
+                    height: preview.info?.height,
                 },
                 full: {
-                    src: last.fileUrl,
-                    width: last.info?.width,
-                    height: last.info?.height,
+                    src: full.fileUrl,
+                    width: full.info?.width,
+                    height: full.info?.height,
                 },
-            } satisfies types.AlbumsContent,
+                download: {
+                    src: download.fileUrl,
+                    width: download.info?.width,
+                    height: download.info?.height,
+                },
+            } satisfies Media,
         ];
     })];
 }

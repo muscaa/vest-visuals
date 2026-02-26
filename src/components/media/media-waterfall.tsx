@@ -5,9 +5,9 @@ import {
     useMediaValues,
 } from "@/components/masonry";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Img } from "@/components/snippets";
+import { ButtonLink, Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import {
     Carousel,
     CarouselContent,
@@ -170,7 +170,19 @@ export function MediaWaterfall(props: Props) {
                             api?.scrollNext();
                         }}
                     />
-                    <div className="absolute top-3.5 right-3.5 theme-dark">
+                    <div className="absolute top-3.5 right-3.5 theme-dark flex gap-2">
+                        {
+                            data[at - 1]?.download && (
+                                <ButtonLink
+                                    href={data[at - 1].download!.src}
+                                    variant="navbar"
+                                    size="icon"
+                                    download={data[at - 1].alt}
+                                >
+                                    <Download />
+                                </ButtonLink>
+                            )
+                        }
                         <Button
                             variant="navbar"
                             size="icon"
