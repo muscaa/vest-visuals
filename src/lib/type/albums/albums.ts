@@ -6,6 +6,7 @@ export type PartialAlbum = {
     title: string;
     description?: string;
     cover?: string;
+    coverUrl?: string;
     email?: string;
     phoneNumber?: string;
     downloadUrl: string;

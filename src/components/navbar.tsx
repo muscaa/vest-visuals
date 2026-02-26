@@ -369,6 +369,7 @@ export interface NavbarProps {
     logo?: React.ReactNode;
     links?: NavLink[];
     className?: string;
+    extraClassName?: string;
 }
 
 export function Navbar(props: NavbarProps) {
@@ -376,7 +377,7 @@ export function Navbar(props: NavbarProps) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <nav className="flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50">
+        <nav className={cn("flex flex-col w-full h-16 justify-center items-center bg-card relative shadow-sm z-50", props.extraClassName)}>
             <div className={cn("flex size-full max-w-6xl justify-between items-center p-2", props.className)}>
                 {
                     props.logo ?? (

@@ -39,6 +39,7 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
         title: props.title,
         description: props.description,
         cover: props.cover,
+        coverUrl: `${serverConfig.env.S3_URL}/${bucket}/${props.id}/${props.cover}/large`,
         email: props.email,
         phoneNumber: props.phoneNumber,
         downloadUrl: `${serverConfig.env.S3_URL}/${bucket}/${contentsPath(props.id)}`,

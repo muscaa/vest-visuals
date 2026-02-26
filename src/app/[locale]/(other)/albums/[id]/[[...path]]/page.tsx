@@ -4,9 +4,11 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { MediaWaterfall } from "@/components/media/media-waterfall";
 import { getPaginated } from "@/actions/albums";
-import { NavbarLayoutProvider } from "@/components/layout/providers/navbar";
 import { Navbar } from "@/components/navbar";
-import { Download, Share2 } from "lucide-react";
+import {
+    Download,
+    Share2,
+} from "lucide-react";
 import { useAlbums } from "@/hooks/albums/useAlbums";
 import {
     Dialog,
@@ -17,12 +19,18 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { BeautifulQRCode } from "@beautiful-qr-code/react";
+import { useMain } from "@/hooks/useMain";
+import { FooterLarge } from "@/components/footer";
+import { Img } from "@/components/snippets";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export default function Page() {
+    const { ref } = useMain();
     const params = useParams<{ id: string; path?: string[]; }>();
     const path = useMemo(() => params.path?.map(decodeURIComponent), [params.path]);
     const { usePartialAlbum } = useAlbums();
     const { data: album } = usePartialAlbum(params.id);
+    const size = useWindowSize();
 
     const handleNextData = async (offset: number, limit: number) => {
         const [status, result] = await getPaginated(offset, limit, params.id, path);
@@ -32,55 +40,80 @@ export default function Page() {
     };
 
     return (
-        <NavbarLayoutProvider
-            header={
-                <Navbar
-                    // logo={<div></div>}
-                    links={album ? [
-                        {
-                            type: "endpoint",
-                            title: "DOWNLOAD",
-                            link: {
-                                href: album.downloadUrl,
-                                download: `${album.title}.zip`,
-                            },
-                            icon: Download,
+        <div ref={ref} className="flex flex-col max-h-full overflow-y-auto">
+            <div className="relative flex w-full min-h-screen">
+                {
+                    album && (
+                        <>
+                            <Img
+                                src={album.coverUrl}
+                                alt="Album Cover"
+                                className="w-full object-cover"
+                            />
+                            <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-8 text-center text-shadow-lg theme-dark">
+                                <h1 className="font-mono">{album.title}</h1>
+                                <h4>{album.description}</h4>
+                                <Button
+                                    variant="transparent"
+                                    className="theme-light"
+                                    onClick={() => size && ref?.current?.scrollTo(0, size.height)}
+                                >
+                                    MAI DEPARTE
+                                </Button>
+                            </div>
+                        </>
+                    )
+                }
+            </div>
+            <Navbar
+                // logo={<div></div>}
+                links={album ? [
+                    {
+                        type: "endpoint",
+                        title: "DOWNLOAD",
+                        link: {
+                            href: album.downloadUrl,
+                            download: `${album.title}.zip`,
                         },
-                        {
-                            type: "endpoint",
-                            title: "SHARE",
-                            component: (props) => (
-                                <Dialog>
-                                    <DialogTrigger render={
-                                        <Button variant="navbar">
-                                            {props.children}
-                                        </Button>
-                                    } />
-                                    <DialogContent className="sm:max-w-md">
-                                        <DialogHeader>
-                                            <DialogTitle>Share</DialogTitle>
-                                        </DialogHeader>
-                                        <div className="flex flex-col">
-                                            <BeautifulQRCode
-                                                data={album.shareUrl}
-                                                foregroundColor="#000000"
-                                                backgroundColor="#ffffff"
-                                                radius={0}
-                                            />
-                                        </div>
-                                    </DialogContent>
-                                </Dialog>
-                            ),
-                            icon: Share2,
-                        },
-                    ] : []}
-                    className="max-w-none"
-                />
-            }
-        >
-            <MediaWaterfall
-                nextData={handleNextData}
+                        icon: Download,
+                    },
+                    {
+                        type: "endpoint",
+                        title: "SHARE",
+                        component: (props) => (
+                            <Dialog>
+                                <DialogTrigger render={
+                                    <Button variant="navbar">
+                                        {props.children}
+                                    </Button>
+                                } />
+                                <DialogContent className="sm:max-w-md">
+                                    <DialogHeader>
+                                        <DialogTitle>Share</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="flex flex-col">
+                                        <BeautifulQRCode
+                                            data={album.shareUrl}
+                                            foregroundColor="#000000"
+                                            backgroundColor="#ffffff"
+                                            radius={0}
+                                        />
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
+                        ),
+                        icon: Share2,
+                    },
+                ] : []}
+                className="max-w-none"
+                extraClassName="sticky top-0"
             />
-        </NavbarLayoutProvider>
+            <main className="grow">
+                <MediaWaterfall
+                    nextData={handleNextData}
+                />
+            </main>
+            <FooterLarge />
+        </div>
     );
 }
