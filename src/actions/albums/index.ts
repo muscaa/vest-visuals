@@ -1,8 +1,23 @@
 "use server";
 
 import { ActionResponse } from "@type/http";
+import * as albums from "@server/albums/albums";
 import * as contents from "@server/albums/contents";
 import { Media } from "@type/media";
+import { PartialAlbum } from "@type/albums/albums";
+
+export async function getAlbum(id: string): ActionResponse<PartialAlbum> {
+    if (!id) {
+        return ["BAD_REQUEST", "Missing album ID"];
+    }
+
+    const result = await albums.getPartial(id);
+    if (!result) {
+        return ["NOT_FOUND", "Album not found"];
+    }
+
+    return ["OK", result];
+}
 
 export async function getPaginated(offset: number, limit: number, albumId: string, path?: string[]): ActionResponse<Media[]> {
     const result = await contents.getPaginatedByPathAndTags(offset, limit, albumId, path, ["small", "large", "original"]);

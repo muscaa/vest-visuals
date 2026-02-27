@@ -12,7 +12,6 @@ import {
     Download,
     Share2,
 } from "lucide-react";
-import { useAlbums } from "@/hooks/albums/useAlbums";
 import {
     Dialog,
     DialogContent,
@@ -27,6 +26,7 @@ import { FooterLarge } from "@/components/footer";
 import { Img } from "@/components/snippets";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { PartialAlbum } from "@type/albums/albums";
+import { useAlbum } from "@/hooks/albums/useAlbum";
 
 interface ShareDialogProps {
     album: PartialAlbum;
@@ -77,8 +77,7 @@ export default function Page() {
     const { ref } = useMain();
     const params = useParams<{ id: string; path?: string[]; }>();
     const path = useMemo(() => params.path?.map(decodeURIComponent), [params.path]);
-    const { usePartialAlbum } = useAlbums();
-    const { data: album } = usePartialAlbum(params.id);
+    const { data: album } = useAlbum(params.id);
     const size = useWindowSize();
 
     const handleNextData = async (offset: number, limit: number) => {
