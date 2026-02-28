@@ -70,7 +70,7 @@ export function useAlbumsContents() {
             formData.append(types.CreateFormData.directory, JSON.stringify(props.directory));
 
             const response = await fetch(API_ALBUMS_CONTENTS, {
-                method: "POST",
+                method: "PUT",
                 body: formData,
             });
             if (!response.ok) throw new Error("Server error");
@@ -108,7 +108,7 @@ export function useAlbumsContents() {
                     formData.append(types.CreateFormData.mediaConfig, JSON.stringify(mediaConfig));
 
                     const response = await fetch(API_ALBUMS_CONTENTS, {
-                        method: "POST",
+                        method: "PUT",
                         body: formData,
                     });
                     if (!response.ok) throw new Error("Server error");

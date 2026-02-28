@@ -18,6 +18,7 @@ export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
             let width: number = metadata.width;
             let height: number = metadata.height;
             const qualityPercent = variant.qualityPercent ?? 100;
+            const format = variant.format ?? "webp";
 
             if (variant.size) {
                 const size = variant.size;
@@ -45,21 +46,20 @@ export class V1SharpProcessor extends base.Processor<V1SharpProcessorConfig> {
                 }
             }
 
-            const processed = await original
-                .resize({
-                    width,
-                    height,
-                })
-                .webp({
-                    quality: qualityPercent,
-                })
-                .toBuffer();
+            const processed = await original.resize({
+                width,
+                height,
+            })
+            .toFormat(format, {
+                quality: qualityPercent,
+            })
+            .toBuffer();
 
             const value: base.ProcessorValue = {
                 tag: key,
                 order: variant.order,
                 buffer: processed,
-                mimeType: "image/webp",
+                mimeType: `image/${format}`,
                 type: "image",
                 info: {
                     alt: config.alt || key,

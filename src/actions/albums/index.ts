@@ -20,7 +20,7 @@ export async function getAlbum(id: string): ActionResponse<PartialAlbum> {
 }
 
 export async function getPaginated(offset: number, limit: number, albumId: string, path?: string[]): ActionResponse<Media[]> {
-    const result = await contents.getPaginatedByPathAndTags(offset, limit, albumId, path, ["small", "large", "original"]);
+    const result = await contents.getPaginatedByPathAndTags(offset, limit, albumId, path, ["small", "large"/*, "original"*/]);
     if (!result) {
         return ["NOT_FOUND", "Content not found"];
     }
@@ -36,8 +36,8 @@ export async function getPaginated(offset: number, limit: number, albumId: strin
         }
 
         const preview = mediaVariants[0];
-        const full = mediaVariants[mediaVariants.length - 2];
-        const download = mediaVariants[mediaVariants.length - 1];
+        const full = mediaVariants[1];
+        // const download = mediaVariants[2];
 
         return [
             {
@@ -52,12 +52,21 @@ export async function getPaginated(offset: number, limit: number, albumId: strin
                     width: full.info?.width,
                     height: full.info?.height,
                 },
-                download: {
-                    src: download.fileUrl,
-                    width: download.info?.width,
-                    height: download.info?.height,
-                },
+                // download: {
+                //     src: download.fileUrl,
+                //     width: download.info?.width,
+                //     height: download.info?.height,
+                // },
             } satisfies Media,
         ];
     })];
+}
+
+export async function getDownloadUrl(id: string, fileName: string, mediaId?: string): ActionResponse<string> {
+    const result = await albums.getDownloadUrl(id, fileName, mediaId, "original");
+    if (!result) {
+        return ["NOT_FOUND", "Download url not found"];
+    }
+
+    return ["OK", result];
 }

@@ -6,7 +6,10 @@ import {
     useState,
 } from "react";
 import { MediaWaterfall } from "@/components/media/media-waterfall";
-import { getPaginated } from "@/actions/albums";
+import {
+    getDownloadUrl,
+    getPaginated,
+} from "@/actions/albums";
 import { Navbar } from "@/components/navbar";
 import {
     Download,
@@ -27,6 +30,8 @@ import { Img } from "@/components/snippets";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { PartialAlbum } from "@type/albums/albums";
 import { useAlbum } from "@/hooks/albums/useAlbum";
+import { Media } from "@type/media";
+import { openLink } from "@client/snippets";
 
 interface ShareDialogProps {
     album: PartialAlbum;
@@ -87,9 +92,16 @@ export default function Page() {
         return result;
     };
 
+    const handleGetDownloadUrl = async (media: Media) => {
+        const [status, result] = await getDownloadUrl(params.id, media.alt!, media.full.src.split("/").at(-2));
+        if (status !== "OK") return undefined;
+
+        return result;
+    };
+
     return (
         <div ref={ref} className="flex flex-col max-h-full overflow-y-auto">
-            <div className="relative flex w-full min-h-screen">
+            <div className="relative flex w-full min-h-screen-dynamic">
                 {
                     album && (
                         <>
@@ -119,9 +131,17 @@ export default function Page() {
                     {
                         type: "endpoint",
                         title: "DOWNLOAD",
-                        link: {
-                            href: album.downloadUrl,
-                            download: `${album.title}.zip`,
+                        // link: {
+                        //     href: album.downloadUrl,
+                        //     download: `${album.title}.zip`,
+                        // },
+                        button: {
+                            onClick: async () => {
+                                const [status, result] = await getDownloadUrl(params.id, `${album.title}.zip`);
+                                if (status !== "OK") return;
+
+                                openLink(result);
+                            },
                         },
                         icon: Download,
                     },
@@ -144,6 +164,7 @@ export default function Page() {
             <main className="grow">
                 <MediaWaterfall
                     nextData={handleNextData}
+                    getDownloadUrl={handleGetDownloadUrl}
                 />
             </main>
             <FooterLarge />

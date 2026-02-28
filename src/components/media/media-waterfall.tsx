@@ -5,7 +5,7 @@ import {
     useMediaValues,
 } from "@/components/masonry";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ButtonLink, Img } from "@/components/snippets";
+import { Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
 import { Download, X } from "lucide-react";
 import {
@@ -21,9 +21,11 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import { Media } from "@type/media";
 import { MediaPreview } from "./media-preview";
+import { openLink } from "@client/snippets";
 
 interface Props {
     nextData: (offset: number, limit: number) => Promise<Media[]>;
+    getDownloadUrl?: (media: Media) => Promise<string | undefined>;
 }
 
 export function MediaWaterfall(props: Props) {
@@ -172,15 +174,21 @@ export function MediaWaterfall(props: Props) {
                     />
                     <div className="absolute top-3.5 right-3.5 theme-dark flex gap-2">
                         {
-                            data[at - 1]?.download && (
-                                <ButtonLink
-                                    href={data[at - 1].download!.src}
+                            props.getDownloadUrl && data[at - 1] && (
+                                <Button
                                     variant="navbar"
                                     size="icon"
-                                    download={data[at - 1].alt}
+                                    onClick={async (e) => {
+                                        e.stopPropagation();
+
+                                        const url = await props.getDownloadUrl?.(data[at - 1]);
+                                        if (!url) return;
+                                        
+                                        openLink(url);
+                                    }}
                                 >
                                     <Download />
-                                </ButtonLink>
+                                </Button>
                             )
                         }
                         <Button

@@ -9,7 +9,7 @@ import { mediaProcessors } from "@server/media/processor";
 import { Blob } from "buffer";
 import { ProcessorValue } from "@server/media/processor/base";
 
-export async function POST(request: NextRequest): Response<types.PartialAlbumsContent> {
+export async function PUT(request: NextRequest): Response<types.PartialAlbumsContent> {
     const admin = await isAdmin({ request });
     if (!admin) {
         return response(["UNAUTHORIZED", "Unauthorized"]);

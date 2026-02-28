@@ -70,7 +70,8 @@
     --radius-4xl: calc(var(--radius) + 16px);
 
     --container-8xl: 88rem;
-    --spacing-screen-no-nav: calc(100vh - 4rem);
+    --spacing-screen-no-nav: calc(100dvh - 4rem);
+    --spacing-screen-dynamic: 100dvh;
 }
 
 @utility theme-light {
