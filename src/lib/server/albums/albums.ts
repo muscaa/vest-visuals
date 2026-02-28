@@ -7,7 +7,14 @@ import {
     s3,
     buckets,
 } from "@server/s3";
-import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, HeadObjectCommand, PutObjectCommand, UploadPartCommand } from "@aws-sdk/client-s3";
+import {
+    CompleteMultipartUploadCommand,
+    CreateMultipartUploadCommand,
+    GetObjectCommand,
+    HeadObjectCommand,
+    PutObjectCommand,
+    UploadPartCommand,
+} from "@aws-sdk/client-s3";
 import { serverConfig } from "@server/config";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import {
@@ -136,6 +143,20 @@ async function upload(id: string, blob: Blob): Promise<boolean> {
         return true;
     } catch (error) { }
     return false;
+}
+
+export async function getDownloadUrl(id: string, fileName: string, mediaId?: string, mediaTag?: string): Promise<string | undefined> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: bucket,
+            Key: mediaId ? `${id}/${mediaId}/${mediaTag}` : contentsPath(id),
+            ResponseContentDisposition: `attachment; filename="${fileName}"`,
+            ResponseContentType: 'application/octet-stream',
+        });
+
+        return await getSignedUrl(s3, command, { expiresIn: 3600 });
+    } catch (error) { }
+    return undefined;
 }
 
 export async function startUpload(id: string, partCount: number): Promise<MultipartUpload | undefined> {
