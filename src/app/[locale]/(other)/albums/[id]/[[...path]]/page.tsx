@@ -101,7 +101,7 @@ export default function Page() {
 
     return (
         <div ref={ref} className="flex flex-col max-h-full overflow-y-auto">
-            <div className="relative flex w-full min-h-screen">
+            <div className="relative flex w-full min-h-screen-dynamic">
                 {
                     album && (
                         <>
