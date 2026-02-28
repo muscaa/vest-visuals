@@ -12,5 +12,6 @@ export interface V1SharpProcessorConfig extends ProcessorConfig {
             scalePercent?: number;
             scaleUnit?: number;
         };
+        format?: "webp" | "jpeg" | "png";
     }>;
 }

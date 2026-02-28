@@ -62,6 +62,7 @@ export function AlbumsContentsCreateDialog(props: Props) {
                             },
                             original: {
                                 order: 400,
+                                format: "jpeg",
                             },
                         },
                     },
