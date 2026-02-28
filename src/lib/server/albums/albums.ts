@@ -151,7 +151,7 @@ export async function getDownloadUrl(id: string, fileName: string, mediaId?: str
             Bucket: bucket,
             Key: mediaId ? `${id}/${mediaId}/${mediaTag}` : contentsPath(id),
             ResponseContentDisposition: `attachment; filename="${fileName}"`,
-            ResponseContentType: 'application/octet-stream',
+            ResponseContentType: "application/octet-stream",
         });
 
         return await getSignedUrl(s3, command, { expiresIn: 3600 });
