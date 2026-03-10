@@ -10,19 +10,19 @@ export async function getLoginUrl(): ActionResponse<string> {
         return ["UNAUTHORIZED", "Unauthorized"];
     }
 
-    const loginResponse = await fetch(`${serverConfig.env.S3_CONSOLE_URL}/api/v1/login`, {
+    const loginResponse = await fetch(`${serverConfig.env.MINIO_CONSOLE_URL}/api/v1/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            accessKey: serverConfig.env.S3_ACCESS_KEY,
-            secretKey: serverConfig.env.S3_SECRET_KEY,
+            accessKey: serverConfig.env.MINIO_ACCESS_KEY,
+            secretKey: serverConfig.env.MINIO_SECRET_KEY,
         }),
     });
 
     const cookies = encodeURIComponent(JSON.stringify(loginResponse.headers.getSetCookie()));
-    const url = `${serverConfig.env.S3_CONSOLE_URL}/internal/login?cookies=${cookies}`;
+    const url = `${serverConfig.env.MINIO_CONSOLE_URL}/internal/login?cookies=${cookies}`;
 
     return ["OK", url];
 }

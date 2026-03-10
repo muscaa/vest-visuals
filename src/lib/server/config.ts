@@ -7,10 +7,9 @@ const env = {
 
     DISCORD_WEBHOOK_CONTACT: process.env.DISCORD_WEBHOOK_CONTACT!,
 
-    S3_URL: process.env.S3_URL!,
-    S3_CONSOLE_URL: process.env.S3_CONSOLE_URL!,
-    S3_ACCESS_KEY: process.env.S3_ACCESS_KEY!,
-    S3_SECRET_KEY: process.env.S3_SECRET_KEY!,
+    MINIO_CONSOLE_URL: process.env.MINIO_CONSOLE_URL!,
+    MINIO_ACCESS_KEY: process.env.MINIO_ACCESS_KEY!,
+    MINIO_SECRET_KEY: process.env.MINIO_SECRET_KEY!,
 
     LIBSQL_URL: process.env.LIBSQL_URL!,
     LIBSQL_AUTH: process.env.LIBSQL_AUTH!,
