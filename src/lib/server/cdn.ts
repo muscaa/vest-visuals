@@ -7,7 +7,7 @@ export interface CDN {
         region: string;
         accessKey: string;
         secretKey: string;
-        forcePathStyle?: boolean;
+        forcePathStyle: boolean;
     };
 }
 
@@ -21,7 +21,7 @@ export const cdns: CDNs = {
             region: serverConfig.env.CDN0_S3_REGION,
             accessKey: serverConfig.env.CDN0_S3_ACCESS_KEY,
             secretKey: serverConfig.env.CDN0_S3_SECRET_KEY,
-            forcePathStyle: true,
+            forcePathStyle: serverConfig.env.CDN0_S3_FORCE_PATH_STYLE,
         },
     },
     cdn1: {
@@ -31,6 +31,7 @@ export const cdns: CDNs = {
             region: serverConfig.env.CDN1_S3_REGION,
             accessKey: serverConfig.env.CDN1_S3_ACCESS_KEY,
             secretKey: serverConfig.env.CDN1_S3_SECRET_KEY,
+            forcePathStyle: serverConfig.env.CDN1_S3_FORCE_PATH_STYLE,
         },
     },
 };

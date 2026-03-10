@@ -30,12 +30,14 @@ const env = {
     CDN0_S3_REGION: process.env.CDN0_S3_REGION!,
     CDN0_S3_ACCESS_KEY: process.env.CDN0_S3_ACCESS_KEY!,
     CDN0_S3_SECRET_KEY: process.env.CDN0_S3_SECRET_KEY!,
+    CDN0_S3_FORCE_PATH_STYLE: process.env.CDN0_S3_FORCE_PATH_STYLE! === "true",
 
     CDN1_URL: process.env.CDN1_URL!,
     CDN1_S3_URL: process.env.CDN1_S3_URL!,
     CDN1_S3_REGION: process.env.CDN1_S3_REGION!,
     CDN1_S3_ACCESS_KEY: process.env.CDN1_S3_ACCESS_KEY!,
     CDN1_S3_SECRET_KEY: process.env.CDN1_S3_SECRET_KEY!,
+    CDN1_S3_FORCE_PATH_STYLE: process.env.CDN1_S3_FORCE_PATH_STYLE! === "true",
 } as const;
 
 export const serverConfig = {
