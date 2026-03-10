@@ -1,6 +1,6 @@
 import {
-    s3,
-    buckets,
+    s3Cdn0,
+    s3Cdn0Buckets,
 } from "@server/s3";
 import {
     PutObjectCommand,
@@ -40,12 +40,12 @@ export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boole
         if (!entry) return false;
 
         const command = new PutObjectCommand({
-            Bucket: buckets.registries,
+            Bucket: s3Cdn0Buckets.registries,
             Key: `${key}.json`,
             Body: JSON.stringify(entry.in, null, 2),
             ContentType: "application/json",
         });
-        await s3.send(command);
+        await s3Cdn0.send(command);
 
         return true;
     } catch (error) { }
@@ -55,10 +55,10 @@ export async function saveRegistry<K extends RegistryKey>(key: K): Promise<boole
 export async function loadRegistry<K extends RegistryKey>(key: K): Promise<RegistryIn<K> | undefined> {
     try {
         const command = new GetObjectCommand({
-            Bucket: buckets.registries,
+            Bucket: s3Cdn0Buckets.registries,
             Key: `${key}.json`,
         });
-        const response = await s3.send(command);
+        const response = await s3Cdn0.send(command);
         const body = await response.Body?.transformToString();
         if (!body) return undefined;
 

@@ -26,11 +26,13 @@ const env = {
     SMTP_SENDER_NAME: process.env.SMTP_SENDER_NAME!,
     SMTP_SENDER_ADDRESS: process.env.SMTP_SENDER_ADDRESS!,
 
+    CDN0_URL: process.env.CDN0_URL!,
     CDN0_S3_URL: process.env.CDN0_S3_URL!,
     CDN0_S3_REGION: process.env.CDN0_S3_REGION!,
     CDN0_S3_ACCESS_KEY: process.env.CDN0_S3_ACCESS_KEY!,
     CDN0_S3_SECRET_KEY: process.env.CDN0_S3_SECRET_KEY!,
 
+    CDN1_URL: process.env.CDN1_URL!,
     CDN1_S3_URL: process.env.CDN1_S3_URL!,
     CDN1_S3_REGION: process.env.CDN1_S3_REGION!,
     CDN1_S3_ACCESS_KEY: process.env.CDN1_S3_ACCESS_KEY!,

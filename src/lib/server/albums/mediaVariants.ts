@@ -6,10 +6,10 @@ import {
     asc,
 } from "drizzle-orm";
 import {
-    s3,
-    buckets,
+    s3Cdn1,
+    s3Cdn1Buckets,
+    getS3FileUrl,
 } from "@server/s3";
-import { serverConfig } from "@server/config";
 import {
     HeadObjectCommand,
     PutObjectCommand,
@@ -22,7 +22,7 @@ import * as types from "@type/albums/mediaVariants";
 export type SelectProps = typeof ALBUMS_MEDIA_VARIANTS.$inferSelect;
 export type MediaVariant = types.AlbumsMediaVariant;
 
-const bucket = buckets.albums;
+const bucket = s3Cdn1Buckets.albums;
 const mediaVariantsTable = ALBUMS_MEDIA_VARIANTS;
 
 function filePath(albumId: string, mediaId: string, tag: string) {
@@ -34,7 +34,7 @@ export function format(albumId: string, props: SelectProps): MediaVariant {
         mediaId: props.mediaId,
         tag: props.tag,
         order: props.order,
-        fileUrl: `${serverConfig.env.S3_URL}/${bucket}/${filePath(albumId, props.mediaId, props.tag)}`,
+        fileUrl: getS3FileUrl("cdn1", bucket, filePath(albumId, props.mediaId, props.tag)),
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -81,7 +81,7 @@ async function exists(albumId: string, mediaId: string, tag: string): Promise<bo
             Bucket: bucket,
             Key: filePath(albumId, mediaId, tag),
         });
-        await s3.send(command);
+        await s3Cdn1.send(command);
 
         return true;
     } catch (error) { }
@@ -99,7 +99,7 @@ async function upload(albumId: string, mediaId: string, tag: string, blob: Blob)
             Body: buffer,
             ContentType: blob.type,
         });
-        await s3.send(command);
+        await s3Cdn1.send(command);
 
         return true;
     } catch (error) { }
@@ -131,7 +131,7 @@ export async function remove(albumId: string, mediaId: string, tag: string): Pro
             Bucket: bucket,
             Key: filePath(albumId, mediaId, tag),
         });
-        await s3.send(command);
+        await s3Cdn1.send(command);
     } catch (error) { }
 
     const result = await db.delete(mediaVariantsTable)
@@ -152,7 +152,7 @@ export async function removeList(albumId: string, mediaId: string, tags?: string
                     Bucket: bucket,
                     Key: filePath(albumId, mediaId, tag),
                 });
-                return s3.send(command);
+                return s3Cdn1.send(command);
             }));
         } catch (error) { }
 
@@ -174,7 +174,7 @@ export async function removeList(albumId: string, mediaId: string, tags?: string
                 Bucket: bucket,
                 Key: filePath(albumId, value.mediaId, value.tag),
             });
-            return s3.send(command);
+            return s3Cdn1.send(command);
         }));
     } catch (error) { }
 
