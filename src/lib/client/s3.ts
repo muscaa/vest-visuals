@@ -3,7 +3,7 @@ import {
     MultipartUploadPart,
 } from "@type/s3";
 
-const CHUNK_SIZE = 10 * 1024 * 1024;
+const CHUNK_SIZE = 20 * 1024 * 1024;
 const CONCURRENCY_LIMIT = 4;
 
 interface DirectMultipartUploadProps {

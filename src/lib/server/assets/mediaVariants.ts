@@ -6,10 +6,10 @@ import {
     asc,
 } from "drizzle-orm";
 import {
-    s3,
-    buckets,
+    s3Cdn0,
+    s3Cdn0Buckets,
+    getS3FileUrl,
 } from "@server/s3";
-import { serverConfig } from "@server/config";
 import {
     HeadObjectCommand,
     PutObjectCommand,
@@ -22,7 +22,7 @@ import * as types from "@type/assets/mediaVariants";
 export type SelectProps = typeof ASSETS_MEDIA_VARIANTS.$inferSelect;
 export type MediaVariant = types.AssetsMediaVariant;
 
-const bucket = buckets.assets;
+const bucket = s3Cdn0Buckets.assets;
 const mediaVariantsTable = ASSETS_MEDIA_VARIANTS;
 
 function filePath(mediaId: string, tag: string) {
@@ -34,7 +34,7 @@ export function format(props: SelectProps): MediaVariant {
         mediaId: props.mediaId,
         tag: props.tag,
         order: props.order,
-        fileUrl: `${serverConfig.env.S3_URL}/${bucket}/${filePath(props.mediaId, props.tag)}`,
+        fileUrl: getS3FileUrl("cdn0", bucket, filePath(props.mediaId, props.tag)),
         type: props.type,
         info: props.info ?? undefined,
         createdAt: props.createdAt,
@@ -81,7 +81,7 @@ async function exists(mediaId: string, tag: string): Promise<boolean> {
             Bucket: bucket,
             Key: filePath(mediaId, tag),
         });
-        await s3.send(command);
+        await s3Cdn0.send(command);
 
         return true;
     } catch (error) { }
@@ -99,7 +99,7 @@ async function upload(mediaId: string, tag: string, blob: Blob): Promise<boolean
             Body: buffer,
             ContentType: blob.type,
         });
-        await s3.send(command);
+        await s3Cdn0.send(command);
 
         return true;
     } catch (error) { }
@@ -131,7 +131,7 @@ export async function remove(mediaId: string, tag: string): Promise<number> {
             Bucket: bucket,
             Key: filePath(mediaId, tag),
         });
-        await s3.send(command);
+        await s3Cdn0.send(command);
     } catch (error) { }
 
     const result = await db.delete(mediaVariantsTable)
@@ -152,7 +152,7 @@ export async function removeList(mediaId: string, tags?: string[]): Promise<numb
                     Bucket: bucket,
                     Key: filePath(mediaId, tag),
                 });
-                return s3.send(command);
+                return s3Cdn0.send(command);
             }));
         } catch (error) { }
 
@@ -174,7 +174,7 @@ export async function removeList(mediaId: string, tags?: string[]): Promise<numb
                 Bucket: bucket,
                 Key: filePath(value.mediaId, value.tag),
             });
-            return s3.send(command);
+            return s3Cdn0.send(command);
         }));
     } catch (error) { }
 

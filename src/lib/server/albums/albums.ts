@@ -4,15 +4,15 @@ import { eq } from "drizzle-orm";
 import * as contents from "./contents";
 import * as types from "@type/albums/albums";
 import {
-    s3,
-    buckets,
+    s3Cdn1,
+    s3Cdn1Buckets,
+    getS3FileUrl,
 } from "@server/s3";
 import {
     CompleteMultipartUploadCommand,
     CreateMultipartUploadCommand,
+    DeleteObjectCommand,
     GetObjectCommand,
-    HeadObjectCommand,
-    PutObjectCommand,
     UploadPartCommand,
 } from "@aws-sdk/client-s3";
 import { serverConfig } from "@server/config";
@@ -37,7 +37,7 @@ type AutoAlbum<T extends SelectProps> =
 
 const albumsTable = ALBUMS;
 const albumsQuery = db.query.ALBUMS;
-const bucket = buckets.albums;
+const bucket = s3Cdn1Buckets.albums;
 const contentsPath = (id: string) => `${id}/contents.zip`;
 
 export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
@@ -46,10 +46,10 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
         title: props.title,
         description: props.description,
         cover: props.cover,
-        coverUrl: `${serverConfig.env.S3_URL}/${bucket}/${props.id}/${props.cover}/large`,
+        coverUrl: getS3FileUrl("cdn1", bucket, `${props.id}/${props.cover}/large`),
         email: props.email,
         phoneNumber: props.phoneNumber,
-        downloadUrl: `${serverConfig.env.S3_URL}/${bucket}/${contentsPath(props.id)}`,
+        downloadUrl: getS3FileUrl("cdn1", bucket, contentsPath(props.id)),
         shareUrl: `${serverConfig.env.URL}/albums/${props.id}`,
         lockAt: props.lockAt,
         deleteAt: props.deleteAt,
@@ -114,54 +114,23 @@ export async function get(id: string): Promise<Album | undefined> {
     return result ? format(result) : undefined;
 }
 
-async function exists(id: string): Promise<boolean> {
-    try {
-        const command = new HeadObjectCommand({
-            Bucket: bucket,
-            Key: contentsPath(id),
-        });
-        await s3.send(command);
-
-        return true;
-    } catch (error) { }
-    return false;
-}
-
-async function upload(id: string, blob: Blob): Promise<boolean> {
-    try {
-        const arrayBuffer = await blob.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-
-        const command = new PutObjectCommand({
-            Bucket: bucket,
-            Key: contentsPath(id),
-            Body: buffer,
-            ContentType: blob.type,
-        });
-        await s3.send(command);
-
-        return true;
-    } catch (error) { }
-    return false;
-}
-
 export async function getDownloadUrl(id: string, fileName: string, mediaId?: string, mediaTag?: string): Promise<string | undefined> {
     try {
         const command = new GetObjectCommand({
             Bucket: bucket,
             Key: mediaId ? `${id}/${mediaId}/${mediaTag}` : contentsPath(id),
             ResponseContentDisposition: `attachment; filename="${fileName}"`,
-            ResponseContentType: 'application/octet-stream',
+            ResponseContentType: "application/octet-stream",
         });
 
-        return await getSignedUrl(s3, command, { expiresIn: 3600 });
+        return await getSignedUrl(s3Cdn1, command, { expiresIn: 3600 });
     } catch (error) { }
     return undefined;
 }
 
 export async function startUpload(id: string, partCount: number): Promise<MultipartUpload | undefined> {
     try {
-        const result = await s3.send(new CreateMultipartUploadCommand({
+        const result = await s3Cdn1.send(new CreateMultipartUploadCommand({
             Bucket: bucket,
             Key: contentsPath(id),
             ContentType: "application/zip",
@@ -172,7 +141,7 @@ export async function startUpload(id: string, partCount: number): Promise<Multip
 
         const presignedUrls: string[] = [];
         for (let i = 1; i <= partCount; i++) {
-            const url = await getSignedUrl(s3, new UploadPartCommand({
+            const url = await getSignedUrl(s3Cdn1, new UploadPartCommand({
                 Bucket: bucket,
                 Key: contentsPath(id),
                 UploadId: uploadId,
@@ -192,7 +161,7 @@ export async function startUpload(id: string, partCount: number): Promise<Multip
 
 export async function finishUpload(id: string, uploadId: string, parts: MultipartUploadPart[]): Promise<boolean> {
     try {
-        await s3.send(new CompleteMultipartUploadCommand({
+        await s3Cdn1.send(new CompleteMultipartUploadCommand({
             Bucket: bucket,
             Key: contentsPath(id),
             UploadId: uploadId,
@@ -242,6 +211,14 @@ export async function remove(id: string): Promise<number> {
     if (!query) return 0;
 
     await contents.removeByAlbumId(id);
+
+    try {
+        const command = new DeleteObjectCommand({
+            Bucket: bucket,
+            Key: contentsPath(id),
+        });
+        await s3Cdn1.send(command);
+    } catch (error) { }
 
     const result = await db.delete(albumsTable)
         .where(eq(albumsTable.id, id));

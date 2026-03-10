@@ -10,8 +10,9 @@ import { Separator } from "@/components/ui/separator";
 import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
-import { PartialAlbumsContent } from "@type/albums/contents";
+import { AlbumsContent } from "@type/albums/contents";
 import {
+    File,
     Folder,
     GripVertical,
 } from "lucide-react";
@@ -33,28 +34,31 @@ import { TextLink } from "@/components/ui/text-link";
 import { useAlbumsDirectories } from "@/hooks/albums/useAlbumsDirectories";
 
 interface ListEntryProps {
-    value: PartialAlbumsContent;
+    value: AlbumsContent;
     sortable: DndSortable;
     disabled?: boolean;
 }
 
 function MediaListEntry(props: ListEntryProps) {
-    const { useAlbumsMedia: useMedia } = useAlbumsMedia();
-    const { data } = useMedia(props.value.albumId, props.value.id);
-    const image = useMemo(() => data && data.albumsMediaVariants.length > 0 ? data.albumsMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
+    // const { useAlbumsMedia: useMedia } = useAlbumsMedia();
+    // const { data } = useMedia(props.value.albumId, props.value.id);
+    // const image = useMemo(() => data && data.albumsMediaVariants.length > 0 ? data.albumsMediaVariants[0].fileUrl : PLACEHOLDER, [data]);
 
-    if (!data) {
-        return (
-            <span>Invalid media</span>
-        );
-    }
+    // if (!data) {
+    //     return (
+    //         <span>Invalid media</span>
+    //     );
+    // }
 
     return (
         <div className="flex flex-wrap gap-4 size-full whitespace-normal">
-            <Img
+            {/* <Img
                 src={image}
                 alt="Preview"
                 className="size-32 object-contain"
+            /> */}
+            <File
+                className="size-16 text-muted-foreground"
             />
             <div className="flex flex-col gap-1 grow text-foreground">
                 <h4>{props.value.path}</h4>
@@ -63,7 +67,7 @@ function MediaListEntry(props: ListEntryProps) {
                     <div className="flex flex-col gap-2 grow">
                         <div className="flex gap-2 items-center">
                             {
-                                data.albumsMediaVariants.map((variant, index) => (
+                                props.value.type === "media" && props.value.albumsMedia.albumsMediaVariants?.map((variant, index) => (
                                     <TextLink
                                         key={index}
                                         href={variant.fileUrl}
@@ -81,7 +85,7 @@ function MediaListEntry(props: ListEntryProps) {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p>{data.albumsMediaVariants?.length || "no"}</p>
+                        <p>{props.value.type === "media" && props.value.albumsMedia.albumsMediaVariants?.length || "no"}</p>
                         <h5>items</h5>
                     </div>
                 </div>
@@ -116,19 +120,9 @@ function DirectoryListEntry(props: ListEntryProps) {
 
     return (
         <div className="flex flex-wrap items-center gap-4 size-full whitespace-normal">
-            {
-                props.value.type === "media" && (
-                    <Img
-                        // src={image}
-                        alt="Preview"
-                        className="size-32 object-contain"
-                    />
-                ) || props.value.type === "directory" && (
-                    <Folder
-                        className="size-16 text-muted-foreground"
-                    />
-                )
-            }
+            <Folder
+                className="size-16 text-muted-foreground"
+            />
             <div className="flex flex-col gap-1 grow text-foreground">
                 <h4>{props.value.path}</h4>
                 <Separator />
@@ -164,7 +158,7 @@ function DirectoryListEntry(props: ListEntryProps) {
 }
 
 interface ListProps {
-    data: PartialAlbumsContent[];
+    data: AlbumsContent[];
     onUpdate?: () => void;
     albumId: string;
     path?: string[];
@@ -173,13 +167,13 @@ interface ListProps {
 export function AlbumsContentsList(props: ListProps) {
     const router = useRouter();
 
-    const [data, setData] = useState<PartialAlbumsContent[]>(props.data);
+    const [data, setData] = useState<AlbumsContent[]>(props.data);
     useEffect(() => setData(props.data), [props.data]);
 
-    const [selected, setSelected] = useState<PartialAlbumsContent>();
+    const [selected, setSelected] = useState<AlbumsContent>();
     const { updateAlbumsContent } = useAlbumsContents();
 
-    const handleSelect = (value: PartialAlbumsContent) => {
+    const handleSelect = (value: AlbumsContent) => {
         setSelected(selected?.id == value.id ? undefined : value);
     };
 
