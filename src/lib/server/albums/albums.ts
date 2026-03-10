@@ -11,6 +11,7 @@ import {
 import {
     CompleteMultipartUploadCommand,
     CreateMultipartUploadCommand,
+    DeleteObjectCommand,
     GetObjectCommand,
     UploadPartCommand,
 } from "@aws-sdk/client-s3";
@@ -210,6 +211,14 @@ export async function remove(id: string): Promise<number> {
     if (!query) return 0;
 
     await contents.removeByAlbumId(id);
+
+    try {
+        const command = new DeleteObjectCommand({
+            Bucket: bucket,
+            Key: contentsPath(id),
+        });
+        await s3Cdn1.send(command);
+    } catch (error) { }
 
     const result = await db.delete(albumsTable)
         .where(eq(albumsTable.id, id));
