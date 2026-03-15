@@ -89,9 +89,9 @@ export function SectionPreview(props: SectionPreviewProps) {
                 </CarouselContent>
                 <CarouselControls />
             </Carousel>
-            <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-8 text-center text-shadow-lg pointer-events-none theme-dark">
-                <h1 className="font-mono">{props.title}</h1>
-                <p>{props.description}</p>
+            <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-8 text-center text-shadow-lg text-shadow-black/30 pointer-events-none theme-dark">
+                <h1 className="font-mono h0">{props.title}</h1>
+                <p className="p4">{props.description}</p>
             </div>
         </section>
     );
