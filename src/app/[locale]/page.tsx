@@ -12,11 +12,14 @@ export default function Page() {
                     title: "Fotograf de Evenimente și Povești Autentice",
                     description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
                     images: [
-                        "https://s3.vestvisuals.ro/portfolio/enr3qepjk5vqijs1zhc1ya0c/large", // majorate
-                        "https://s3.vestvisuals.ro/portfolio/a8rm9fhczl4px321ladxwrft/large", // outdoor
-                        "https://s3.vestvisuals.ro/portfolio/zz9zwk8shj6zvb0esbwq3z0q/large", // automotive
-                        "https://s3.vestvisuals.ro/portfolio/y4g068yl6ce1o3bspivi5r5p/large", // real estate
-                        "https://s3.vestvisuals.ro/portfolio/z42sd0lf54pzm9abaomt9ybb/large", // marketing
+                        "https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/large", // majorate
+                        "https://cdn0.vestvisuals.ro/portfolio/yio20oo5vxfs18cxm925k3fy/large", // majorate
+                        "https://cdn0.vestvisuals.ro/portfolio/x7nxyoz3hwdezu4tr33kb4gw/large", // majorate
+                        "https://cdn0.vestvisuals.ro/portfolio/dozugwupvkafsmnpxtsc55f7/large", // majorate
+                        "https://cdn0.vestvisuals.ro/portfolio/a8rm9fhczl4px321ladxwrft/large", // outdoor
+                        // "https://s3.vestvisuals.ro/portfolio/zz9zwk8shj6zvb0esbwq3z0q/large", // automotive
+                        // "https://s3.vestvisuals.ro/portfolio/y4g068yl6ce1o3bspivi5r5p/large", // real estate
+                        // "https://s3.vestvisuals.ro/portfolio/z42sd0lf54pzm9abaomt9ybb/large", // marketing
                     ],
                 }}
                 about={{

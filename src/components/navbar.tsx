@@ -73,6 +73,12 @@ const navLinks: NavLink[] = [
         title: "EVENIMENTE",
         endpoints: [
             {
+                title: "MAJORAT",
+                link: {
+                    href: SERVICES_18TH_BIRTHDAY(),
+                },
+            },
+            {
                 title: "NUNTA",
                 link: {
                     href: SERVICES_WEDDING(),
@@ -88,12 +94,6 @@ const navLinks: NavLink[] = [
             //     title: "ANIVERSARE",
             //     href: CONTACT(),
             // },
-            {
-                title: "MAJORAT",
-                link: {
-                    href: SERVICES_18TH_BIRTHDAY(),
-                },
-            },
             // {
             //     title: "BUSINESS / CORPORATE",
             //     href: CONTACT(),

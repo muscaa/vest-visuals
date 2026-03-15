@@ -10,12 +10,22 @@ export default function Page() {
                 title: "Fotograf de Evenimente și Povești Autentice",
                 description: "Surprindem emoții, nu doar imagini. Servicii foto-video pentru nunți, portrete și business în Timișoara și în țară.",
                 images: [
-                    "https://s3.vestvisuals.ro/portfolio/x7nxyoz3hwdezu4tr33kb4gw/large",
-                    "https://s3.vestvisuals.ro/portfolio/jsiq1gpcwa49ypt1g89xqigr/large",
-                    "https://s3.vestvisuals.ro/portfolio/mztov3s0lsirgx4d7mi8xrmd/large",
-                    "https://s3.vestvisuals.ro/portfolio/a3zmgxetb5n6r8sl5jnc87hz/large",
-                    "https://s3.vestvisuals.ro/portfolio/l80gztc0uljicevwrh615f6u/large",
-                    "https://s3.vestvisuals.ro/portfolio/da1fvnn2sg9ahfruccmbw880/large",
+                    "https://cdn0.vestvisuals.ro/portfolio/qyko3rjjfg14yjhvs2l45wck/large",
+                    "https://cdn0.vestvisuals.ro/portfolio/edxehljl77ssdkxq9nw9gqx5/large",
+                    "https://cdn0.vestvisuals.ro/portfolio/bufx0duqpa13cgbsowldzuqh/large",
+                    
+                    "https://cdn0.vestvisuals.ro/portfolio/l80gztc0uljicevwrh615f6u/large",
+                    "https://cdn0.vestvisuals.ro/portfolio/a3zmgxetb5n6r8sl5jnc87hz/large",
+                    
+                    "https://cdn0.vestvisuals.ro/portfolio/x7nxyoz3hwdezu4tr33kb4gw/large",
+                    "https://cdn0.vestvisuals.ro/portfolio/s9izbjl5t4rvdjanoonj8jyp/large",
+
+                    // "https://s3.vestvisuals.ro/portfolio/x7nxyoz3hwdezu4tr33kb4gw/large",
+                    // "https://s3.vestvisuals.ro/portfolio/jsiq1gpcwa49ypt1g89xqigr/large",
+                    // "https://s3.vestvisuals.ro/portfolio/mztov3s0lsirgx4d7mi8xrmd/large",
+                    // "https://s3.vestvisuals.ro/portfolio/a3zmgxetb5n6r8sl5jnc87hz/large",
+                    // "https://s3.vestvisuals.ro/portfolio/l80gztc0uljicevwrh615f6u/large",
+                    // "https://s3.vestvisuals.ro/portfolio/da1fvnn2sg9ahfruccmbw880/large",
                 ],
             }}
             price={{
