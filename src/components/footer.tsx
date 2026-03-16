@@ -30,6 +30,7 @@ import {
 } from "@shared/i18n";
 import { Button } from "./ui/button";
 import { useMain } from "@/hooks/useMain";
+import { LogoLargeLink } from "./logo";
 
 export function FooterBase() {
     return (
@@ -42,7 +43,7 @@ export function FooterBase() {
                 <IconLink href="https://x.com/VestVisual" icon={SiX} />
             </div>
             <div className="flex flex-col items-center sm:items-end text-center">
-                <p>© {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
+                <p>Copyright © {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
                 <p>
                     Made by <TextLink href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
                         <SiGithub size={16} className="size-4 translate-y-1" />
@@ -74,6 +75,13 @@ export function FooterSmall() {
 export function FooterLarge() {
     const { ref } = useMain();
 
+    const pj = [
+        "VEST VISUALS S.R.L.",
+        "CUI 54191210",
+        "TIMIS, TIMISOARA",
+        "Str. Matei Millo 44",
+    ];
+
     const locations = [
         { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
         { name: "Arad", href: LOCATIONS_ARAD() },
@@ -92,10 +100,24 @@ export function FooterLarge() {
     return (
         <footer className="relative flex flex-col mt-4.5">
             <div className="flex justify-center items-center bg-background2">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center max-w-6xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
-                        <h4 className="font-medium">PAGINI UTILE</h4>
+                        <LogoLargeLink
+                            // className="w-full h-12 shrink-0 grow-0"
+                            extraClassName="flex w-full h-12"
+                            className="h-full w-auto"
+                        />
                         <div className="flex flex-col items-center lg:items-start gap-1">
+                            {
+                                pj.map((info, index) => (
+                                    <p key={index}>{info}</p>
+                                ))
+                            }
+                        </div>
+                    </div>
+                    <div className="flex flex-col text-center gap-6">
+                        <h4 className="font-medium font-mono">PAGINI UTILE</h4>
+                        <div className="flex flex-col items-center gap-1">
                             {
                                 pages.map((page, index) => (
                                     <TextLink key={index} href={page.href} variant="ghost">
@@ -106,7 +128,7 @@ export function FooterLarge() {
                         </div>
                     </div>
                     <div className="flex flex-col text-center gap-6">
-                        <h4 className="font-medium">LOCATII</h4>
+                        <h4 className="font-medium font-mono">LOCATII</h4>
                         <div className="flex flex-col items-center gap-1">
                             {
                                 locations.map((location, index) => (
@@ -118,7 +140,7 @@ export function FooterLarge() {
                         </div>
                     </div>
                     <div className="flex flex-col text-center lg:text-end gap-6 sm:col-span-2 sm:justify-self-center lg:col-span-1 lg:justify-self-auto">
-                        <h4 className="font-medium">CONTACTEAZA-NE</h4>
+                        <h4 className="font-medium font-mono">CONTACTEAZA-NE</h4>
                         <div className="flex flex-col items-center lg:items-end gap-4">
                             <p className="text-muted-foreground flex-wrap max-w-80">
                                 Iti raspundem intrebarilor legate de serviciile oferite de noi.
