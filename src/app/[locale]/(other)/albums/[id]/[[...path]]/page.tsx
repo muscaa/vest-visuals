@@ -25,7 +25,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { BeautifulQRCode } from "@beautiful-qr-code/react";
 import { useMain } from "@/hooks/useMain";
-import { FooterLarge } from "@/components/footer";
+import { FooterSmall } from "@/components/footer";
 import { Img } from "@/components/snippets";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { PartialAlbum } from "@type/albums/albums";
@@ -167,7 +167,7 @@ export default function Page() {
                     getDownloadUrl={handleGetDownloadUrl}
                 />
             </main>
-            <FooterLarge />
+            <FooterSmall />
         </div>
     );
 }

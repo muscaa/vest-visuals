@@ -31,7 +31,7 @@ import {
 import { Button } from "./ui/button";
 import { useMain } from "@/hooks/useMain";
 
-function FooterBase() {
+export function FooterBase() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
             <div className="flex items-center justify-center sm:justify-start gap-4">
@@ -54,10 +54,19 @@ function FooterBase() {
     );
 }
 
-export function Footer() {
+export function FooterSmall() {
+    const { ref } = useMain();
+
     return (
-        <footer className="flex justify-center items-center bg-background2">
-            <FooterBase />
+        <footer className="relative flex flex-col mt-4.5">
+            <div className="flex justify-center items-center bg-background2">
+                <FooterBase />
+            </div>
+            <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
+                <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
+                    <ChevronsUp className="size-8" />
+                </Button>
+            </div>
         </footer>
     );
 }
@@ -81,7 +90,7 @@ export function FooterLarge() {
     ];
 
     return (
-        <footer className="flex flex-col relative mt-4.5">
+        <footer className="relative flex flex-col mt-4.5">
             <div className="flex justify-center items-center bg-background2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
                     <div className="flex flex-col text-center lg:text-start gap-6">
