@@ -30,8 +30,11 @@ import {
 } from "@shared/i18n";
 import { Button } from "./ui/button";
 import { useMain } from "@/hooks/useMain";
+import { LogoLargeLink } from "./logo";
+import { cn } from "@shared/shadcn/lib/utils";
+import { SALLink, SOLLink } from "./anpc";
 
-function FooterBase() {
+export function FooterBase() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
             <div className="flex items-center justify-center sm:justify-start gap-4">
@@ -41,8 +44,8 @@ function FooterBase() {
                 <IconLink href="https://tiktok.com/@vest_visuals" icon={SiTiktok} />
                 <IconLink href="https://x.com/VestVisual" icon={SiX} />
             </div>
-            <div className="flex flex-col items-center sm:items-end text-center">
-                <p>© {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
+            <div className="flex flex-col items-center sm:items-end text-center sm:text-end">
+                <p>Copyright © {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
                 <p>
                     Made by <TextLink href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
                         <SiGithub size={16} className="size-4 translate-y-1" />
@@ -54,16 +57,55 @@ function FooterBase() {
     );
 }
 
-export function Footer() {
+export function FooterSmall() {
+    const { ref } = useMain();
+
     return (
-        <footer className="flex justify-center items-center bg-background2">
-            <FooterBase />
+        <footer className="relative flex flex-col mt-4.5">
+            <div className="flex justify-center items-center bg-background2">
+                <FooterBase />
+            </div>
+            <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
+                <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
+                    <ChevronsUp className="size-8" />
+                </Button>
+            </div>
         </footer>
+    );
+}
+
+interface FooterSectionProps {
+    header?: React.ReactNode;
+    title?: string;
+    className?: string;
+    extraClassName?: string;
+    children?: React.ReactNode;
+}
+
+function FooterSection(props: FooterSectionProps) {
+    return (
+        <div className={cn("flex flex-col gap-6 max-w-48 w-full", props.className)}>
+            {
+                props.header ?? (
+                    <h4 className="font-mono">{props.title}</h4>
+                )
+            }
+            <div className={cn("flex flex-col items-start gap-1", props.extraClassName)}>
+                {props.children}
+            </div>
+        </div>
     );
 }
 
 export function FooterLarge() {
     const { ref } = useMain();
+
+    const pj = [
+        "VEST VISUALS S.R.L.",
+        "CUI 54191210",
+        "TIMIS, TIMISOARA",
+        "Str. Matei Millo 44",
+    ];
 
     const locations = [
         { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
@@ -81,44 +123,60 @@ export function FooterLarge() {
     ];
 
     return (
-        <footer className="flex flex-col relative mt-4.5">
+        <footer className="relative flex flex-col mt-4.5">
             <div className="flex justify-center items-center bg-background2">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center max-w-5xl w-full px-4 py-16 gap-12">
-                    <div className="flex flex-col text-center lg:text-start gap-6">
-                        <h4 className="font-medium">PAGINI UTILE</h4>
-                        <div className="flex flex-col items-center lg:items-start gap-1">
+                <div className="flex flex-wrap-reverse justify-evenly max-w-6xl w-full px-4 py-16 gap-12">
+                    <div
+                        className="
+                            flex flex-wrap gap-6
+                            not-lg:w-full not-lg:justify-center not-lg:items-center
+                            lg:flex-col lg:mr-auto
+                        "
+                    >
+                        <LogoLargeLink />
+                        <div className="flex flex-col">
                             {
-                                pages.map((page, index) => (
-                                    <TextLink key={index} href={page.href} variant="ghost">
-                                        {page.name}
-                                    </TextLink>
+                                pj.map((info, index) => (
+                                    <p key={index}>{info}</p>
                                 ))
                             }
                         </div>
-                    </div>
-                    <div className="flex flex-col text-center gap-6">
-                        <h4 className="font-medium">LOCATII</h4>
-                        <div className="flex flex-col items-center gap-1">
-                            {
-                                locations.map((location, index) => (
-                                    <TextLink key={index} href={location.href} variant="ghost">
-                                        {location.name}
-                                    </TextLink>
-                                ))
-                            }
+                        <div className="flex flex-col gap-1">
+                            <SALLink />
+                            <SOLLink />
                         </div>
                     </div>
-                    <div className="flex flex-col text-center lg:text-end gap-6 sm:col-span-2 sm:justify-self-center lg:col-span-1 lg:justify-self-auto">
-                        <h4 className="font-medium">CONTACTEAZA-NE</h4>
-                        <div className="flex flex-col items-center lg:items-end gap-4">
-                            <p className="text-muted-foreground flex-wrap max-w-80">
-                                Iti raspundem intrebarilor legate de serviciile oferite de noi.
-                            </p>
-                            <div className="flex gap-4">
-                                <ButtonLink href={CONTACT()}>CONTACT</ButtonLink>
-                            </div>
-                        </div>
-                    </div>
+                    <FooterSection
+                        title="PAGINI UTILE"
+                    >
+                        {
+                            pages.map((page, index) => (
+                                <TextLink key={index} href={page.href} variant="ghost">
+                                    {page.name}
+                                </TextLink>
+                            ))
+                        }
+                    </FooterSection>
+                    <FooterSection
+                        title="LOCATII"
+                    >
+                        {
+                            locations.map((location, index) => (
+                                <TextLink key={index} href={location.href} variant="ghost">
+                                    {location.name}
+                                </TextLink>
+                            ))
+                        }
+                    </FooterSection>
+                    <FooterSection
+                        title="CONTACTEAZA-NE"
+                        className="xs:max-md:max-w-full xs:max-md:w-auto"
+                    >
+                        <p>
+                            Iti raspundem intrebarilor legate de serviciile oferite de noi.
+                        </p>
+                        <ButtonLink href={CONTACT()} className="mt-4">CONTACT</ButtonLink>
+                    </FooterSection>
                 </div>
             </div>
             <div className="flex justify-center items-center bg-background3">

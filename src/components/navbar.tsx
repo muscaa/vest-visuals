@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import logo from ":/logos/vest-visuals-slim.svg";
 import {
     Button,
     buttonVariants,
@@ -42,6 +40,7 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@shared/shadcn/lib/utils";
 import { Single } from "@type/utils";
+import { LogoSmallLink } from "./logo";
 
 type NavEndpoint = {
     title: string;
@@ -381,13 +380,7 @@ export function Navbar(props: NavbarProps) {
             <div className={cn("flex size-full max-w-6xl justify-between items-center p-2", props.className)}>
                 {
                     props.logo ?? (
-                        <Link href={HOME()}>
-                            <Image
-                                src={logo}
-                                alt="Logo"
-                                className="size-16"
-                            />
-                        </Link>
+                        <LogoSmallLink />
                     )
                 }
                 <div className="flex items-center gap-2">

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronRight } from "lucide-react";
 import { Icon } from "../snippets";
-import { LogoLink } from "../logo";
+import { LogoLargeLink } from "../logo";
 import { splitRender } from "@client/snippets";
 import { Link } from "@shared/i18n";
 
@@ -150,7 +150,7 @@ export function SimpleSidebar(props: SimpleSidebarProps) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                            render={<LogoLink />}
+                            render={<LogoLargeLink />}
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
                         />
                     </SidebarMenuItem>
