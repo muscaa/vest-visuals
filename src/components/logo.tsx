@@ -50,7 +50,7 @@ export function LogoLarge(props: LogoProps) {
         <Image
             src={logo_large}
             alt="Vest Visuals Logo Large"
-            className={cn("size-16", props.className)}
+            className={cn("w-61.5 h-16", props.className)}
         />
     );
 }
@@ -60,7 +60,7 @@ export function LogoLargeWhite(props: LogoProps) {
         <Image
             src={logo_large_white}
             alt="Vest Visuals Logo Large White"
-            className={cn("size-16", props.className)}
+            className={cn("w-61.5 h-16", props.className)}
         />
     );
 }
@@ -70,7 +70,7 @@ export function LogoLargeBlack(props: LogoProps) {
         <Image
             src={logo_large_black}
             alt="Vest Visuals Logo Large Black"
-            className={cn("size-16", props.className)}
+            className={cn("w-61.5 h-16", props.className)}
         />
     );
 }
