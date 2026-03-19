@@ -19,6 +19,13 @@ import {
     SectionTeamProps,
 } from "@/components/sections/team";
 import { Separator } from "../ui/separator";
+import { Link } from "@shared/i18n";
+import {
+    SiWhatsapp,
+    SiWhatsappHex,
+} from "@icons-pack/react-simple-icons";
+import { Reveal2 } from "../animations/reveal2";
+import { cn } from "@shared/shadcn/lib/utils";
 
 interface Props {
     preview: SectionPreviewProps;
@@ -37,6 +44,22 @@ export function HomePage(props: Props) {
             <SectionPortfolio {...props.portfolio} />
             <SectionBenefits {...props.benefits} className="bg-background2" />
             <SectionTeam {...props.team} />
+            <Reveal2
+                direction="left"
+                render={(props) => (
+                    <Link
+                        ref={props.ref}
+                        href="https://wa.me/40723971618"
+                        target="_blank"
+                        className={cn(props.className, "fixed right-4 md:right-8 bottom-8 z-50 size-14 rounded-full flex justify-center items-center theme-dark shadow-sm")}
+                        style={{
+                            backgroundColor: SiWhatsappHex,
+                        }}
+                    >
+                        <SiWhatsapp className="size-8" />
+                    </Link>
+                )}
+            />
         </div>
     );
 }

@@ -47,7 +47,7 @@ function Other() {
             </Reveal>
             <Reveal delay={200}>
                 <OtherLink
-                    href="https://api.whatsapp.com/send?phone=40723971618&text"
+                    href="https://wa.me/40723971618"
                     icon={SiWhatsapp}
                     title="WhatsApp"
                     text="+40 723 971 618"
