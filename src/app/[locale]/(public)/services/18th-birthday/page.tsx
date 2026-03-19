@@ -27,6 +27,7 @@ export default function Page() {
                     // "https://s3.vestvisuals.ro/portfolio/l80gztc0uljicevwrh615f6u/large",
                     // "https://s3.vestvisuals.ro/portfolio/da1fvnn2sg9ahfruccmbw880/large",
                 ],
+                portfolioHref: "/portfolio/18th-birthday",
             }}
             price={{
                 title: "Preturi si Oferte 2026",

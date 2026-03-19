@@ -16,7 +16,7 @@ interface PerkCardProps {
 
 function PerkCard(props: PerkCardProps) {
     return (
-        <InfoCard className="w-xs sm:w-sm">
+        <InfoCard className="w-xs sm:w-sm not-dark:ring-0">
             <CardHeader className="place-items-center my-4">
                 <props.icon className="size-16" />
                 <h3 className="font-bold font-mono text-center">{props.title}</h3>

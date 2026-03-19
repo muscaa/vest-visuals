@@ -12,6 +12,7 @@ export default function Page() {
                 images: [
                     // "http://192.168.0.155:9000/assets/p6axvqo8qotsols2e0s1f4zh/large",
                 ],
+                portfolioHref: "/portfolio/christening",
             }}
             price={{
                 title: "Preturi si Oferte 2026",
