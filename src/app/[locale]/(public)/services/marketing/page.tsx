@@ -16,6 +16,7 @@ export default function Page() {
                     "https://s3.vestvisuals.ro/portfolio/kci4tsjlnm3l5kywact8srbd/large",
                     "https://s3.vestvisuals.ro/portfolio/lccacqbntvcqc1laix9cpa8g/large",
                 ],
+                portfolioHref: "/portfolio/marketing",
             }}
             price={{
                 title: "Preturi si Oferte 2026",

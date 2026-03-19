@@ -18,6 +18,7 @@ export default function Page() {
                     "https://s3.vestvisuals.ro/portfolio/scxshfgur7e7j4ndoxbprb7x/large",
                     "https://s3.vestvisuals.ro/portfolio/bwkb2xnt4aiduxqkahyw72om/large",
                 ],
+                portfolioHref: "/portfolio/outdoor",
             }}
             price={{
                 title: "Preturi si Oferte 2026",

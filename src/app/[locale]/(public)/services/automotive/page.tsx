@@ -17,6 +17,7 @@ export default function Page() {
                     "https://s3.vestvisuals.ro/portfolio/tuezrjoujv0hqvpbhydwt9k4/large",
                     "https://s3.vestvisuals.ro/portfolio/xku47dpl4g4vorazvjfhdjjc/large",
                 ],
+                portfolioHref: "/portfolio/automotive",
             }}
             price={{
                 title: "Preturi si Oferte 2026",

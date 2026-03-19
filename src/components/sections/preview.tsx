@@ -1,5 +1,5 @@
 import { cn } from "@shared/shadcn/lib/utils";
-import { Img } from "../snippets";
+import { ButtonLink, Img } from "../snippets";
 import {
     Carousel,
     CarouselContent,
@@ -60,6 +60,7 @@ export interface SectionPreviewProps {
     title: string;
     description: string;
     images: string[];
+    portfolioHref?: string;
     className?: string;
 }
 
@@ -89,9 +90,25 @@ export function SectionPreview(props: SectionPreviewProps) {
                 </CarouselContent>
                 <CarouselControls />
             </Carousel>
-            <div className="absolute size-full flex flex-col justify-center items-center gap-8 p-8 text-center text-shadow-lg text-shadow-black/30 pointer-events-none theme-dark">
-                <h1 className="font-mono h0">{props.title}</h1>
-                <p className="p4">{props.description}</p>
+            <div className="absolute size-full flex flex-col justify-evenly items-center p-8 pointer-events-none theme-dark">
+                <div></div>
+                <div className="flex flex-col justify-center items-center gap-8 text-center text-shadow-lg text-shadow-black/30">
+                    <h1 className="font-mono h0">{props.title}</h1>
+                    <p className="p4">{props.description}</p>
+                </div>
+                <div></div>
+                {
+                    props.portfolioHref && (
+                        <ButtonLink
+                            href={props.portfolioHref}
+                            variant="secondary"
+                            size="lg"
+                            className="pointer-events-auto theme-light"
+                        >
+                            VEZI PORTOFOLIUL COMPLET
+                        </ButtonLink>
+                    )
+                }
             </div>
         </section>
     );
