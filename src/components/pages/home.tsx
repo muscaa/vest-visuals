@@ -42,7 +42,7 @@ export function HomePage(props: Props) {
             <SectionAbout {...props.about} />
             <Separator />
             <SectionPortfolio {...props.portfolio} />
-            <SectionBenefits {...props.benefits} className="bg-background2" />
+            <SectionBenefits {...props.benefits} className="bg-primary/20 dark:bg-primary/10" />
             <SectionTeam {...props.team} />
             <Reveal2
                 direction="left"
