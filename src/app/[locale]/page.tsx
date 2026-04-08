@@ -71,7 +71,7 @@ export default function Page() {
                     members: [
                         {
                             name: "David",
-                            image: "https://s3.vestvisuals.ro/assets/b5aper1c72hhuu0do4wcr1gs/medium",
+                            image: "https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium",
                             roles: [
                                 "videograf",
                                 "fotograf",
@@ -86,7 +86,7 @@ export default function Page() {
                         },
                         {
                             name: "Mihail",
-                            image: "https://s3.vestvisuals.ro/assets/sea7b5p5ozm5iupyd3qc57rm/medium",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
                             roles: [
                                 "fotograf",
                                 "editor foto",
