@@ -14,7 +14,7 @@ export default function Page() {
                     "https://s3.vestvisuals.ro/portfolio/hwktjt5gmgoefmt69q3fckiv/large",
                     "https://s3.vestvisuals.ro/portfolio/dl07n8adsot5whobspse96kv/large",
                 ],
-                portfolioHref: "/portfolio/outdoor",
+                portfolioHref: "/portfolio/real-estate",
             }}
             price={{
                 title: "Preturi si Oferte 2026",
