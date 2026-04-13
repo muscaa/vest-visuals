@@ -101,6 +101,18 @@ export default function Page() {
                         },
                     ],
                 }}
+                testimonials={{
+                    title: "Testimoniale",
+                    reviews: [
+                        {
+                            name: "Mihail",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba."
+                        }
+                    ],
+                }}
             />
         </NavbarLayout>
     );

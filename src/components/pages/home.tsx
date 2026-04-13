@@ -18,6 +18,10 @@ import {
     SectionTeam,
     SectionTeamProps,
 } from "@/components/sections/team";
+import {
+    SectionTestimonials,
+    SectionTestimonialsProps,
+} from "../sections/testimonials";
 import { Separator } from "../ui/separator";
 import { Link } from "@shared/i18n";
 import {
@@ -33,6 +37,7 @@ interface Props {
     portfolio: SectionPortfolioProps;
     benefits: SectionBenefitsProps;
     team: SectionTeamProps;
+    testimonials: SectionTestimonialsProps;
 }
 
 export function HomePage(props: Props) {
@@ -44,6 +49,7 @@ export function HomePage(props: Props) {
             <SectionPortfolio {...props.portfolio} />
             <SectionBenefits {...props.benefits} className="bg-primary/20 dark:bg-primary/10" />
             <SectionTeam {...props.team} />
+            <SectionTestimonials {...props.testimonials} />
             <Reveal2
                 direction="left"
                 render={(props) => (
