@@ -80,8 +80,6 @@ export default function Page() {
                             email: "david@vestvisuals.ro",
                             socials: {
                                 instagram: "https://www.instagram.com/david.bostina/",
-                                facebook: "https://www.facebook.com/david.bostina/",
-                                linkedin: "https://www.linkedin.com/in/david-bostinas-a52989390/",
                             },
                         },
                         {
@@ -95,8 +93,6 @@ export default function Page() {
                             email: "mihail@vestvisuals.ro",
                             socials: {
                                 instagram: "https://www.instagram.com/musca.mihail/",
-                                facebook: "https://www.facebook.com/mihailmusca/",
-                                linkedin: "https://www.linkedin.com/in/muscaa/",
                             },
                         },
                     ],
