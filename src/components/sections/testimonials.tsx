@@ -7,6 +7,7 @@ import {
 } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Star } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
 interface ReviewCardProps {
     name: string;
@@ -61,19 +62,32 @@ export function SectionTestimonials(props: SectionTestimonialsProps) {
     return (
         <section
             id="testimonials"
-            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
+            className={cn("flex flex-col justify-center items-center gap-8 w-full", props.className)}
         >
             <h2 className="font-mono text-center my-8">{props.title}</h2>
-            <div className="flex flex-wrap max-w-6xl w-full justify-center gap-8">
-                {
-                    props.reviews.map((review, index) => (
-                        <ReviewCard
-                            key={index}
-                            {...review}
-                        />
-                    ))
-                }
-            </div>
+            <Carousel
+                opts={{
+                    loop: true,
+                }}
+                className="max-w-6xl w-full bg-red-500"
+            >
+                <CarouselContent className="py-8">
+                    {
+                        props.reviews.map((review, index) => (
+                            <CarouselItem
+                                key={index}
+                                className="basis-auto"
+                            >
+                                <ReviewCard
+                                    {...review}
+                                />
+                            </CarouselItem>
+                        ))
+                    }
+                </CarouselContent>
+                {/* <CarouselPrevious variant="transparent" /> */}
+                {/* <CarouselNext variant="transparent" /> */}
+            </Carousel>
         </section>
     );
 }
