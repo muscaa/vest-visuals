@@ -19,7 +19,7 @@ interface ReviewCardProps {
 
 function ReviewCard(props: ReviewCardProps) {
     return (
-        <InfoCard className="w-xs sm:w-md">
+        <InfoCard className="w-xs sm:w-md max-w-[calc(100vw-4rem)] h-full">
             <CardHeader>
                 <div className="flex items-center gap-4">
                     <Img
@@ -30,9 +30,9 @@ function ReviewCard(props: ReviewCardProps) {
                 </div>
                 <Separator />
             </CardHeader>
-            <CardContent className="flex flex-col gap-8">
-                <p>{props.description}</p>
-                <div className="flex justify-between items-center">
+            <CardContent className="flex flex-col grow gap-8">
+                <p className="grow">{props.description}</p>
+                <div className="flex flex-wrap justify-between items-center">
                     <div className="flex gap-1">
                         {
                             Array.from({ length: props.score }).map((_, index) => (
@@ -45,7 +45,7 @@ function ReviewCard(props: ReviewCardProps) {
                             ))
                         }
                     </div>
-                    <span className="text-muted-foreground h5">{props.date}</span>
+                    <span className="text-muted-foreground h5 text-right">{props.date}</span>
                 </div>
             </CardContent>
         </InfoCard>
@@ -69,7 +69,7 @@ export function SectionTestimonials(props: SectionTestimonialsProps) {
                 opts={{
                     loop: true,
                 }}
-                className="max-w-6xl w-full bg-red-500"
+                className="max-w-full"
             >
                 <CarouselContent className="py-8">
                     {
@@ -85,8 +85,8 @@ export function SectionTestimonials(props: SectionTestimonialsProps) {
                         ))
                     }
                 </CarouselContent>
-                {/* <CarouselPrevious variant="transparent" /> */}
-                {/* <CarouselNext variant="transparent" /> */}
+                <CarouselPrevious variant="transparent" className="left-2" />
+                <CarouselNext variant="transparent" className="right-2" />
             </Carousel>
         </section>
     );

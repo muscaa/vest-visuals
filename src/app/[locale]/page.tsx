@@ -105,35 +105,70 @@ export default function Page() {
                             image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
                             score: 5,
                             date: "25 dec 2025",
-                            description: "Foarte de treaba."
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
                         },
                         {
                             name: "2",
                             image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
                             score: 5,
                             date: "25 dec 2025",
-                            description: "Foarte de treaba."
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
                         },
                         {
                             name: "3",
                             image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
                             score: 5,
                             date: "25 dec 2025",
-                            description: "Foarte de treaba."
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
                         },
                         {
                             name: "4",
                             image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
                             score: 5,
                             date: "25 dec 2025",
-                            description: "Foarte de treaba."
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
                         },
                         {
                             name: "5",
                             image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
                             score: 5,
                             date: "25 dec 2025",
-                            description: "Foarte de treaba."
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                        },
+                        {
+                            name: "1",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                        },
+                        {
+                            name: "2",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                        },
+                        {
+                            name: "3",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                        },
+                        {
+                            name: "4",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                        },
+                        {
+                            name: "5",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            score: 5,
+                            date: "25 dec 2025",
+                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
                         },
                     ],
                 }}
