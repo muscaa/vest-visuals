@@ -13,6 +13,7 @@ import {
 import { TextLink } from "../ui/text-link";
 import { Separator } from "../ui/separator";
 import { InfoCard } from "../info-card";
+import { Badge } from "../ui/badge";
 
 function MemberCard(props: TeamMember) {
     return (
@@ -72,8 +73,19 @@ function MemberCard(props: TeamMember) {
                 </TextLink>
                 <Separator />
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-                <span className="text-muted-foreground">{props.roles.join(" | ")}</span>
+            <CardContent className="flex flex-wrap gap-2">
+                {
+                    props.roles.map((role, index) => (
+                        <Badge
+                            key={index}
+                            variant="secondary"
+                            size="md"
+                            className="grow"
+                        >
+                            {role}
+                        </Badge>
+                    ))
+                }
             </CardContent>
         </InfoCard>
     );

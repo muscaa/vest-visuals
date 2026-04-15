@@ -9,6 +9,7 @@ import { AuthContextProvider } from "@/contexts/auth";
 import { ThemeLayoutProvider } from "./providers/theme";
 import { Toaster } from "../ui/sonner";
 import { MainContextProvider } from "@/contexts/main";
+import { AnalyticsProvider } from "./providers/analytics";
 
 export const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ export function ClientLayout(props: LayoutProps) {
                         />
                     </AuthContextProvider>
                 </QueryClientProvider>
+                <AnalyticsProvider />
             </ThemeLayoutProvider>
         </MainContextProvider>
     );
