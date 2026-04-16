@@ -2,12 +2,18 @@
 
 import { clientConfig } from "@client/config";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { useCookies } from "@/hooks/useCookies";
 
 interface AnalyticsProviderProps {
 }
 
 export function AnalyticsProvider(props: AnalyticsProviderProps) {
-    // TODO check for consent
+    const { useConsent } = useCookies();
+    const { data } = useConsent();
+
+    if (!clientConfig.env.GOOGLE_ANALYTICS_ENABLED || data !== "all") {
+        return null;
+    }
 
     return (
         <GoogleAnalytics
