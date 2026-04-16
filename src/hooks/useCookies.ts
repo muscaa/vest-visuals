@@ -25,7 +25,7 @@ export function useCookies() {
 
     const consent = useMutation({
         mutationFn: async (value: typeof COOKIE_CONSENT.value[number] | undefined) => {
-            setCookie(COOKIE_CONSENT.name, value);
+            setCookie(COOKIE_CONSENT.name, value, { expiresIn: { months: 6 } });
         },
     });
 
