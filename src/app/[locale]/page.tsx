@@ -101,74 +101,39 @@ export default function Page() {
                     title: "Testimoniale",
                     reviews: [
                         {
-                            name: "1",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Bara Denis",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/dafy5npxf0li1130hhap5tvo/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "22 mar 2026",
+                            description: "Pozele au iesit super, va multumim mult de tot!!!! Le-am pus pe instagram cu drag, atat eu cat si iubita mea!"
                         },
                         {
-                            name: "2",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Ionut Condescu",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/uabl3f0ndb4hby7tf428qj9e/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "21 mar 2026",
+                            description: "Multumim pentru poze, au ieșit super frumoase! Recomandam serviciile!"
                         },
                         {
-                            name: "3",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Oana",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/m3u1fne49flwng97jamw3avp/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "14 feb 2026",
+                            description: "Va multumim din suflet pentru tot! Ati fost minunați!"
                         },
                         {
-                            name: "4",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Vladescu Razvan",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "31 aug 2025",
+                            description: "Pozele la apartamentul meu au iesit foarte bine! M-au ajutat sa gasesc clienti si sa-l vand foarte repede. Punctualitate si profesionalism. Recomand!"
                         },
                         {
-                            name: "5",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Patrick Sabau",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/ok1f6eurgum0dnwollokpqzv/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "1",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "2",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "3",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "4",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "5",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "16 iun 2025",
+                            description: "Baietii de la Vest Visuals mi-au ajutat cu niste poze si videoclipuri excelente pentru masina mea. Sunt foarte Multumit"
                         },
                     ],
                 }}
