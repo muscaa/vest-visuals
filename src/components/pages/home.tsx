@@ -47,7 +47,7 @@ export function HomePage(props: Props) {
             <SectionAbout {...props.about} />
             <Separator />
             <SectionPortfolio {...props.portfolio} />
-            <SectionBenefits {...props.benefits} className="bg-primary/20 dark:bg-primary/10" />
+            <SectionBenefits {...props.benefits} />
             <SectionTeam {...props.team} />
             <SectionTestimonials {...props.testimonials} />
             <Reveal2
