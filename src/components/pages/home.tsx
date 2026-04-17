@@ -30,6 +30,7 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { Reveal2 } from "../animations/reveal2";
 import { cn } from "@shared/shadcn/lib/utils";
+import { SectionBeforeAndAfter } from "../sections/before-and-after";
 
 interface Props {
     preview: SectionPreviewProps;
@@ -47,6 +48,7 @@ export function HomePage(props: Props) {
             <SectionAbout {...props.about} />
             <Separator />
             <SectionPortfolio {...props.portfolio} />
+            <SectionBeforeAndAfter title="Editare Profesionala" />
             <SectionBenefits {...props.benefits} />
             <SectionTeam {...props.team} />
             <SectionTestimonials {...props.testimonials} />
