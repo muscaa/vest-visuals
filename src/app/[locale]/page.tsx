@@ -35,7 +35,7 @@ export default function Page() {
                             cover: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
                         },
                         {
-                            name: "portrete",
+                            name: "sedinte foto",
                             href: "/portfolio/outdoor",
                             cover: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
                         },
@@ -45,12 +45,12 @@ export default function Page() {
                             cover: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
                         },
                         {
-                            name: "imobiliare (real estate)",
+                            name: "imobiliare",
                             href: "/portfolio/real-estate",
                             cover: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
                         },
                         {
-                            name: "promovare firme (marketing)",
+                            name: "promovare firme",
                             href: "/portfolio/marketing",
                             cover: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
                         },
