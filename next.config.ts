@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     devIndicators: {
         position: "top-right",
     },
+    allowedDevOrigins: ["musca.dev", "*.musca.dev"],
     experimental: {
         serverActions: {
             bodySizeLimit: "100mb"
