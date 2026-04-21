@@ -1,16 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "./ui/button";
 import { GripVertical } from "lucide-react";
+import { cn } from "@shared/shadcn/lib/utils";
 
-export const Feature9 = () => {
+interface Props {
+    c1: React.ReactNode;
+    c2: React.ReactNode;
+    mode?: "drag" | "hover";
+    className?: string;
+}
+
+export function Comparison(props: Props) {
     const [inset, setInset] = useState<number>(50);
-    const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
+    const [active, setActive] = useState<boolean>(false);
 
-    const onMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
-        console.log("mouse move");
-
-        if (!onMouseDown) return;
+    const onPointerMove = (e: React.MouseEvent | React.TouchEvent) => {
+        if (!active) return;
 
         const rect = e.currentTarget.getBoundingClientRect();
         let x = 0;
@@ -26,69 +33,47 @@ export const Feature9 = () => {
     };
 
     return (
-        <div className="w-full py-20 lg:py-40">
-            <div className="container mx-auto">
-                <div className="flex flex-col gap-4">
-                    <div className="pt-12 w-full">
-                        <div
-                            className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
-                            // onMouseMove={onMouseMove}
-                            // onMouseUp={() => setOnMouseDown(false)}
-                            // onTouchMove={onMouseMove}
-                            // onTouchEnd={() => setOnMouseDown(false)}
-                            onPointerMove={onMouseMove}
-                            onPointerUp={() => setOnMouseDown(false)}
-                        >
-                            <div
-                                className="bg-muted h-full w-1 absolute z-20 top-0 -ml-1 select-none"
-                                style={{
-                                    left: inset + "%",
-                                }}
-                            >
-                                <button
-                                    className="bg-muted rounded hover:scale-110 transition-all w-5 h-10 select-none -translate-y-1/2 absolute top-1/2 -ml-2 z-30 cursor-ew-resize flex justify-center items-center"
-                                    // onTouchStart={(e) => {
-                                    //     setOnMouseDown(true);
-                                    //     onMouseMove(e);
-                                    //     console.log("touch start");
-                                    // }}
-                                    // onMouseDown={(e) => {
-                                    //     setOnMouseDown(true);
-                                    //     onMouseMove(e);
-                                    //     console.log("mouse down");
-                                    // }}
-                                    onPointerDown={(e) => {
-                                        setOnMouseDown(true);
-                                        onMouseMove(e);
-                                        console.log("mouse down");
-                                    }}
-                                    // onTouchEnd={() => setOnMouseDown(false)}
-                                    // onMouseUp={() => setOnMouseDown(false)}
-                                    onPointerUp={() => setOnMouseDown(false)}
-                                >
-                                    <GripVertical className="h-4 w-4 select-none" />
-                                </button>
-                            </div>
-                            <img
-                                src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80"
-                                alt="feature8"
-                                width={1920}
-                                height={1080}
-                                className="absolute left-0 top-0 z-10 w-full h-full aspect-video rounded-2xl select-none border grayscale"
-                                style={{
-                                    clipPath: "inset(0 0 0 " + inset + "%)",
-                                }}
-                            />
-                            <img
-                                src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80"
-                                alt="darkmode-feature8.png"
-                                width={1920}
-                                height={1080}
-                                className="absolute left-0 top-0 w-full h-full aspect-video rounded-2xl select-none border"
-                            />
-                        </div>
-                    </div>
-                </div>
+        <div
+            className={cn("relative size-full overflow-hidden rounded-2xl select-none", props.className)}
+            onPointerMove={onPointerMove}
+            onPointerUp={() => setActive(false)}
+            onPointerEnter={() => setActive(false)}
+            onPointerLeave={() => setActive(false)}
+        >
+            <div
+                className="absolute left-0 top-0 size-full"
+                style={{
+                    clipPath: `inset(0 ${100 - inset}% 0 0)`
+                }}
+            >
+                {props.c1}
+            </div>
+            <div
+                className="absolute left-0 top-0 size-full"
+                style={{
+                    clipPath: `inset(0 0 0 ${inset}%)`,
+                }}
+            >
+                {props.c2}
+            </div>
+            <div
+                className="absolute w-1 h-full top-0 -translate-x-1/2 select-none bg-secondary"
+                style={{
+                    left: inset + "%",
+                }}
+            >
+                <Button
+                    variant="secondary"
+                    size="none"
+                    className="absolute w-6 h-12 top-1/2 -translate-1/2 cursor-ew-resize"
+                    onPointerDown={(e) => {
+                        setActive(true);
+                        onPointerMove(e);
+                    }}
+                    onPointerUp={() => setActive(false)}
+                >
+                    <GripVertical className="size-6 select-none" />
+                </Button>
             </div>
         </div>
     );
