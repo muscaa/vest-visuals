@@ -25,6 +25,34 @@ export default function Page() {
                 about={{
                     title: "Cine suntem noi?",
                     description: "Suntem o echipă pasionată de fotografie și videografie, dedicată să transformăm momentele speciale în amintiri de neuitat. Cu o abordare creativă și atenție la detalii, spunem povești vizuale autentice, indiferent că este vorba de o nuntă, un eveniment corporate sau ceva personal. Credem în emoție, naturalețe și profesionalism.",
+                    members: [
+                        {
+                            name: "David",
+                            image: "https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium",
+                            roles: [
+                                "videograf",
+                                "fotograf",
+                                "editor video",
+                            ],
+                            email: "david@vestvisuals.ro",
+                            socials: {
+                                instagram: "https://www.instagram.com/david.bostina/",
+                            },
+                        },
+                        {
+                            name: "Mihail",
+                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
+                            roles: [
+                                "fotograf",
+                                "editor foto",
+                                "editor video",
+                            ],
+                            email: "mihail@vestvisuals.ro",
+                            socials: {
+                                instagram: "https://www.instagram.com/musca.mihail/",
+                            },
+                        },
+                    ],
                 }}
                 portfolio={{
                     title: "Portofoliu",
@@ -63,37 +91,6 @@ export default function Page() {
                             icon: Heart,
                             title: "Suntem nerăbdărori să aflăm povestea voastră ",
                             description: "Pentru noi, totul pornește de la emoție. Transformăm momentele voastre în povești fotografice care transmit bucurie pură și te fac să retrăiești fiecare zâmbet, de fiecare dată.",
-                        },
-                    ],
-                }}
-                team={{
-                    title: "Echipa",
-                    members: [
-                        {
-                            name: "David",
-                            image: "https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium",
-                            roles: [
-                                "videograf",
-                                "fotograf",
-                                "editor video",
-                            ],
-                            email: "david@vestvisuals.ro",
-                            socials: {
-                                instagram: "https://www.instagram.com/david.bostina/",
-                            },
-                        },
-                        {
-                            name: "Mihail",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
-                            roles: [
-                                "fotograf",
-                                "editor foto",
-                                "editor video",
-                            ],
-                            email: "mihail@vestvisuals.ro",
-                            socials: {
-                                instagram: "https://www.instagram.com/musca.mihail/",
-                            },
                         },
                     ],
                 }}

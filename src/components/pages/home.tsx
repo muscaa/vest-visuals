@@ -38,7 +38,6 @@ interface Props {
     about: SectionAboutProps;
     portfolio: SectionPortfolioProps;
     benefits: SectionBenefitsProps;
-    team: SectionTeamProps;
     testimonials: SectionTestimonialsProps;
 }
 
@@ -52,7 +51,6 @@ export function HomePage(props: Props) {
             <SectionBeforeAndAfter title="Editare Profesionala" />
             <SectionHighlights />
             <SectionBenefits {...props.benefits} />
-            <SectionTeam {...props.team} />
             <SectionTestimonials {...props.testimonials} />
             <Reveal2
                 direction="left"
