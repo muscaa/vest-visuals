@@ -31,6 +31,7 @@ import {
 import { Reveal2 } from "../animations/reveal2";
 import { cn } from "@shared/shadcn/lib/utils";
 import { SectionBeforeAndAfter } from "../sections/before-and-after";
+import { SectionHighlights } from "../sections/highlights";
 
 interface Props {
     preview: SectionPreviewProps;
@@ -49,6 +50,7 @@ export function HomePage(props: Props) {
             <Separator />
             <SectionPortfolio {...props.portfolio} />
             <SectionBeforeAndAfter title="Editare Profesionala" />
+            <SectionHighlights />
             <SectionBenefits {...props.benefits} />
             <SectionTeam {...props.team} />
             <SectionTestimonials {...props.testimonials} />
