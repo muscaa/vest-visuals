@@ -65,7 +65,7 @@ export function Comparison(props: Props) {
                 <Button
                     variant="secondary"
                     size="none"
-                    className="absolute w-6 h-12 top-1/2 -translate-1/2 cursor-ew-resize"
+                    className="absolute w-6 h-12 left-1/2 top-1/2 -translate-1/2 cursor-ew-resize"
                     onPointerDown={(e) => {
                         setActive(true);
                         onPointerMove(e);
