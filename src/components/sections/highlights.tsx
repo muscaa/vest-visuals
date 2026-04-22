@@ -17,9 +17,9 @@ interface HighlightProps {
 
 function Highlight(props: HighlightProps) {
     return (
-        <div className="flex items-center gap-2 theme-dark">
+        <div className="flex not-sm:flex-col items-center gap-2 theme-dark">
             <props.icon className="size-12" />
-            <div className="flex flex-col">
+            <div className="flex flex-col not-sm:text-center">
                 <h4>{props.title}</h4>
                 <p>{props.description}</p>
             </div>
@@ -37,7 +37,7 @@ export function SectionHighlights(props: SectionHighlightsProps) {
             id="highlights"
             className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
         >
-            <div className="flex justify-around items-center size-full gap-4 p-8 bg-primary rounded-2xl">
+            <div className="grid grid-cols-2 lg:grid-cols-4 justify-items-center size-full gap-8 p-8 bg-primary rounded-2xl">
                 <Highlight title="Livrare Rapida" description="oriunde in tara" icon={Gauge} />
                 <Highlight title="Garantia Calitatii" description="produse de calitate" icon={Award} />
                 <Highlight title="Producator" description="distribuitor direct" icon={Network} />
