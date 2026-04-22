@@ -19,6 +19,9 @@ export function Comparison(props: Props) {
     const onPointerMove = (e: React.MouseEvent | React.TouchEvent) => {
         if (!active) return;
 
+        e.preventDefault();
+        e.stopPropagation();
+
         const rect = e.currentTarget.getBoundingClientRect();
         let x = 0;
 
@@ -65,7 +68,7 @@ export function Comparison(props: Props) {
                 <Button
                     variant="secondary"
                     size="none"
-                    className="absolute w-6 h-12 left-1/2 top-1/2 -translate-1/2 cursor-ew-resize"
+                    className="absolute w-6 h-12 left-1/2 top-1/2 -translate-1/2 cursor-ew-resize touch-none"
                     onPointerDown={(e) => {
                         setActive(true);
                         onPointerMove(e);
