@@ -24,7 +24,7 @@ function ReviewCard(props: ReviewCardProps) {
                 <div className="flex items-center gap-4">
                     <Img
                         src={props.image}
-                        className="size-16 rounded-full"
+                        className="size-16 rounded-full object-cover"
                     />
                     <h3>{props.name}</h3>
                 </div>

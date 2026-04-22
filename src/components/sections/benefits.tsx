@@ -16,7 +16,7 @@ interface PerkCardProps {
 
 function PerkCard(props: PerkCardProps) {
     return (
-        <InfoCard className="w-xs sm:w-sm not-dark:ring-0">
+        <InfoCard className="w-xs sm:w-sm ring-primary/30 bg-primary/10">
             <CardHeader className="place-items-center my-4">
                 <props.icon className="size-16" />
                 <h3 className="font-bold font-mono text-center">{props.title}</h3>
@@ -38,7 +38,7 @@ export function SectionBenefits(props: SectionBenefitsProps) {
     return (
         <section
             id="benefits"
-            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full", props.className)}
+            className={cn("flex flex-col justify-center items-center gap-8 p-8 w-full bg-primary/10", props.className)}
         >
             <h2 className="font-mono text-center my-8">{props.title}</h2>
             <div className="flex flex-wrap max-w-8xl w-full justify-center gap-4">

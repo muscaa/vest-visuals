@@ -25,6 +25,32 @@ export default function Page() {
                 about={{
                     title: "Cine suntem noi?",
                     description: "Suntem o echipă pasionată de fotografie și videografie, dedicată să transformăm momentele speciale în amintiri de neuitat. Cu o abordare creativă și atenție la detalii, spunem povești vizuale autentice, indiferent că este vorba de o nuntă, un eveniment corporate sau ceva personal. Credem în emoție, naturalețe și profesionalism.",
+                    member1: {
+                        name: "David",
+                        image: "https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium",
+                        roles: [
+                            "videograf",
+                            "fotograf",
+                            "editor video",
+                        ],
+                        email: "david@vestvisuals.ro",
+                        socials: {
+                            instagram: "https://www.instagram.com/david.bostina/",
+                        },
+                    },
+                    member2: {
+                        name: "Mihail",
+                        image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
+                        roles: [
+                            "fotograf",
+                            "editor foto",
+                            "editor video",
+                        ],
+                        email: "mihail@vestvisuals.ro",
+                        socials: {
+                            instagram: "https://www.instagram.com/musca.mihail/",
+                        },
+                    },
                 }}
                 portfolio={{
                     title: "Portofoliu",
@@ -35,7 +61,7 @@ export default function Page() {
                             cover: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
                         },
                         {
-                            name: "portrete",
+                            name: "sedinte foto",
                             href: "/portfolio/outdoor",
                             cover: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
                         },
@@ -45,12 +71,12 @@ export default function Page() {
                             cover: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
                         },
                         {
-                            name: "imobiliare (real estate)",
+                            name: "imobiliare",
                             href: "/portfolio/real-estate",
                             cover: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
                         },
                         {
-                            name: "promovare firme (marketing)",
+                            name: "promovare firme",
                             href: "/portfolio/marketing",
                             cover: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
                         },
@@ -66,109 +92,43 @@ export default function Page() {
                         },
                     ],
                 }}
-                team={{
-                    title: "Echipa",
-                    members: [
-                        {
-                            name: "David",
-                            image: "https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium",
-                            roles: [
-                                "videograf",
-                                "fotograf",
-                                "editor video",
-                            ],
-                            email: "david@vestvisuals.ro",
-                            socials: {
-                                instagram: "https://www.instagram.com/david.bostina/",
-                            },
-                        },
-                        {
-                            name: "Mihail",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
-                            roles: [
-                                "fotograf",
-                                "editor foto",
-                                "editor video",
-                            ],
-                            email: "mihail@vestvisuals.ro",
-                            socials: {
-                                instagram: "https://www.instagram.com/musca.mihail/",
-                            },
-                        },
-                    ],
-                }}
                 testimonials={{
                     title: "Testimoniale",
                     reviews: [
                         {
-                            name: "1",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Bara Denis",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/dafy5npxf0li1130hhap5tvo/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "22 mar 2026",
+                            description: "Pozele au iesit super, va multumim mult de tot!!!! Le-am pus pe instagram cu drag, atat eu cat si iubita mea!"
                         },
                         {
-                            name: "2",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Ionut Condescu",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/uabl3f0ndb4hby7tf428qj9e/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "21 mar 2026",
+                            description: "Multumim pentru poze, au ieșit super frumoase! Recomandam serviciile!"
                         },
                         {
-                            name: "3",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Oana",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/m3u1fne49flwng97jamw3avp/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "14 feb 2026",
+                            description: "Va multumim din suflet pentru tot! Ati fost minunați!"
                         },
                         {
-                            name: "4",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Vladescu Razvan",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "31 aug 2025",
+                            description: "Pozele la apartamentul meu au iesit foarte bine! M-au ajutat sa gasesc clienti si sa-l vand foarte repede. Punctualitate si profesionalism. Recomand!"
                         },
                         {
-                            name: "5",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
+                            name: "Patrick Sabau",
+                            image: "https://cdn0.vestvisuals.ro/portfolio/ok1f6eurgum0dnwollokpqzv/small",
                             score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "1",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "2",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "3",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "4",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba. Foarte de treaba."
-                        },
-                        {
-                            name: "5",
-                            image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/small",
-                            score: 5,
-                            date: "25 dec 2025",
-                            description: "Foarte de treaba. Foarte de treaba. Foarte de treaba."
+                            date: "16 iun 2025",
+                            description: "Baietii de la Vest Visuals mi-au ajutat cu niste poze si videoclipuri excelente pentru masina mea. Sunt foarte Multumit"
                         },
                     ],
                 }}

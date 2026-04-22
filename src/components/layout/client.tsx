@@ -30,8 +30,8 @@ export function ClientLayout(props: LayoutProps) {
                             richColors
                         />
                     </AuthContextProvider>
+                    <AnalyticsProvider />
                 </QueryClientProvider>
-                <AnalyticsProvider />
             </ThemeLayoutProvider>
         </MainContextProvider>
     );

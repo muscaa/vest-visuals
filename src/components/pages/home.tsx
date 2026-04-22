@@ -30,13 +30,14 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { Reveal2 } from "../animations/reveal2";
 import { cn } from "@shared/shadcn/lib/utils";
+import { SectionBeforeAndAfter } from "../sections/before-and-after";
+import { SectionHighlights } from "../sections/highlights";
 
 interface Props {
     preview: SectionPreviewProps;
     about: SectionAboutProps;
     portfolio: SectionPortfolioProps;
     benefits: SectionBenefitsProps;
-    team: SectionTeamProps;
     testimonials: SectionTestimonialsProps;
 }
 
@@ -47,8 +48,9 @@ export function HomePage(props: Props) {
             <SectionAbout {...props.about} />
             <Separator />
             <SectionPortfolio {...props.portfolio} />
-            <SectionBenefits {...props.benefits} className="bg-primary/20 dark:bg-primary/10" />
-            <SectionTeam {...props.team} />
+            <SectionBeforeAndAfter title="Editare Profesionala" />
+            <SectionHighlights />
+            <SectionBenefits {...props.benefits} />
             <SectionTestimonials {...props.testimonials} />
             <Reveal2
                 direction="left"

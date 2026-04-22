@@ -181,6 +181,7 @@ function CarouselPrevious({
 
     return (
         <Button
+            suppressHydrationWarning // TODO remove
             data-slot="carousel-previous"
             variant={variant}
             size={size}
@@ -212,6 +213,7 @@ function CarouselNext({
 
     return (
         <Button
+            suppressHydrationWarning // TODO remove
             data-slot="carousel-next"
             variant={variant}
             size={size}
