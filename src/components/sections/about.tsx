@@ -15,21 +15,25 @@ import { Separator } from "../ui/separator";
 import { InfoCard } from "../info-card";
 import { Badge } from "../ui/badge";
 
-function MemberCard(props: TeamMember) {
+interface MemberCardProps {
+    member: TeamMember;
+}
+
+function MemberCard(props: MemberCardProps) {
     return (
-        <InfoCard className="w-xs sm:w-sm">
+        <InfoCard className={cn("w-sm")}>
             <Img
-                src={props.image}
-                alt={props.name}
+                src={props.member.image}
+                alt={props.member.name}
             />
             <CardHeader>
                 <div className="flex justify-between items-center">
-                    <h3 className="font-mono h1">{props.name}</h3>
+                    <h3 className="font-mono h1">{props.member.name}</h3>
                     <div className="flex">
                         {
-                            props.socials.instagram && (
+                            props.member.socials.instagram && (
                                 <TextLink
-                                    href={props.socials.instagram}
+                                    href={props.member.socials.instagram}
                                     target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
@@ -39,9 +43,9 @@ function MemberCard(props: TeamMember) {
                             )
                         }
                         {
-                            props.socials.facebook && (
+                            props.member.socials.facebook && (
                                 <TextLink
-                                    href={props.socials.facebook}
+                                    href={props.member.socials.facebook}
                                     target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
@@ -51,9 +55,9 @@ function MemberCard(props: TeamMember) {
                             )
                         }
                         {
-                            props.socials.linkedin && (
+                            props.member.socials.linkedin && (
                                 <TextLink
-                                    href={props.socials.linkedin}
+                                    href={props.member.socials.linkedin}
                                     target="_blank"
                                     variant="ghost"
                                     size="icon-responsive"
@@ -65,17 +69,17 @@ function MemberCard(props: TeamMember) {
                     </div>
                 </div>
                 <TextLink
-                    href={`mailto:${props.email}`}
+                    href={`mailto:${props.member.email}`}
                     target="_blank"
                     className="w-min"
                 >
-                    {props.email}
+                    {props.member.email}
                 </TextLink>
                 <Separator />
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
                 {
-                    props.roles.map((role, index) => (
+                    props.member.roles.map((role, index) => (
                         <Badge
                             key={index}
                             variant="secondary"
@@ -94,7 +98,8 @@ function MemberCard(props: TeamMember) {
 export interface SectionAboutProps {
     title: string;
     description: string;
-    members: TeamMember[];
+    member1: TeamMember;
+    member2: TeamMember;
     className?: string;
 }
 
@@ -102,19 +107,24 @@ export function SectionAbout(props: SectionAboutProps) {
     return (
         <section
             id="about"
-            className={cn("flex flex-col justify-center items-center text-center gap-8 p-8 w-full", props.className)}
+            className={cn("flex not-lg:flex-col justify-center not-lg:items-center gap-16 p-8 py-16 w-full", props.className)}
         >
-            <h2 className="font-mono my-8">{props.title}</h2>
-            <p className="max-w-4xl">{props.description}</p>
-            <div className="flex flex-wrap max-w-6xl w-full justify-evenly gap-8">
-                {
-                    props.members.map((member, index) => (
-                        <MemberCard
-                            key={index}
-                            {...member}
-                        />
-                    ))
-                }
+            <div className="flex flex-col items-center gap-16 max-w-128 w-full">
+                <div className="flex flex-col gap-4 text-justify">
+                    <h2 className="font-mono my-8">{props.title}</h2>
+                    <p>{props.description}</p>
+                </div>
+                <MemberCard
+                    member={props.member2}
+                />
+            </div>
+            <div className="flex flex-col items-center gap-16 max-w-128 w-full">
+                <MemberCard
+                    member={props.member1}
+                />
+                <div className="flex flex-col grow w-full min-h-4 bg-background2 rounded-2xl">
+                    
+                </div>
             </div>
         </section>
     );
