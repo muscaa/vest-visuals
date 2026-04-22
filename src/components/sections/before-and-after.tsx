@@ -37,7 +37,7 @@ export function SectionBeforeAndAfter(props: SectionBeforeAndAfterProps) {
                         className="size-full object-cover"
                     />
                 )}
-                className="min-w-128 max-w-192 w-full h-128"
+                className="lg:min-w-128 max-w-192 w-full h-96 lg:h-128"
             />
         </section>
     );
