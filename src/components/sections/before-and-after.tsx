@@ -11,7 +11,7 @@ export function SectionBeforeAndAfter(props: SectionBeforeAndAfterProps) {
     return (
         <section
             id="about"
-            className={cn("flex not-lg:flex-col justify-center items-center gap-16 p-8 lg:py-32 w-full bg-background3", props.className)}
+            className={cn("flex not-lg:flex-col justify-center items-center gap-16 p-8 lg:py-32 w-full bg-background2", props.className)}
         >
             <div className="flex flex-col gap-4 max-w-128 text-justify">
                 <h2 className="font-mono mb-8 not-lg:text-center">{props.title}</h2>
