@@ -50,7 +50,7 @@ export function HomePage(props: Props) {
             <SectionPortfolio {...props.portfolio} />
             <SectionBeforeAndAfter title="Editare Profesionala" />
             <SectionHighlights />
-            <SectionBenefits {...props.benefits} />
+            {/* <SectionBenefits {...props.benefits} /> */}
             <SectionTestimonials {...props.testimonials} />
             <Reveal2
                 direction="left"
