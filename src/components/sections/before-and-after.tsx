@@ -25,14 +25,14 @@ export function SectionBeforeAndAfter(props: SectionBeforeAndAfterProps) {
             <Comparison
                 c1={(
                     <Img
-                        src="https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/large"
+                        src="https://cdn0.vestvisuals.ro/assets/yneoo6rvga4s61g1wilygf77/large"
                         alt="Before"
                         className="size-full object-cover"
                     />
                 )}
                 c2={(
                     <Img
-                        src="https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/large"
+                        src="https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/large"
                         alt="After"
                         className="size-full object-cover"
                     />
