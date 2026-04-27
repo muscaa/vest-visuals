@@ -40,7 +40,7 @@ export default function Page() {
                     },
                     member2: {
                         name: "Mihail",
-                        image: "https://cdn0.vestvisuals.ro/assets/ikhrfkmpuq731hm81z4qfo5n/medium",
+                        image: "https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/medium",
                         roles: [
                             "fotograf",
                             "editor foto",
