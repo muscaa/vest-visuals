@@ -4,7 +4,7 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground p;
     }
 
     div {
@@ -35,13 +35,13 @@
         @apply h6;
     }
 
-    p {
+    /* p {
         @apply p;
     }
 
     span {
         @apply p;
-    }
+    } */
     
     .grecaptcha-badge {
         visibility: hidden;
