@@ -1,0 +1,29 @@
+// Logo — geometric V mark, inline so we can color/animate paths.
+// cls-1 polygons -> teal arms; cls-2 polygon -> blue chevron.
+
+export function LogoMark({
+    size = 36,
+    animated = false,
+    className = "",
+}: {
+    size?: number;
+    animated?: boolean;
+    className?: string;
+}) {
+    // 720x468 viewBox from the small SVG, paths verbatim
+    return (
+        <svg
+            viewBox="0 0 720 468"
+            width={size}
+            height={size * (468 / 720)}
+            className={`vv-logo ${animated ? "vv-logo--animated" : ""} ${className}`}
+            aria-label="Vest Visuals"
+        >
+            <g className="vv-logo__teal" fill="var(--color2)">
+                <polygon points="375 182 360 156 345 130 330 104 315 78 300 52 285 26 270 0 240 0 210 0 180 0 195 26 210 52 225 78 240 104 255 130 270 156 285 182 300 208 315 234 330 260 345 234 360 208 375 182" />
+                <polygon points="690 0 660 0 630 0 615 26 600 52 585 78 570 104 555 130 540 156 525 182 510 208 495 234 480 260 465 286 450 312 435 338 420 364 405 390 390 416 375 442 360 468 390 468 420 468 450 468 465 442 480 416 495 390 510 364 525 338 540 312 555 286 570 260 585 234 600 208 615 182 630 156 645 130 660 104 675 78 690 52 705 26 720 0 690 0" />
+            </g>
+            <polygon className="vv-logo__blue" fill="var(--color1)" points="570 0 540 0 510 0 495 26 480 52 465 78 450 104 435 130 420 156 405 182 390 208 375 234 360 260 345 286 330 312 315 286 300 260 285 234 270 208 255 182 240 156 225 130 210 104 195 78 180 52 165 26 150 0 120 0 90 0 60 0 30 0 0 0 15 26 30 52 45 78 75 78 105 78 120 104 135 130 150 156 165 182 180 208 195 234 210 260 225 286 240 312 255 338 270 364 285 390 300 416 315 442 330 468 345 442 360 416 375 390 390 364 405 338 420 312 435 286 450 260 465 234 480 208 495 182 510 156 525 130 540 104 555 78 570 52 585 26 600 0 570 0" />
+        </svg>
+    );
+}
