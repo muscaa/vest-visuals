@@ -1,5 +1,7 @@
-import { SoftwareHome } from "@/components/software/home";
+import { HomePage } from "@/components/software/pages/home";
 
 export default function Page() {
-    return <SoftwareHome />;
+    return (
+        <HomePage />
+    );
 }

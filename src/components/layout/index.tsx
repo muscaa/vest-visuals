@@ -6,6 +6,7 @@ import {
     _Translator,
 } from "next-intl";
 import { locales } from "@shared/i18n";
+import { Navbar2LayoutProvider } from "./providers/navbar2";
 
 export type MetadataProps<T> = T & {
     t: _Translator<Record<string, any>, never>;
@@ -114,6 +115,14 @@ export function NavbarLayout(props: LayoutProps) {
         <NavbarLayoutProvider>
             <BaseLayout {...props} />
         </NavbarLayoutProvider>
+    );
+}
+
+export function Navbar2Layout(props: LayoutProps) {
+    return (
+        <Navbar2LayoutProvider>
+            <BaseLayout {...props} />
+        </Navbar2LayoutProvider>
     );
 }
 

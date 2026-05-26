@@ -6,3 +6,21 @@
             0 100%,
             0 calc(var(--spacing) * --value(number)));
 }
+
+/* :root { --s: 150px; } */
+
+@utility grid-background {
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, var(--border) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    /* background-image:
+        repeating-linear-gradient(0deg, var(--border) 0 1px, transparent 1px calc(var(--s) * 0.8660254)),
+        repeating-linear-gradient(60deg, var(--border) 0 1px, transparent 1px calc(var(--s) * 0.8660254)),
+        repeating-linear-gradient(120deg, var(--border) 0 1px, transparent 1px calc(var(--s) * 0.8660254)); */
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%);
+    pointer-events: none;
+}
