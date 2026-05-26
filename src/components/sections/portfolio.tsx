@@ -4,7 +4,7 @@ import { cn } from "@shared/shadcn/lib/utils";
 import { PortfolioCategory } from "@type/registries/portfolio-categories";
 import { Reveal2 } from "../animations/reveal2";
 import { Img } from "../snippets";
-import { Link } from "@shared/i18n";
+import { Link } from "../link";
 
 interface PortfolioCategoryLinkProps {
     ref: React.Ref<any>;

@@ -10,7 +10,7 @@ import {
     CardContent,
     CardHeader,
 } from "../ui/card";
-import { TextLink } from "../ui/text-link";
+import { TextLink } from "../typography";
 import { Separator } from "../ui/separator";
 import { InfoCard } from "../info-card";
 import { Badge } from "../ui/badge";
@@ -36,7 +36,7 @@ function MemberCard(props: MemberCardProps) {
                                     href={props.member.socials.instagram}
                                     target="_blank"
                                     variant="ghost"
-                                    size="icon-responsive"
+                                    // size="icon-responsive"
                                 >
                                     <SiInstagram />
                                 </TextLink>
@@ -48,7 +48,7 @@ function MemberCard(props: MemberCardProps) {
                                     href={props.member.socials.facebook}
                                     target="_blank"
                                     variant="ghost"
-                                    size="icon-responsive"
+                                    // size="icon-responsive"
                                 >
                                     <SiFacebook />
                                 </TextLink>
@@ -60,7 +60,7 @@ function MemberCard(props: MemberCardProps) {
                                     href={props.member.socials.linkedin}
                                     target="_blank"
                                     variant="ghost"
-                                    size="icon-responsive"
+                                    // size="icon-responsive"
                                 >
                                     <Linkedin />
                                 </TextLink>

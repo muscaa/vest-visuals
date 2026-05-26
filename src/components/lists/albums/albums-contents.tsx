@@ -30,7 +30,7 @@ import {
     A_ALBUMS_$ID_$PATH,
     PLACEHOLDER,
 } from "@shared/i18n";
-import { TextLink } from "@/components/ui/text-link";
+import { TextLink } from "@/components/typography";
 import { useAlbumsDirectories } from "@/hooks/albums/useAlbumsDirectories";
 
 interface ListEntryProps {

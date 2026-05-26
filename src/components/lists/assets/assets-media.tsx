@@ -17,7 +17,7 @@ import { AssetsMedia } from "@type/assets/media";
 import { AssetsMediaUploadDialog } from "@/components/dialogs/assets/assets-media-upload";
 import { AssetsMediaDeleteDialog } from "@/components/dialogs/assets/assets-media-delete";
 import { PLACEHOLDER } from "@shared/i18n";
-import { TextLink } from "@/components/ui/text-link";
+import { TextLink } from "@/components/typography";
 
 interface ListEntryProps {
     value: AssetsMedia;

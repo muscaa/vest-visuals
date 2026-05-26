@@ -7,7 +7,6 @@ import { SectionParallax } from "./parallax";
 import { SectionAbout } from "./about";
 import { SectionCarousel } from "./carousel";
 import { SectionTeam } from "./team";
-import { NavbarLayoutProvider } from "../layout/providers/navbar";
 
 interface SectionsMainProps {
 

@@ -23,7 +23,7 @@ import {
     SectionTestimonialsProps,
 } from "../sections/testimonials";
 import { Separator } from "../ui/separator";
-import { Link } from "@shared/i18n";
+import { Link } from "../link";
 import {
     SiWhatsapp,
     SiWhatsappHex,
