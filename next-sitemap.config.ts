@@ -1,15 +1,15 @@
-import { IConfig } from "next-sitemap";
+import type { IConfig } from "next-sitemap";
 
 export default {
     siteUrl: "https://vestvisuals.ro",
     generateRobotsTxt: true,
     changefreq: "weekly",
     priority: 0.7,
-    transform: (config, url) => {
-        console.log(url);
+    transform: (config, path) => {
+        console.log(path);
 
         return {
-            loc: url,
+            loc: path,
         };
     },
 } satisfies IConfig;

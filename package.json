@@ -2,10 +2,11 @@
     "name": "vest-visuals",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
-        "postbuild": "next-sitemap",
+        "postbuild": "next-sitemap --config next-sitemap.config.ts",
         "start": "next start",
         "lint": "next lint",
         "db:generate": "dotenvx run -f .env.local -- run-s auth:generate",
