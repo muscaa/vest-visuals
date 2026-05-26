@@ -261,6 +261,7 @@ export const pathnames = [
     A_ALBUMS,
     A_ALBUMS_$ID_$PATH,
 ] as const;
+export type Pathname = ReturnType<typeof pathnames[number]>;
 
 // export type Pathnames = {
 //     [P in typeof pathnames[number]as P["en"]]: {
