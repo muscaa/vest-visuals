@@ -1,7 +1,7 @@
 import {
-    NavbarLayout,
+    StudioNavbarLayout,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { COOKIE_POLICY } from "@shared/i18n";
 
 export const {
@@ -14,4 +14,4 @@ export const {
     }),
 });
 
-export default NavbarLayout;
+export default StudioNavbarLayout;

@@ -2,7 +2,7 @@ import {
     LocaleLayoutProps,
     SidebarLayout,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { headers } from "next/headers";
 import { isAdmin } from "@server/auth/permissions";
 import { DndContextProvider } from "@/contexts/dnd";

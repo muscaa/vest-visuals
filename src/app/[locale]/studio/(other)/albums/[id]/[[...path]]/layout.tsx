@@ -1,7 +1,7 @@
 import {
     BaseLayout,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import {
     ALBUMS_$ID_$PATH,
 } from "@shared/i18n";

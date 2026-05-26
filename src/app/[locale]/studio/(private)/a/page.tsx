@@ -1,6 +1,6 @@
 "use server";
 
-import { LocaleLayoutProps } from "@/components/layout";
+import { LocaleLayoutProps } from "@/components/layouts";
 import { getLocale } from "@server/i18n";
 import {
     redirect,

@@ -1,8 +1,8 @@
 import {
-    NavbarLayout,
+    StudioNavbarLayout,
     LocaleLayoutProps,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { headers } from "next/headers";
 import { auth } from "@server/auth";
 import {
@@ -37,6 +37,6 @@ export default async function Layout(props: LocaleLayoutProps) {
     }
 
     return (
-        <NavbarLayout {...props} />
+        <StudioNavbarLayout {...props} />
     );
 }
