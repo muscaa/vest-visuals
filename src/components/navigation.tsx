@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/collapsible";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ChevronRightIcon, Dot, Menu } from "lucide-react";
-import { Link } from "@shared/i18n";
+import { Link, Pathname } from "@shared/i18n";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
@@ -31,7 +31,7 @@ interface NavigationBase {
 
 interface NavigationTypes {
     entries: (NavigationBase & Single<Omit<NavigationTypes, "entries">>)[];
-    link: string;
+    to: Pathname;
 }
 
 export type NavigationEntry = NavigationBase & Single<NavigationTypes>;
@@ -81,8 +81,8 @@ export function Navigation(props: NavigationProps) {
                                             <div className="flex flex-col gap-1">
                                                 {
                                                     entry.entries.map((entry, index) => (
-                                                        entry.link && (
-                                                            <Link key={`${entry.text}-${index}`} href={entry.link}>
+                                                        entry.to && (
+                                                            <Link key={`${entry.text}-${index}`} href={entry.to}>
                                                                 <Button variant="navbar">
                                                                     <Dot />
                                                                     {entry.text}
@@ -94,8 +94,8 @@ export function Navigation(props: NavigationProps) {
                                             </div>
                                         </CollapsibleContent>
                                     </Collapsible>
-                                ) || entry.link && (
-                                    <Link key={`${entry.text}-${index}`} href={entry.link}>
+                                ) || entry.to && (
+                                    <Link key={`${entry.text}-${index}`} href={entry.to}>
                                         <Button variant="navbar">
                                             <Dot />
                                             {entry.text}
@@ -134,10 +134,10 @@ export function Navigation(props: NavigationProps) {
                                             <NavigationMenuContent>
                                                 {
                                                     entry.entries.map((entry, index) => (
-                                                        entry.link && (
+                                                        entry.to && (
                                                             <NavigationMenuLink
                                                                 key={`${entry.text}-${index}`}
-                                                                render={<Link href={entry.link} />}
+                                                                render={<Link href={entry.to} />}
                                                             >
                                                                 {entry.text}
                                                             </NavigationMenuLink>
@@ -146,9 +146,9 @@ export function Navigation(props: NavigationProps) {
                                                 }
                                             </NavigationMenuContent>
                                         </>
-                                    ) || entry.link && (
+                                    ) || entry.to && (
                                         <NavigationMenuLink
-                                            render={<Link href={entry.link} />}
+                                            render={<Link href={entry.to} />}
                                             base="trigger"
                                             variant="ghost"
                                         >

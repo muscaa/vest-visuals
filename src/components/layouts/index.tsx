@@ -131,30 +131,30 @@ export function StudioNavbarLayout(props: LayoutProps) {
                     entries={[
                         {
                             text: "ACASA",
-                            link: HOME(),
+                            to: HOME(),
                         },
                         {
                             text: "EVENIMENTE",
                             entries: [
                                 {
                                     text: "MAJORAT",
-                                    link: SERVICES_18TH_BIRTHDAY(),
+                                    to: SERVICES_18TH_BIRTHDAY(),
                                 },
                                 {
                                     text: "NUNTA",
-                                    link: SERVICES_WEDDING(),
+                                    to: SERVICES_WEDDING(),
                                 },
                                 {
                                     text: "BOTEZ",
-                                    link: SERVICES_CHRISTENING(),
+                                    to: SERVICES_CHRISTENING(),
                                 },
                                 // {
                                 //     text: "ANIVERSARE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 // {
                                 //     text: "BUSINESS / CORPORATE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                             ],
                         },
@@ -163,27 +163,27 @@ export function StudioNavbarLayout(props: LayoutProps) {
                             entries: [
                                 // {
                                 //     text: "PORTRETE OFICIALE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 // {
                                 //     text: "ALBUME ABSOLVIRE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 // {
                                 //     text: "MATERNITATE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 // {
                                 //     text: "NOU-NASCUTI",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 // {
                                 //     text: "STUDIO",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 {
                                     text: "SEDINTA FOTO", // LUMINA NATURALA (OUTDOOR)
-                                    link: SERVICES_OUTDOOR(),
+                                    to: SERVICES_OUTDOOR(),
                                 },
                             ],
                         },
@@ -192,29 +192,29 @@ export function StudioNavbarLayout(props: LayoutProps) {
                             entries: [
                                 {
                                     text: "IMOBILIARE (REAL ESTATE)",
-                                    link: SERVICES_REAL_ESTATE(),
+                                    to: SERVICES_REAL_ESTATE(),
                                 },
                                 {
                                     text: "AUTOMOTIVE",
-                                    link: SERVICES_AUTOMOTIVE(),
+                                    to: SERVICES_AUTOMOTIVE(),
                                 },
                                 // {
                                 //     text: "PRODUSE E-COMMERCE",
-                                //     link: CONTACT(),
+                                //     to: CONTACT(),
                                 // },
                                 {
                                     text: "PROMOVARE FIRME (MARKETING)",
-                                    link: SERVICES_MARKETING(),
+                                    to: SERVICES_MARKETING(),
                                 },
                             ],
                         },
                         // {
                         //     text: "PORTOFOLIU",
-                        //     link: PORTFOLIO(),
+                        //     to: PORTFOLIO(),
                         // },
                         {
                             text: "CONTACT",
-                            link: CONTACT(),
+                            to: CONTACT(),
                         },
                     ]}
                 />
@@ -233,7 +233,7 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                     entries={[
                         {
                             text: "ACASA",
-                            link: HOME(),
+                            to: HOME(),
                         },
                     ]}
                 />
