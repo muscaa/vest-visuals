@@ -1,3 +1,4 @@
+import { TextH1, TextP, TextSpan } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -10,14 +11,14 @@ export function HeroSection(props: Props) {
             <div className="grid-background" />
             <div className="grid grid-cols-2 gap-16 items-center max-w-7xl w-full">
                 <div className="flex flex-col">
-                    <p className="text-display text-balance mt-14">
+                    <TextH1 size="display" className="mt-14">
                         We build software
                         <br />
                         that ships, <em>predictably.</em>
-                    </p>
-                    <p className="text-lead text-pretty max-w-[50ch] my-10 text-muted-foreground">
+                    </TextH1>
+                    <TextP variant="muted" size="lead" className="max-w-[50ch] my-10">
                         Vest Visuals is a small engineering studio. We design, build, and launch web apps, mobile apps, internal tools, and data products with senior teams — on fixed weekly sprints, no surprises.
-                    </p>
+                    </TextP>
                     <div className="flex gap-4">
                         <Button variant="default">
                             Book a discovery call
@@ -26,10 +27,10 @@ export function HeroSection(props: Props) {
                             See recent work
                         </Button>
                     </div>
-                    <div className="flex gap-12 text-label font-mono text-muted-foreground mt-16">
-                        <span><b>11</b> shipped products</span>
-                        <span><b>4x</b> on-time delivery</span>
-                        <span><b>NPS 72</b> last 12mo</span>
+                    <div className="flex gap-12 mt-16">
+                        <TextSpan variant="muted" size="label" font="mono2"><b>11</b> shipped products</TextSpan>
+                        <TextSpan variant="muted" size="label" font="mono2"><b>4x</b> on-time delivery</TextSpan>
+                        <TextSpan variant="muted" size="label" font="mono2"><b>NPS 72</b> last 12mo</TextSpan>
                     </div>
                 </div>
                 <div className="bg-black/20 size-full">

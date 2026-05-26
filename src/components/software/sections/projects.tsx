@@ -1,3 +1,4 @@
+import { TextH1, TextSpan } from "@/components/typography";
 import { Separator } from "@/components/ui/separator";
 
 interface Props {
@@ -8,16 +9,16 @@ export function ProjectsSection(props: Props) {
     return (
         <div className="flex flex-col justify-center items-center px-6 py-16">
             <div className="flex flex-col max-w-7xl w-full">
-                <div className="flex items-center gap-4 text-label font-mono uppercase text-muted-foreground mb-10">
-                    <span>03</span>
+                <div className="flex items-center gap-4 mb-10">
+                    <TextSpan variant="muted" size="label" font="mono1">03</TextSpan>
                     <Separator className="shrink" />
-                    <span>Work</span>
+                    <TextSpan variant="muted" size="label" font="mono1">Work</TextSpan>
                 </div>
-                <p className="text-h1 text-balance mb-14">
+                <TextH1 className="mb-14">
                     Three years, three problems
                     <br />
                     we kept thinking about.
-                </p>
+                </TextH1>
                 <div className="flex grow h-50 bg-black/20">
 
                 </div>

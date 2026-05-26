@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator"
 import { Icon } from "../home/icons";
+import { Text, TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
 
 interface Props {
 
@@ -60,28 +61,29 @@ export function ServicesSection(props: Props) {
     return (
         <section id="services" className="flex flex-col justify-center items-center px-6 py-16">
             <div className="flex flex-col max-w-7xl w-full">
-                <div className="flex items-center gap-4 text-label font-mono uppercase text-muted-foreground mb-10">
-                    <span>02</span>
+                <div className="flex items-center gap-4 mb-10">
+                    <TextSpan variant="muted" size="label" font="mono1">02</TextSpan>
                     <Separator className="shrink" />
-                    <span>Services</span>
+                    <TextSpan variant="muted" size="label" font="mono1">Services</TextSpan>
                 </div>
-                <p className="text-h1 text-balance mb-4">What we build, end to end.</p>
-                <p className="text-muted-foreground text-pretty max-w-[56ch] mb-14">
+                <TextH1 className="mb-4">What we build, end to end.</TextH1>
+                <TextP variant="muted" size="lead" className="max-w-[56ch] mb-14">
                     Senior generalists on every project. No staff augmentation, no junior layers. We pick the simplest stack that does the job for ten years.
-                </p>
+                </TextP>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border overflow-hidden rounded-lg border">
                     {
                         items.map((it) => (
                             <article key={it.n} className="relative group/service flex flex-col gap-3 p-8 transition-all bg-background hover:bg-background2">
-                                <span className="absolute top-4 right-4 font-mono text-label text-muted-foreground">{it.n}</span>
+                                <TextSpan variant="muted" size="label" font="mono2" className="absolute top-4 right-4">{it.n}</TextSpan>
                                 <div className="grid place-items-center size-10 mb-2 border rounded-md transition-all bg-muted text-informative group-hover/service:text-success group-hover/service:border-success group-hover/service:-rotate-3">{it.icon}</div>
-                                <p className="text-h3">{it.title}</p>
-                                <p className="text-sm text-muted-foreground grow">{it.desc}</p>
+                                <TextH2>{it.title}</TextH2>
+                                {/* <p className="text-h3">{it.title}</p> */}
+                                <TextP variant="muted" size="sm" className="grow">{it.desc}</TextP>
                                 <div className="relative h-16 mt-2 rounded-md transition-all bg-muted group-hover/service:bg-background border overflow-hidden">{it.viz}</div>
-                                <div className="flex justify-between items-center mt-auto pt-4 border-t border-dashed text-label font-mono text-muted-foreground">
+                                <Text variant="muted" size="label" font="mono2" className="flex justify-between items-center mt-auto pt-4 border-t border-dashed">
                                     <span>→ <b className="text-foreground">{it.meta}</b></span>
                                     <span>{it.n}/08</span>
-                                </div>
+                                </Text>
                             </article>
                         ))
                     }

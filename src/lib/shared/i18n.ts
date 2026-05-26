@@ -1,6 +1,5 @@
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
-import { Single } from "@type/utils";
 
 export const locales = ["en", "ro"] as const;
 export type Locale = typeof locales[number];
@@ -282,9 +281,3 @@ export const routing = defineRouting({
 });
 
 export const { Link: I18nLink, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);
-
-export type LinkProps = Single<{ to: Pathname; href: string; }> & Omit<React.ComponentProps<typeof I18nLink>, "href">;
-
-export function Link({ to, href, ...props }: LinkProps) {
-    return I18nLink({ href: to ?? href, ...props });
-}

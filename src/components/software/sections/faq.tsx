@@ -1,6 +1,6 @@
+import { TextH1, TextLink, TextP, TextSpan } from "@/components/typography";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
-import { TextLink } from "@/components/ui/text-link";
 
 interface Props {
 
@@ -45,17 +45,17 @@ export function FAQSection(props: Props) {
     return (
         <section id="faq" className="flex flex-col justify-center items-center px-6 py-16">
             <div className="flex flex-col max-w-7xl w-full">
-                <div className="flex items-center gap-4 text-label font-mono uppercase text-muted-foreground mb-10">
-                    <span>05</span>
+                <div className="flex items-center gap-4 mb-10">
+                    <TextSpan variant="muted" size="label" font="mono1">05</TextSpan>
                     <Separator className="shrink" />
-                    <span>FAQ</span>
+                    <TextSpan variant="muted" size="label" font="mono1">FAQ</TextSpan>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] md:gap-16">
                     <div className="flex flex-col">
-                        <p className="text-h1 text-balance mb-4 max-w-[14ch]">Questions we get most.</p>
-                        <p className="text-muted-foreground text-pretty max-w-[32ch] mb-14">
+                        <TextH1 className="mb-4 max-w-[14ch]">Questions we get most.</TextH1>
+                        <TextP variant="muted" size="lead" className="max-w-[32ch] mb-14">
                             Didn't see yours? Hit us at <TextLink href="mailto:contact@vestvisuals.ro">contact@vestvisuals.ro</TextLink>
-                        </p>
+                        </TextP>
                     </div>
                     <Accordion>
                         {
