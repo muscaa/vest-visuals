@@ -127,7 +127,7 @@ export default function Page() {
             </div>
             <Navbar
                 // logo={<div></div>}
-                links={album ? [
+                /*links={album ? [
                     {
                         type: "endpoint",
                         title: "DOWNLOAD",
@@ -157,9 +157,9 @@ export default function Page() {
                         ),
                         icon: Share2,
                     },
-                ] : []}
+                ] : []}*/
                 className="max-w-none"
-                extraClassName="sticky top-0"
+                // extraClassName="sticky top-0"
             />
             <main className="grow">
                 <MediaWaterfall
