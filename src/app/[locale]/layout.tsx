@@ -2,7 +2,7 @@ import "@/styles/main.css";
 import {
     LocaleLayoutProps,
     BaseLayout,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { locales } from "@shared/i18n";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";

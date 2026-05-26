@@ -5,21 +5,23 @@ import { FooterLarge } from "@/components/footer";
 import { cn } from "@shared/shadcn/lib/utils";
 import { useMain } from "@/hooks/useMain";
 
-export interface Navbar2LayoutProviderProps {
+export interface NavbarLayoutProps {
     children: React.ReactNode;
     nav?: React.ReactNode;
     footer?: React.ReactNode;
     className?: string;
 }
 
-export function Navbar2LayoutProvider(props: Navbar2LayoutProviderProps) {
+export function NavbarLayout(props: NavbarLayoutProps) {
     const { ref } = useMain();
 
     return (
         <>
             {
                 props.nav ?? (
-                    <Navbar />
+                    <Navbar
+                        entries={[]}
+                    />
                 )
             }
             <div ref={ref} className={cn("flex flex-col max-h-full overflow-y-auto", props.className)}>

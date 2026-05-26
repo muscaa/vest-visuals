@@ -6,14 +6,14 @@ import {
     QueryClientProvider,
 } from "@tanstack/react-query";
 import { AuthContextProvider } from "@/contexts/auth";
-import { ThemeLayoutProvider } from "./providers/theme";
+import { ThemeLayoutProvider } from "./theme";
 import { Toaster } from "../ui/sonner";
 import { MainContextProvider } from "@/contexts/main";
-import { AnalyticsProvider } from "./providers/analytics";
+import { AnalyticsProvider } from "./analytics";
 
 export const queryClient = new QueryClient();
 
-export function ClientLayout(props: LayoutProps) {
+export function ClientProvider(props: LayoutProps) {
     return (
         <MainContextProvider>
             <ThemeLayoutProvider

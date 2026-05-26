@@ -1,7 +1,7 @@
 import {
     BaseLayout,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { HOME } from "@shared/i18n";
 
 export const {

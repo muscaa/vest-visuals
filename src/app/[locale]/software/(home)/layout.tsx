@@ -1,7 +1,7 @@
 import {
-    Navbar2Layout,
+    SoftwareNavbarLayout,
     createInfo,
-} from "@/components/layout";
+} from "@/components/layouts";
 import { HOME } from "@shared/i18n";
 
 export const {
@@ -14,4 +14,4 @@ export const {
     }),
 });
 
-export default Navbar2Layout;
+export default SoftwareNavbarLayout;
