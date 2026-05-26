@@ -54,7 +54,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuStyle = cva(
-    "items-center p transition-all focus-visible:ring-[3px] focus-visible:outline-1 outline-none [&_svg:not([class*='size-'])]:size-6",
+    "text-sm items-center transition-all focus-visible:ring-[3px] focus-visible:outline-1 outline-none [&_svg:not([class*='size-'])]:size-6",
     {
         variants: {
             base: {
