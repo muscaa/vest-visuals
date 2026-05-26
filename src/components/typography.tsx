@@ -7,7 +7,7 @@ import {
 import { cn } from "@shared/shadcn/lib/utils";
 import { useRender } from "@base-ui/react/use-render";
 import { mergeProps } from "@base-ui/react/merge-props";
-import { Link, Pathname } from "@shared/i18n";
+import { Link, LinkProps, Pathname } from "@shared/i18n";
 
 export const textVariants = cva(
     "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 border-transparent bg-clip-padding focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none outline-none group/text",
@@ -102,18 +102,19 @@ export function TextP({
 
 export function TextLink({
     to,
+    href,
     variant = "link",
     size = "default",
     font = "default",
     ...props
-}: Props & { to: Pathname; }) {
+}: Props & LinkProps) {
     return (
         <Text
             {...props}
             variant={variant}
             size={size}
             font={font}
-            render={<Link href={to} />}
+            render={<Link href={to ?? href} />}
         />
     );
 }
