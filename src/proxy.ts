@@ -27,7 +27,17 @@ const GUARDED = [
     ...routing.locales.map((locale) => `/${locale}${path}`),
 ]).flat();
 
-function next(request: NextRequest) {
+export async function proxy(request: NextRequest) {
+    const pathname = request.nextUrl.pathname;
+
+    if (GUARDED.includes(pathname) || GUARDED.find(p => pathname.startsWith(p + "/"))) {
+        const cookie = getSessionCookie(request);
+
+        if (!cookie) {
+            return NextResponse.redirect(getUrlString(request, LOGIN()));
+        }
+    }
+
     const response = i18nMiddleware(request);
     if (!response.ok) return response;
 
@@ -45,21 +55,6 @@ function next(request: NextRequest) {
 
     url.pathname = `/${locale}/${subApp}${rest.length ? "/" + rest.join("/") : ""}`;
     return NextResponse.rewrite(url, { headers: response.headers });
-}
-
-export async function proxy(request: NextRequest) {
-    const url = request.nextUrl;
-    const pathname = url.pathname;
-
-    if (GUARDED.includes(pathname) || GUARDED.find(p => pathname.startsWith(p + "/"))) {
-        const cookie = getSessionCookie(request);
-
-        if (!cookie) {
-            return NextResponse.redirect(getUrlString(request, LOGIN()));
-        }
-    }
-
-    return next(request);
 }
 
 export const config = {
