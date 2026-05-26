@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { ImgHTMLAttributes } from "react";
-import { Link } from "@shared/i18n";
+import { Link } from "./link";
 import { VariantProps } from "class-variance-authority";
 import { cn } from "@shared/shadcn/lib/utils";
 

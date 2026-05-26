@@ -1,4 +1,4 @@
-import { Link } from "@shared/i18n";
+import { Link } from "./link";
 import { Img } from "./snippets";
 
 interface Props {

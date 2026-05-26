@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutProps } from "@/components/layout";
+import { LayoutProps } from "@/components/layouts";
 import {
     QueryClient,
     QueryClientProvider,

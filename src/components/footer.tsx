@@ -12,7 +12,6 @@ import {
     IconLink,
     ButtonLink
 } from "@/components/snippets";
-import { TextLink } from "@/components/ui/text-link";
 import {
     ChevronsUp
 } from "lucide-react";
@@ -33,6 +32,7 @@ import { useMain } from "@/hooks/useMain";
 import { LogoLargeLink } from "./logo";
 import { cn } from "@shared/shadcn/lib/utils";
 import { SALLink, SOLLink } from "./anpc";
+import { TextLink } from "./typography";
 
 export function FooterBase() {
     return (

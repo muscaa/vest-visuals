@@ -21,9 +21,10 @@ import {
 } from "@/components/ui/collapsible";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ChevronRightIcon, Dot, Menu } from "lucide-react";
-import { Link, Pathname } from "@shared/i18n";
+import { Link } from "./link";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import { Pathname } from "@shared/i18n";
 
 interface NavigationBase {
     text: string;

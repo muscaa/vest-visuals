@@ -60,7 +60,7 @@ export function Text({
     const element = useRender({
         defaultTagName: "div",
         render,
-        props: mergeProps<"div">({ className: cn(textVariants({ variant, size, className })) }, props),
+        props: mergeProps<"div">({ className: cn(textVariants({ variant, size, font, className })) }, props),
     });
 
     return element;

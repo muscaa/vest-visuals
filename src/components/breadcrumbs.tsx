@@ -8,7 +8,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link } from "@shared/i18n";
+import { Link } from "./link";
 import { Fragment } from "react";
 
 export type BreadcrumbsPage = [name: string, href: string];

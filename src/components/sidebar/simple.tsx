@@ -24,7 +24,7 @@ import { ChevronRight } from "lucide-react";
 import { Icon } from "../snippets";
 import { LogoLargeLink } from "../logo";
 import { splitRender } from "@client/snippets";
-import { Link } from "@shared/i18n";
+import { Link } from "../link";
 
 interface SimpleSidebarMenuItemProps {
     href?: string;
