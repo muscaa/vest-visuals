@@ -1,3 +1,4 @@
+import { TextH1, TextH2 } from "@/components/typography";
 import { getTranslations } from "next-intl/server";
 
 export default async function NotFound() {
@@ -5,8 +6,8 @@ export default async function NotFound() {
 
     return (
         <div className="flex flex-col justify-center items-center text-center gap-8 p-8 w-full min-h-screen-no-nav">
-            <h1 className="h0">404</h1>
-            <h2>{t("not-found")}</h2>
+            <TextH1 size="display">404</TextH1>
+            <TextH2>{t("not-found")}</TextH2>
         </div>
     );
 }
