@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
-        "postbuild": "next-sitemap --config next-sitemap.config.ts",
+        "postbuild": "run-p sitemap:studio sitemap:software",
         "start": "next start",
         "lint": "next lint",
         "db:generate": "dotenvx run -f .env.local -- run-s auth:generate",
@@ -16,7 +16,9 @@
         "drizzle:generate": "drizzle-kit generate",
         "drizzle:migrate": "drizzle-kit migrate",
         "auth:generate": "cli generate --config=./better-auth.config.ts --output=./src/lib/server/db/schema/auth.ts --yes",
-        "auth:migrate": "cli migrate --config=./better-auth.config.ts --yes"
+        "auth:migrate": "cli migrate --config=./better-auth.config.ts --yes",
+        "sitemap:studio": "next-sitemap --config next-sitemap.config.ts --app studio",
+        "sitemap:software": "next-sitemap --config next-sitemap.config.ts --app software"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.997.0",
@@ -72,6 +74,7 @@
         "@dotenvx/dotenvx": "^1.49.0",
         "@eslint/eslintrc": "^0.1.0",
         "@tailwindcss/postcss": "^4",
+        "@types/minimist": "^1.2.5",
         "@types/node": "^25.0.9",
         "@types/react": "^19.2.8",
         "@types/react-dom": "^19.2.3",
@@ -79,6 +82,8 @@
         "drizzle-kit": "^0.31.9",
         "eslint": "^10.0.1",
         "eslint-config-next": "^0.2.4",
+        "jiti": "^2.7.0",
+        "minimist": "^1.2.8",
         "npm-run-all2": "^8.0.4",
         "tailwindcss": "^4",
         "typescript": "^5",

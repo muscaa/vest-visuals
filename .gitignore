@@ -20,9 +20,12 @@ package-lock.json
 
 # production
 /build
-/public/robots.txt
-/public/sitemap.xml
-/public/sitemap-*.xml
+/public/studio/robots.txt
+/public/studio/sitemap.xml
+/public/studio/sitemap-*.xml
+/public/software/robots.txt
+/public/software/sitemap.xml
+/public/software/sitemap-*.xml
 /.data
 
 # misc
