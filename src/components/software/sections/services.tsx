@@ -59,7 +59,7 @@ export function ServicesSection(props: Props) {
     ];
 
     return (
-        <section id="services" className="flex flex-col justify-center items-center px-6 py-16">
+        <section id="services" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-br from-transparent to-muted border-b">
             <div className="flex flex-col max-w-7xl w-full">
                 <div className="flex items-center gap-4 mb-10">
                     <TextSpan variant="muted" size="label" font="mono1">02</TextSpan>
