@@ -32,6 +32,7 @@ export const textVariants = cva(
                 body: "text-body",
                 sm: "text-sm",
                 label: "text-label",
+                xs: "text-xs",
             },
             font: {
                 default: "",

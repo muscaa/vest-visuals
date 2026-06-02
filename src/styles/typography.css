@@ -42,4 +42,8 @@
     --text-label: 11px;
     --text-label--line-height: 1.4;
     --text-label--letter-spacing: 0.08em;
+
+    --text-xs: 8px;
+    --text-xs--line-height: 1.2;
+    --text-xs--letter-spacing: 0.08em;
 }
