@@ -1,3 +1,4 @@
+import { ReviewCarousel } from "@/components/review";
 import { TextH1, TextP, TextSpan } from "@/components/typography";
 import { Separator } from "@/components/ui/separator";
 
@@ -18,9 +19,34 @@ export function TestimonialsSection(props: Props) {
                 <TextP variant="muted" size="lead" className="max-w-[56ch] mb-14">
                     Things our clients said in the post-launch retrospective. Names and titles are real.
                 </TextP>
-                <div className="flex grow h-50 bg-black/20">
-
-                </div>
+                <ReviewCarousel
+                    reviews={[
+                        {
+                            name: "Stefan",
+                            role: "Project Manager",
+                            image: "",
+                            date: "22 may 2026",
+                            score: 5,
+                            description: "Many thanks for the platform, it looks great and it's incredibly fast!",
+                        },
+                        {
+                            name: "Richard",
+                            role: "Project Manager",
+                            image: "",
+                            date: "22 may 2026",
+                            score: 5,
+                            description: "These guys came up with some of the best-looking and most insightful business dashboards I've ever seen. Kudos!",
+                        },
+                        {
+                            name: "Jordan",
+                            role: "Project Manager",
+                            image: "",
+                            date: "22 may 2026",
+                            score: 5,
+                            description: "It was a great pleasure working with this team. They delivered high quality in record time as well.",
+                        },
+                    ]}
+                />
             </div>
         </div>
     );
