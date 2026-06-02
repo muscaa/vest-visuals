@@ -233,8 +233,49 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                 <Navbar
                     entries={[
                         {
-                            text: "ACASA",
-                            to: HOME(),
+                            text: "HOME",
+                            to: "/",
+                        },
+                        {
+                            text: "SERVICES",
+                            entries: [
+                                {
+                                    text: "Web Apps",
+                                    to: "/",
+                                },
+                                {
+                                    text: "Mobile Apps",
+                                    to: "/",
+                                },
+                                {
+                                    text: "Dashboards & Dataviz",
+                                    to: "/",
+                                },
+                                {
+                                    text: "Design Systems",
+                                    to: "/",
+                                },
+                                {
+                                    text: "AI integrations",
+                                    to: "/",
+                                },
+                                {
+                                    text: "Internal Tools",
+                                    to: "/",
+                                },
+                                {
+                                    text: "E-commerce",
+                                    to: "/",
+                                },
+                                {
+                                    text: "Platform engineering",
+                                    to: "/",
+                                },
+                            ],
+                        },
+                        {
+                            text: "CONTACT",
+                            to: "/contact",
                         },
                     ]}
                 />
