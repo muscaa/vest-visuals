@@ -11,7 +11,7 @@ export function ContactSection(props: Props) {
             <div className="grid grid-cols-2 gap-16 max-w-7xl w-full">
                 <div className="flex flex-col">
                     <div className="flex items-center gap-4 mb-10">
-                        <TextSpan variant="muted" size="label" font="mono1">06</TextSpan>
+                        <TextSpan variant="muted" size="label" font="mono1">05</TextSpan>
                         <Separator className="shrink" />
                         <TextSpan variant="muted" size="label" font="mono1">Contact</TextSpan>
                     </div>
