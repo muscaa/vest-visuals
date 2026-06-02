@@ -201,20 +201,17 @@ export function HeroSection(props: Props) {
                             See recent work
                         </Button>
                     </div>
-                    <div className="flex gap-12 mt-16">
+                    {/* <div className="flex gap-12 mt-16">
                         <TextSpan variant="muted" size="label" font="mono2"><b>11</b> shipped products</TextSpan>
                         <TextSpan variant="muted" size="label" font="mono2"><b>4x</b> on-time delivery</TextSpan>
                         <TextSpan variant="muted" size="label" font="mono2"><b>NPS 72</b> last 12mo</TextSpan>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="relative bg-black/20 w-full aspect-5/4">
                     <BrowserMock />
                     <PhoneMock />
                     <TerminalMock />
                 </div>
-            </div>
-            <div className="flex max-w-7xl w-full h-20 mt-16 bg-black/20">
-                {/* TODO */}
             </div>
         </header>
     );
