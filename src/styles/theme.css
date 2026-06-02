@@ -4,12 +4,6 @@
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
-    --color-background2: var(--background2);
-    --color-foreground2: var(--foreground2);
-
-    --color-background3: var(--background3);
-    --color-foreground3: var(--foreground3);
-
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
 

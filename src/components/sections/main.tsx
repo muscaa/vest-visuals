@@ -2,11 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { FooterLarge } from "../footer";
-import { SectionParallax } from "./parallax";
-import { SectionAbout } from "./about";
-import { SectionCarousel } from "./carousel";
-import { SectionTeam } from "./team";
 
 interface SectionsMainProps {
 

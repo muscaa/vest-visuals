@@ -18,6 +18,7 @@ import {
     SERVICES_AUTOMOTIVE,
     SERVICES_MARKETING,
 } from "@shared/i18n";
+import { Footer } from "../footer";
 
 export type MetadataProps<T> = T & {
     t: _Translator<Record<string, any>, never>;
@@ -235,6 +236,29 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                             text: "ACASA",
                             to: HOME(),
                         },
+                    ]}
+                />
+            }
+            footer={
+                <Footer
+                    sections={[
+                        {
+                            title: "Legal",
+                            links: [
+                                {
+                                    name: "Termeni si conditii",
+                                    to: "/terms-of-service",
+                                },
+                                {
+                                    name: "Politica de confidentialitate",
+                                    to: "/privacy-policy",
+                                },
+                                {
+                                    name: "Politica de cookie-uri",
+                                    to: "/cookie-policy",
+                                },
+                            ],
+                        }
                     ]}
                 />
             }

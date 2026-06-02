@@ -73,7 +73,7 @@ export function ServicesSection(props: Props) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border overflow-hidden rounded-lg border">
                     {
                         items.map((it) => (
-                            <article key={it.n} className="relative group/service flex flex-col gap-3 p-8 transition-all bg-background hover:bg-background2">
+                            <article key={it.n} className="relative group/service flex flex-col gap-3 p-8 transition-all bg-background hover:bg-muted">
                                 <TextSpan variant="muted" size="label" font="mono2" className="absolute top-4 right-4">{it.n}</TextSpan>
                                 <div className="grid place-items-center size-10 mb-2 border rounded-md transition-all bg-muted text-informative group-hover/service:text-success group-hover/service:border-success group-hover/service:-rotate-3">{it.icon}</div>
                                 <TextH2>{it.title}</TextH2>

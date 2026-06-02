@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
-import { FooterLarge } from "@/components/footer";
+import { Footer } from "@/components/footer";
 import { cn } from "@shared/shadcn/lib/utils";
 import { useMain } from "@/hooks/useMain";
 
@@ -28,7 +28,9 @@ export function NavbarLayout(props: NavbarLayoutProps) {
                 {props.children}
                 {
                     props.footer ?? (
-                        <FooterLarge />
+                        <Footer
+                            sections={[]}
+                        />
                     )
                 }
             </div>
