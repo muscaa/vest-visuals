@@ -13,6 +13,57 @@
                 "og-title": "Hai să construim ceva grozav",
                 "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
             }
+        },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "Un studio mic, pentru software care merită păstrat.",
+                    "description": "Suntem câțiva ingineri senior din Timișoara, construind produse web și mobile, sisteme interne și instrumente de date pentru clienți din toată lumea. Mici intenționat, ca oamenii care îți stabilesc proiectul să fie aceiași care scriu codul.",
+                    "button-1": "Începe o conversație",
+                    "button-2": "Vezi ce am construit"
+                },
+                "services": {
+                    "eyebrow": "Ce putem face",
+                    "title": "O echipă de produs completă, fără numărul de angajați.",
+                    "description": "Majoritatea studiourilor fie se specializează îngust, fie umplu echipele cu juniori. Noi nu facem nici una, nici alta. Câțiva generaliști senior acoperă întreg ciclul, de la prima schiță pe tablă până la deploy-ul în producție și tot ce îl ține funcțional după.",
+                    "s1-t": "Product Engineering",
+                    "s1-d": "Aplicații web și mobile gândite până în detalii, care rezistă la utilizare reală. Ne pasă la fel de mult de cazurile-limită ca de scenariul ideal.",
+                    "s2-t": "Sisteme Interne",
+                    "s2-d": "Instrumentele pe care chiar funcționează afacerea ta. Transformăm spreadsheet-urile fragile și pașii manuali în software în care echipa ta are încredere.",
+                    "s3-t": "Date & Infrastructură",
+                    "s3-d": "Pipeline-uri, analiză și configurări cloud care fac datele utilizabile și deploy-urile lipsite de evenimente. Munca neglamuroasă de care depinde tot restul.",
+                    "s4-t": "Parteneriat Tehnic",
+                    "s4-d": "Uneori ai nevoie de judecată, nu de mâini în plus. Consiliem pe arhitectură, descurcăm codebase-uri moștenite și ajutăm echipele să decidă ce merită construit."
+                },
+                "testimonials": {
+                    "eyebrow": "Clienți",
+                    "title": "Munca vorbește, dar au făcut-o și ei.",
+                    "description": "Câteva cuvinte de la oamenii pentru care am construit."
+                },
+                "faq": {
+                    "eyebrow": "Bine de știut",
+                    "title": "Înainte să ne scrii.",
+                    "description": "Mai e ceva pe cap? Scrie-ne la <email>contact@vestvisuals.ro</email> și îți răspundem pe șleau.",
+                    "q1": "Cât costă să lucrăm cu voi?",
+                    "a1": "Facturăm time and materials, transparent. Vezi exact unde se duc orele și păstrezi libertatea de a schimba direcția pe măsură ce munca îți arată ce contează. Fără scope fix care se învechește pe tăcute, fără estimări umflate.",
+                    "q2": "Cât de mic înseamnă \"mic\"?",
+                    "a2": "Suficient de mic încât să cunoști pe nume pe toți cei care lucrează la proiectul tău și încât inginerul senior din apelul de discovery să fie cel care îți scrie codul. Asta e ideea, nu o limitare.",
+                    "q3": "Lucrați cu clienți din afara României?",
+                    "a3": "Cea mai mare parte a muncii noastre e remote și internațională. Suntem obișnuiți să lucrăm peste fusuri orare și avem un ritm prin care păstrăm proiectele distribuite clare și pe drumul cel bun.",
+                    "q4": "Puteți prelua ceva care a fost deja început?",
+                    "a4": "Da, și o facem des. Codebase-uri moștenite, build-uri pe jumătate făcute sau un proiect care a depășit pe cine l-a început. Evaluăm cinstit ce se poate salva înainte să propunem o rescriere.",
+                    "q5": "De ce aveți nevoie de la noi ca să începem?",
+                    "a5": "De o conversație. Nu ai nevoie de o specificație finită sau de documente tehnice, doar de o idee clară despre problemă. Te ajutăm noi să o modelăm în ceva ce se poate construi.",
+                    "q6": "Ce se întâmplă când se termină proiectul?",
+                    "a6": "Deții fiecare linie de cod din prima zi. Predăm documentație curată și rămânem disponibili dacă vrei suport continuu, dar nu ești niciodată blocat cu noi."
+                },
+                "contact": {
+                    "eyebrow": "Contact",
+                    "title": "Hai să discutăm despre proiectul tău.",
+                    "description": "Spune-ne ce construiești și îți răspundem într-o zi lucrătoare. Dacă suntem potriviți, stabilim un apel scurt; dacă nu, te îndrumăm bucuroși spre cineva care e.",
+                    "button": "Mergi la pagina de contact"
+                }
+            }
         }
     },
     "Metadata": {

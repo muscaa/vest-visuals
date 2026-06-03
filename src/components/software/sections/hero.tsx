@@ -2,33 +2,33 @@
 
 import { ButtonLink } from "@/components/snippets";
 import { TextH1, TextP, TextSpan } from "@/components/typography";
-import { Button } from "@/components/ui/button";
 import { cn } from "@shared/shadcn/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface Props {
 
 }
 
 export function HeroSection(props: Props) {
+    const t = useTranslations("Software.Page.home.hero");
+
     return (
         <header id="hero" className="relative flex flex-col justify-center items-center px-6 pt-24 pb-18 border-b">
             <div className="grid-background" />
             <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-16 items-center max-w-7xl w-full">
                 <div className="flex flex-col">
                     <TextH1 size="display" className="mt-14">
-                        We build software
-                        <br />
-                        that ships, <em>predictably.</em>
+                        {t("title")}
                     </TextH1>
                     <TextP variant="muted" size="lead" className="max-w-[50ch] my-10">
-                        Vest Visuals is a small engineering studio. We design, build, and launch web apps, mobile apps, internal tools, and data products with senior teams — on fixed weekly sprints, no surprises.
+                        {t("description")}
                     </TextP>
                     <div className="flex gap-4">
                         <ButtonLink to="/contact" variant="default">
-                            Book a discovery call
+                            {t("button-1")}
                         </ButtonLink>
                         <ButtonLink href="#services" variant="outline">
-                            See what we do
+                            {t("button-2")}
                         </ButtonLink>
                     </div>
                     {/* <div className="flex gap-12 mt-16">

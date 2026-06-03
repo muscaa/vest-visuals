@@ -13,6 +13,57 @@
                 "og-title": "Let's build something great",
                 "og-subtitle": "Tell us about your project and we'll take it from there"
             }
+        },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "A small studio for software worth keeping.",
+                    "description": "We're a handful of senior engineers in Timișoara, building web and mobile products, internal systems, and data tooling for clients worldwide. Small on purpose, so the people who scope your project are the same ones who write the code.",
+                    "button-1": "Start a conversation",
+                    "button-2": "Explore our work"
+                },
+                "services": {
+                    "eyebrow": "Capabilities",
+                    "title": "A full product team, without the headcount.",
+                    "description": "Most studios specialize narrowly or pad teams with juniors. We do neither. A few senior generalists cover the whole lifecycle, from the first whiteboard sketch to the production deploy and everything that keeps it running after.",
+                    "s1-t": "Product Engineering",
+                    "s1-d": "Web and mobile apps that feel considered in the details and hold up under real use. We care as much about the edge cases as the happy path.",
+                    "s2-t": "Internal Systems",
+                    "s2-d": "The tools your business actually runs on. We turn brittle spreadsheets and manual handoffs into software your team trusts.",
+                    "s3-t": "Data & Infrastructure",
+                    "s3-d": "Pipelines, analytics, and cloud setups that make data usable and deploys uneventful. The unglamorous work that everything else depends on.",
+                    "s4-t": "Technical Partnership",
+                    "s4-d": "Sometimes you need judgment more than hands. We advise on architecture, untangle inherited codebases, and help teams decide what's worth building."
+                },
+                "testimonials": {
+                    "eyebrow": "Clients",
+                    "title": "The work speaks, but they did too.",
+                    "description": "A few words from the people we've built for."
+                },
+                "faq": {
+                    "eyebrow": "Good to know",
+                    "title": "Before you reach out.",
+                    "description": "Anything else on your mind? Write to us at <email>contact@vestvisuals.ro</email> and we'll answer plainly.",
+                    "q1": "What does it cost to work with you?",
+                    "a1": "We bill for time and materials, transparently. You see exactly where the hours go and keep the freedom to change direction as the work teaches you what matters. No fixed scope quietly going stale, no padded estimates.",
+                    "q2": "How small is \"small\"?",
+                    "a2": "Small enough that you'll know everyone working on your project by name, and that the senior engineer in the discovery call is the one writing your code. That's the point, not a limitation.",
+                    "q3": "Do you work with clients outside Romania?",
+                    "a3": "Most of our work is remote and international. We're used to working across time zones and have a rhythm for keeping distributed projects clear and on track.",
+                    "q4": "Can you take over something that's already been started?",
+                    "a4": "Yes, and we often do. Inherited codebases, half-finished builds, or a project that's outgrown whoever started it. We'll assess honestly what's salvageable before suggesting a rewrite.",
+                    "q5": "What do you need from us to start?",
+                    "a5": "A conversation. You don't need a finished spec or technical documents, just a clear sense of the problem. We'll help shape it into something buildable.",
+                    "q6": "What happens when the project ends?",
+                    "a6": "You own every line of code from day one. We hand off clean documentation, and we're around if you want ongoing support, but you're never locked in."
+                },
+                "contact": {
+                    "eyebrow": "Get in touch",
+                    "title": "Let's talk about your project.",
+                    "description": " Tell us what you're building and we'll reply within one business day. If we're the right fit, we'll set up a short call; if we're not, we'll happily point you toward someone who is.",
+                    "button": "Go to contact page"
+                }
+            }
         }
     },
     "Metadata": {

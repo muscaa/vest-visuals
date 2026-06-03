@@ -16,61 +16,64 @@ import {
     Sparkles,
     Zap,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
 
 }
 
 export function ServicesSection(props: Props) {
+    const t = useTranslations("Software.Page.home.services");
+
     const items: { n: string; icon: React.ReactNode; title: string; desc: string; meta: string; viz: React.ReactNode }[] = [
         {
-            n: "01", icon: <Code />, title: "Custom web apps",
-            desc: "TypeScript, React, Next.js. Type-safe from the database to the design system.",
+            n: "01", icon: <Code />, title: t("s1-t"),
+            desc: t("s1-d"),
             meta: "12 shipped",
             viz: <VizCode />,
         },
         {
-            n: "02", icon: <Smartphone />, title: "Mobile apps",
-            desc: "Native (Swift, Kotlin) or universal (React Native, Expo) — your call.",
+            n: "02", icon: <Smartphone />, title: t("s2-t"),
+            desc: t("s2-d"),
             meta: "iOS + Android",
             viz: <VizPhone />,
         },
         {
-            n: "03", icon: <ChartNoAxesCombined />, title: "Dashboards & dataviz",
-            desc: "D3, Plot, custom WebGL. We turn warehouse rows into something you can act on.",
+            n: "03", icon: <ChartNoAxesCombined />, title: t("s3-t"),
+            desc: t("s3-d"),
             meta: "real-time ready",
             viz: <VizChart />,
         },
         {
-            n: "04", icon: <LayoutGrid />, title: "Design systems",
-            desc: "Tokens, components, docs. Tailwind + shadcn or fully custom — handed off to your team.",
+            n: "04", icon: <LayoutGrid />, title: t("s4-t"),
+            desc: t("s4-d"),
             meta: "Figma + code",
             viz: <VizSystem />,
         },
-        {
-            n: "05", icon: <Sparkles />, title: "AI integrations",
-            desc: "RAG, agents, evals. Claude, GPT, in-house — we ship the boring scaffolding around them.",
-            meta: "eval-driven",
-            viz: <VizAI />,
-        },
-        {
-            n: "06", icon: <Zap />, title: "Internal tools",
-            desc: "Admin panels, ops dashboards, workflow apps. Built fast, maintained for years.",
-            meta: "low-overhead",
-            viz: <VizPanel />,
-        },
-        {
-            n: "07", icon: <ShoppingCart />, title: "E-commerce",
-            desc: "Shopify Hydrogen, custom storefronts, headless. Conversion is a number — we move it.",
-            meta: "+34% CR avg",
-            viz: <VizCart />,
-        },
-        {
-            n: "08", icon: <Layers />, title: "Platform engineering",
-            desc: "Migrations, infra, CI/CD. We get your team off the things slowing them down.",
-            meta: "no rewrites",
-            viz: <VizStack />,
-        },
+        // {
+        //     n: "05", icon: <Sparkles />, title: "AI integrations",
+        //     desc: "RAG, agents, evals. Claude, GPT, in-house — we ship the boring scaffolding around them.",
+        //     meta: "eval-driven",
+        //     viz: <VizAI />,
+        // },
+        // {
+        //     n: "06", icon: <Zap />, title: "Internal tools",
+        //     desc: "Admin panels, ops dashboards, workflow apps. Built fast, maintained for years.",
+        //     meta: "low-overhead",
+        //     viz: <VizPanel />,
+        // },
+        // {
+        //     n: "07", icon: <ShoppingCart />, title: "E-commerce",
+        //     desc: "Shopify Hydrogen, custom storefronts, headless. Conversion is a number — we move it.",
+        //     meta: "+34% CR avg",
+        //     viz: <VizCart />,
+        // },
+        // {
+        //     n: "08", icon: <Layers />, title: "Platform engineering",
+        //     desc: "Migrations, infra, CI/CD. We get your team off the things slowing them down.",
+        //     meta: "no rewrites",
+        //     viz: <VizStack />,
+        // },
     ];
 
     return (
@@ -79,11 +82,15 @@ export function ServicesSection(props: Props) {
                 <div className="flex items-center gap-4 mb-10">
                     <TextSpan variant="muted" size="label" font="mono1">02</TextSpan>
                     <Separator className="shrink" />
-                    <TextSpan variant="muted" size="label" font="mono1">Services</TextSpan>
+                    <TextSpan variant="muted" size="label" font="mono1" className="shrink-0">
+                        {t("eyebrow")}
+                    </TextSpan>
                 </div>
-                <TextH1 className="mb-4">What we build, end to end.</TextH1>
+                <TextH1 className="mb-4">
+                    {t("title")}
+                </TextH1>
                 <TextP variant="muted" size="lead" className="max-w-[56ch] mb-14">
-                    Senior generalists on every project. No staff augmentation, no junior layers. We pick the simplest stack that does the job for ten years.
+                    {t("description")}
                 </TextP>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border overflow-hidden rounded-lg border">
                     {
@@ -92,12 +99,11 @@ export function ServicesSection(props: Props) {
                                 <TextSpan variant="muted" size="label" font="mono2" className="absolute top-4 right-4">{it.n}</TextSpan>
                                 <div className="grid place-items-center size-10 mb-2 border rounded-md transition-all bg-muted text-informative group-hover/service:text-success group-hover/service:border-success group-hover/service:-rotate-3">{it.icon}</div>
                                 <TextH2>{it.title}</TextH2>
-                                {/* <p className="text-h3">{it.title}</p> */}
                                 <TextP variant="muted" size="sm" className="grow">{it.desc}</TextP>
                                 <div className="relative h-16 mt-2 rounded-md transition-all bg-muted group-hover/service:bg-background border overflow-hidden">{it.viz}</div>
                                 <Text variant="muted" size="label" font="mono2" className="flex justify-between items-center mt-auto pt-4 border-t border-dashed">
                                     <span>→ <b className="text-foreground">{it.meta}</b></span>
-                                    <span>{it.n}/08</span>
+                                    <span>{it.n}/04</span>
                                 </Text>
                             </article>
                         ))
@@ -111,7 +117,7 @@ export function ServicesSection(props: Props) {
 function VizCode() {
     return (
         <svg viewBox="0 0 200 56" width="100%" height="100%" preserveAspectRatio="none">
-            <g fontFamily="JetBrains Mono, monospace" fontSize="6.5" fill="var(--fg-soft)">
+            <g fontFamily="JetBrains Mono, monospace" fontSize="6.5" fill="var(--muted-foreground)">
                 <text x="10" y="14"><tspan fill="var(--color5)">01</tspan> <tspan fill="var(--color1)">const</tspan> ship = () =&gt; &#123;</text>
                 <text x="10" y="26"><tspan fill="var(--color5)">02</tspan> <tspan fill="var(--color1)">&#160;&#160;return</tspan> &quot;main&quot;</text>
                 <text x="10" y="38"><tspan fill="var(--color5)">03</tspan> &#125;</text>
