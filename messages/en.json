@@ -3,7 +3,15 @@
         "Metadata": {
             "home": {
                 "title": "Home",
-                "description": "Vest Visuals is a full-service software development company building web and mobile apps, custom internal tools, SaaS products, and cloud & DevOps solutions for startups, SMBs, and enterprises worldwide. Partner with our remote-first team to design, build, and scale reliable software tailored to your business."
+                "description": "Vest Visuals is a full-service software development company building web and mobile apps, custom internal tools, SaaS products, and cloud & DevOps solutions for startups, SMBs, and enterprises worldwide. Partner with our remote-first team to design, build, and scale reliable software tailored to your business.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Building web, mobile & cloud software that scales"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Get in touch with Vest Visuals to discuss your software project. Reach our remote-first team for web and mobile apps, custom tools, SaaS, and cloud & DevOps solutions. Request a quote, ask a question, or schedule a free consultation — we typically reply within one business day.",
+                "og-title": "Let's build something great",
+                "og-subtitle": "Tell us about your project and we'll take it from there"
             }
         }
     },

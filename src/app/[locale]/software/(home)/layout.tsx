@@ -10,8 +10,8 @@ export const {
         description: t("Software.Metadata.home.description"),
         url: "/",
         image: og.splitImage({
-            title: t("Software.Metadata.home.title"),
-            subtitle: t("Software.Metadata.home.description"),
+            title: t("Software.Metadata.home.og-title"),
+            subtitle: t("Software.Metadata.home.og-subtitle"),
             image: "/software.png",
         }),
     }),

@@ -80,7 +80,7 @@ export async function GET(request: Request) {
                             <p
                                 tw="text-6xl tracking-tight"
                                 style={{
-                                    fontFamily: "sans-500",
+                                    fontFamily: "sans-700",
                                 }}
                             >
                                 {title}
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
                             {
                                 subtitle && (
                                     <p
-                                        tw="text-lg"
+                                        tw="text-2xl"
                                         style={{
                                             color: muted,
                                             fontFamily: "sans-400",

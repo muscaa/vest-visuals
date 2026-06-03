@@ -1,9 +1,17 @@
 {
-    "Software" : {
+    "Software": {
         "Metadata": {
             "home": {
                 "title": "Acasă",
-                "description": "Vest Visuals este o companie de dezvoltare software full-service care creează aplicații web și mobile, instrumente interne personalizate, produse SaaS și soluții cloud & DevOps pentru startup-uri, IMM-uri și companii mari din întreaga lume. Colaborează cu echipa noastră remote pentru a proiecta, construi și scala software fiabil, adaptat afacerii tale."
+                "description": "Vest Visuals este o companie de dezvoltare software full-service care creează aplicații web și mobile, instrumente interne personalizate, produse SaaS și soluții cloud & DevOps pentru startup-uri, IMM-uri și companii mari din întreaga lume. Colaborează cu echipa noastră remote pentru a proiecta, construi și scala software fiabil, adaptat afacerii tale.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Dezvoltăm software web, mobile & cloud care scalează"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Contactează Vest Visuals pentru a discuta despre proiectul tău software. Echipa noastră remote te ajută cu aplicații web și mobile, instrumente personalizate, SaaS și soluții cloud & DevOps. Solicită o ofertă, pune o întrebare sau programează o consultație gratuită — răspundem de obicei într-o zi lucrătoare.",
+                "og-title": "Hai să construim ceva grozav",
+                "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
             }
         }
     },

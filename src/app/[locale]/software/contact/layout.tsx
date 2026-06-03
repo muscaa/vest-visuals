@@ -6,12 +6,12 @@ export const {
     generateMetadata,
 } = generate({
     metadata: async ({ t }) => ({
-        title: t("Software.Metadata.home.title"),
-        description: t("Software.Metadata.home.description"),
+        title: t("Software.Metadata.contact.title"),
+        description: t("Software.Metadata.contact.description"),
         url: "/",
         image: og.splitImage({
-            title: t("Software.Metadata.home.title"),
-            subtitle: t("Software.Metadata.home.description"),
+            title: t("Software.Metadata.contact.og-title"),
+            subtitle: t("Software.Metadata.contact.og-subtitle"),
             image: "/software.png",
         }),
     }),
