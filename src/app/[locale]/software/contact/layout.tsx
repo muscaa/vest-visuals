@@ -8,7 +8,7 @@ export const {
     metadata: async ({ t }) => ({
         title: t("Software.Metadata.contact.title"),
         description: t("Software.Metadata.contact.description"),
-        url: "/",
+        url: "/contact",
         image: og.splitImage({
             title: t("Software.Metadata.contact.og-title"),
             subtitle: t("Software.Metadata.contact.og-subtitle"),
