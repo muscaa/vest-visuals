@@ -321,19 +321,23 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                             ],
                         },
                         {
-                            title: "Legal",
+                            title: "Company",
                             links: [
                                 {
-                                    name: "Termeni si conditii",
+                                    name: "Terms of service",
                                     to: "/terms-of-service",
                                 },
                                 {
-                                    name: "Politica de confidentialitate",
+                                    name: "Privacy policy",
                                     to: "/privacy-policy",
                                 },
                                 {
-                                    name: "Politica de cookie-uri",
+                                    name: "Cookie policy",
                                     to: "/cookie-policy",
+                                },
+                                {
+                                    name: "Contact",
+                                    to: "/contact",
                                 },
                             ],
                         },

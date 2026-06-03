@@ -231,7 +231,7 @@ export function Footer(props: Props) {
     return (
         <footer className="relative flex flex-col mt-4.5">
             <div className="flex justify-center items-center bg-muted">
-                <div className="flex flex-wrap-reverse justify-evenly max-w-6xl w-full px-4 py-16 gap-12">
+                <div className="flex flex-wrap-reverse justify-evenly max-w-7xl w-full px-4 py-16 gap-12">
                     <div
                         className="
                             flex flex-wrap gap-6
@@ -240,13 +240,13 @@ export function Footer(props: Props) {
                         "
                     >
                         <LogoLargeLink />
-                        {/* <div className="flex flex-col">
+                        <div className="flex flex-col">
                             {
                                 pj.map((info, index) => (
                                     <p key={index}>{info}</p>
                                 ))
                             }
-                        </div> */}
+                        </div>
                         <div className="flex flex-col gap-1">
                             <SALLink />
                             <SOLLink />
@@ -271,7 +271,7 @@ export function Footer(props: Props) {
                 </div>
             </div>
             <div className="flex justify-center items-center bg-secondary">
-                <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-7xl w-full px-4 py-8 gap-6">
                     <div className="flex items-center justify-center sm:justify-start gap-4">
                         <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
                         <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
