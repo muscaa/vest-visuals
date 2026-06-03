@@ -1,16 +1,19 @@
-import {
-    SoftwareNavbarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { HOME } from "@shared/i18n";
+import { generate, og } from "@/components/layouts";
+import { SoftwareNavbarLayout } from "@/components/layouts/software";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
+} = generate({
     metadata: async ({ t }) => ({
-        route: HOME(),
-        routeName: t("Metadata.home.title"),
+        title: t("Software.Metadata.home.title"),
+        description: t("Software.Metadata.home.description"),
+        url: "/",
+        image: og.splitImage({
+            title: t("Software.Metadata.home.title"),
+            subtitle: t("Software.Metadata.home.description"),
+            image: "/software.png",
+        }),
     }),
 });
 
