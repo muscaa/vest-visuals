@@ -284,6 +284,43 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                 <Footer
                     sections={[
                         {
+                            title: "Services",
+                            links: [
+                                {
+                                    name: "Web Apps",
+                                    to: "/",
+                                },
+                                {
+                                    name: "Mobile Apps",
+                                    to: "/",
+                                },
+                                {
+                                    name: "Dashboards & Dataviz",
+                                    to: "/",
+                                },
+                                {
+                                    name: "Design Systems",
+                                    to: "/",
+                                },
+                                {
+                                    name: "AI integrations",
+                                    to: "/",
+                                },
+                                {
+                                    name: "Internal Tools",
+                                    to: "/",
+                                },
+                                {
+                                    name: "E-commerce",
+                                    to: "/",
+                                },
+                                {
+                                    name: "Platform engineering",
+                                    to: "/",
+                                },
+                            ],
+                        },
+                        {
                             title: "Legal",
                             links: [
                                 {
@@ -299,7 +336,7 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                                     to: "/cookie-policy",
                                 },
                             ],
-                        }
+                        },
                     ]}
                 />
             }

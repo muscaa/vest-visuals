@@ -1,5 +1,6 @@
 "use client";
 
+import { ButtonLink } from "@/components/snippets";
 import { TextH1, TextP, TextSpan } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { cn } from "@shared/shadcn/lib/utils";
@@ -23,12 +24,12 @@ export function HeroSection(props: Props) {
                         Vest Visuals is a small engineering studio. We design, build, and launch web apps, mobile apps, internal tools, and data products with senior teams — on fixed weekly sprints, no surprises.
                     </TextP>
                     <div className="flex gap-4">
-                        <Button variant="default">
+                        <ButtonLink to="/contact" variant="default">
                             Book a discovery call
-                        </Button>
-                        <Button variant="outline">
-                            See recent work
-                        </Button>
+                        </ButtonLink>
+                        <ButtonLink href="#services" variant="outline">
+                            See what we do
+                        </ButtonLink>
                     </div>
                     {/* <div className="flex gap-12 mt-16">
                         <TextSpan variant="muted" size="label" font="mono2"><b>11</b> shipped products</TextSpan>

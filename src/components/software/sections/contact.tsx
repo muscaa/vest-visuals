@@ -25,7 +25,7 @@ export function ContactSection(props: Props) {
                 <TextP variant="muted" size="lead" className="max-w-[58ch] mb-14 text-center">
                     We reply within one business day. If it's a fit, we'll suggest a 30-minute discovery call; if not, we'll point you somewhere good.
                 </TextP>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <ButtonLink to="/contact" size="lg">Go to contact page</ButtonLink>
                     <ButtonLink href="mailto:contact@vestvisuals.ro" size="lg" variant="link">contact@vestvisuals.ro</ButtonLink>
                 </div>
