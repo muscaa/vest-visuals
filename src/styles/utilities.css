@@ -30,11 +30,22 @@
 }
 
 @keyframes gradient-slide {
+
     0%,
     100% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+}
+
+@utility polygon-scatter-background {
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-image: url("/polygon-scatter.svg");
+    background-size: cover;
+    pointer-events: none;
 }
