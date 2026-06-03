@@ -1,6 +1,21 @@
 import { Separator } from "@/components/ui/separator"
-import { Icon } from "../home/icons";
-import { Text, TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
+import {
+    Text,
+    TextH1,
+    TextH2,
+    TextP,
+    TextSpan,
+} from "@/components/typography";
+import {
+    ChartNoAxesCombined,
+    Code,
+    Layers,
+    LayoutGrid,
+    ShoppingCart,
+    Smartphone,
+    Sparkles,
+    Zap,
+} from "lucide-react";
 
 interface Props {
 
@@ -9,49 +24,49 @@ interface Props {
 export function ServicesSection(props: Props) {
     const items: { n: string; icon: React.ReactNode; title: string; desc: string; meta: string; viz: React.ReactNode }[] = [
         {
-            n: "01", icon: <Icon.Code />, title: "Custom web apps",
+            n: "01", icon: <Code />, title: "Custom web apps",
             desc: "TypeScript, React, Next.js. Type-safe from the database to the design system.",
             meta: "12 shipped",
             viz: <VizCode />,
         },
         {
-            n: "02", icon: <Icon.Phone />, title: "Mobile apps",
+            n: "02", icon: <Smartphone />, title: "Mobile apps",
             desc: "Native (Swift, Kotlin) or universal (React Native, Expo) — your call.",
             meta: "iOS + Android",
             viz: <VizPhone />,
         },
         {
-            n: "03", icon: <Icon.Chart />, title: "Dashboards & dataviz",
+            n: "03", icon: <ChartNoAxesCombined />, title: "Dashboards & dataviz",
             desc: "D3, Plot, custom WebGL. We turn warehouse rows into something you can act on.",
             meta: "real-time ready",
             viz: <VizChart />,
         },
         {
-            n: "04", icon: <Icon.Grid />, title: "Design systems",
+            n: "04", icon: <LayoutGrid />, title: "Design systems",
             desc: "Tokens, components, docs. Tailwind + shadcn or fully custom — handed off to your team.",
             meta: "Figma + code",
             viz: <VizSystem />,
         },
         {
-            n: "05", icon: <Icon.Spark />, title: "AI integrations",
+            n: "05", icon: <Sparkles />, title: "AI integrations",
             desc: "RAG, agents, evals. Claude, GPT, in-house — we ship the boring scaffolding around them.",
             meta: "eval-driven",
             viz: <VizAI />,
         },
         {
-            n: "06", icon: <Icon.Bolt />, title: "Internal tools",
+            n: "06", icon: <Zap />, title: "Internal tools",
             desc: "Admin panels, ops dashboards, workflow apps. Built fast, maintained for years.",
             meta: "low-overhead",
             viz: <VizPanel />,
         },
         {
-            n: "07", icon: <Icon.Cart />, title: "E-commerce",
+            n: "07", icon: <ShoppingCart />, title: "E-commerce",
             desc: "Shopify Hydrogen, custom storefronts, headless. Conversion is a number — we move it.",
             meta: "+34% CR avg",
             viz: <VizCart />,
         },
         {
-            n: "08", icon: <Icon.Layers />, title: "Platform engineering",
+            n: "08", icon: <Layers />, title: "Platform engineering",
             desc: "Migrations, infra, CI/CD. We get your team off the things slowing them down.",
             meta: "no rewrites",
             viz: <VizStack />,
