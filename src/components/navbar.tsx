@@ -4,6 +4,7 @@ import { cn } from "@shared/shadcn/lib/utils";
 import { LogoSmallLink } from "./logo";
 import { Navigation, NavigationEntry } from "./navigation";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageToggle } from "./language-toggle";
 
 export interface NavbarProps {
     entries?: NavigationEntry[];
@@ -25,7 +26,12 @@ export function Navbar(props: NavbarProps) {
                     props.right ?? (
                         <Navigation
                             entries={props.entries ?? []}
-                            end={<ThemeToggle />}
+                            end={(
+                                <>
+                                    <ThemeToggle />
+                                    <LanguageToggle />
+                                </>
+                            )}
                         />
                     )
                 }
