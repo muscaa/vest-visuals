@@ -22,6 +22,7 @@ export function LanguageToggle() {
         } as any, {
             locale: locales[nextIndex]
         });
+        router.refresh();
     };
 
     return (

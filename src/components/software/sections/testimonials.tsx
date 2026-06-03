@@ -20,7 +20,7 @@ export function TestimonialsSection(props: Props) {
                         {t("eyebrow")}
                     </TextSpan>
                 </div>
-                <TextH1 className="mb-4">
+                <TextH1 className="mb-4 max-w-[20ch]">
                     {t("title")}
                 </TextH1>
                 <TextP variant="muted" size="lead" className="max-w-[56ch] mb-14">
