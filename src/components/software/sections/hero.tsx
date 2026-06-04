@@ -9,7 +9,7 @@ interface Props {
 
 }
 
-export function HeroSection(props: Props) {
+export function SoftwareHeroSection(props: Props) {
     const t = useTranslations("Software.Page.home.hero");
 
     return (

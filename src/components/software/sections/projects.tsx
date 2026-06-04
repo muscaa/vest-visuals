@@ -5,7 +5,7 @@ interface Props {
 
 }
 
-export function ProjectsSection(props: Props) {
+export function SoftwareProjectsSection(props: Props) {
     return (
         <div className="flex flex-col justify-center items-center px-6 py-16">
             <div className="flex flex-col max-w-7xl w-full">

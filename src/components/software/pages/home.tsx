@@ -1,23 +1,23 @@
-import { ContactSection } from "../sections/contact";
-import { FAQSection } from "../sections/faq";
-import { HeroSection } from "../sections/hero";
-// import { ProjectsSection } from "../sections/projects";
-import { ServicesSection } from "../sections/services";
-import { TestimonialsSection } from "../sections/testimonials";
+import { SoftwareContactSection } from "../sections/contact";
+import { SoftwareFAQSection } from "../sections/faq";
+import { SoftwareHeroSection } from "../sections/hero";
+// import { SoftwareProjectsSection } from "../sections/projects";
+import { SoftwareServicesSection } from "../sections/services";
+import { SoftwareTestimonialsSection } from "../sections/testimonials";
 
 interface Props {
 
 }
 
-export function HomePage(props: Props) {
+export function SoftwareHomePage(props: Props) {
     return (
         <>
-            <HeroSection />
-            <ServicesSection />
-            {/* <ProjectsSection /> */}
-            <TestimonialsSection />
-            <FAQSection />
-            <ContactSection />
+            <SoftwareHeroSection />
+            <SoftwareServicesSection />
+            {/* <SoftwareProjectsSection /> */}
+            <SoftwareTestimonialsSection />
+            <SoftwareFAQSection />
+            <SoftwareContactSection />
         </>
     );
 }

@@ -9,7 +9,7 @@ interface Props {
 
 }
 
-export function ContactSection(props: Props) {
+export function SoftwareContactSection(props: Props) {
     const t = useTranslations("Software.Page.home.contact");
 
     return (

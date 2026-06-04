@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-export function TestimonialsSection(props: Props) {
+export function SoftwareTestimonialsSection(props: Props) {
     const t = useTranslations("Software.Page.home.testimonials");
 
     return (

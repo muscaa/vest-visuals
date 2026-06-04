@@ -22,7 +22,7 @@ interface Props {
 
 }
 
-export function ServicesSection(props: Props) {
+export function SoftwareServicesSection(props: Props) {
     const t = useTranslations("Software.Page.home.services");
 
     const items: { n: string; icon: React.ReactNode; title: string; desc: string; meta: string; viz: React.ReactNode }[] = [

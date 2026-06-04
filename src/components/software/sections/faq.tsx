@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-export function FAQSection(props: Props) {
+export function SoftwareFAQSection(props: Props) {
     const t = useTranslations("Software.Page.home.faq");
 
     const items = [
