@@ -1,4 +1,20 @@
 {
+    "Studio": {
+        "Metadata": {
+            "home": {
+                "title": "Acasă",
+                "description": "Vest Visuals este un studio profesional de fotografie și videografie specializat în nunți, evenimente, portrete, automotive, imobiliare și conținut de marketing. Livrăm imagini și video de înaltă calitate, adaptate nevoilor tale, cu servicii de încredere și timp de execuție rapid pentru clienți din întreaga regiune.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Servicii profesionale de fotografie & videografie"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Contactează Vest Visuals pentru a discuta despre proiectul tău de fotografie sau videografie. Acoperim nunți, evenimente, portrete, automotive, imobiliare și filmări de marketing. Solicită o ofertă, pune o întrebare sau rezervă-ți ședința, răspundem de obicei într-o zi lucrătoare.",
+                "og-title": "Hai să lucrăm împreună",
+                "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
+            }
+        }
+    },
     "Software": {
         "Metadata": {
             "home": {

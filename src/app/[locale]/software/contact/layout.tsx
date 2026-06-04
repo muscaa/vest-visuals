@@ -12,7 +12,7 @@ export const {
         image: og.splitImage({
             title: t("Software.Metadata.contact.og-title"),
             subtitle: t("Software.Metadata.contact.og-subtitle"),
-            image: "/software.png",
+            image: "/software.jpg",
         }),
     }),
 });

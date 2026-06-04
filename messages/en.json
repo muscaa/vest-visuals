@@ -1,4 +1,20 @@
 {
+    "Studio": {
+        "Metadata": {
+            "home": {
+                "title": "Home",
+                "description": "Vest Visuals is a professional photography and videography studio specializing in weddings, events, portraits, automotive, real estate, and marketing content. We deliver high-quality images and video tailored to your needs, with reliable service and fast turnaround for clients across the region.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Professional photography & videography services"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Contact Vest Visuals to discuss your photography or videography project. We cover weddings, events, portraits, automotive, real estate, and marketing shoots. Request a quote, ask a question, or book your session, we typically reply within one business day.",
+                "og-title": "Let's work together",
+                "og-subtitle": "Tell us about your project and we'll handle the rest"
+            }
+        }
+    },
     "Software": {
         "Metadata": {
             "home": {
