@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { ImgHTMLAttributes } from "react";
+// import { ImgHTMLAttributes } from "react";
 import { Link } from "./link";
 import { VariantProps } from "class-variance-authority";
 import { cn } from "@shared/shadcn/lib/utils";
@@ -28,13 +28,13 @@ export function ButtonLink({ className, variant = "default", size = "default", .
     );
 }
 
-export function Img(props: ImgHTMLAttributes<HTMLImageElement>) {
-    return (
-        <img
-            fetchPriority="low"
-            loading="lazy"
-            decoding="async"
-            {...props}
-        />
-    );
-}
+// export function Img(props: ImgHTMLAttributes<HTMLImageElement>) {
+//     return (
+//         <img
+//             fetchPriority="low"
+//             loading="lazy"
+//             decoding="async"
+//             {...props}
+//         />
+//     );
+// }

@@ -1,5 +1,5 @@
 import { Link } from "./link";
-import { Img } from "./snippets";
+import { Img } from "./img";
 
 interface Props {
     className?: string;
