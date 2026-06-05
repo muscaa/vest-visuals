@@ -11,7 +11,7 @@ interface Props {
 
 export function StudioBeforeAndAfterSection(props: Props) {
     return (
-        <section id="before-and-after" className="flex flex-col justify-center items-center px-6 py-16">
+        <section id="before-and-after" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-primary/20 to-transparent">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="03">
                     Post-producție

@@ -10,7 +10,7 @@ interface Props {
 
 export function StudioTestimonialsSection(props: Props) {
     return (
-        <section id="testimonials" className="flex flex-col justify-center items-center px-6 py-16">
+        <section id="testimonials" className="flex flex-col justify-center items-center px-6 py-16 bg-muted">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="04">
                     Clienți

@@ -69,7 +69,7 @@ interface Props {
 
 export function StudioAboutSection(props: Props) {
     return (
-        <section id="about" className="flex flex-col justify-center items-center px-6 py-16">
+        <section id="about" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-br from-transparent to-muted">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="01">
                     Studio
