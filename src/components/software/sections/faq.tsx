@@ -1,6 +1,8 @@
-import { TextH1, TextLink, TextP, TextSpan } from "@/components/typography";
+"use client";
+
+import { Eyebrow } from "@/components/eyebrow";
+import { TextH1, TextLink, TextP } from "@/components/typography";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -72,13 +74,9 @@ export function SoftwareFAQSection(props: Props) {
     return (
         <section id="faq" className="flex flex-col justify-center items-center px-6 py-16 bg-muted border-b">
             <div className="flex flex-col max-w-7xl w-full">
-                <div className="flex items-center gap-4 mb-10">
-                    <TextSpan variant="muted" size="label" font="mono1">04</TextSpan>
-                    <Separator className="shrink" />
-                    <TextSpan variant="muted" size="label" font="mono1" className="shrink-0">
-                        {t("eyebrow")}
-                    </TextSpan>
-                </div>
+                <Eyebrow num="04">
+                    {t("eyebrow")}
+                </Eyebrow>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] md:gap-16">
                     <div className="flex flex-col">
                         <TextH1 className="mb-4 max-w-[14ch]">

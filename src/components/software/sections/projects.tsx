@@ -1,3 +1,5 @@
+"use client";
+
 import { TextH1, TextSpan } from "@/components/typography";
 import { Separator } from "@/components/ui/separator";
 

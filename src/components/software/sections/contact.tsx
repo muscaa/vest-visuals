@@ -1,8 +1,8 @@
 "use client";
 
+import { Eyebrow } from "@/components/eyebrow";
 import { ButtonLink } from "@/components/snippets";
-import { TextH1, TextP, TextSpan } from "@/components/typography";
-import { Separator } from "@/components/ui/separator";
+import { TextH1, TextP } from "@/components/typography";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -15,18 +15,11 @@ export function SoftwareContactSection(props: Props) {
     return (
         <section id="contact" className="flex flex-col justify-center items-center px-6 py-16">
             <div className="flex flex-col items-center max-w-7xl w-full">
-                <div className="flex items-center gap-4 mb-10 max-w-[58ch] w-full">
-                    <TextSpan variant="muted" size="label" font="mono1">05</TextSpan>
-                    <Separator className="shrink" />
-                    <TextSpan variant="muted" size="label" font="mono1" className="shrink-0">
-                        {t("eyebrow")}
-                    </TextSpan>
-                </div>
+                <Eyebrow num="05" className="max-w-[58ch] w-full">
+                    {t("eyebrow")}
+                </Eyebrow>
                 <TextH1 size="display" className="mb-4 text-center max-w-[15ch]">
                     {t("title")}
-                    {/* Tell us what you're
-                    <br />
-                    building. */}
                 </TextH1>
                 <TextP variant="muted" size="lead" className="max-w-[58ch] mb-14 text-center">
                     {t("description")}
