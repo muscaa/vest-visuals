@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 import { InfoCard } from "./info-card";
-import { Img } from "./snippets";
+import { Img } from "./img";
 import { CardContent, CardHeader } from "./ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
 import { Separator } from "./ui/separator";

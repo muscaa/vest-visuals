@@ -22,13 +22,14 @@ const buttonVariants = cva(
                 neutral: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
                 transparent: "bg-secondary/60 text-secondary-foreground shadow-xs hover:bg-secondary/80",
                 // TODO
+                white: "theme-dark bg-foreground text-background hover:bg-primary hover:text-primary-foreground",
             },
             size: {
                 // default: "h-9 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
                 xs: "text-label h-6 gap-1 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
                 sm: "h-8 gap-1 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-8 [&_svg:not([class*='size-'])]:size-4",
                 default: "h-10 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-6",
-                lg: "h-14 text-lead gap-2 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-8",
+                lg: "h-14 text-lead gap-2 px-6 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-8",
                 // icon: "size-9",
                 "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
                 "icon-sm": "size-8 [&_svg:not([class*='size-'])]:size-4",

@@ -1,4 +1,14 @@
 @theme inline {
+    --text-mark: clamp(64px, 14vw, 208px);
+    --text-mark--line-height: 0.8;
+    --text-mark--letter-spacing: -0.05em;
+    --text-mark--font-weight: 500;
+
+    --text-hero: clamp(44px, 9vw, 128px);
+    --text-hero--line-height: 0.92;
+    --text-hero--letter-spacing: -0.04em;
+    --text-hero--font-weight: 500;
+
     --text-display: clamp(40px, 6.4vw, 76px);
     --text-display--line-height: 1;
     --text-display--letter-spacing: -0.035em;

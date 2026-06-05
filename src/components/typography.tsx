@@ -22,6 +22,8 @@ export const textVariants = cva(
             },
             size: {
                 default: "",
+                mark: "text-mark text-balance",
+                hero: "text-hero text-balance",
                 display: "text-display text-balance",
                 stat: "text-stat text-balance",
                 h1: "text-h1 text-balance",
