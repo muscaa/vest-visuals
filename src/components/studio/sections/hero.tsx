@@ -32,7 +32,7 @@ function CarouselOverlay() {
 
     return (
         <div className="flex flex-col items-center px-6 py-16 min-h-screen-no-nav pointer-events-none theme-dark">
-            <div className="flex flex-col justify-between gap-8 max-w-7xl w-full grow">
+            <div className="flex flex-col justify-between gap-8 max-w-8xl w-full grow">
                 <div />
                 <TextH1 size="hero">
                     Surprindem <i className="text-success">emoții,</i>

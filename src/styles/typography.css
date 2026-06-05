@@ -9,6 +9,11 @@
     --text-hero--letter-spacing: -0.04em;
     --text-hero--font-weight: 500;
 
+    --text-title: clamp(40px, 7vw, 96px);
+    --text-title--line-height: 0.95;
+    --text-title--letter-spacing: -0.035em;
+    --text-title--font-weight: 500;
+
     --text-display: clamp(40px, 6.4vw, 76px);
     --text-display--line-height: 1;
     --text-display--letter-spacing: -0.035em;
