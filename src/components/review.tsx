@@ -23,13 +23,14 @@ export function ReviewCard(props: ReviewCardProps) {
                 <div className="flex items-center gap-4">
                     <Img
                         src={props.image || "/placeholder.jpg"}
+                        alt="Profile Icon"
                         className="size-16 rounded-full object-cover"
                     />
                     <div className="flex flex-col">
                         <TextH3>{props.name}</TextH3>
                         {
                             props.role && (
-                                <TextP variant="muted" size="label">{props.role}</TextP>
+                                <TextP variant="muted" size="label" font="mono1">{props.role}</TextP>
                             )
                         }
                     </div>
