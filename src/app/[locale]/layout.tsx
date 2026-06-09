@@ -8,6 +8,8 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 
+export const generateStaticParams = () => locales.map((locale) => ({ locale }));
+
 export default async function Layout(props: LocaleLayoutProps) {
     const { locale } = await props.params;
     if (!hasLocale(locales, locale)) {
