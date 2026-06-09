@@ -1,17 +1,11 @@
-import {
-    StudioNavbarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { LOCATIONS_DROBETA_TURNU_SEVERIN } from "@shared/i18n";
+import { defaultMetadata, generate } from "@/components/layouts";
+import { StudioNavbarLayout } from "@/components/studio/layout";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: LOCATIONS_DROBETA_TURNU_SEVERIN(),
-        routeName: t("Metadata.locations-drobeta-turnu-severin.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "locations-drobeta-turnu-severin", "/locations/drobeta-turnu-severin"),
 });
 
 export default StudioNavbarLayout;

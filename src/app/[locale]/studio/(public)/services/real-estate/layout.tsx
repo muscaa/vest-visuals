@@ -1,17 +1,11 @@
-import {
-    StudioNavbarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { SERVICES_REAL_ESTATE } from "@shared/i18n";
+import { defaultMetadata, generate } from "@/components/layouts";
+import { StudioNavbarLayout } from "@/components/studio/layout";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: SERVICES_REAL_ESTATE(),
-        routeName: t("Metadata.services-real-estate.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "services-real-estate", "/services/real-estate"),
 });
 
 export default StudioNavbarLayout;

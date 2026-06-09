@@ -12,6 +12,102 @@
                 "description": "Contact Vest Visuals to discuss your photography or videography project. We cover weddings, events, portraits, automotive, real estate, and marketing shoots. Request a quote, ask a question, or book your session, we typically reply within one business day.",
                 "og-title": "Let's work together",
                 "og-subtitle": "Tell us about your project and we'll handle the rest"
+            },
+            "privacy-policy": {
+                "title": "Privacy Policy",
+                "description": "Read the Vest Visuals privacy policy to understand how we collect, use, and protect your personal data. Learn what information we gather when you contact us or book a photography or videography session, and the rights you have over your data.",
+                "og-title": "Your privacy matters",
+                "og-subtitle": "How we collect, use, and protect your data"
+            },
+            "cookie-policy": {
+                "title": "Cookie Policy",
+                "description": "Learn how Vest Visuals uses cookies and similar technologies on our website. This cookie policy explains which cookies we use, why we use them, and how you can manage or disable them in your browser at any time.",
+                "og-title": "About our cookies",
+                "og-subtitle": "What we use and how to manage them"
+            },
+            "terms-of-service": {
+                "title": "Terms of Service",
+                "description": "Review the Vest Visuals terms of service before using our website or booking our photography and videography services. These terms cover bookings, payments, usage rights, and the conditions that apply when you work with us.",
+                "og-title": "The terms of working together",
+                "og-subtitle": "Bookings, payments, and usage rights explained"
+            },
+            "locations-timisoara": {
+                "title": "Photography & Videography in Timișoara",
+                "description": "Vest Visuals offers professional photography and videography in Timișoara for weddings, events, portraits, automotive, real estate, and business content. Local knowledge, a personal approach, and high-quality results for every project in the city and beyond.",
+                "og-title": "Vest Visuals in Timișoara",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-arad": {
+                "title": "Photography & Videography in Arad",
+                "description": "Vest Visuals brings professional photography and videography to Arad for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the city and its surroundings.",
+                "og-title": "Vest Visuals in Arad",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-oradea": {
+                "title": "Photography & Videography in Oradea",
+                "description": "Vest Visuals offers professional photography and videography in Oradea for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project in the city and the wider region.",
+                "og-title": "Vest Visuals in Oradea",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-drobeta-turnu-severin": {
+                "title": "Photography & Videography in Drobeta-Turnu Severin",
+                "description": "Vest Visuals offers professional photography and videography in Drobeta-Turnu Severin for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project in the area.",
+                "og-title": "Vest Visuals in Drobeta-Turnu Severin",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-cluj-napoca": {
+                "title": "Photography & Videography in Cluj-Napoca",
+                "description": "Vest Visuals brings professional photography and videography to Cluj-Napoca for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the city and region.",
+                "og-title": "Vest Visuals in Cluj-Napoca",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-bucuresti": {
+                "title": "Photography & Videography in Bucharest",
+                "description": "Vest Visuals offers professional photography and videography in Bucharest for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the capital.",
+                "og-title": "Vest Visuals in Bucharest",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "services-18th-birthday": {
+                "title": "18th Birthday Photography & Videography",
+                "description": "Vest Visuals captures 18th birthday parties with professional photography and videography. From the big entrance to the last dance, we document every moment so you can relive the night exactly as it felt, with photos and films made to last.",
+                "og-title": "Your 18th, captured right",
+                "og-subtitle": "Photography & videography for your big night"
+            },
+            "services-wedding": {
+                "title": "Wedding Photography & Videography",
+                "description": "Vest Visuals offers professional wedding photography and videography for your big day. We capture every emotion, detail, and celebration with a natural, personal approach, delivering timeless photos and cinematic films you'll treasure for years.",
+                "og-title": "Your wedding, beautifully told",
+                "og-subtitle": "Timeless photography & cinematic films"
+            },
+            "services-christening": {
+                "title": "Christening Photography & Videography",
+                "description": "Vest Visuals captures christenings with warm, natural photography and videography. From the ceremony to the celebration, we document this special day with care, so you keep the memories of your little one's first big moment forever.",
+                "og-title": "A day to remember",
+                "og-subtitle": "Gentle photography & video for your christening"
+            },
+            "services-outdoor": {
+                "title": "Outdoor Portrait Photography",
+                "description": "Vest Visuals creates natural outdoor portrait sessions for individuals, couples, and families. Shot in beautiful natural light, our relaxed approach brings out genuine expressions and delivers portraits you'll actually love looking at.",
+                "og-title": "Portraits in natural light",
+                "og-subtitle": "Relaxed outdoor sessions, genuine results"
+            },
+            "services-real-estate": {
+                "title": "Real Estate Photography & Videography",
+                "description": "Vest Visuals offers professional real estate photography and videography that helps properties sell faster. We showcase every space at its best with sharp images and smooth video tours that draw buyers in and make listings stand out.",
+                "og-title": "Properties that sell faster",
+                "og-subtitle": "Photography & video that draws buyers in"
+            },
+            "services-automotive": {
+                "title": "Automotive Photography & Videography",
+                "description": "Vest Visuals shoots cars the way they deserve, with professional automotive photography and videography. From static detail shots to dynamic rolling footage, we make every vehicle look its absolute best, ready for ads, dealers, or your collection.",
+                "og-title": "Cars that look like the ad",
+                "og-subtitle": "Automotive photography & video done right"
+            },
+            "services-marketing": {
+                "title": "Marketing Content for Businesses",
+                "description": "Vest Visuals creates cinematic commercial content for businesses, from product and brand photography to promotional video. We help your business stand out with professional visuals built to sell and made to fit how you market.",
+                "og-title": "Content that sells",
+                "og-subtitle": "Cinematic commercial photo & video"
             }
         },
         "Page": {
@@ -200,9 +296,6 @@
         }
     },
     "Metadata": {
-        "home": {
-            "title": "Home"
-        },
         "contact": {
             "title": "Contact"
         },
@@ -253,15 +346,6 @@
         },
         "locations-bucuresti": {
             "title": "Locations | Bucuresti"
-        },
-        "privacy-policy": {
-            "title": "Privacy Policy"
-        },
-        "terms-of-service": {
-            "title": "Terms of Service"
-        },
-        "cookie-policy": {
-            "title": "Cookie Policy"
         },
         "albums": {
             "title": "Albums"

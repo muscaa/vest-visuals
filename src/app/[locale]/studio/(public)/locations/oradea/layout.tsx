@@ -1,17 +1,11 @@
-import {
-    StudioNavbarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { LOCATIONS_ORADEA } from "@shared/i18n";
+import { defaultMetadata, generate } from "@/components/layouts";
+import { StudioNavbarLayout } from "@/components/studio/layout";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: LOCATIONS_ORADEA(),
-        routeName: t("Metadata.locations-oradea.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "locations-oradea", "/locations/oradea"),
 });
 
 export default StudioNavbarLayout;

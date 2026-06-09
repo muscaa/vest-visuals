@@ -1,17 +1,11 @@
-import {
-    StudioNavbarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { PRIVACY_POLICY } from "@shared/i18n";
+import { defaultMetadata, generate } from "@/components/layouts";
+import { StudioNavbarLayout } from "@/components/studio/layout";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: PRIVACY_POLICY(),
-        routeName: t("Metadata.privacy-policy.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "privacy-policy", "/privacy-policy"),
 });
 
 export default StudioNavbarLayout;

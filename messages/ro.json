@@ -12,6 +12,102 @@
                 "description": "Contactează Vest Visuals pentru a discuta despre proiectul tău de fotografie sau videografie. Acoperim nunți, evenimente, portrete, automotive, imobiliare și filmări de marketing. Solicită o ofertă, pune o întrebare sau rezervă-ți ședința, răspundem de obicei într-o zi lucrătoare.",
                 "og-title": "Hai să lucrăm împreună",
                 "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
+            },
+            "privacy-policy": {
+                "title": "Politica de confidențialitate",
+                "description": "Citește politica de confidențialitate Vest Visuals pentru a înțelege cum colectăm, folosim și protejăm datele tale personale. Află ce informații strângem când ne contactezi sau rezervi o ședință foto ori video și ce drepturi ai asupra datelor tale.",
+                "og-title": "Confidențialitatea ta contează",
+                "og-subtitle": "Cum colectăm, folosim și protejăm datele tale"
+            },
+            "cookie-policy": {
+                "title": "Politica de cookie-uri",
+                "description": "Află cum folosește Vest Visuals cookie-urile și tehnologiile similare pe site-ul nostru. Această politică explică ce cookie-uri folosim, de ce le folosim și cum le poți gestiona sau dezactiva oricând din browserul tău.",
+                "og-title": "Despre cookie-urile noastre",
+                "og-subtitle": "Ce folosim și cum le poți gestiona"
+            },
+            "terms-of-service": {
+                "title": "Termeni și condiții",
+                "description": "Citește termenii și condițiile Vest Visuals înainte de a folosi site-ul sau de a rezerva serviciile noastre foto și video. Acești termeni acoperă rezervările, plățile, drepturile de utilizare și condițiile care se aplică atunci când lucrezi cu noi.",
+                "og-title": "Termenii colaborării noastre",
+                "og-subtitle": "Rezervări, plăți și drepturi de utilizare"
+            },
+            "locations-timisoara": {
+                "title": "Fotografie și videografie în Timișoara",
+                "description": "Vest Visuals oferă fotografie și videografie profesională în Timișoara pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Cunoaștem orașul, lucrăm personal și livrăm rezultate de calitate pentru orice proiect.",
+                "og-title": "Vest Visuals în Timișoara",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "locations-arad": {
+                "title": "Fotografie și videografie în Arad",
+                "description": "Vest Visuals aduce fotografie și videografie profesională în Arad pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Lucrăm personal și livrăm rezultate de calitate pentru orice proiect din oraș și împrejurimi.",
+                "og-title": "Vest Visuals în Arad",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "locations-oradea": {
+                "title": "Fotografie și videografie în Oradea",
+                "description": "Vest Visuals oferă fotografie și videografie profesională în Oradea pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Lucrăm personal și livrăm rezultate de calitate pentru orice proiect din oraș și regiune.",
+                "og-title": "Vest Visuals în Oradea",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "locations-drobeta-turnu-severin": {
+                "title": "Fotografie și videografie în Drobeta-Turnu Severin",
+                "description": "Vest Visuals oferă fotografie și videografie profesională în Drobeta-Turnu Severin pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Lucrăm personal și livrăm rezultate de calitate în toată zona.",
+                "og-title": "Vest Visuals în Drobeta-Turnu Severin",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "locations-cluj-napoca": {
+                "title": "Fotografie și videografie în Cluj-Napoca",
+                "description": "Vest Visuals aduce fotografie și videografie profesională în Cluj-Napoca pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Lucrăm personal și livrăm rezultate de calitate pentru orice proiect din oraș și regiune.",
+                "og-title": "Vest Visuals în Cluj-Napoca",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "locations-bucuresti": {
+                "title": "Fotografie și videografie în București",
+                "description": "Vest Visuals oferă fotografie și videografie profesională în București pentru nunți, evenimente, portrete, automotive, imobiliare și conținut pentru firme. Lucrăm personal și livrăm rezultate de calitate pentru orice proiect din capitală.",
+                "og-title": "Vest Visuals în București",
+                "og-subtitle": "Fotografie și videografie în tot orașul"
+            },
+            "services-18th-birthday": {
+                "title": "Fotografie și videografie pentru majorat",
+                "description": "Vest Visuals surprinde petrecerile de majorat cu fotografie și videografie profesională. De la marea intrare până la ultimul dans, documentăm fiecare moment ca să retrăiești seara exact așa cum a fost, cu poze și filme făcute să dureze.",
+                "og-title": "Majoratul tău, surprins cum trebuie",
+                "og-subtitle": "Fotografie și videografie pentru marea ta seară"
+            },
+            "services-wedding": {
+                "title": "Fotografie și videografie pentru nuntă",
+                "description": "Vest Visuals oferă fotografie și videografie profesională pentru ziua nunții tale. Surprindem fiecare emoție, detaliu și moment de sărbătoare cu o abordare naturală și personală, livrând poze atemporale și filme cinematice de păstrat o viață.",
+                "og-title": "Nunta ta, povestită frumos",
+                "og-subtitle": "Poze atemporale și filme cinematice"
+            },
+            "services-christening": {
+                "title": "Fotografie și videografie pentru botez",
+                "description": "Vest Visuals surprinde botezuri cu fotografie și videografie caldă și naturală. De la slujbă până la petrecere, documentăm cu grijă această zi specială, ca să păstrezi pentru totdeauna amintirile primului moment important al celui mic.",
+                "og-title": "O zi de neuitat",
+                "og-subtitle": "Fotografie și video cu suflet pentru botez"
+            },
+            "services-outdoor": {
+                "title": "Ședințe foto în aer liber",
+                "description": "Vest Visuals creează ședințe foto naturale în aer liber pentru persoane, cupluri și familii. Fotografiate în lumină naturală frumoasă, abordarea noastră relaxată scoate la iveală expresii sincere și portrete pe care chiar îți place să le privești.",
+                "og-title": "Portrete în lumină naturală",
+                "og-subtitle": "Ședințe relaxate, rezultate sincere"
+            },
+            "services-real-estate": {
+                "title": "Fotografie și videografie imobiliară",
+                "description": "Vest Visuals oferă fotografie și videografie imobiliară profesională care ajută proprietățile să se vândă mai repede. Punem în valoare fiecare spațiu cu imagini clare și tururi video care atrag cumpărătorii și fac anunțul să iasă în evidență.",
+                "og-title": "Proprietăți care se vând mai repede",
+                "og-subtitle": "Fotografie și video care atrag cumpărători"
+            },
+            "services-automotive": {
+                "title": "Fotografie și videografie automotive",
+                "description": "Vest Visuals fotografiază mașinile așa cum merită, cu fotografie și videografie automotive profesională. De la cadre statice de detaliu până la filmări în mișcare, facem fiecare mașină să arate impecabil, gata pentru reclame, dealeri sau colecția ta.",
+                "og-title": "Mașini care arată ca-n reclame",
+                "og-subtitle": "Fotografie și video automotive cum trebuie"
+            },
+            "services-marketing": {
+                "title": "Conținut de promovare pentru firme",
+                "description": "Vest Visuals creează conținut comercial cinematic pentru firme, de la fotografie de produs și brand până la video promoțional. Te ajutăm să ieși în evidență cu imagini profesionale gândite să vândă și adaptate felului în care îți promovezi afacerea.",
+                "og-title": "Conținut care vinde",
+                "og-subtitle": "Foto și video comercial cinematic"
             }
         },
         "Page": {
