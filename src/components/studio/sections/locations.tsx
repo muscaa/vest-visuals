@@ -111,7 +111,7 @@ export function StudioLocationsSection(props: Props) {
                         name="Orașul tău?"
                         description="Filmăm și fotografiem în toată țara."
                         accent="Spune-ne unde"
-                        className="bg-transparent hover:bg-success/10"
+                        className="hover:bg-[color-mix(in_oklab,_var(--color2)_20%,_var(--muted))]"
                     />
                 </div>
             </div>
