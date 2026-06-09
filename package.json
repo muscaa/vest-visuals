@@ -17,8 +17,8 @@
         "drizzle:migrate": "drizzle-kit migrate",
         "auth:generate": "cli generate --config=./better-auth.config.ts --output=./src/lib/server/db/schema/auth.ts --yes",
         "auth:migrate": "cli migrate --config=./better-auth.config.ts --yes",
-        "sitemap:studio": "next-sitemap --config next-sitemap.config.ts --app studio",
-        "sitemap:software": "next-sitemap --config next-sitemap.config.ts --app software"
+        "sitemap:studio": "next-sitemap --config next-sitemap.config.js --app studio",
+        "sitemap:software": "next-sitemap --config next-sitemap.config.js --app software"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.997.0",

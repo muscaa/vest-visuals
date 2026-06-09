@@ -1,10 +1,6 @@
-import { createJiti } from "jiti";
-const jiti = createJiti(import.meta.url, { tsconfigPaths: true });
 import type { IConfig } from "next-sitemap";
 import minimist from "minimist";
-
-import type * as i18n from "@shared/i18n";
-const { locales, routing }: typeof i18n = await jiti.import("@shared/i18n.ts"); // stupid next-sitemap can use typescript files, but cant import typescript files...
+import { Locale, locales, routing } from "@shared/i18n";
 
 const args = minimist(process.argv.slice(2));
 
@@ -35,7 +31,7 @@ function getApp(tag: string): App {
     };
 }
 
-function getLocalePath(path: string, locale: i18n.Locale | "x-default") {
+function getLocalePath(path: string, locale: Locale | "x-default") {
     if (locale == "x-default") return path;
 
     const localepaths = routing.pathnames[`/${path}`];
@@ -63,7 +59,7 @@ export default {
         if (tag != app.tag) return undefined;
 
         return {
-            loc: getLocalePath(path, locale as i18n.Locale),
+            loc: getLocalePath(path, locale as Locale),
             alternateRefs: ([...locales, "x-default"] as const).map((locale) => ({
                 href: clean(`${app.url}/${getLocalePath(path, locale)}`),
                 hreflang: locale,
