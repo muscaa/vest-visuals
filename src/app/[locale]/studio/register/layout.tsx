@@ -1,25 +1,15 @@
-import {
-    StudioNavbarLayout,
-    LocaleLayoutProps,
-    createInfo,
-} from "@/components/layouts";
-import { headers } from "next/headers";
+import { defaultMetadata, generate, LocaleLayoutProps } from "@/components/layouts";
+import { StudioNavbarLayout } from "@/components/studio/layout";
 import { auth } from "@server/auth";
-import {
-    redirect,
-    REGISTER,
-    U_ACCOUNT,
-} from "@shared/i18n";
 import { getLocale } from "@server/i18n";
+import { redirect, U_ACCOUNT } from "@shared/i18n";
+import { headers } from "next/headers";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: REGISTER(),
-        routeName: t("Metadata.register.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "register", "/register"),
 });
 
 export default async function Layout(props: LocaleLayoutProps) {

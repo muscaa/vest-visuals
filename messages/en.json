@@ -114,6 +114,36 @@
                 "description": "Browse the Vest Visuals portfolio of photography and videography work, from weddings and events to portraits, automotive, real estate, and business content. See our style, quality, and attention to detail across a range of recent projects.",
                 "og-title": "Our work, in one place",
                 "og-subtitle": "Photography & videography across every project"
+            },
+            "login": {
+                "title": "Log In",
+                "description": "Log in to your Vest Visuals account to access your galleries, manage your bookings, and view your photos and videos. Enter your details to securely sign in and pick up right where you left off.",
+                "og-title": "Welcome back",
+                "og-subtitle": "Sign in to access your galleries"
+            },
+            "register": {
+                "title": "Create Account",
+                "description": "Create a Vest Visuals account to access your private galleries, manage your bookings, and download your photos and videos. Sign up in a few steps and keep everything from your shoot in one place.",
+                "og-title": "Join Vest Visuals",
+                "og-subtitle": "Create your account to get started"
+            },
+            "albums": {
+                "title": "Your Albums",
+                "description": "View and download the photos and videos from your Vest Visuals shoot. Browse your private album, relive every moment from your session, and save your favorite shots, all in one place, whenever you're ready.",
+                "og-title": "Your gallery is ready",
+                "og-subtitle": "View and download your photos and videos"
+            },
+            "u": {
+                "title": "Dashboard",
+                "description": "Your Vest Visuals dashboard. Access your galleries, manage your bookings, and view or download your photos and videos, all in one place.",
+                "og-title": "Your dashboard",
+                "og-subtitle": "Galleries, bookings, and downloads in one place"
+            },
+            "a": {
+                "title": "Admin Dashboard",
+                "description": "The Vest Visuals admin dashboard. Manage bookings, galleries, clients, and content from a single place.",
+                "og-title": "Admin dashboard",
+                "og-subtitle": "Manage bookings, galleries, and clients"
             }
         },
         "Page": {

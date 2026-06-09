@@ -25,13 +25,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { BeautifulQRCode } from "@beautiful-qr-code/react";
 import { useMain } from "@/hooks/useMain";
-import { FooterSmall } from "@/components/footer";
-import { Img } from "@/components/snippets";
+import { Footer } from "@/components/footer";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { PartialAlbum } from "@type/albums/albums";
 import { useAlbum } from "@/hooks/albums/useAlbum";
 import { Media } from "@type/media";
 import { openLink } from "@client/snippets";
+import { Img } from "@/components/img";
 
 interface ShareDialogProps {
     album: PartialAlbum;
@@ -106,7 +106,7 @@ export default function Page() {
                     album && (
                         <>
                             <Img
-                                src={album.coverUrl}
+                                src={album.coverUrl!}
                                 alt="Album Cover"
                                 className="w-full object-cover"
                             />
@@ -167,7 +167,9 @@ export default function Page() {
                     getDownloadUrl={handleGetDownloadUrl}
                 />
             </main>
-            <FooterSmall />
+            <Footer
+                sections={[]} // TODO
+            />
         </div>
     );
 }

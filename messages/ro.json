@@ -114,6 +114,36 @@
                 "description": "Explorează portofoliul Vest Visuals de fotografie și videografie, de la nunți și evenimente la portrete, automotive, imobiliare și conținut pentru firme. Vezi stilul, calitatea și atenția la detaliu în mai multe proiecte recente.",
                 "og-title": "Lucrările noastre, la un loc",
                 "og-subtitle": "Fotografie și videografie în fiecare proiect"
+            },
+            "login": {
+                "title": "Autentificare",
+                "description": "Autentifică-te în contul tău Vest Visuals pentru a-ți accesa galeriile, a-ți gestiona rezervările și a vedea pozele și filmele. Introdu datele tale pentru a intra în siguranță și a continua de unde ai rămas.",
+                "og-title": "Bine ai revenit",
+                "og-subtitle": "Conectează-te pentru a-ți accesa galeriile"
+            },
+            "register": {
+                "title": "Creează cont",
+                "description": "Creează-ți un cont Vest Visuals pentru a-ți accesa galeriile private, a-ți gestiona rezervările și a-ți descărca pozele și filmele. Înregistrează-te în câțiva pași și ține tot ce ține de filmarea ta într-un singur loc.",
+                "og-title": "Alătură-te Vest Visuals",
+                "og-subtitle": "Creează-ți contul pentru a începe"
+            },
+            "albums": {
+                "title": "Albumele tale",
+                "description": "Vezi și descarcă pozele și filmele de la filmarea ta Vest Visuals. Răsfoiește albumul tău privat, retrăiește fiecare moment din ședință și salvează-ți cadrele preferate, toate într-un singur loc, oricând ești gata.",
+                "og-title": "Galeria ta e gata",
+                "og-subtitle": "Vezi și descarcă pozele și filmele tale"
+            },
+            "u": {
+                "title": "Panou de control",
+                "description": "Panoul tău Vest Visuals. Accesează-ți galeriile, gestionează-ți rezervările și vezi sau descarcă pozele și filmele, toate într-un singur loc.",
+                "og-title": "Panoul tău",
+                "og-subtitle": "Galerii, rezervări și descărcări într-un loc"
+            },
+            "a": {
+                "title": "Panou de administrare",
+                "description": "Panoul de administrare Vest Visuals. Gestionează rezervări, galerii, clienți și conținut dintr-un singur loc.",
+                "og-title": "Panou de administrare",
+                "og-subtitle": "Gestionează rezervări, galerii și clienți"
             }
         },
         "Page": {

@@ -1,26 +1,15 @@
-import {
-    LocaleLayoutProps,
-    SidebarLayout,
-    createInfo,
-} from "@/components/layouts";
-import { headers } from "next/headers";
-import { isAdmin } from "@server/auth/permissions";
+import { defaultMetadata, generate, LocaleLayoutProps, SidebarLayout } from "@/components/layouts";
 import { DndContextProvider } from "@/contexts/dnd";
-import {
-    redirect,
-    A,
-    LOGIN,
-} from "@shared/i18n";
+import { isAdmin } from "@server/auth/permissions";
 import { getLocale } from "@server/i18n";
+import { LOGIN, redirect } from "@shared/i18n";
+import { headers } from "next/headers";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: A(),
-        routeName: t("Metadata.admin.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "a", "/a"),
 });
 
 export default async function Layout(props: LocaleLayoutProps) {

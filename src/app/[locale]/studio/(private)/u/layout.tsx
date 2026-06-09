@@ -1,25 +1,14 @@
-import {
-    SidebarLayout,
-    LocaleLayoutProps,
-    createInfo,
-} from "@/components/layouts";
-import { headers } from "next/headers";
+import { defaultMetadata, generate, LocaleLayoutProps, SidebarLayout } from "@/components/layouts";
 import { auth } from "@server/auth";
-import {
-    redirect,
-    U,
-    LOGIN,
-} from "@shared/i18n";
 import { getLocale } from "@server/i18n";
+import { LOGIN, redirect } from "@shared/i18n";
+import { headers } from "next/headers";
 
 export const {
     generateStaticParams,
     generateMetadata,
-} = createInfo({
-    metadata: async ({ t }) => ({
-        route: U(),
-        routeName: t("Metadata.user.title"),
-    }),
+} = generate({
+    metadata: async ({ t }) => defaultMetadata(t, "Studio", "u", "/u"),
 });
 
 export default async function Layout(props: LocaleLayoutProps) {
