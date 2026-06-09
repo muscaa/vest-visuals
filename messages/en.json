@@ -1,8 +1,337 @@
 {
-    "Metadata": {
-        "home": {
-            "title": "Home"
+    "Studio": {
+        "Metadata": {
+            "home": {
+                "title": "Home",
+                "description": "Vest Visuals is a professional photography and videography studio specializing in weddings, events, portraits, automotive, real estate, and marketing content. We deliver high-quality images and video tailored to your needs, with reliable service and fast turnaround for clients across the region.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Professional photography & videography services"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Contact Vest Visuals to discuss your photography or videography project. We cover weddings, events, portraits, automotive, real estate, and marketing shoots. Request a quote, ask a question, or book your session, we typically reply within one business day.",
+                "og-title": "Let's work together",
+                "og-subtitle": "Tell us about your project and we'll handle the rest"
+            },
+            "privacy-policy": {
+                "title": "Privacy Policy",
+                "description": "Read the Vest Visuals privacy policy to understand how we collect, use, and protect your personal data. Learn what information we gather when you contact us or book a photography or videography session, and the rights you have over your data.",
+                "og-title": "Your privacy matters",
+                "og-subtitle": "How we collect, use, and protect your data"
+            },
+            "cookie-policy": {
+                "title": "Cookie Policy",
+                "description": "Learn how Vest Visuals uses cookies and similar technologies on our website. This cookie policy explains which cookies we use, why we use them, and how you can manage or disable them in your browser at any time.",
+                "og-title": "About our cookies",
+                "og-subtitle": "What we use and how to manage them"
+            },
+            "terms-of-service": {
+                "title": "Terms of Service",
+                "description": "Review the Vest Visuals terms of service before using our website or booking our photography and videography services. These terms cover bookings, payments, usage rights, and the conditions that apply when you work with us.",
+                "og-title": "The terms of working together",
+                "og-subtitle": "Bookings, payments, and usage rights explained"
+            },
+            "locations-timisoara": {
+                "title": "Photography & Videography in Timișoara",
+                "description": "Vest Visuals offers professional photography and videography in Timișoara for weddings, events, portraits, automotive, real estate, and business content. Local knowledge, a personal approach, and high-quality results for every project in the city and beyond.",
+                "og-title": "Vest Visuals in Timișoara",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-arad": {
+                "title": "Photography & Videography in Arad",
+                "description": "Vest Visuals brings professional photography and videography to Arad for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the city and its surroundings.",
+                "og-title": "Vest Visuals in Arad",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-oradea": {
+                "title": "Photography & Videography in Oradea",
+                "description": "Vest Visuals offers professional photography and videography in Oradea for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project in the city and the wider region.",
+                "og-title": "Vest Visuals in Oradea",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-drobeta-turnu-severin": {
+                "title": "Photography & Videography in Drobeta-Turnu Severin",
+                "description": "Vest Visuals offers professional photography and videography in Drobeta-Turnu Severin for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project in the area.",
+                "og-title": "Vest Visuals in Drobeta-Turnu Severin",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-cluj-napoca": {
+                "title": "Photography & Videography in Cluj-Napoca",
+                "description": "Vest Visuals brings professional photography and videography to Cluj-Napoca for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the city and region.",
+                "og-title": "Vest Visuals in Cluj-Napoca",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "locations-bucuresti": {
+                "title": "Photography & Videography in Bucharest",
+                "description": "Vest Visuals offers professional photography and videography in Bucharest for weddings, events, portraits, automotive, real estate, and business content. A personal approach and high-quality results for every project across the capital.",
+                "og-title": "Vest Visuals in Bucharest",
+                "og-subtitle": "Photography & videography across the city"
+            },
+            "services-18th-birthday": {
+                "title": "18th Birthday Photography & Videography",
+                "description": "Vest Visuals captures 18th birthday parties with professional photography and videography. From the big entrance to the last dance, we document every moment so you can relive the night exactly as it felt, with photos and films made to last.",
+                "og-title": "Your 18th, captured right",
+                "og-subtitle": "Photography & videography for your big night"
+            },
+            "services-wedding": {
+                "title": "Wedding Photography & Videography",
+                "description": "Vest Visuals offers professional wedding photography and videography for your big day. We capture every emotion, detail, and celebration with a natural, personal approach, delivering timeless photos and cinematic films you'll treasure for years.",
+                "og-title": "Your wedding, beautifully told",
+                "og-subtitle": "Timeless photography & cinematic films"
+            },
+            "services-christening": {
+                "title": "Christening Photography & Videography",
+                "description": "Vest Visuals captures christenings with warm, natural photography and videography. From the ceremony to the celebration, we document this special day with care, so you keep the memories of your little one's first big moment forever.",
+                "og-title": "A day to remember",
+                "og-subtitle": "Gentle photography & video for your christening"
+            },
+            "services-outdoor": {
+                "title": "Outdoor Portrait Photography",
+                "description": "Vest Visuals creates natural outdoor portrait sessions for individuals, couples, and families. Shot in beautiful natural light, our relaxed approach brings out genuine expressions and delivers portraits you'll actually love looking at.",
+                "og-title": "Portraits in natural light",
+                "og-subtitle": "Relaxed outdoor sessions, genuine results"
+            },
+            "services-real-estate": {
+                "title": "Real Estate Photography & Videography",
+                "description": "Vest Visuals offers professional real estate photography and videography that helps properties sell faster. We showcase every space at its best with sharp images and smooth video tours that draw buyers in and make listings stand out.",
+                "og-title": "Properties that sell faster",
+                "og-subtitle": "Photography & video that draws buyers in"
+            },
+            "services-automotive": {
+                "title": "Automotive Photography & Videography",
+                "description": "Vest Visuals shoots cars the way they deserve, with professional automotive photography and videography. From static detail shots to dynamic rolling footage, we make every vehicle look its absolute best, ready for ads, dealers, or your collection.",
+                "og-title": "Cars that look like the ad",
+                "og-subtitle": "Automotive photography & video done right"
+            },
+            "services-marketing": {
+                "title": "Marketing Content for Businesses",
+                "description": "Vest Visuals creates cinematic commercial content for businesses, from product and brand photography to promotional video. We help your business stand out with professional visuals built to sell and made to fit how you market.",
+                "og-title": "Content that sells",
+                "og-subtitle": "Cinematic commercial photo & video"
+            },
+            "portfolio": {
+                "title": "Portfolio",
+                "description": "Browse the Vest Visuals portfolio of photography and videography work, from weddings and events to portraits, automotive, real estate, and business content. See our style, quality, and attention to detail across a range of recent projects.",
+                "og-title": "Our work, in one place",
+                "og-subtitle": "Photography & videography across every project"
+            },
+            "login": {
+                "title": "Log In",
+                "description": "Log in to your Vest Visuals account to access your galleries, manage your bookings, and view your photos and videos. Enter your details to securely sign in and pick up right where you left off.",
+                "og-title": "Welcome back",
+                "og-subtitle": "Sign in to access your galleries"
+            },
+            "register": {
+                "title": "Create Account",
+                "description": "Create a Vest Visuals account to access your private galleries, manage your bookings, and download your photos and videos. Sign up in a few steps and keep everything from your shoot in one place.",
+                "og-title": "Join Vest Visuals",
+                "og-subtitle": "Create your account to get started"
+            },
+            "albums": {
+                "title": "Your Albums",
+                "description": "View and download the photos and videos from your Vest Visuals shoot. Browse your private album, relive every moment from your session, and save your favorite shots, all in one place, whenever you're ready.",
+                "og-title": "Your gallery is ready",
+                "og-subtitle": "View and download your photos and videos"
+            },
+            "u": {
+                "title": "Dashboard",
+                "description": "Your Vest Visuals dashboard. Access your galleries, manage your bookings, and view or download your photos and videos, all in one place.",
+                "og-title": "Your dashboard",
+                "og-subtitle": "Galleries, bookings, and downloads in one place"
+            },
+            "a": {
+                "title": "Admin Dashboard",
+                "description": "The Vest Visuals admin dashboard. Manage bookings, galleries, clients, and content from a single place.",
+                "og-title": "Admin dashboard",
+                "og-subtitle": "Manage bookings, galleries, and clients"
+            }
         },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "The moments that <accent>matter,</accent> captured <accent2>right.</accent2>",
+                    "description": "Weddings, events, portraits, automotive, real estate, and brand work, shot and edited by a studio that actually cares how it turns out. Wherever your story takes place, we're there for it.",
+                    "button-1": "See our work",
+                    "button-2": "Get in touch"
+                },
+                "about": {
+                    "eyebrow": "Who we are",
+                    "title": "Small studio, <accent>full attention.</accent>",
+                    "description": "We started Vest Visuals because we love this work and we're picky about how it's done. From the first message to the final gallery, you're talking to the people actually behind the camera and the edit. We take on projects we can give our full attention to, so nothing about your shoot feels rushed or generic.",
+                    "description-1": "Has a rare eye for light and for the moments that won't happen twice.",
+                    "description-2": "Gives rhythm, sound, and emotion to what would otherwise be just clips."
+                },
+                "portfolio": {
+                    "eyebrow": "Selected work",
+                    "title": "See it <accent>for yourself.</accent>",
+                    "description": "A handful of recent projects we're proud of. Quality over quantity, every time.",
+                    "18th-birthday": {
+                        "name": "18th <accent>Birthdays</accent>",
+                        "description": "A night you won't forget"
+                    },
+                    "outdoor": {
+                        "name": "Photo <accent>Sessions</accent>",
+                        "description": "Portraits in natural light"
+                    },
+                    "automotive": {
+                        "name": "<accent>Automotive</accent>",
+                        "description": "Cars that look like the ad"
+                    },
+                    "real-estate": {
+                        "name": "Real <accent>Estate</accent>",
+                        "description": "Listings that sell faster"
+                    },
+                    "marketing": {
+                        "name": "Business <accent>Content</accent>",
+                        "description": "Cinematic commercial content"
+                    }
+                },
+                "before-and-after": {
+                    "eyebrow": "The editing",
+                    "title": "Same frame. <accent>Whole new feeling.</accent>",
+                    "description": "Good editing is the part nobody talks about and everybody notices. Pull the slider and watch a raw shot turn into the final look, all in the color, contrast, and mood."
+                },
+                "testimonials": {
+                    "eyebrow": "Reviews",
+                    "title": "What our <accent>clients have to say.</accent>"
+                },
+                "locations": {
+                    "eyebrow": "Where we shoot",
+                    "title": "Wherever the <accent>shoot takes us.</accent>",
+                    "description": "A good project is worth the drive. We pack the gear and show up wherever you need us, near or far.",
+                    "other": {
+                        "name": "Somewhere else?",
+                        "description": "We travel across the country for the right shoot",
+                        "link": "Tell us where"
+                    }
+                },
+                "contact": {
+                    "eyebrow": "Say hello",
+                    "title": "Got something in mind? <accent>Let's talk.</accent>",
+                    "description": "Send us a few details about what you need and you'll hear back within one business day.",
+                    "button": "Go to the contact page"
+                }
+            }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Home",
+                    "events": "Events",
+                    "events-18th-birthday": "18th Birthday",
+                    "events-wedding": "Wedding",
+                    "events-christening": "Christening",
+                    "portraits": "Portraits",
+                    "portraits-outdoor": "Photo Session",
+                    "commercial": "Commercial",
+                    "commercial-real-estate": "Real Estate",
+                    "commercial-automotive": "Automotive",
+                    "commercial-marketing": "Business Promotion",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "company": "Company",
+                    "company-terms-of-service": "Terms of service",
+                    "company-privacy-policy": "Privacy policy",
+                    "company-cookie-policy": "Cookie policy",
+                    "company-contact": "Contact"
+                }
+            }
+        }
+    },
+    "Software": {
+        "Metadata": {
+            "home": {
+                "title": "Home",
+                "description": "Vest Visuals is a full-service software development company building web and mobile apps, custom internal tools, SaaS products, and cloud & DevOps solutions for startups, SMBs, and enterprises worldwide. Partner with our remote-first team to design, build, and scale reliable software tailored to your business.",
+                "og-title": "Vest Visuals",
+                "og-subtitle": "Building web, mobile & cloud software that scales"
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "Get in touch with Vest Visuals to discuss your software project. Reach our remote-first team for web and mobile apps, custom tools, SaaS, and cloud & DevOps solutions. Request a quote, ask a question, or schedule a free consultation, we typically reply within one business day.",
+                "og-title": "Let's build something great",
+                "og-subtitle": "Tell us about your project and we'll take it from there"
+            }
+        },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "A small studio for software worth keeping.",
+                    "description": "We're a handful of senior engineers in Timișoara, building web and mobile products, internal systems, and data tooling for clients worldwide. Small on purpose, so the people who scope your project are the same ones who write the code.",
+                    "button-1": "Start a conversation",
+                    "button-2": "Explore our work"
+                },
+                "services": {
+                    "eyebrow": "Capabilities",
+                    "title": "A full product team, without the headcount.",
+                    "description": "Most studios specialize narrowly or pad teams with juniors. We do neither. A few senior generalists cover the whole lifecycle, from the first whiteboard sketch to the production deploy and everything that keeps it running after.",
+                    "s1-t": "Product Engineering",
+                    "s1-d": "Web and mobile apps that feel considered in the details and hold up under real use. We care as much about the edge cases as the happy path.",
+                    "s2-t": "Internal Systems",
+                    "s2-d": "The tools your business actually runs on. We turn brittle spreadsheets and manual handoffs into software your team trusts.",
+                    "s3-t": "Data & Infrastructure",
+                    "s3-d": "Pipelines, analytics, and cloud setups that make data usable and deploys uneventful. The unglamorous work that everything else depends on.",
+                    "s4-t": "Technical Partnership",
+                    "s4-d": "Sometimes you need judgment more than hands. We advise on architecture, untangle inherited codebases, and help teams decide what's worth building."
+                },
+                "testimonials": {
+                    "eyebrow": "Clients",
+                    "title": "The work speaks, but they did too.",
+                    "description": "A few words from the people we've built for."
+                },
+                "faq": {
+                    "eyebrow": "Good to know",
+                    "title": "Before you reach out.",
+                    "description": "Anything else on your mind? Write to us at <email>contact@vestvisuals.ro</email> and we'll answer plainly.",
+                    "q1": "What does it cost to work with you?",
+                    "a1": "We bill for time and materials, transparently. You see exactly where the hours go and keep the freedom to change direction as the work teaches you what matters. No fixed scope quietly going stale, no padded estimates.",
+                    "q2": "How small is \"small\"?",
+                    "a2": "Small enough that you'll know everyone working on your project by name, and that the senior engineer in the discovery call is the one writing your code. That's the point, not a limitation.",
+                    "q3": "Do you work with clients outside Romania?",
+                    "a3": "Most of our work is remote and international. We're used to working across time zones and have a rhythm for keeping distributed projects clear and on track.",
+                    "q4": "Can you take over something that's already been started?",
+                    "a4": "Yes, and we often do. Inherited codebases, half-finished builds, or a project that's outgrown whoever started it. We'll assess honestly what's salvageable before suggesting a rewrite.",
+                    "q5": "What do you need from us to start?",
+                    "a5": "A conversation. You don't need a finished spec or technical documents, just a clear sense of the problem. We'll help shape it into something buildable.",
+                    "q6": "What happens when the project ends?",
+                    "a6": "You own every line of code from day one. We hand off clean documentation, and we're around if you want ongoing support, but you're never locked in."
+                },
+                "contact": {
+                    "eyebrow": "Get in touch",
+                    "title": "Let's talk about your project.",
+                    "description": "Tell us what you're building and we'll reply within one business day. If we're the right fit, we'll set up a short call; if we're not, we'll happily point you toward someone who is.",
+                    "button": "Go to contact page"
+                }
+            }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Home",
+                    "services": "Services",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Internal Systems",
+                    "services-data-and-infrastructure": "Data & Infrastructure",
+                    "services-technical-partnership": "Technical Partnership",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "services": "Services",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Internal Systems",
+                    "services-data-and-infrastructure": "Data & Infrastructure",
+                    "services-technical-partnership": "Technical Partnership",
+                    "company": "Company",
+                    "company-terms-of-service": "Terms of service",
+                    "company-privacy-policy": "Privacy policy",
+                    "company-cookie-policy": "Cookie policy",
+                    "company-contact": "Contact"
+                }
+            }
+        }
+    },
+    "Metadata": {
         "contact": {
             "title": "Contact"
         },
@@ -53,15 +382,6 @@
         },
         "locations-bucuresti": {
             "title": "Locations | Bucuresti"
-        },
-        "privacy-policy": {
-            "title": "Privacy Policy"
-        },
-        "terms-of-service": {
-            "title": "Terms of Service"
-        },
-        "cookie-policy": {
-            "title": "Cookie Policy"
         },
         "albums": {
             "title": "Albums"

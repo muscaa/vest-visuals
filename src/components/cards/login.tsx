@@ -12,7 +12,7 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
-import { TextLink } from "../ui/text-link";
+import { TextLink } from "../typography";
 
 interface Props {
     onLogin?: () => void;

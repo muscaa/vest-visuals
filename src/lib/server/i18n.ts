@@ -4,7 +4,7 @@ import {
 } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing } from "@shared/i18n";
-import { LocaleLayoutProps } from "@/components/layout";
+import { LocaleLayoutProps } from "@/components/layouts";
 
 export async function getLocale(props: LocaleLayoutProps) {
     const { locale } = await props.params;

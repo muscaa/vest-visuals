@@ -261,6 +261,7 @@ export const pathnames = [
     A_ALBUMS,
     A_ALBUMS_$ID_$PATH,
 ] as const;
+export type Pathname = ReturnType<typeof pathnames[number]>;
 
 // export type Pathnames = {
 //     [P in typeof pathnames[number]as P["en"]]: {
@@ -279,4 +280,4 @@ export const routing = defineRouting({
     }])) as /* Pathnames */ Record<string, PathnameLocales>,
 });
 
-export const { Link, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);
+export const { Link: I18nLink, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);

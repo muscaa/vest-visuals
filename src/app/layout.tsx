@@ -3,9 +3,9 @@ import {
     Inter,
     JetBrains_Mono,
 } from "next/font/google";
-import { LayoutProps } from "@/components/layout";
+import { LayoutProps } from "@/components/layouts";
 import { NextIntlClientProvider } from "next-intl";
-import { ClientLayout } from "@/components/layout/client";
+import { ClientProvider } from "@/components/providers";
 
 export const inter = Inter({
     subsets: ["latin"],
@@ -25,9 +25,9 @@ export default async function RootLayout(props: LayoutProps) {
                 className={`${inter.className} ${jetbrainsMono.variable} antialiased flex flex-col w-screen h-screen`}
             >
                 <NextIntlClientProvider>
-                    <ClientLayout>
+                    <ClientProvider>
                         {props.children}
-                    </ClientLayout>
+                    </ClientProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

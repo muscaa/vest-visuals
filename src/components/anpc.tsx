@@ -1,5 +1,5 @@
-import { Link } from "@shared/i18n";
-import { Img } from "./snippets";
+import { Link } from "./link";
+import { Img } from "./img";
 
 interface Props {
     className?: string;

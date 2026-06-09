@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { PartialPortfolioGroup } from "@type/portfolio/groups";
@@ -27,6 +26,7 @@ import {
     A_PORTFOLIO_GROUPS_$ID,
     PLACEHOLDER,
 } from "@shared/i18n";
+import { Img } from "@/components/img";
 
 interface ListEntryProps {
     value: PartialPortfolioGroup;

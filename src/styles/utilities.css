@@ -6,3 +6,46 @@
             0 100%,
             0 calc(var(--spacing) * --value(number)));
 }
+
+@utility grid-background {
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, color-mix(in oklab, transparent 50%, var(--border)) 1px, transparent 1px),
+        linear-gradient(to bottom, color-mix(in oklab, transparent 50%, var(--border)) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+@utility gradient-text {
+    font-style: normal;
+    background: linear-gradient(105deg, var(--color1) 0%, var(--color2) 60%, var(--color1) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-slide 6s ease-in-out infinite;
+}
+
+@keyframes gradient-slide {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@utility polygon-scatter-background {
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-image: url("/polygon-scatter.svg");
+    background-size: cover;
+    pointer-events: none;
+}

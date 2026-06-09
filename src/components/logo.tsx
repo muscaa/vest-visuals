@@ -6,10 +6,8 @@ import logo_large_white from ":/logos/large-white.svg";
 import logo_large_black from ":/logos/large-black.svg";
 import Image from "next/image";
 import { cn } from "@shared/shadcn/lib/utils";
-import {
-    Link,
-    HOME,
-} from "@shared/i18n";
+import { Link } from "./link";
+import { HOME } from "@shared/i18n";
 
 interface LogoProps {
     className?: string;

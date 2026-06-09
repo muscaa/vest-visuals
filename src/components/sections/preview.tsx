@@ -1,5 +1,5 @@
 import { cn } from "@shared/shadcn/lib/utils";
-import { ButtonLink, Img } from "../snippets";
+import { ButtonLink } from "../snippets";
 import {
     Carousel,
     CarouselContent,
@@ -13,6 +13,7 @@ import {
     useState,
     useEffect,
 } from "react";
+import { Img } from "../img";
 
 function CarouselControls() {
     const { api } = useCarousel();
@@ -82,6 +83,7 @@ export function SectionPreview(props: SectionPreviewProps) {
                             <CarouselItem key={index} className="p-0">
                                 <Img
                                     src={image}
+                                    alt=""
                                     className="size-full object-cover"
                                 />
                             </CarouselItem>

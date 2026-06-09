@@ -1,63 +1,64 @@
-/* paragraphs */
+@theme inline {
+    --text-mark: clamp(64px, 14vw, 208px);
+    --text-mark--line-height: 0.8;
+    --text-mark--letter-spacing: -0.05em;
+    --text-mark--font-weight: 500;
 
-@utility p0 {
-    @apply text-4xl lg:text-5xl;
-}
+    --text-hero: clamp(44px, 9vw, 128px);
+    --text-hero--line-height: 0.92;
+    --text-hero--letter-spacing: -0.04em;
+    --text-hero--font-weight: 500;
 
-@utility p1 {
-    @apply text-3xl lg:text-4xl;
-}
+    --text-title: clamp(40px, 7vw, 96px);
+    --text-title--line-height: 0.95;
+    --text-title--letter-spacing: -0.035em;
+    --text-title--font-weight: 500;
 
-@utility p2 {
-    @apply text-2xl lg:text-3xl;
-}
+    --text-display: clamp(40px, 6.4vw, 76px);
+    --text-display--line-height: 1;
+    --text-display--letter-spacing: -0.035em;
+    --text-display--font-weight: 500;
 
-@utility p3 {
-    @apply text-xl lg:text-2xl;
-}
+    --text-stat: clamp(36px, 4.5vw, 56px);
+    --text-stat--line-height: 1;
+    --text-stat--letter-spacing: -0.03em;
+    --text-stat--font-weight: 500;
 
-@utility p4 {
-    @apply text-lg lg:text-xl;
-}
+    --text-h1: clamp(28px, 3.4vw, 44px);
+    --text-h1--line-height: 1.05;
+    --text-h1--letter-spacing: -0.02em;
+    --text-h1--font-weight: 500;
 
-@utility p {
-    @apply text-base;
-}
+    --text-h2: clamp(24px, 2.4vw, 30px);
+    --text-h2--line-height: 1.1;
+    --text-h2--letter-spacing: -0.018em;
+    --text-h2--font-weight: 500;
 
-@utility p5 {
-    @apply text-sm;
-}
+    --text-h3: 18px;
+    --text-h3--line-height: 1.3;
+    --text-h3--letter-spacing: -0.01em;
+    --text-h3--font-weight: 500;
 
-@utility p6 {
-    @apply text-xs;
-}
+    --text-h4: 16px;
+    --text-h4--line-height: 1.4;
+    --text-h4--letter-spacing: -0.01em;
+    --text-h4--font-weight: 500;
 
-/* headings */
+    --text-lead: 17px;
+    --text-lead--line-height: 1.55;
 
-@utility h0 {
-    @apply p0 font-extrabold;
-}
+    --text-body: 15px;
+    --text-body--line-height: 1.55;
+    --text-body--letter-spacing: -0.005em;
 
-@utility h1 {
-    @apply p1 font-extrabold;
-}
+    --text-sm: 13.5px;
+    --text-sm--line-height: 1.55;
 
-@utility h2 {
-    @apply p2 font-bold;
-}
+    --text-label: 11px;
+    --text-label--line-height: 1.4;
+    --text-label--letter-spacing: 0.08em;
 
-@utility h3 {
-    @apply p3 font-semibold;
-}
-
-@utility h4 {
-    @apply p4 font-medium;
-}
-
-@utility h5 {
-    @apply p5 font-light;
-}
-
-@utility h6 {
-    @apply p6 font-extralight;
+    --text-xs: 8px;
+    --text-xs--line-height: 1.2;
+    --text-xs--letter-spacing: 0.08em;
 }

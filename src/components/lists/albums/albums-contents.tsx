@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { AlbumsContent } from "@type/albums/contents";
@@ -30,7 +29,7 @@ import {
     A_ALBUMS_$ID_$PATH,
     PLACEHOLDER,
 } from "@shared/i18n";
-import { TextLink } from "@/components/ui/text-link";
+import { TextLink } from "@/components/typography";
 import { useAlbumsDirectories } from "@/hooks/albums/useAlbumsDirectories";
 
 interface ListEntryProps {
