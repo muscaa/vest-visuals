@@ -15,13 +15,16 @@ export function StudioTestimonialsSection(props: Props) {
                 <Eyebrow num="04">
                     Clienți
                 </Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
+                {/* <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="title">
                         Ce spun oamenii cu care am <i className="text-success">lucrat.</i>
                     </TextH1>
                     <TextP variant="muted" size="lead">
                     </TextP>
-                </div>
+                </div> */}
+                <TextH1 size="title" className="mb-16">
+                    Ce spun oamenii cu care am <i className="text-success">lucrat.</i>
+                </TextH1>
                 <ReviewCarousel
                     reviews={[
                         {
