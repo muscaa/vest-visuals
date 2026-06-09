@@ -1,57 +1,46 @@
+"use client";
+
 import { Navbar } from "../navbar";
 import { Footer } from "../footer";
 import { NavbarLayout } from "../layouts/navbar";
 import { LayoutProps } from "../layouts";
+import { useTranslations } from "next-intl";
 
 export function SoftwareNavbarLayout(props: LayoutProps) {
+    const t = useTranslations("Software.Components.navbar-layout");
+
     return (
         <NavbarLayout
             nav={
                 <Navbar
                     entries={[
                         {
-                            text: "HOME",
+                            text: t("nav.home"),
                             to: "/",
                         },
                         {
-                            text: "SERVICES",
+                            text: t("nav.services"),
                             entries: [
                                 {
-                                    text: "Web Apps",
+                                    text: t("nav.services-product-engineering"),
                                     to: "/",
                                 },
                                 {
-                                    text: "Mobile Apps",
+                                    text: t("nav.services-internal-systems"),
                                     to: "/",
                                 },
                                 {
-                                    text: "Dashboards & Dataviz",
+                                    text: t("nav.services-data-and-infrastructure"),
                                     to: "/",
                                 },
                                 {
-                                    text: "Design Systems",
-                                    to: "/",
-                                },
-                                {
-                                    text: "AI integrations",
-                                    to: "/",
-                                },
-                                {
-                                    text: "Internal Tools",
-                                    to: "/",
-                                },
-                                {
-                                    text: "E-commerce",
-                                    to: "/",
-                                },
-                                {
-                                    text: "Platform engineering",
+                                    text: t("nav.services-technical-partnership"),
                                     to: "/",
                                 },
                             ],
                         },
                         {
-                            text: "CONTACT",
+                            text: t("nav.contact"),
                             to: "/contact",
                         },
                     ]}
@@ -61,59 +50,43 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                 <Footer
                     sections={[
                         {
-                            title: "Services",
+                            title: t("footer.services"),
                             links: [
                                 {
-                                    name: "Web Apps",
+                                    name: t("footer.services-product-engineering"),
                                     to: "/",
                                 },
                                 {
-                                    name: "Mobile Apps",
+                                    name: t("footer.services-internal-systems"),
                                     to: "/",
                                 },
                                 {
-                                    name: "Dashboards & Dataviz",
+                                    name: t("footer.services-data-and-infrastructure"),
                                     to: "/",
                                 },
                                 {
-                                    name: "Design Systems",
-                                    to: "/",
-                                },
-                                {
-                                    name: "AI integrations",
-                                    to: "/",
-                                },
-                                {
-                                    name: "Internal Tools",
-                                    to: "/",
-                                },
-                                {
-                                    name: "E-commerce",
-                                    to: "/",
-                                },
-                                {
-                                    name: "Platform engineering",
+                                    name: t("footer.services-technical-partnership"),
                                     to: "/",
                                 },
                             ],
                         },
                         {
-                            title: "Company",
+                            title: t("footer.company"),
                             links: [
                                 {
-                                    name: "Terms of service",
+                                    name: t("footer.company-terms-of-service"),
                                     to: "/terms-of-service",
                                 },
                                 {
-                                    name: "Privacy policy",
+                                    name: t("footer.company-privacy-policy"),
                                     to: "/privacy-policy",
                                 },
                                 {
-                                    name: "Cookie policy",
+                                    name: t("footer.company-cookie-policy"),
                                     to: "/cookie-policy",
                                 },
                                 {
-                                    name: "Contact",
+                                    name: t("footer.company-contact"),
                                     to: "/contact",
                                 },
                             ],

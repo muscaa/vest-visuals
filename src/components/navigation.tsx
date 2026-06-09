@@ -131,7 +131,7 @@ export function Navigation(props: NavigationProps) {
                                 {
                                     entry.entries && (
                                         <>
-                                            <NavigationMenuTrigger>{entry.text}</NavigationMenuTrigger>
+                                            <NavigationMenuTrigger className="uppercase">{entry.text}</NavigationMenuTrigger>
                                             <NavigationMenuContent>
                                                 {
                                                     entry.entries.map((entry, index) => (
@@ -139,6 +139,7 @@ export function Navigation(props: NavigationProps) {
                                                             <NavigationMenuLink
                                                                 key={`${entry.text}-${index}`}
                                                                 render={<Link href={entry.to} />}
+                                                                className="uppercase"
                                                             >
                                                                 {entry.text}
                                                             </NavigationMenuLink>
@@ -152,6 +153,7 @@ export function Navigation(props: NavigationProps) {
                                             render={<Link href={entry.to} />}
                                             base="trigger"
                                             variant="ghost"
+                                            className="uppercase"
                                         >
                                             {entry.text}
                                         </NavigationMenuLink>

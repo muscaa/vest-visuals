@@ -147,6 +147,31 @@
                     "button": "Go to contact page"
                 }
             }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Home",
+                    "services": "Services",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Internal Systems",
+                    "services-data-and-infrastructure": "Data & Infrastructure",
+                    "services-technical-partnership": "Technical Partnership",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "services": "Services",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Internal Systems",
+                    "services-data-and-infrastructure": "Data & Infrastructure",
+                    "services-technical-partnership": "Technical Partnership",
+                    "company": "Company",
+                    "company-terms-of-service": "Terms of service",
+                    "company-privacy-policy": "Privacy policy",
+                    "company-cookie-policy": "Cookie policy",
+                    "company-contact": "Contact"
+                }
+            }
         }
     },
     "Metadata": {

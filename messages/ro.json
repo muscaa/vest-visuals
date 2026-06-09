@@ -147,6 +147,31 @@
                     "button": "Mergi la pagina de contact"
                 }
             }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Acasă",
+                    "services": "Servicii",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Sisteme Interne",
+                    "services-data-and-infrastructure": "Date & Infrastructură",
+                    "services-technical-partnership": "Parteneriat Tehnic",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "services": "Servicii",
+                    "services-product-engineering": "Product Engineering",
+                    "services-internal-systems": "Sisteme Interne",
+                    "services-data-and-infrastructure": "Date & Infrastructură",
+                    "services-technical-partnership": "Parteneriat Tehnic",
+                    "company": "Companie",
+                    "company-terms-of-service": "Termeni și condiții",
+                    "company-privacy-policy": "Politica de confidențialitate",
+                    "company-cookie-policy": "Politica de cookie-uri",
+                    "company-contact": "Contact"
+                }
+            }
         }
     },
     "Metadata": {
