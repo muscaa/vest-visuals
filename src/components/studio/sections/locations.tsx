@@ -2,11 +2,14 @@
 
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
+import { Link } from "@/components/link";
 import { TextH1, TextH2, TextP } from "@/components/typography";
+import { Pathname } from "@shared/i18n";
 import { cn } from "@shared/shadcn/lib/utils";
 
 interface LocationProps {
     name: string;
+    to: Pathname;
     county?: string;
     image?: string;
     description?: string;
@@ -16,7 +19,10 @@ interface LocationProps {
 
 function Location(props: LocationProps) {
     return (
-        <div className={cn("relative flex flex-col gap-2 px-4 py-6 transition-all bg-background hover:bg-muted", props.className)}>
+        <Link
+            to={props.to}
+            className={cn("relative flex flex-col gap-2 px-4 py-6 transition-all bg-background hover:bg-muted", props.className)}
+        >
             {
                 props.image && (
                     <Img
@@ -50,7 +56,7 @@ function Location(props: LocationProps) {
                     </TextP>
                 )
             }
-        </div>
+        </Link>
     );
 }
 
@@ -78,37 +84,44 @@ export function StudioLocationsSection(props: Props) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border bg-clip-padding border-b border-t">
                     <Location
                         name="Timișoara"
+                        to="/locations/timisoara"
                         county="Timiș"
                         image="https://images.unsplash.com/photo-1687696162729-a75f9ddc004d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         className="bg-muted sm:col-span-2 lg:col-span-3"
                     />
                     <Location
                         name="Arad"
+                        to="/locations/arad"
                         county="Arad"
                         image="https://images.unsplash.com/photo-1632207857925-a4d52c54d683?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
                         name="Oradea"
+                        to="/locations/oradea"
                         county="Bihor"
                         image="https://images.unsplash.com/photo-1654172054677-9a8cd7a8c04a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
                         name="Drobeta-Turnu Severin"
+                        to="/locations/drobeta-turnu-severin"
                         county="Mehedinți"
                         image="https://images.unsplash.com/photo-1592335234454-1454bd449a2c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
                         name="Cluj-Napoca"
+                        to="/locations/cluj-napoca"
                         county="Cluj"
                         image="https://images.unsplash.com/photo-1678736680989-195226823176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
                         name="București"
+                        to="/locations/bucuresti"
                         county="București"
                         image="https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
                         name="Orașul tău?"
+                        to="/contact"
                         description="Filmăm și fotografiem în toată țara."
                         accent="Spune-ne unde"
                         className="hover:bg-[color-mix(in_oklab,_var(--color2)_20%,_var(--muted))]"

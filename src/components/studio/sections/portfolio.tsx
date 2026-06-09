@@ -2,11 +2,14 @@
 
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
+import { Link } from "@/components/link";
 import { TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
+import { Pathname } from "@shared/i18n";
 import { cn } from "@shared/shadcn/lib/utils";
 
 interface PortfolioProps {
     name: string;
+    to: Pathname;
     description: string;
     label: string;
     image: string;
@@ -15,7 +18,8 @@ interface PortfolioProps {
 
 function Portfolio(props: PortfolioProps) {
     return (
-        <div
+        <Link
+            to={props.to}
             className={
                 cn(
                     "relative flex flex-col justify-end gap-1 p-6 aspect-square theme-dark group/portfolio",
@@ -38,7 +42,7 @@ function Portfolio(props: PortfolioProps) {
             <TextSpan variant="muted" size="label" font="mono1">
                 {props.label}
             </TextSpan>
-        </div>
+        </Link>
     );
 }
 
@@ -66,6 +70,7 @@ export function StudioPortfolioSection(props: Props) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Portfolio
                         name="Majorate"
+                        to="/portfolio/18th-birthday"
                         description="Aniversari care merita amintite"
                         label="24 sesiuni"
                         image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
@@ -73,24 +78,28 @@ export function StudioPortfolioSection(props: Props) {
                     />
                     <Portfolio
                         name="Sedinte Foto"
+                        to="/portfolio/outdoor"
                         description="Portrete in lumina naturala"
                         label="38 sesiuni"
                         image="https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium"
                     />
                     <Portfolio
                         name="Automotive"
+                        to="/portfolio/automotive"
                         description="Masini, surprinse in miscare"
                         label="17 proiecte"
                         image="https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium"
                     />
                     <Portfolio
                         name="Imobilirare"
+                        to="/portfolio/real-estate"
                         description="Spatii care se vand singure"
                         label="52 proprietati"
                         image="https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium"
                     />
                     <Portfolio
                         name="Promovare Firme"
+                        to="/portfolio/marketing"
                         description="Continut comercial cinematic"
                         label="29 campanii"
                         image="https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium"
