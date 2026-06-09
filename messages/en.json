@@ -80,6 +80,31 @@
                     "button": "Go to the contact page"
                 }
             }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Home",
+                    "events": "Events",
+                    "events-18th-birthday": "18th Birthday",
+                    "events-wedding": "Wedding",
+                    "events-christening": "Christening",
+                    "portraits": "Portraits",
+                    "portraits-outdoor": "Photo Session",
+                    "commercial": "Commercial",
+                    "commercial-real-estate": "Real Estate",
+                    "commercial-automotive": "Automotive",
+                    "commercial-marketing": "Business Promotion",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "company": "Company",
+                    "company-terms-of-service": "Terms of service",
+                    "company-privacy-policy": "Privacy policy",
+                    "company-cookie-policy": "Cookie policy",
+                    "company-contact": "Contact"
+                }
+            }
         }
     },
     "Software": {

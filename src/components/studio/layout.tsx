@@ -1,31 +1,36 @@
+"use client";
+
 import { Navbar } from "../navbar";
 import { Footer } from "../footer";
 import { NavbarLayout } from "../layouts/navbar";
 import { LayoutProps } from "../layouts";
+import { useTranslations } from "next-intl";
 
 export function StudioNavbarLayout(props: LayoutProps) {
+    const t = useTranslations("Studio.Components.navbar-layout");
+
     return (
         <NavbarLayout
             nav={
                 <Navbar
                     entries={[
                         {
-                            text: "ACASA",
+                            text: t("nav.home"),
                             to: "/",
                         },
                         {
-                            text: "EVENIMENTE",
+                            text: t("nav.events"),
                             entries: [
                                 {
-                                    text: "MAJORAT",
+                                    text: t("nav.events-18th-birthday"),
                                     to: "/services/18th-birthday",
                                 },
                                 {
-                                    text: "NUNTA",
+                                    text: t("nav.events-wedding"),
                                     to: "/services/wedding",
                                 },
                                 {
-                                    text: "BOTEZ",
+                                    text: t("nav.events-christening"),
                                     to: "/services/christening",
                                 },
                                 // {
@@ -39,7 +44,7 @@ export function StudioNavbarLayout(props: LayoutProps) {
                             ],
                         },
                         {
-                            text: "PORTRETE",
+                            text: t("nav.portraits"),
                             entries: [
                                 // {
                                 //     text: "PORTRETE OFICIALE",
@@ -62,20 +67,20 @@ export function StudioNavbarLayout(props: LayoutProps) {
                                 //     to: CONTACT(),
                                 // },
                                 {
-                                    text: "SEDINTA FOTO", // LUMINA NATURALA (OUTDOOR)
+                                    text: t("nav.portraits-outdoor"), // LUMINA NATURALA (OUTDOOR)
                                     to: "/services/outdoor",
                                 },
                             ],
                         },
                         {
-                            text: "COMERCIAL",
+                            text: t("nav.commercial"),
                             entries: [
                                 {
-                                    text: "IMOBILIARE (REAL ESTATE)",
+                                    text: t("nav.commercial-real-estate"),
                                     to: "/services/real-estate",
                                 },
                                 {
-                                    text: "AUTOMOTIVE",
+                                    text: t("nav.commercial-automotive"),
                                     to: "/services/automotive",
                                 },
                                 // {
@@ -83,7 +88,7 @@ export function StudioNavbarLayout(props: LayoutProps) {
                                 //     to: CONTACT(),
                                 // },
                                 {
-                                    text: "PROMOVARE FIRME (MARKETING)",
+                                    text: t("nav.commercial-marketing"),
                                     to: "/services/marketing",
                                 },
                             ],
@@ -93,7 +98,7 @@ export function StudioNavbarLayout(props: LayoutProps) {
                         //     to: PORTFOLIO(),
                         // },
                         {
-                            text: "CONTACT",
+                            text: t("nav.contact"),
                             to: "/contact",
                         },
                     ]}
@@ -103,22 +108,22 @@ export function StudioNavbarLayout(props: LayoutProps) {
                 <Footer
                     sections={[
                         {
-                            title: "Company",
+                            title: t("footer.company"),
                             links: [
                                 {
-                                    name: "Terms of service",
+                                    name: t("footer.company-terms-of-service"),
                                     to: "/terms-of-service",
                                 },
                                 {
-                                    name: "Privacy policy",
+                                    name: t("footer.company-privacy-policy"),
                                     to: "/privacy-policy",
                                 },
                                 {
-                                    name: "Cookie policy",
+                                    name: t("footer.company-cookie-policy"),
                                     to: "/cookie-policy",
                                 },
                                 {
-                                    name: "Contact",
+                                    name: t("footer.company-contact"),
                                     to: "/contact",
                                 },
                             ],

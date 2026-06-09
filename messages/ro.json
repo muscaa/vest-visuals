@@ -80,6 +80,31 @@
                     "button": "Mergi la pagina de contact"
                 }
             }
+        },
+        "Components": {
+            "navbar-layout": {
+                "nav": {
+                    "home": "Acasă",
+                    "events": "Evenimente",
+                    "events-18th-birthday": "Majorat",
+                    "events-wedding": "Nuntă",
+                    "events-christening": "Botez",
+                    "portraits": "Portrete",
+                    "portraits-outdoor": "Ședință Foto",
+                    "commercial": "Comercial",
+                    "commercial-real-estate": "Imobiliare",
+                    "commercial-automotive": "Automotive",
+                    "commercial-marketing": "Promovare Firme",
+                    "contact": "Contact"
+                },
+                "footer": {
+                    "company": "Companie",
+                    "company-terms-of-service": "Termeni și condiții",
+                    "company-privacy-policy": "Politica de confidențialitate",
+                    "company-cookie-policy": "Politica de cookie-uri",
+                    "company-contact": "Contact"
+                }
+            }
         }
     },
     "Software": {
