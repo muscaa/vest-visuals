@@ -108,6 +108,12 @@
                 "description": "Vest Visuals creates cinematic commercial content for businesses, from product and brand photography to promotional video. We help your business stand out with professional visuals built to sell and made to fit how you market.",
                 "og-title": "Content that sells",
                 "og-subtitle": "Cinematic commercial photo & video"
+            },
+            "portfolio": {
+                "title": "Portfolio",
+                "description": "Browse the Vest Visuals portfolio of photography and videography work, from weddings and events to portraits, automotive, real estate, and business content. See our style, quality, and attention to detail across a range of recent projects.",
+                "og-title": "Our work, in one place",
+                "og-subtitle": "Photography & videography across every project"
             }
         },
         "Page": {

@@ -6,7 +6,6 @@ import { PreviewImage } from "@/components/preview-image";
 import { usePortfolio } from "@/hooks/portfolio/usePortfolio";
 import { useState } from "react";
 import { Reveal } from "@/components/animations/reveal";
-import { Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import {
@@ -18,6 +17,7 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@shared/shadcn/lib/utils";
+import { Img } from "@/components/img";
 
 export default function Page() {
     const { tag } = useParams<{ tag: string; }>();
@@ -73,6 +73,7 @@ export default function Page() {
                                     <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
                                         <Img
                                             src={item.full.src}
+                                            alt=""
                                             width={item.full.width}
                                             height={item.full.height}
                                             onClick={(e) => e.stopPropagation()}
