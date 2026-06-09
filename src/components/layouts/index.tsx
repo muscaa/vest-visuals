@@ -73,6 +73,19 @@ export function generate<M>(gen: Generator<M>): GeneratorResult {
     };
 }
 
+export function defaultMetadata(t: _Translator<Record<string, any>, never>, type: "Studio" | "Software", name: string, url: Pathname): MetadataResult {
+    return {
+        title: t(`${type}.Metadata.${name}.title`),
+        description: t(`${type}.Metadata.${name}.description`),
+        url,
+        image: og.splitImage({
+            title: t(`${type}.Metadata.${name}.og-title`),
+            subtitle: t(`${type}.Metadata.${name}.og-subtitle`),
+            image: type == "Studio" ? "/studio.jpg" : type == "Software" ? "/software.jpg" : "/placeholder.jpg",
+        }),
+    };
+}
+
 function buildPath(basePath: string, params: Record<string, any>) {
     const searchParams = new URLSearchParams();
 
