@@ -1,6 +1,7 @@
 import { NavbarLayout } from "./navbar";
 import { Navbar } from "../navbar";
 import { LayoutProps } from ".";
+import { Footer } from "../footer";
 
 export function StudioNavbarLayout(props: LayoutProps) {
     return (
@@ -94,6 +95,33 @@ export function StudioNavbarLayout(props: LayoutProps) {
                         {
                             text: "CONTACT",
                             to: "/contact",
+                        },
+                    ]}
+                />
+            }
+            footer={
+                <Footer
+                    sections={[
+                        {
+                            title: "Company",
+                            links: [
+                                {
+                                    name: "Terms of service",
+                                    to: "/terms-of-service",
+                                },
+                                {
+                                    name: "Privacy policy",
+                                    to: "/privacy-policy",
+                                },
+                                {
+                                    name: "Cookie policy",
+                                    to: "/cookie-policy",
+                                },
+                                {
+                                    name: "Contact",
+                                    to: "/contact",
+                                },
+                            ],
                         },
                     ]}
                 />
