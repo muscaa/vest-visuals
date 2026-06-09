@@ -13,6 +13,73 @@
                 "og-title": "Let's work together",
                 "og-subtitle": "Tell us about your project and we'll handle the rest"
             }
+        },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "The moments that <accent>matter,</accent> captured <accent2>right.</accent2>",
+                    "description": "Weddings, events, portraits, automotive, real estate, and brand work, shot and edited by a studio that actually cares how it turns out. Wherever your story takes place, we're there for it.",
+                    "button-1": "See our work",
+                    "button-2": "Get in touch"
+                },
+                "about": {
+                    "eyebrow": "Who we are",
+                    "title": "Small studio, <accent>full attention.</accent>",
+                    "description": "We started Vest Visuals because we love this work and we're picky about how it's done. From the first message to the final gallery, you're talking to the people actually behind the camera and the edit. We take on projects we can give our full attention to, so nothing about your shoot feels rushed or generic.",
+                    "description-1": "Has a rare eye for light and for the moments that won't happen twice.",
+                    "description-2": "Gives rhythm, sound, and emotion to what would otherwise be just clips."
+                },
+                "portfolio": {
+                    "eyebrow": "Selected work",
+                    "title": "See it <accent>for yourself.</accent>",
+                    "description": "A handful of recent projects we're proud of. Quality over quantity, every time.",
+                    "18th-birthday": {
+                        "name": "18th <accent>Birthdays</accent>",
+                        "description": "A night you won't forget"
+                    },
+                    "outdoor": {
+                        "name": "Photo <accent>Sessions</accent>",
+                        "description": "Portraits in natural light"
+                    },
+                    "automotive": {
+                        "name": "<accent>Automotive</accent>",
+                        "description": "Cars that look like the ad"
+                    },
+                    "real-estate": {
+                        "name": "Real <accent>Estate</accent>",
+                        "description": "Listings that sell faster"
+                    },
+                    "marketing": {
+                        "name": "Business <accent>Content</accent>",
+                        "description": "Cinematic commercial content"
+                    }
+                },
+                "before-and-after": {
+                    "eyebrow": "The editing",
+                    "title": "Same frame. <accent>Whole new feeling.</accent>",
+                    "description": "Good editing is the part nobody talks about and everybody notices. Pull the slider and watch a raw shot turn into the final look, all in the color, contrast, and mood."
+                },
+                "testimonials": {
+                    "eyebrow": "Reviews",
+                    "title": "What our <accent>clients have to say.</accent>"
+                },
+                "locations": {
+                    "eyebrow": "Where we shoot",
+                    "title": "Wherever the <accent>shoot takes us.</accent>",
+                    "description": "A good project is worth the drive. We pack the gear and show up wherever you need us, near or far.",
+                    "other": {
+                        "name": "Somewhere else?",
+                        "description": "We travel across the country for the right shoot",
+                        "link": "Tell us where"
+                    }
+                },
+                "contact": {
+                    "eyebrow": "Say hello",
+                    "title": "Got something in mind? <accent>Let's talk.</accent>",
+                    "description": "Send us a few details about what you need and you'll hear back within one business day.",
+                    "button": "Go to the contact page"
+                }
+            }
         }
     },
     "Software": {
@@ -76,7 +143,7 @@
                 "contact": {
                     "eyebrow": "Get in touch",
                     "title": "Let's talk about your project.",
-                    "description": " Tell us what you're building and we'll reply within one business day. If we're the right fit, we'll set up a short call; if we're not, we'll happily point you toward someone who is.",
+                    "description": "Tell us what you're building and we'll reply within one business day. If we're the right fit, we'll set up a short call; if we're not, we'll happily point you toward someone who is.",
                     "button": "Go to contact page"
                 }
             }

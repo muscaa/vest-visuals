@@ -13,6 +13,73 @@
                 "og-title": "Hai să lucrăm împreună",
                 "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
             }
+        },
+        "Page": {
+            "home": {
+                "hero": {
+                    "title": "Momentele care <accent>contează,</accent> surprinse cum <accent2>trebuie.</accent2>",
+                    "description": "Nunți, evenimente, portrete, automotive, imobiliare și brand content, filmate și editate de un studio căruia chiar îi pasă de rezultat. Oriunde se petrece povestea ta, suntem acolo pentru ea.",
+                    "button-1": "Vezi lucrările",
+                    "button-2": "Scrie-ne"
+                },
+                "about": {
+                    "eyebrow": "Cine suntem",
+                    "title": "Studio mic, <accent>atenție maximă.</accent>",
+                    "description": "Am pornit Vest Visuals pentru că iubim ce facem și suntem pretențioși cu felul în care iese. De la primul mesaj până la galeria finală, vorbești cu oamenii care chiar stau în spatele aparatului și al editării. Luăm proiectele cărora le putem da toată atenția, așa că filmarea ta nu se simte nici pe fugă, nici banală.",
+                    "description-1": "Are un ochi rar pentru lumină și pentru clipele care nu se repetă.",
+                    "description-2": "Dă ritm, sunet și emoție unor cadre care altfel ar fi doar imagini."
+                },
+                "portfolio": {
+                    "eyebrow": "Lucrări alese",
+                    "title": "Vezi cu <accent>ochii tăi.</accent>",
+                    "description": "Câteva proiecte recente de care suntem mândri. Calitate înainte de cantitate, de fiecare dată.",
+                    "18th-birthday": {
+                        "name": "<accent>Majorate</accent>",
+                        "description": "O seară pe care n-o uiți prea curând"
+                    },
+                    "outdoor": {
+                        "name": "Ședințe <accent>Foto</accent>",
+                        "description": "Portrete în lumină naturală"
+                    },
+                    "automotive": {
+                        "name": "<accent>Automotive</accent>",
+                        "description": "Mașini care arată ca-n reclame"
+                    },
+                    "real-estate": {
+                        "name": "<accent>Imobiliare</accent>",
+                        "description": "Proprietăți care se vând repede"
+                    },
+                    "marketing": {
+                        "name": "Promovare <accent>Firme</accent>",
+                        "description": "Conținut comercial cinematic"
+                    }
+                },
+                "before-and-after": {
+                    "eyebrow": "Editarea",
+                    "title": "Același cadru. <accent>Cu totul altă senzație.</accent>",
+                    "description": "Editarea bună e partea despre care nu vorbește nimeni, dar pe care o observă toți. Trage de cursor și vezi cum un cadru brut devine imaginea finală, totul stă în culoare, contrast și atmosferă."
+                },
+                "testimonials": {
+                    "eyebrow": "Recenzii",
+                    "title": "Ce spun <accent>clienții noștri.</accent>"
+                },
+                "locations": {
+                    "eyebrow": "Unde filmăm",
+                    "title": "Oriunde <accent>ne duce filmarea.</accent>",
+                    "description": "Un proiect bun merită drumul. Ne strângem echipamentul și venim acolo unde ai nevoie de noi, aproape sau departe.",
+                    "other": {
+                        "name": "În altă parte?",
+                        "description": "Mergem în toată țara pentru filmarea potrivită",
+                        "link": "Spune-ne unde"
+                    }
+                },
+                "contact": {
+                    "eyebrow": "Salută-ne",
+                    "title": "Ai ceva în minte? <accent>Hai să vorbim.</accent>",
+                    "description": "Trimite-ne câteva detalii despre ce ai nevoie și primești răspuns într-o zi lucrătoare.",
+                    "button": "Mergi la pagina de contact"
+                }
+            }
         }
     },
     "Software": {

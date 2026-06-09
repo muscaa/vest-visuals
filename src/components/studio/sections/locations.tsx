@@ -6,6 +6,7 @@ import { Link } from "@/components/link";
 import { TextH1, TextH2, TextP } from "@/components/typography";
 import { Pathname } from "@shared/i18n";
 import { cn } from "@shared/shadcn/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface LocationProps {
     name: string;
@@ -65,20 +66,26 @@ interface Props {
 }
 
 export function StudioLocationsSection(props: Props) {
+    const t = useTranslations("Studio.Page.home.locations");
+
     return (
         <section id="locations" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="05">
-                    Locații
+                    {t("eyebrow")}
                 </Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="title">
-                        Lucrăm din Timișoara.
-                        <br />
-                        <i className="text-primary">Venim oriunde.</i>
+                        {
+                            t.rich("title", {
+                                accent: (chunks) => (
+                                    <i className="text-success">{chunks}</i>
+                                )
+                            })
+                        }
                     </TextH1>
                     <TextP variant="muted" size="lead">
-                        Studio principal în Timișoara — dar lucrăm cu plăcere oriunde povestea ne cheamă.
+                        {t("description")}
                     </TextP>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border bg-clip-padding border-b border-t">
@@ -120,10 +127,10 @@ export function StudioLocationsSection(props: Props) {
                         image="https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     />
                     <Location
-                        name="Orașul tău?"
+                        name={t("other.name")}
                         to="/contact"
-                        description="Filmăm și fotografiem în toată țara."
-                        accent="Spune-ne unde"
+                        description={t("other.description")}
+                        accent={t("other.link")}
                         className="hover:bg-[color-mix(in_oklab,_var(--color2)_20%,_var(--muted))]"
                     />
                 </div>

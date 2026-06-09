@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { SiInstagram } from "@icons-pack/react-simple-icons";
 import { Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface MemberCardProps {
     image: string;
@@ -68,20 +69,26 @@ interface Props {
 }
 
 export function StudioAboutSection(props: Props) {
+    const t = useTranslations("Studio.Page.home.about");
+
     return (
         <section id="about" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-br from-transparent to-muted">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="01">
-                    Studio
+                    {t("eyebrow")}
                 </Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="title">
-                        O echipă de doi.
-                        <br />
-                        <i className="text-success">O singură viziune.</i>
+                        {
+                            t.rich("title", {
+                                accent: (chunks) => (
+                                    <i className="text-primary">{chunks}</i>
+                                )
+                            })
+                        }
                     </TextH1>
                     <TextP variant="muted" size="lead">
-                        Suntem o echipă pasionată de fotografie și videografie, dedicată să transformăm momente obișnuite în amintiri vizuale memorabile. Credem în emoție, naturalețe și profesionalism. Lucrăm cu echipament profesional și cu obsesia de a livra fiecare proiect așa cum am vrea să primim noi unul — la timp, atent editat, fără compromisuri.
+                        {t("description")}
                     </TextP>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -89,7 +96,7 @@ export function StudioAboutSection(props: Props) {
                         image="https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/medium"
                         firstName="Mihail"
                         lastName="Musca"
-                        description="Compozițiile lui se simt naturale — chiar și când fiecare cadru a fost atent gândit."
+                        description={t("description-1")}
                         role="Fotograf principal & editor"
                         skills={[
                             "foto",
@@ -103,7 +110,7 @@ export function StudioAboutSection(props: Props) {
                         image="https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium"
                         firstName="David"
                         lastName="Boștină"
-                        description="Transformă cadrele brute în montaje cu ritm, sunet și emoție."
+                        description={t("description-2")}
                         role="Videograf principal & colorist"
                         skills={[
                             "video",

@@ -3,17 +3,20 @@
 import { Eyebrow } from "@/components/eyebrow";
 import { ReviewCarousel } from "@/components/review";
 import { TextH1, TextP } from "@/components/typography";
+import { useTranslations } from "next-intl";
 
 interface Props {
 
 }
 
 export function StudioTestimonialsSection(props: Props) {
+    const t = useTranslations("Studio.Page.home.testimonials");
+
     return (
         <section id="testimonials" className="flex flex-col justify-center items-center px-6 py-16 bg-muted">
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow num="04">
-                    Clienți
+                    {t("eyebrow")}
                 </Eyebrow>
                 {/* <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="title">
@@ -23,7 +26,13 @@ export function StudioTestimonialsSection(props: Props) {
                     </TextP>
                 </div> */}
                 <TextH1 size="title" className="mb-16">
-                    Ce spun oamenii cu care am <i className="text-success">lucrat.</i>
+                    {
+                        t.rich("title", {
+                            accent: (chunks) => (
+                                <i className="text-success">{chunks}</i>
+                            )
+                        })
+                    }
                 </TextH1>
                 <ReviewCarousel
                     reviews={[

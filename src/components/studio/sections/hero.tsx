@@ -15,9 +15,11 @@ import {
     CarouselPrevious,
     useCarousel,
 } from "@/components/ui/carousel";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 function CarouselOverlay() {
+    const t = useTranslations("Studio.Page.home.hero");
     const { api, at, max } = useCarousel();
 
     useEffect(() => {
@@ -35,25 +37,35 @@ function CarouselOverlay() {
             <div className="flex flex-col justify-between gap-8 max-w-8xl w-full grow">
                 <div />
                 <TextH1 size="hero">
-                    Surprindem <i className="text-success">emoții,</i>
-                    <br />
-                    nu doar <i className="text-primary">imagini.</i>
+                    {
+                        t.rich("title", {
+                            accent: (chunks) => (
+                                <>
+                                    <i className="text-primary">{chunks}</i>
+                                    <br />
+                                </>
+                            ),
+                            accent2: (chunks) => (
+                                <i className="text-success">{chunks}</i>
+                            )
+                        })
+                    }
                 </TextH1>
                 <div />
                 <TextP size="lead" className="max-w-[60ch] text-pretty">
-                    Fotografie și videografie pentru nunți, majorate, portrete, automotive, imobiliare și brand content — în Timișoara și pe oriunde ne cheamă povestea.
+                    {t("description")}
                 </TextP>
                 <div className="flex not-xs:flex-col gap-4 pointer-events-auto">
                     <Button variant="white" size="lg">
-                        Vezi portofoliul
+                        {t("button-1")}
                     </Button>
                     <Button variant="outline" size="lg">
-                        Incepe un proiect
+                        {t("button-2")}
                     </Button>
                 </div>
                 <div className="flex not-sm:flex-col sm:justify-between gap-4">
                     <div className="flex gap-4">
-                        {
+                        {/* {
                             [
                                 {
                                     stat: "3+",
@@ -77,7 +89,7 @@ function CarouselOverlay() {
                                     </TextSpan>
                                 </div>
                             ))
-                        }
+                        } */}
                     </div>
                     <div className="flex justify-center items-center gap-2 pointer-events-auto">
                         <CarouselPrevious
