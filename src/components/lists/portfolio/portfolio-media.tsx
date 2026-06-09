@@ -7,10 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-    ButtonLink,
-    Img,
-} from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { PortfolioMedia } from "@type/portfolio/media";
@@ -25,6 +21,7 @@ import { PortfolioMediaUploadDialog } from "@/components/dialogs/portfolio/portf
 import { PortfolioMediaDeleteDialog } from "@/components/dialogs/portfolio/portfolio-media-delete";
 import { PLACEHOLDER } from "@shared/i18n";
 import { TextLink } from "@/components/typography";
+import { Img } from "@/components/img";
 
 interface ListEntryProps {
     value: PortfolioMedia;

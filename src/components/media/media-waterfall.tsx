@@ -5,7 +5,6 @@ import {
     useMediaValues,
 } from "@/components/masonry";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Img } from "@/components/snippets";
 import { Button } from "@/components/ui/button";
 import { Download, X } from "lucide-react";
 import {
@@ -22,6 +21,7 @@ import { useIntersectionObserver } from "@uidotdev/usehooks";
 import { Media } from "@type/media";
 import { MediaPreview } from "./media-preview";
 import { openLink } from "@client/snippets";
+import { Img } from "../img";
 
 interface Props {
     nextData: (offset: number, limit: number) => Promise<Media[]>;
@@ -146,6 +146,7 @@ export function MediaWaterfall(props: Props) {
                                     <div className="flex justify-center items-center w-full h-[75%] md:w-[75%] md:h-full">
                                         <Img
                                             src={item.full.src}
+                                            alt=""
                                             width={item.full.width}
                                             height={item.full.height}
                                             onClick={(e) => e.stopPropagation()}

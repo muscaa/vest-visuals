@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Img } from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SortableList } from "../sortable";
 import { AlbumsContent } from "@type/albums/contents";

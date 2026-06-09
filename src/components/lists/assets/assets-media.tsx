@@ -7,10 +7,6 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-    ButtonLink,
-    Img,
-} from "@/components/snippets";
 import { dateToString } from "@shared/snippets";
 import { SimpleList } from "../simple";
 import { AssetsMedia } from "@type/assets/media";
@@ -18,6 +14,7 @@ import { AssetsMediaUploadDialog } from "@/components/dialogs/assets/assets-medi
 import { AssetsMediaDeleteDialog } from "@/components/dialogs/assets/assets-media-delete";
 import { PLACEHOLDER } from "@shared/i18n";
 import { TextLink } from "@/components/typography";
+import { Img } from "@/components/img";
 
 interface ListEntryProps {
     value: AssetsMedia;

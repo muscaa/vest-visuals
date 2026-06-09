@@ -1,6 +1,6 @@
 import { Media } from "@type/media";
-import { Img } from "../snippets";
 import { cn } from "@shared/shadcn/lib/utils";
+import { Img } from "../img";
 
 interface Props {
     media: Media;
@@ -15,7 +15,7 @@ export function MediaPreview(props: Props) {
         <div className="overflow-hidden">
             <Img
                 src={props.media.preview.src}
-                alt={props.media.alt}
+                alt={props.media.alt!}
                 onClick={props.onClick}
                 className={cn("transition-all ease-out hover:opacity-75 hover:scale-105 size-full", props.className)}
             />
