@@ -1,5 +1,5 @@
 import { generate, og } from "@/components/layouts";
-import { SoftwareNavbarLayout } from "@/components/layouts/software";
+import { SoftwareNavbarLayout } from "@/components/software/layout";
 
 export const {
     generateStaticParams,

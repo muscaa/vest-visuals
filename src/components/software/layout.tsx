@@ -1,7 +1,7 @@
-import { NavbarLayout } from "./navbar";
 import { Navbar } from "../navbar";
 import { Footer } from "../footer";
-import { LayoutProps } from ".";
+import { NavbarLayout } from "../layouts/navbar";
+import { LayoutProps } from "../layouts";
 
 export function SoftwareNavbarLayout(props: LayoutProps) {
     return (
