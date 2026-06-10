@@ -331,6 +331,16 @@
             }
         }
     },
+    "Shared": {
+        "Components": {
+            "cookie-consent": {
+                "title": "Cookie-uri",
+                "description": "Acest site folosește cookie-uri pentru a-ți oferi o experiență de navigare mai bună. Află mai multe despre <link>cum folosim cookie-urile și cum îți poți schimba setările.</link>",
+                "button-1": "Doar esențiale",
+                "button-2": "Acceptă toate"
+            }
+        }
+    },
     "Basic": {
         "not-found": "Ne pare rau, dar pagina nu a fost gasita"
     }
