@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://dev1-server0-media.musca.dev
-
-# Sitemaps
-Sitemap: https://dev1-server0-media.musca.dev/sitemap.xml
