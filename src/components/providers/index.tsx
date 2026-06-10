@@ -10,6 +10,7 @@ import { ThemeLayoutProvider } from "./theme";
 import { Toaster } from "../ui/sonner";
 import { MainContextProvider } from "@/contexts/main";
 import { AnalyticsProvider } from "./analytics";
+import { CookieConsent } from "../cookie-consent";
 
 export const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ export function ClientProvider(props: LayoutProps) {
                             position="bottom-right"
                             richColors
                         />
+                        <CookieConsent />
                     </AuthContextProvider>
                     <AnalyticsProvider />
                 </QueryClientProvider>

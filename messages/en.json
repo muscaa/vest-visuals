@@ -331,6 +331,16 @@
             }
         }
     },
+    "Shared": {
+        "Components": {
+            "cookie-consent": {
+                "title": "Cookies",
+                "description": "This site uses cookies to give you a better browsing experience. Learn more about <link>how we use cookies and how you can change your settings.</link>",
+                "button-1": "Allow Essential",
+                "button-2": "Allow All"
+            }
+        }
+    },
     "Basic": {
         "not-found": "We're sorry, but the page was not found"
     }
