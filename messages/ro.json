@@ -242,66 +242,74 @@
     "Software": {
         "Metadata": {
             "home": {
-                "title": "Acasă",
-                "description": "Vest Visuals este o companie de dezvoltare software full-service care creează aplicații web și mobile, instrumente interne personalizate, produse SaaS și soluții cloud & DevOps pentru startup-uri, IMM-uri și companii mari din întreaga lume. Colaborează cu echipa noastră remote pentru a proiecta, construi și scala software fiabil, adaptat afacerii tale.",
-                "og-title": "Vest Visuals",
-                "og-subtitle": "Dezvoltăm software web, mobile & cloud care scalează"
+                "title": "Dezvoltare software, web & cloud la comandă",
+                "description": "Vest Visuals este o companie de dezvoltare software care construiește aplicații web și mobile, dashboard-uri de business intelligence, automatizări de procese, infrastructură cloud & DevOps și pipeline-uri de date, cu consultanță tehnică și suport pe termen lung pentru firme din toată lumea.",
+                "og-title": "Software construit pentru succes pe termen lung",
+                "og-subtitle": "Aplicații web & mobile, automatizări, cloud, date și consultanță de la o singură echipă"
             },
             "contact": {
                 "title": "Contact",
-                "description": "Contactează Vest Visuals pentru a discuta despre proiectul tău software. Echipa noastră remote te ajută cu aplicații web și mobile, instrumente personalizate, SaaS și soluții cloud & DevOps. Solicită o ofertă, pune o întrebare sau programează o consultație gratuită, răspundem de obicei într-o zi lucrătoare.",
-                "og-title": "Hai să construim ceva grozav",
-                "og-subtitle": "Spune-ne despre proiectul tău și ne ocupăm noi de rest"
+                "description": "Contactează Vest Visuals pentru dezvoltare software la comandă, aplicații web și mobile, automatizări, cloud & DevOps sau data engineering. Programează un apel gratuit de 30-45 de minute, primești feedback sincer și un plan tehnic clar, cu răspuns într-o zi lucrătoare.",
+                "og-title": "Hai să vorbim despre proiectul tău",
+                "og-subtitle": "Apel gratuit, feedback sincer și un plan tehnic clar într-o săptămână"
             }
         },
         "Page": {
             "home": {
                 "hero": {
-                    "title": "Un studio mic, pentru software care merită păstrat.",
-                    "description": "Suntem câțiva ingineri senior din Timișoara, construind produse web și mobile, sisteme interne și instrumente de date pentru clienți din toată lumea. Mici intenționat, ca oamenii care îți stabilesc proiectul să fie aceiași care scriu codul.",
-                    "button-1": "Începe o conversație",
-                    "button-2": "Vezi ce am construit"
+                    "title": "Soluții software construite pentru succes pe termen lung",
+                    "description": "Construim software personalizat, adaptat felului în care funcționează cu adevărat organizația ta, îmbunătățind performanța și eliminând efortul irosit. Ne luăm timp să-ți înțelegem afacerea înainte să scriem o linie de cod și rămânem alături de tine cu îndrumare de specialitate la fiecare pas. Nu doar livrăm software, te ajutăm să-l faci să reușească.",
+                    "button-1": "Spune-ne ce ai nevoie",
+                    "button-2": "Ce facem"
                 },
                 "services": {
-                    "eyebrow": "Ce putem face",
-                    "title": "O echipă de produs completă, fără numărul de angajați.",
-                    "description": "Majoritatea studiourilor fie se specializează îngust, fie umplu echipele cu juniori. Noi nu facem nici una, nici alta. Câțiva generaliști senior acoperă întreg ciclul, de la prima schiță pe tablă până la deploy-ul în producție și tot ce îl ține funcțional după.",
-                    "s1-t": "Product Engineering",
-                    "s1-d": "Aplicații web și mobile gândite până în detalii, care rezistă la utilizare reală. Ne pasă la fel de mult de cazurile-limită ca de scenariul ideal.",
-                    "s2-t": "Sisteme Interne",
-                    "s2-d": "Instrumentele pe care chiar funcționează afacerea ta. Transformăm spreadsheet-urile fragile și pașii manuali în software în care echipa ta are încredere.",
-                    "s3-t": "Date & Infrastructură",
-                    "s3-d": "Pipeline-uri, analiză și configurări cloud care fac datele utilizabile și deploy-urile lipsite de evenimente. Munca neglamuroasă de care depinde tot restul.",
-                    "s4-t": "Parteneriat Tehnic",
-                    "s4-d": "Uneori ai nevoie de judecată, nu de mâini în plus. Consiliem pe arhitectură, descurcăm codebase-uri moștenite și ajutăm echipele să decidă ce merită construit."
+                    "eyebrow": "Servicii",
+                    "title": "Ce facem",
+                    "description": "Fiecare serviciu, de la dezvoltare web la cloud și date, e gestionat de specialiști cu ani de experiență exact în acel domeniu. Așa menținem calitatea ridicată în tipuri de muncă foarte diferite.",
+                    "s1-t": "Dezvoltare web",
+                    "s1-d": "De la landing page-uri și magazine online la platforme web enterprise complexe. Design curat, funcționalitate impecabilă, responsivitate completă și SEO făcut corect din prima zi.",
+                    "s2-t": "Dezvoltare mobile",
+                    "s2-d": "Transformăm conceptul tău într-o aplicație mobilă pe care oamenilor chiar le place s-o folosească. Funcționalitate intuitivă, vizual rafinat și o experiență la care clienții tăi revin, atât pe iOS, cât și pe Android.",
+                    "s3-t": "Cloud & DevOps",
+                    "s3-d": "Migrează, scalează sau optimizează-ți platformele cu specialiștii noștri cloud. Infrastructură mai rapidă, deployment-uri fără bătăi de cap și sisteme construite să rămână fiabile pe măsură ce crești.",
+                    "s4-t": "Business Intelligence",
+                    "s4-d": "Ne luăm timp să-ți înțelegem afacerea, ca cifrele să însemne ceva. Dashboard-uri, raportare și vizualizare de date care răspund la întrebări reale, nu rapoarte la întâmplare.",
+                    "s5-t": "Automatizări",
+                    "s5-d": "Îți analizăm fluxurile de lucru și automatizăm părțile repetitive. De la emailuri și rapoarte până la procese de business întregi și pipeline-uri de date care rulează singure.",
+                    "s6-t": "Data Engineering",
+                    "s6-d": "Nu-ți mai face griji pentru datele tale, oricât de mari ar deveni. Construim și administrăm întregul pipeline: colectare din orice sursă, ETL, baze de date, data warehousing, fluxuri automatizate și raportare.",
+                    "s7-t": "Consultanță tehnică",
+                    "s7-d": "Uneori ai nevoie de un plan mai mult decât de mâini în plus. Te consiliem pe arhitectură software și codebase-uri și ajutăm echipa ta să decidă ce merită construit. Ideal dacă ai deja dezvoltatori.",
+                    "s8-t": "Suport & mentenanță",
+                    "s8-d": "Suport și mentenanță software pe termen lung, care îți ține sistemele rapide, sigure și fiabile, astfel încât ce construim să performeze ani buni după lansare."
                 },
                 "testimonials": {
                     "eyebrow": "Clienți",
-                    "title": "Munca vorbește, dar au făcut-o și ei.",
-                    "description": "Câteva cuvinte de la oamenii pentru care am construit."
+                    "title": "Munca vorbește, dar au vorbit și ei.",
+                    "description": "Câteva cuvinte de la firmele pentru care am construit software."
                 },
                 "faq": {
-                    "eyebrow": "Bine de știut",
-                    "title": "Înainte să ne scrii.",
-                    "description": "Mai e ceva pe cap? Scrie-ne la <email>contact@vestvisuals.ro</email> și îți răspundem pe șleau.",
-                    "q1": "Cât costă să lucrăm cu voi?",
-                    "a1": "Facturăm time and materials, transparent. Vezi exact unde se duc orele și păstrezi libertatea de a schimba direcția pe măsură ce munca îți arată ce contează. Fără scope fix care se învechește pe tăcute, fără estimări umflate.",
-                    "q2": "Cât de mic înseamnă \"mic\"?",
-                    "a2": "Suficient de mic încât să cunoști pe nume pe toți cei care lucrează la proiectul tău și încât inginerul senior din apelul de discovery să fie cel care îți scrie codul. Asta e ideea, nu o limitare.",
-                    "q3": "Lucrați cu clienți din afara României?",
-                    "a3": "Cea mai mare parte a muncii noastre e remote și internațională. Suntem obișnuiți să lucrăm peste fusuri orare și avem un ritm prin care păstrăm proiectele distribuite clare și pe drumul cel bun.",
-                    "q4": "Puteți prelua ceva care a fost deja început?",
-                    "a4": "Da, și o facem des. Codebase-uri moștenite, build-uri pe jumătate făcute sau un proiect care a depășit pe cine l-a început. Evaluăm cinstit ce se poate salva înainte să propunem o rescriere.",
+                    "eyebrow": "Întrebări",
+                    "title": "Cele mai frecvente întrebări",
+                    "description": "Mai ai ceva în minte? Scrie-ne la <email>contact@vestvisuals.ro</email> și îți răspundem direct.",
+                    "q1": "Cât de repede puteți începe?",
+                    "a1": "Majoritatea proiectelor de dezvoltare software încep în maximum o săptămână de la apelul de descoperire. Dacă ai în minte o aplicație web, mobilă sau o automatizare, scrie-ne și găsim un loc.",
+                    "q2": "Cum lucrați cu o echipă existentă?",
+                    "a2": "Asta e cea mai mare parte din experiența noastră. Dezvoltatorii noștri se integrează în echipa ta și lucrăm ca o singură echipă mare, nu ca două grupuri separate care își pasează taskuri.",
+                    "q3": "Unde e bazată echipa voastră?",
+                    "a3": "În Timișoara, România, lucrând remote cu clienți de software atât locali, cât și internaționali.",
+                    "q4": "Cât costă apelul de descoperire?",
+                    "a4": "Nimic. Programează un apel de 30-45 de minute, îți dăm feedback sincer despre proiectul tău software și un plan tehnic clar, fără nicio obligație de a continua.",
                     "q5": "De ce aveți nevoie de la noi ca să începem?",
-                    "a5": "De o conversație. Nu ai nevoie de o specificație finită sau de documente tehnice, doar de o idee clară despre problemă. Te ajutăm noi să o modelăm în ceva ce se poate construi.",
-                    "q6": "Ce se întâmplă când se termină proiectul?",
-                    "a6": "Deții fiecare linie de cod din prima zi. Predăm documentație curată și rămânem disponibili dacă vrei suport continuu, dar nu ești niciodată blocat cu noi."
+                    "a5": "O descriere clară a ceea ce ai nevoie și a ceea ce vrei să obții. Cu cât ne dai mai multe detalii, cu atât mai bun e planul de dezvoltare cu care venim înapoi.",
+                    "q6": "Lucrați cu preț fix pe proiect?",
+                    "a6": "Uneori, în funcție de proiect. În majoritatea cazurilor, facturarea pe etape de dezvoltare finalizate a funcționat cel mai bine atât pentru noi, cât și pentru clienți."
                 },
                 "contact": {
                     "eyebrow": "Contact",
-                    "title": "Hai să discutăm despre proiectul tău.",
-                    "description": "Spune-ne ce construiești și îți răspundem într-o zi lucrătoare. Dacă suntem potriviți, stabilim un apel scurt; dacă nu, te îndrumăm bucuroși spre cineva care e.",
-                    "button": "Mergi la pagina de contact"
+                    "title": "Spune-ne ce construiești",
+                    "description": "Mergi la pagina de contact, descrie-ne proiectul tău software și îl analizăm și revenim cât mai repede, de obicei într-o zi lucrătoare.",
+                    "button": "Contactează-ne"
                 }
             }
         },
@@ -310,18 +318,26 @@
                 "nav": {
                     "home": "Acasă",
                     "services": "Servicii",
-                    "services-product-engineering": "Product Engineering",
-                    "services-internal-systems": "Sisteme Interne",
-                    "services-data-and-infrastructure": "Date & Infrastructură",
-                    "services-technical-partnership": "Parteneriat Tehnic",
+                    "services-web-development": "Dezvoltare web",
+                    "services-mobile-development": "Dezvoltare mobile",
+                    "services-cloud-and-devops": "Cloud & DevOps",
+                    "services-business-intelligence": "Business Intelligence",
+                    "services-workflow-automation": "Automatizări",
+                    "services-data-engineering": "Data Engineering",
+                    "services-technical-consulting": "Consultanță tehnică",
+                    "services-support-and-maintenance": "Suport & mentenanță",
                     "contact": "Contact"
                 },
                 "footer": {
                     "services": "Servicii",
-                    "services-product-engineering": "Product Engineering",
-                    "services-internal-systems": "Sisteme Interne",
-                    "services-data-and-infrastructure": "Date & Infrastructură",
-                    "services-technical-partnership": "Parteneriat Tehnic",
+                    "services-web-development": "Dezvoltare web",
+                    "services-mobile-development": "Dezvoltare mobile",
+                    "services-cloud-and-devops": "Cloud & DevOps",
+                    "services-business-intelligence": "Business Intelligence",
+                    "services-workflow-automation": "Automatizări",
+                    "services-data-engineering": "Data Engineering",
+                    "services-technical-consulting": "Consultanță tehnică",
+                    "services-support-and-maintenance": "Suport & mentenanță",
                     "company": "Companie",
                     "company-terms-of-service": "Termeni și condiții",
                     "company-privacy-policy": "Politica de confidențialitate",

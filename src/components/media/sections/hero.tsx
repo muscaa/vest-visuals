@@ -41,7 +41,7 @@ function CarouselOverlay() {
                         t.rich("title", {
                             accent: (chunks) => (
                                 <>
-                                    <i className="text-primary">{chunks}</i>
+                                    <i className="text-chart-1">{chunks}</i>
                                     <br />
                                 </>
                             ),

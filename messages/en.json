@@ -242,66 +242,74 @@
     "Software": {
         "Metadata": {
             "home": {
-                "title": "Home",
-                "description": "Vest Visuals is a full-service software development company building web and mobile apps, custom internal tools, SaaS products, and cloud & DevOps solutions for startups, SMBs, and enterprises worldwide. Partner with our remote-first team to design, build, and scale reliable software tailored to your business.",
-                "og-title": "Vest Visuals",
-                "og-subtitle": "Building web, mobile & cloud software that scales"
+                "title": "Custom Software, Web & Cloud Development",
+                "description": "Vest Visuals is a custom software development company building web and mobile apps, business intelligence dashboards, workflow automation, cloud & DevOps infrastructure, and data engineering pipelines, with technical consulting and long-term support for businesses worldwide.",
+                "og-title": "Software built for long-term success",
+                "og-subtitle": "Web & mobile apps, automation, cloud, data, and consulting from one experienced team"
             },
             "contact": {
                 "title": "Contact",
-                "description": "Get in touch with Vest Visuals to discuss your software project. Reach our remote-first team for web and mobile apps, custom tools, SaaS, and cloud & DevOps solutions. Request a quote, ask a question, or schedule a free consultation, we typically reply within one business day.",
-                "og-title": "Let's build something great",
-                "og-subtitle": "Tell us about your project and we'll take it from there"
+                "description": "Contact Vest Visuals for custom software development, web and mobile apps, workflow automation, cloud & DevOps, or data engineering. Book a free 30-45 minute discovery call, get honest feedback and a clear technical plan, with a reply within one business day.",
+                "og-title": "Let's talk about your project",
+                "og-subtitle": "Free discovery call, honest feedback, and a clear technical plan within a week"
             }
         },
         "Page": {
             "home": {
                 "hero": {
-                    "title": "A small studio for software worth keeping.",
-                    "description": "We're a handful of senior engineers in Timișoara, building web and mobile products, internal systems, and data tooling for clients worldwide. Small on purpose, so the people who scope your project are the same ones who write the code.",
-                    "button-1": "Start a conversation",
-                    "button-2": "Explore our work"
+                    "title": "Software solutions built for long-term success",
+                    "description": "We build custom software tailored to how your organization actually works, improving performance and cutting wasted effort. We take time to understand your business before writing a line of code, and we stay involved with expert guidance at every step. We don't just ship software, we help you make it succeed.",
+                    "button-1": "Tell us what you need",
+                    "button-2": "What we do"
                 },
                 "services": {
-                    "eyebrow": "Capabilities",
-                    "title": "A full product team, without the headcount.",
-                    "description": "Most studios specialize narrowly or pad teams with juniors. We do neither. A few senior generalists cover the whole lifecycle, from the first whiteboard sketch to the production deploy and everything that keeps it running after.",
-                    "s1-t": "Product Engineering",
-                    "s1-d": "Web and mobile apps that feel considered in the details and hold up under real use. We care as much about the edge cases as the happy path.",
-                    "s2-t": "Internal Systems",
-                    "s2-d": "The tools your business actually runs on. We turn brittle spreadsheets and manual handoffs into software your team trusts.",
-                    "s3-t": "Data & Infrastructure",
-                    "s3-d": "Pipelines, analytics, and cloud setups that make data usable and deploys uneventful. The unglamorous work that everything else depends on.",
-                    "s4-t": "Technical Partnership",
-                    "s4-d": "Sometimes you need judgment more than hands. We advise on architecture, untangle inherited codebases, and help teams decide what's worth building."
+                    "eyebrow": "Services",
+                    "title": "What we do",
+                    "description": "Every service, from web development to cloud and data, is handled by specialists with years of experience in that exact field. That's how we keep quality high across very different kinds of work.",
+                    "s1-t": "Web Development",
+                    "s1-d": "From landing pages and e-commerce stores to complex enterprise web platforms. Clean design, flawless functionality, full responsiveness, and SEO done properly from day one.",
+                    "s2-t": "Mobile Development",
+                    "s2-d": "We turn your concept into a mobile app people actually enjoy using. Intuitive functionality, polished visuals, and a user experience your customers will come back to, on both iOS and Android.",
+                    "s3-t": "Cloud & DevOps",
+                    "s3-d": "Migrate, scale, or optimize your platforms with our cloud specialists. Faster infrastructure, smooth deployments, and systems built to stay reliable as you grow.",
+                    "s4-t": "Business Intelligence",
+                    "s4-d": "We take time to understand your business so the numbers mean something. Dashboards, reporting, and data visualization that answer real questions, not random reports.",
+                    "s5-t": "Workflow Automation",
+                    "s5-d": "We map your workflows and automate the repetitive parts. From emails and reports to entire business processes and data pipelines running on their own.",
+                    "s6-t": "Data Engineering",
+                    "s6-d": "Stop worrying about your data, no matter how big it gets. We build and run the full pipeline: collection from any source, ETL, databases, data warehousing, automated flows, and reporting.",
+                    "s7-t": "Technical Consulting",
+                    "s7-d": "Sometimes you need a plan more than extra hands. We advise on software architecture and codebases, and help your team decide what's worth building. Ideal if you already have developers.",
+                    "s8-t": "Support & Maintenance",
+                    "s8-d": "Long-term software support and maintenance that keeps your systems fast, secure, and reliable, so what we build keeps performing years after launch."
                 },
                 "testimonials": {
                     "eyebrow": "Clients",
                     "title": "The work speaks, but they did too.",
-                    "description": "A few words from the people we've built for."
+                    "description": "A few words from the businesses we've built software for."
                 },
                 "faq": {
-                    "eyebrow": "Good to know",
-                    "title": "Before you reach out.",
+                    "eyebrow": "Questions",
+                    "title": "Most common questions",
                     "description": "Anything else on your mind? Write to us at <email>contact@vestvisuals.ro</email> and we'll answer plainly.",
-                    "q1": "What does it cost to work with you?",
-                    "a1": "We bill for time and materials, transparently. You see exactly where the hours go and keep the freedom to change direction as the work teaches you what matters. No fixed scope quietly going stale, no padded estimates.",
-                    "q2": "How small is \"small\"?",
-                    "a2": "Small enough that you'll know everyone working on your project by name, and that the senior engineer in the discovery call is the one writing your code. That's the point, not a limitation.",
-                    "q3": "Do you work with clients outside Romania?",
-                    "a3": "Most of our work is remote and international. We're used to working across time zones and have a rhythm for keeping distributed projects clear and on track.",
-                    "q4": "Can you take over something that's already been started?",
-                    "a4": "Yes, and we often do. Inherited codebases, half-finished builds, or a project that's outgrown whoever started it. We'll assess honestly what's salvageable before suggesting a rewrite.",
+                    "q1": "How quickly can you start?",
+                    "a1": "Most software development projects start within a week of the discovery call. If you have a web app, mobile app, or automation project in mind, reach out and we'll find a slot.",
+                    "q2": "How do you work with an existing team?",
+                    "a2": "That's most of our experience. Our developers integrate with your crew and work as one bigger team, not two separate groups passing tickets around.",
+                    "q3": "Where's your team based?",
+                    "a3": "Timișoara, Romania, working remotely with software clients both local and international.",
+                    "q4": "How much does the discovery call cost?",
+                    "a4": "Nothing. Book a 30-45 minute call, we'll give you honest feedback on your software project and a clear technical plan, with no obligation to move forward.",
                     "q5": "What do you need from us to start?",
-                    "a5": "A conversation. You don't need a finished spec or technical documents, just a clear sense of the problem. We'll help shape it into something buildable.",
-                    "q6": "What happens when the project ends?",
-                    "a6": "You own every line of code from day one. We hand off clean documentation, and we're around if you want ongoing support, but you're never locked in."
+                    "a5": "A clear description of what you need and what you want to achieve. The more detail you give us, the better the development plan we come back with.",
+                    "q6": "Do you offer fixed-bid projects?",
+                    "a6": "Sometimes, depending on the project. In most cases, billing per completed development stage has worked best for both us and our clients."
                 },
                 "contact": {
-                    "eyebrow": "Get in touch",
-                    "title": "Let's talk about your project.",
-                    "description": "Tell us what you're building and we'll reply within one business day. If we're the right fit, we'll set up a short call; if we're not, we'll happily point you toward someone who is.",
-                    "button": "Go to contact page"
+                    "eyebrow": "Contact",
+                    "title": "Tell us what you're building",
+                    "description": "Head to the contact page, describe your software project, and we'll review it and get back to you as soon as possible, usually within one business day.",
+                    "button": "Contact us"
                 }
             }
         },
@@ -310,18 +318,26 @@
                 "nav": {
                     "home": "Home",
                     "services": "Services",
-                    "services-product-engineering": "Product Engineering",
-                    "services-internal-systems": "Internal Systems",
-                    "services-data-and-infrastructure": "Data & Infrastructure",
-                    "services-technical-partnership": "Technical Partnership",
+                    "services-web-development": "Web Development",
+                    "services-mobile-development": "Mobile Development",
+                    "services-cloud-and-devops": "Cloud & DevOps",
+                    "services-business-intelligence": "Business Intelligence",
+                    "services-workflow-automation": "Workflow Automation",
+                    "services-data-engineering": "Data Engineering",
+                    "services-technical-consulting": "Technical Consulting",
+                    "services-support-and-maintenance": "Support & Maintenance",
                     "contact": "Contact"
                 },
                 "footer": {
                     "services": "Services",
-                    "services-product-engineering": "Product Engineering",
-                    "services-internal-systems": "Internal Systems",
-                    "services-data-and-infrastructure": "Data & Infrastructure",
-                    "services-technical-partnership": "Technical Partnership",
+                    "services-web-development": "Web Development",
+                    "services-mobile-development": "Mobile Development",
+                    "services-cloud-and-devops": "Cloud & DevOps",
+                    "services-business-intelligence": "Business Intelligence",
+                    "services-workflow-automation": "Workflow Automation",
+                    "services-data-engineering": "Data Engineering",
+                    "services-technical-consulting": "Technical Consulting",
+                    "services-support-and-maintenance": "Support & Maintenance",
                     "company": "Company",
                     "company-terms-of-service": "Terms of service",
                     "company-privacy-policy": "Privacy policy",
