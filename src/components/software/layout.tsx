@@ -22,19 +22,35 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                             text: t("nav.services"),
                             entries: [
                                 {
-                                    text: t("nav.services-product-engineering"),
+                                    text: t("nav.services-web-development"),
                                     to: "/",
                                 },
                                 {
-                                    text: t("nav.services-internal-systems"),
+                                    text: t("nav.services-mobile-development"),
                                     to: "/",
                                 },
                                 {
-                                    text: t("nav.services-data-and-infrastructure"),
+                                    text: t("nav.services-cloud-and-devops"),
                                     to: "/",
                                 },
                                 {
-                                    text: t("nav.services-technical-partnership"),
+                                    text: t("nav.services-business-intelligence"),
+                                    to: "/",
+                                },
+                                {
+                                    text: t("nav.services-workflow-automation"),
+                                    to: "/",
+                                },
+                                {
+                                    text: t("nav.services-data-engineering"),
+                                    to: "/",
+                                },
+                                {
+                                    text: t("nav.services-technical-consulting"),
+                                    to: "/",
+                                },
+                                {
+                                    text: t("nav.services-support-and-maintenance"),
                                     to: "/",
                                 },
                             ],
@@ -53,19 +69,35 @@ export function SoftwareNavbarLayout(props: LayoutProps) {
                             title: t("footer.services"),
                             links: [
                                 {
-                                    name: t("footer.services-product-engineering"),
+                                    name: t("footer.services-web-development"),
                                     to: "/",
                                 },
                                 {
-                                    name: t("footer.services-internal-systems"),
+                                    name: t("footer.services-mobile-development"),
                                     to: "/",
                                 },
                                 {
-                                    name: t("footer.services-data-and-infrastructure"),
+                                    name: t("footer.services-cloud-and-devops"),
                                     to: "/",
                                 },
                                 {
-                                    name: t("footer.services-technical-partnership"),
+                                    name: t("footer.services-business-intelligence"),
+                                    to: "/",
+                                },
+                                {
+                                    name: t("footer.services-workflow-automation"),
+                                    to: "/",
+                                },
+                                {
+                                    name: t("footer.services-data-engineering"),
+                                    to: "/",
+                                },
+                                {
+                                    name: t("footer.services-technical-consulting"),
+                                    to: "/",
+                                },
+                                {
+                                    name: t("footer.services-support-and-maintenance"),
                                     to: "/",
                                 },
                             ],
