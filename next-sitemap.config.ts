@@ -15,11 +15,11 @@ function clean(str: string) {
 
 function getApp(tag: string): App {
     const apps: Record<string, Omit<App, "tag">> = {
-        studio: {
-            url: `https://${process.env.HOST_BASE!}`
+        media: {
+            url: `https://${process.env.HOST_MEDIA!}`
         },
         software: {
-            url: `https://${process.env.HOST_SOFTWARE!}`
+            url: `https://${process.env.HOST_BASE!}`
         },
     };
 
