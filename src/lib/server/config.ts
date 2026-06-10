@@ -4,7 +4,7 @@ const env = {
     ...sharedConfig.env,
     // PRIVATE
     HOST_BASE: process.env.HOST_BASE!,
-    HOST_STUDIO: process.env.HOST_STUDIO!,
+    HOST_MEDIA: process.env.HOST_MEDIA!,
     HOST_SOFTWARE: process.env.HOST_SOFTWARE!,
 
     RECAPTCHA_KEY_SECRET: process.env.RECAPTCHA_KEY_SECRET!,

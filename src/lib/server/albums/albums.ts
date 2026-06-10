@@ -50,7 +50,7 @@ export function format<T extends SelectProps>(props: T): AutoAlbum<T> {
         email: props.email,
         phoneNumber: props.phoneNumber,
         downloadUrl: getS3FileUrl("cdn1", bucket, contentsPath(props.id)),
-        shareUrl: `${serverConfig.env.URL}/albums/${props.id}`,
+        shareUrl: `${serverConfig.env.MEDIA_URL}/albums/${props.id}`,
         lockAt: props.lockAt,
         deleteAt: props.deleteAt,
         albumsContents: props.albumsContents?.map((value) => contents.format(value)),

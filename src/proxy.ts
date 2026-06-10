@@ -14,8 +14,8 @@ import { serverConfig } from "@server/config";
 const i18nMiddleware = createMiddleware(routing);
 
 const HOST_TO_SUBAPP: Record<string, string> = {
-    [serverConfig.env.HOST_BASE]: "studio",
-    [serverConfig.env.HOST_STUDIO]: "studio",
+    [serverConfig.env.HOST_BASE]: "software",
+    [serverConfig.env.HOST_MEDIA]: "media",
     [serverConfig.env.HOST_SOFTWARE]: "software",
 };
 const SEO_FILES = ["/robots.txt", "/sitemap.xml", "/sitemap-0.xml"];
