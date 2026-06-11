@@ -1,6 +1,6 @@
 "use client";
 
-import { ReCaptchaProvider } from "@/components/recaptcha";
+import { ReCaptchaProvider } from "@/components/providers/recaptcha";
 import { SectionContact } from "@/components/sections/contact";
 
 export default function Page() {
