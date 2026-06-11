@@ -1,3 +1,4 @@
+import { Main } from "@/components/main";
 import { SoftwareContactSection } from "../sections/contact";
 import { SoftwareFAQSection } from "../sections/faq";
 import { SoftwareHeroSection } from "../sections/hero";
@@ -11,13 +12,13 @@ interface Props {
 
 export function SoftwareHomePage(props: Props) {
     return (
-        <>
+        <Main>
             <SoftwareHeroSection />
             <SoftwareServicesSection />
             {/* <SoftwareProjectsSection /> */}
             <SoftwareTestimonialsSection />
             <SoftwareFAQSection />
             <SoftwareContactSection />
-        </>
+        </Main>
     );
 }

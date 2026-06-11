@@ -15,6 +15,9 @@ function clean(str: string) {
 
 function getApp(tag: string): App {
     const apps: Record<string, Omit<App, "tag">> = {
+        account: {
+            url: `https://${process.env.HOST_ACCOUNT!}`
+        },
         media: {
             url: `https://${process.env.HOST_MEDIA!}`
         },

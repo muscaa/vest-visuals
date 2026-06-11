@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@shared/shadcn/lib/utils";
 import { Img } from "@/components/img";
+import { Main } from "@/components/main";
 
 export default function Page() {
     const { tag } = useParams<{ tag: string; }>();
@@ -26,7 +27,7 @@ export default function Page() {
     const [api, setApi] = useState<CarouselApi>();
 
     return (
-        <>
+        <Main>
             <div className="flex justify-center size-full p-2 min-h-screen-no-nav">
                 {
                     data && (
@@ -114,6 +115,6 @@ export default function Page() {
                     </div>
                 </Carousel>
             </Reveal>
-        </>
+        </Main>
     );
 }

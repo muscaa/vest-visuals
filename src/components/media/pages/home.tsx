@@ -1,3 +1,4 @@
+import { Main } from "@/components/main";
 import { MediaAboutSection } from "../sections/about";
 import { MediaBeforeAndAfterSection } from "../sections/before-and-after";
 import { MediaContactSection } from "../sections/contact";
@@ -12,7 +13,7 @@ interface Props {
 
 export function MediaHomePage(props: Props) {
     return (
-        <>
+        <Main>
             <MediaHeroSection />
             <MediaAboutSection />
             <MediaPortfolioSection />
@@ -20,6 +21,6 @@ export function MediaHomePage(props: Props) {
             <MediaTestimonialsSection />
             <MediaLocationsSection />
             <MediaContactSection />
-        </>
+        </Main>
     );
 }

@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
-        "postbuild": "run-p sitemap:media sitemap:software",
+        "postbuild": "run-p sitemap:account sitemap:media sitemap:software",
         "start": "next start",
         "lint": "next lint",
         "db:generate": "dotenvx run -f .env.local -- run-s auth:generate",
@@ -17,6 +17,7 @@
         "drizzle:migrate": "drizzle-kit migrate",
         "auth:generate": "cli generate --config=./better-auth.config.ts --output=./src/lib/server/db/schema/auth.ts --yes",
         "auth:migrate": "cli migrate --config=./better-auth.config.ts --yes",
+        "sitemap:account": "next-sitemap --config next-sitemap.config.js --app account",
         "sitemap:media": "next-sitemap --config next-sitemap.config.js --app media",
         "sitemap:software": "next-sitemap --config next-sitemap.config.js --app software"
     },
