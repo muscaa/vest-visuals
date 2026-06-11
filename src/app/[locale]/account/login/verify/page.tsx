@@ -1,6 +1,7 @@
 "use client";
 
 import { OTPCard } from "@/components/cards/otp";
+import { Main } from "@/components/main";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Page() {
@@ -11,10 +12,10 @@ export default function Page() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center size-full p-8 min-h-screen-no-nav">
+        <Main className="justify-center items-center p-8">
             <OTPCard
                 onSubmit={handleSubmit}
             />
-        </div>
+        </Main>
     );
 }
