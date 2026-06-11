@@ -82,6 +82,11 @@ export const auth = betterAuth({
             disableIpTracking: false,
         },
     },
+    trustedOrigins: () => [
+        serverConfig.env.ACCOUNT_URL,
+        serverConfig.env.MEDIA_URL,
+        serverConfig.env.SOFTWARE_URL,
+    ],
     telemetry: {
         enabled: false,
         disableNotice: true,
