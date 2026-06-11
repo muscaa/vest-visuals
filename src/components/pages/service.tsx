@@ -11,6 +11,7 @@ import {
     SectionFAQProps,
 } from "../sections/faq";
 import { Separator } from "../ui/separator";
+import { Main } from "../main";
 
 interface Props {
     preview: SectionPreviewProps;
@@ -20,11 +21,11 @@ interface Props {
 
 export function ServicePage(props: Props) {
     return (
-        <div className="flex flex-col justify-center items-center size-full">
+        <Main className="justify-center items-center">
             <SectionPreview {...props.preview} />
             <SectionPrice {...props.price} />
             <Separator />
             <SectionFAQ {...props.faq} />
-        </div>
+        </Main>
     );
 }
