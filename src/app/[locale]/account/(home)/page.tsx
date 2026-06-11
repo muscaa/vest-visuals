@@ -1,7 +1,7 @@
-import { MediaHomePage } from "@/components/media/pages/home";
-
 export default function Page() {
     return (
-        <MediaHomePage />
+        <main className="flex flex-col justify-center items-center min-h-screen-no-nav">
+            hello world
+        </main>
     );
 }

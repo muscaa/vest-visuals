@@ -15,6 +15,7 @@ const i18nMiddleware = createMiddleware(routing);
 
 const HOST_TO_SUBAPP: Record<string, string> = {
     [serverConfig.env.HOST_BASE]: "software",
+    [serverConfig.env.HOST_ACCOUNT]: "account",
     [serverConfig.env.HOST_MEDIA]: "media",
     [serverConfig.env.HOST_SOFTWARE]: "software",
 };
