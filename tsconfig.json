@@ -1,20 +1,12 @@
 {
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.d.ts"
-    ],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
     "compilerOptions": {
         "strict": true,
         "esModuleInterop": true,
         "jsx": "react-jsx",
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ES2024"
-        ],
+        "lib": ["DOM", "DOM.Iterable", "ES2024"],
         "isolatedModules": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
@@ -22,9 +14,7 @@
         "allowJs": true,
         "forceConsistentCasingInFileNames": true,
         "paths": {
-            "~/*": [
-                "./src/*"
-            ]
+            "~/*": ["./src/*"]
         },
         "noEmit": true
     }

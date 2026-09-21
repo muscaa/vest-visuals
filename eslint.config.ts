@@ -1,5 +1,5 @@
-import type { Linter } from "eslint";
 import { tanstackConfig } from "@tanstack/eslint-config";
+import type { Linter } from "eslint";
 
 export default [
     ...tanstackConfig,
@@ -8,7 +8,7 @@ export default [
             // "import/no-cycle": "off",
             // "import/order": "off",
             // "sort-imports": "off",
-            // "@typescript-eslint/array-type": "off",
+            "@typescript-eslint/array-type": "off",
             // "@typescript-eslint/require-await": "off",
             // "pnpm/json-enforce-catalog": "off",
             // "@typescript-eslint/no-unnecessary-condition": "off",
