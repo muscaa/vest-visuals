@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { Button } from './ui/button'
 
 export function NotFound({ children }: { children?: any }) {
   return (
@@ -20,6 +21,9 @@ export function NotFound({ children }: { children?: any }) {
           Start Over
         </Link>
       </p>
+      <Button>
+        Test Button
+      </Button>
     </div>
   )
 }
