@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -12,24 +10,23 @@
 package-lock.json
 
 # testing
-/coverage
+/test-results/
 
-# next.js
-/.next/
-/out/
+# tanstack
+/.tanstack/
+/api/
+.output
+.nitro
+.vercel
 
 # production
-/build
-/public/account/robots.txt
-/public/account/sitemap.xml
-/public/account/sitemap-*.xml
-/public/media/robots.txt
-/public/media/sitemap.xml
-/public/media/sitemap-*.xml
-/public/software/robots.txt
-/public/software/sitemap.xml
-/public/software/sitemap-*.xml
-/.data
+/build/
+/server/build
+/public/build
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.cache
 
 # misc
 .DS_Store
@@ -45,12 +42,8 @@ yarn-error.log*
 .env*
 !.env.example
 
-# vercel
-.vercel
-
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # IDE
 /.vscode
