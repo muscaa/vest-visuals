@@ -1,5 +1,5 @@
 {
-    "name": "tanstack-start-example-basic",
+    "name": "vest-visuals",
     "private": true,
     "sideEffects": false,
     "type": "module",
@@ -10,24 +10,47 @@
         "start": "node .output/server/index.mjs"
     },
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.1136.0",
+        "@aws-sdk/s3-request-presigner": "^3.1136.0",
         "@tanstack/react-router": "^1.170.38",
         "@tanstack/react-router-devtools": "^1.167.2",
         "@tanstack/react-start": "^1.168.56",
+        "@uidotdev/usehooks": "^2.4.1",
+        "animejs": "^4.5.0",
+        "better-auth": "^1.7.5",
+        "drizzle-orm": "^0.45.3",
+        "postgres": "^3.4.9",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-google-recaptcha-v3": "^1.11.0",
+        "sharp": "^0.35.4",
         "tailwind-merge": "^3.6.0",
+        "uuid": "^14.0.2",
+        "workflow": "^4.8.9",
         "zod": "^4.4.3"
     },
     "devDependencies": {
+        "@better-auth/cli": "^1.4.22",
         "@tailwindcss/vite": "^4.2.2",
         "@types/node": "^22.5.4",
         "@types/react": "^19.0.8",
         "@types/react-dom": "^19.0.3",
+        "@types/uuid": "^10.0.0",
+        "@typescript/native": "npm:typescript@^7.0.2",
         "@vitejs/plugin-react": "^6.0.1",
+        "drizzle-kit": "^0.31.11",
         "nitro": "^3.0.260311-beta",
         "tailwindcss": "^4.2.2",
-        "@typescript/native": "npm:typescript@^7.0.2",
         "typescript": "npm:@typescript/typescript6@^6.0.2",
         "vite": "^8.0.14"
+    },
+    "allowScripts": {
+        "esbuild@0.18.20": true,
+        "esbuild@0.25.12": true,
+        "esbuild@0.28.2": true,
+        "@swc/core@1.15.3": true,
+        "better-sqlite3@12.11.1": true,
+        "cbor-extract@2.2.2": true,
+        "@prisma/client@5.22.0": true
     }
 }
