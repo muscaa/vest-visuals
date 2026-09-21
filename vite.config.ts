@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig } from "vite";
 import viteReact from "@vitejs/plugin-react";
@@ -18,5 +19,20 @@ export default defineConfig({
         }),
         viteReact(),
         nitro(),
+        paraglideVitePlugin({
+            project: "./project.inlang",
+            outdir: "./src/lib/shared/paraglide",
+            // outputStructure: "message-modules",
+            // cookieName: "PARAGLIDE_LOCALE",
+            // strategy: ["url", "cookie", "preferredLanguage", "baseLocale"],
+            // urlPatterns: [
+            //     {
+            //         pattern: "/:path(.*)?",
+            //         localized: [
+            //             ["en", "/en/:path(.*)?"],
+            //         ],
+            //     }
+            // ],
+        }),
     ],
 });

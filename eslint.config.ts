@@ -15,6 +15,6 @@ export default [
         },
     },
     {
-        // ignores: ["./src/lib/shared/paraglide/**"],
+        ignores: ["./src/lib/shared/paraglide/**"],
     },
 ] satisfies Linter.Config[];
