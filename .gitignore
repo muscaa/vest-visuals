@@ -11,13 +11,11 @@ package-lock.json
 
 # testing
 /test-results/
+/coverage/
 
 # tanstack
 /.tanstack/
-/api/
-.output
-.nitro
-.vercel
+/src/routeTree.gen.ts
 
 # production
 /build/
@@ -27,6 +25,9 @@ package-lock.json
 /blob-report/
 /playwright/.cache/
 .cache
+.output
+.nitro
+.vercel
 
 # misc
 .DS_Store
