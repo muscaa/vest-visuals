@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
+import { LocaleSwitcher } from "./locale-switcher";
 
 export function NotFound({ children }: { children?: any }) {
     return (
@@ -24,6 +25,7 @@ export function NotFound({ children }: { children?: any }) {
                 </Link>
             </p>
             <Button>Test Button</Button>
+            <LocaleSwitcher />
         </div>
     );
 }

@@ -28,7 +28,19 @@ export default defineConfig({
             outdir: "./src/lib/shared/paraglide",
             // outputStructure: "message-modules",
             // cookieName: "PARAGLIDE_LOCALE",
-            // strategy: ["url", "cookie", "preferredLanguage", "baseLocale"],
+            strategy: [
+                "url",
+                "cookie",
+                "preferredLanguage",
+                "globalVariable",
+                "baseLocale",
+            ],
+            routeStrategies: [
+                {
+                    match: "/api/:path(.*)?",
+                    exclude: true,
+                },
+            ],
             // urlPatterns: [
             //     {
             //         pattern: "/:path(.*)?",
