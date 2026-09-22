@@ -14,6 +14,7 @@ export const rewriteParaglide: LocationRewrite = {
 // internal bridges
 //
 const bridges = {
+    account: env.VITE_REWRITE_BRIDGE_ACCOUNT,
     media: env.VITE_REWRITE_BRIDGE_MEDIA,
     software: env.VITE_REWRITE_BRIDGE_SOFTWARE,
 } satisfies Record<string, string>;

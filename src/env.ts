@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const env = createEnv({
     client: {
+        VITE_REWRITE_BRIDGE_ACCOUNT: z.string(),
         VITE_REWRITE_BRIDGE_MEDIA: z.string(),
         VITE_REWRITE_BRIDGE_SOFTWARE: z.string(),
     },
