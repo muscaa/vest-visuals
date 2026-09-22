@@ -9,6 +9,8 @@ import { devtools } from "@tanstack/devtools-vite";
 export default defineConfig({
     server: {
         port: 3000,
+        host: true,
+        allowedHosts: [".musca.dev"],
     },
     resolve: {
         tsconfigPaths: true,
