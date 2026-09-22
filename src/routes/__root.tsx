@@ -3,7 +3,7 @@ import {
     HeadContent,
     Link,
     Scripts,
-    createRootRoute,
+    createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
@@ -13,8 +13,13 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
+import type { QueryClient } from "@tanstack/react-query";
 
-export const Route = createRootRoute({
+interface RouterContext {
+    queryClient: QueryClient;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
     beforeLoad: async () => {
         // Other redirect strategies are possible; see
         // https://github.com/TanStack/router/tree/main/examples/react/i18n-paraglide#offline-redirect
@@ -58,12 +63,6 @@ export const Route = createRootRoute({
             { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
             { rel: "icon", href: "/favicon.ico" },
         ],
-        scripts: [
-            {
-                src: "/customScript.js",
-                type: "text/javascript",
-            },
-        ],
     }),
     errorComponent: DefaultCatchBoundary,
     notFoundComponent: () => <NotFound />,
@@ -87,47 +86,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     >
                         Home
                     </Link>{" "}
-                    <Link
-                        to="/posts"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                    >
-                        Posts
-                    </Link>{" "}
-                    <Link
-                        to="/users"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                    >
-                        Users
-                    </Link>{" "}
-                    <Link
-                        to="/route-a"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                    >
-                        Pathless Layout
-                    </Link>{" "}
-                    <Link
-                        to="/deferred"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                    >
-                        Deferred
-                    </Link>{" "}
-                    <Link
-                        // @ts-expect-error
-                        to="/this-route-does-not-exist"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                    >
-                        This Route Does Not Exist
-                    </Link>
                 </div>
                 <hr />
                 {children}
