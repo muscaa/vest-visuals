@@ -15,6 +15,9 @@
         "allowJs": true,
         "forceConsistentCasingInFileNames": true,
         "paths": {
+            "@client/*": ["./src/lib/client/*"],
+            "@server/*": ["./src/lib/server/*"],
+            "@shared/*": ["./src/lib/shared/*"],
             "~/*": ["./src/*"]
         },
         "noEmit": true
