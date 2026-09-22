@@ -1,3 +1,4 @@
+import { getLocale } from "@shared/paraglide/runtime";
 import {
     HeadContent,
     Link,
@@ -12,6 +13,13 @@ import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 
 export const Route = createRootRoute({
+    beforeLoad: async () => {
+        // Other redirect strategies are possible; see
+        // https://github.com/TanStack/router/tree/main/examples/react/i18n-paraglide#offline-redirect
+        if (typeof document !== "undefined") {
+            document.documentElement.setAttribute("lang", getLocale());
+        }
+    },
     head: () => ({
         meta: [
             {
@@ -62,7 +70,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
     return (
-        <html>
+        <html lang={getLocale()}>
             <head>
                 <HeadContent />
             </head>

@@ -1,4 +1,6 @@
 {
     "$schema": "https://inlang.com/schema/inlang-message-format",
-    "example_message": "Hello world {username}"
+    "example_message": "Hello world {username}",
+    "language_label": "Language",
+    "current_locale": "Current locale: {locale}"
 }
