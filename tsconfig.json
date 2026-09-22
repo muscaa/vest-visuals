@@ -18,7 +18,7 @@
             "@client/*": ["./src/lib/client/*"],
             "@server/*": ["./src/lib/server/*"],
             "@shared/*": ["./src/lib/shared/*"],
-            "~/*": ["./src/*"]
+            "@/*": ["./src/*"]
         },
         "noEmit": true
     }
