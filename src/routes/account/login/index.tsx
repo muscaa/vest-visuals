@@ -1,6 +1,6 @@
-import { LoginForm } from "@/components/login-form";
 import { IconDiamond } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { LoginForm } from "@/components/login-form";
 
 export const Route = createFileRoute("/account/login/")({
     component: RouteComponent,

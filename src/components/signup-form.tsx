@@ -9,26 +9,7 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createServerFn } from "@tanstack/react-start";
-import { auth } from "@server/auth";
-
-const signupFn = createServerFn({ method: "POST" })
-    .validator((data: FormData) => {
-        const email = data.get("email") as string;
-        const password = data.get("password") as string;
-        const name = email.split("@")[0];
-
-        return { name, email, password };
-    })
-    .handler(async ({ data }) => {
-        await auth.api.signUpEmail({
-            body: {
-                name: data.name,
-                email: data.email,
-                password: data.password,
-            },
-        });
-    });
+import { signup } from "@/functions/auth";
 
 export function SignupForm({
     className,
@@ -36,7 +17,7 @@ export function SignupForm({
 }: React.ComponentProps<"form">) {
     return (
         <form
-            action={signupFn.url}
+            action={signup.url}
             className={cn("flex flex-col gap-6", className)}
             {...props}
         >
@@ -71,11 +52,7 @@ export function SignupForm({
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input
-                        id="password"
-                        type="password"
-                        required
-                    />
+                    <Input id="password" type="password" required />
                     <FieldDescription>
                         Must be at least 8 characters long.
                     </FieldDescription>

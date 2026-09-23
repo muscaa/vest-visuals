@@ -1,6 +1,6 @@
-import { SignupForm } from "@/components/signup-form";
 import { IconDiamond } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { SignupForm } from "@/components/signup-form";
 
 export const Route = createFileRoute("/account/signup/")({
     component: RouteComponent,

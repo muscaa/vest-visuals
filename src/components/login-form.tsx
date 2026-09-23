@@ -9,25 +9,7 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createServerFn } from "@tanstack/react-start";
-import { auth } from "@server/auth";
-
-const loginFn = createServerFn({ method: "POST" })
-    .validator((data: FormData) => {
-        const email = data.get("email") as string;
-        const password = data.get("password") as string;
-
-        return { email, password };
-    })
-    .handler(async ({ data }) => {
-        await auth.api.signInEmail({
-            body: {
-                email: data.email,
-                password: data.password,
-                rememberMe: true,
-            },
-        });
-    });
+import { login } from "@/functions/auth";
 
 export function LoginForm({
     className,
@@ -35,7 +17,7 @@ export function LoginForm({
 }: React.ComponentProps<"form">) {
     return (
         <form
-            action={loginFn.url}
+            action={login.url}
             className={cn("flex flex-col gap-6", className)}
             {...props}
         >
