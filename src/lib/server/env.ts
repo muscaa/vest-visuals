@@ -9,6 +9,7 @@ const server = client.extend({
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32),
+    BETTER_AUTH_COOKIE_DOMAIN: z.string(),
 });
 
 const parsed = server.safeParse(process.env);

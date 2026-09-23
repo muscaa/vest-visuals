@@ -19,7 +19,7 @@ export const auth = betterAuth({
     advanced: {
         crossSubDomainCookies: {
             enabled: true,
-            domain: ".musca.dev", // TODO
+            domain: envServer.BETTER_AUTH_COOKIE_DOMAIN,
         },
     },
     emailAndPassword: {
