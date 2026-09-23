@@ -1,5 +1,5 @@
 import { deLocalizeUrl, localizeUrl } from "@shared/paraglide/runtime";
-import { env } from "./env";
+import { envClient } from "@client/env";
 import type { LocationRewrite } from "@tanstack/react-router";
 
 //
@@ -14,9 +14,9 @@ export const rewriteParaglide: LocationRewrite = {
 // internal bridges
 //
 const bridges = {
-    account: env.VITE_REWRITE_BRIDGE_ACCOUNT,
-    media: env.VITE_REWRITE_BRIDGE_MEDIA,
-    software: env.VITE_REWRITE_BRIDGE_SOFTWARE,
+    account: envClient.PUBLIC_REWRITE_BRIDGE_ACCOUNT,
+    media: envClient.PUBLIC_REWRITE_BRIDGE_MEDIA,
+    software: envClient.PUBLIC_REWRITE_BRIDGE_SOFTWARE,
 } satisfies Record<string, string>;
 
 type Bridge = keyof typeof bridges;

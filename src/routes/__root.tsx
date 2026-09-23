@@ -14,10 +14,16 @@ import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
 import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { envPublic } from "@server/env";
 
 interface RouterContext {
     queryClient: QueryClient;
 }
+
+const getEnvScript = createIsomorphicFn()
+    .server(() => envPublic)
+    .client(() => window.__ENV__);
 
 export const Route = createRootRouteWithContext<RouterContext>()({
     beforeLoad: async () => {
@@ -62,6 +68,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             },
             { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
             { rel: "icon", href: "/favicon.ico" },
+        ],
+        scripts: [
+            {
+                children: `window.__ENV__=${JSON.stringify(getEnvScript()).replace(/</g, "\\u003c")}`,
+            },
         ],
     }),
     errorComponent: DefaultCatchBoundary,
