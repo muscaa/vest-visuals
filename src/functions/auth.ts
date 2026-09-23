@@ -1,6 +1,7 @@
 import { auth } from "@server/auth";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
+import { redirect } from "@tanstack/react-router";
 
 export const getSession = createServerFn({ method: "GET" })
     .handler(async () => {
@@ -37,6 +38,8 @@ export const login = createServerFn({ method: "POST" })
                 rememberMe: true,
             },
         });
+
+        throw redirect({ to: "/account/private" });
     });
 
 export const signup = createServerFn({ method: "POST" })
@@ -55,9 +58,13 @@ export const signup = createServerFn({ method: "POST" })
                 password: data.password,
             },
         });
+        
+        throw redirect({ to: "/account/private" });
     });
 
 export const signout = createServerFn({ method: "GET" })
     .handler(async () => {
-        await auth.api.signOut();
+        const headers = getRequestHeaders();
+
+        await auth.api.signOut({ headers });
     });

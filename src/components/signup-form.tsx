@@ -18,6 +18,7 @@ export function SignupForm({
     return (
         <form
             action={signup.url}
+            method="post"
             className={cn("flex flex-col gap-6", className)}
             {...props}
         >
@@ -41,6 +42,7 @@ export function SignupForm({
                     <FieldLabel htmlFor="email">Email</FieldLabel>
                     <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="m@example.com"
                         required
@@ -52,7 +54,12 @@ export function SignupForm({
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                    />
                     <FieldDescription>
                         Must be at least 8 characters long.
                     </FieldDescription>
