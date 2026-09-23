@@ -12,4 +12,4 @@ declare global {
 //     },
 // });
 
-export const envClient = globalThis.__ENV__;
+export const envClient = globalThis.__ENV__!;
