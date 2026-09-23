@@ -76,7 +76,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 <HeadContent />
             </head>
             <body>
-                <div className="p-2 flex gap-2 text-lg">
+                {/* <div className="p-2 flex gap-2 text-lg">
                     <Link
                         to="/"
                         activeProps={{
@@ -87,7 +87,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                         Home
                     </Link>{" "}
                 </div>
-                <hr />
+                <hr /> */}
                 {children}
                 <TanStackDevtools
                     config={{
