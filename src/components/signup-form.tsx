@@ -9,13 +9,37 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { createServerFn } from "@tanstack/react-start";
+import { auth } from "@server/auth";
+
+const signupFn = createServerFn({ method: "POST" })
+    .validator((data: FormData) => {
+        const email = data.get("email") as string;
+        const password = data.get("password") as string;
+        const name = email.split("@")[0];
+
+        return { name, email, password };
+    })
+    .handler(async ({ data }) => {
+        await auth.api.signUpEmail({
+            body: {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+            },
+        });
+    });
 
 export function SignupForm({
     className,
     ...props
 }: React.ComponentProps<"form">) {
     return (
-        <form className={cn("flex flex-col gap-6", className)} {...props}>
+        <form
+            action={signupFn.url}
+            className={cn("flex flex-col gap-6", className)}
+            {...props}
+        >
             <FieldGroup>
                 <div className="flex flex-col items-center gap-1 text-center">
                     <h1 className="text-2xl font-bold">Create your account</h1>
@@ -23,7 +47,7 @@ export function SignupForm({
                         Fill in the form below to create your account
                     </p>
                 </div>
-                <Field>
+                {/* <Field>
                     <FieldLabel htmlFor="name">Full Name</FieldLabel>
                     <Input
                         id="name"
@@ -31,7 +55,7 @@ export function SignupForm({
                         placeholder="John Doe"
                         required
                     />
-                </Field>
+                </Field> */}
                 <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
                     <Input
@@ -56,7 +80,7 @@ export function SignupForm({
                         Must be at least 8 characters long.
                     </FieldDescription>
                 </Field>
-                <Field>
+                {/* <Field>
                     <FieldLabel htmlFor="confirm-password">
                         Confirm Password
                     </FieldLabel>
@@ -68,7 +92,7 @@ export function SignupForm({
                     <FieldDescription>
                         Please confirm your password.
                     </FieldDescription>
-                </Field>
+                </Field> */}
                 <Field>
                     <Button type="submit">Create Account</Button>
                 </Field>
