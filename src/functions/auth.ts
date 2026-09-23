@@ -56,3 +56,8 @@ export const signup = createServerFn({ method: "POST" })
             },
         });
     });
+
+export const signout = createServerFn({ method: "GET" })
+    .handler(async () => {
+        await auth.api.signOut();
+    });

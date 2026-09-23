@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { getSession, signout } from "@/functions/auth";
+import { getSession } from "@/functions/auth";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/account/private/")({
+export const Route = createFileRoute("/media/private/")({
     beforeLoad: async () => {
         const session = await getSession();
 
@@ -20,8 +19,7 @@ function RouteComponent() {
 
     return (
         <div>
-            <div>Hello "/account/private/"!</div>
-            <Button onClick={() => signout()}>Sign Out</Button>
+            <div>Hello "/media/private/"!</div>
             <div className="flex flex-col whitespace-pre-wrap">
                 {JSON.stringify(user, null, 2)}
             </div>
