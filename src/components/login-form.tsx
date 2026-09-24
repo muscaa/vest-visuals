@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "@shared/shadcn/utils";
 
 import { Button } from "@/components/ui/button";
 import {

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { cva } from "class-variance-authority";
-import { cn } from "cn";
+import { cn } from "@shared/shadcn/utils";
 import type { VariantProps } from "class-variance-authority";
 
 import { Label } from "@/components/ui/label";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "cn";
+import { cn } from "@shared/shadcn/utils";
 
 function Card({
     className,
