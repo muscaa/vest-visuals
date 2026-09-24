@@ -1,0 +1,54 @@
+@theme inline {
+    --text-lg-1: clamp(44px, 9vw, 128px); /* hero */
+    --text-lg-1--line-height: 0.92;
+    --text-lg-1--letter-spacing: -0.04em;
+    --text-lg-1--font-weight: 500;
+
+    --text-lg-2: clamp(40px, 7vw, 96px); /* title */
+    --text-lg-2--line-height: 0.95;
+    --text-lg-2--letter-spacing: -0.035em;
+    --text-lg-2--font-weight: 500;
+
+    --text-lg-3: clamp(40px, 6.4vw, 76px); /* display */
+    --text-lg-3--line-height: 1;
+    --text-lg-3--letter-spacing: -0.035em;
+    --text-lg-3--font-weight: 500;
+
+    --text-lg-4: clamp(36px, 4.5vw, 56px); /* stat */
+    --text-lg-4--line-height: 1;
+    --text-lg-4--letter-spacing: -0.03em;
+    --text-lg-4--font-weight: 500;
+
+    --text-md-1: clamp(28px, 3.4vw, 44px); /* h1 */
+    --text-md-1--line-height: 1.05;
+    --text-md-1--letter-spacing: -0.02em;
+    --text-md-1--font-weight: 500;
+
+    --text-md-2: clamp(24px, 2.4vw, 30px); /* h2 */
+    --text-md-2--line-height: 1.1;
+    --text-md-2--letter-spacing: -0.018em;
+    --text-md-2--font-weight: 500;
+
+    --text-md-3: 18px; /* h3 */
+    --text-md-3--line-height: 1.3;
+    --text-md-3--letter-spacing: -0.01em;
+
+    --text-md-4: 16px; /* h4 */
+    --text-md-4--line-height: 1.4;
+    --text-md-4--letter-spacing: -0.01em;
+
+    --text-sm-1: 15px; /* body */
+    --text-sm-1--line-height: 1.55;
+    --text-sm-1--letter-spacing: -0.005em;
+
+    --text-sm-2: 13.5px; /* sm */
+    --text-sm-2--line-height: 1.55;
+
+    --text-sm-3: 11px; /* label */
+    --text-sm-3--line-height: 1.4;
+    --text-sm-3--letter-spacing: 0.08em;
+
+    --text-sm-4: 8px; /* xs */
+    --text-sm-4--line-height: 1.2;
+    --text-sm-4--letter-spacing: 0.08em;
+}

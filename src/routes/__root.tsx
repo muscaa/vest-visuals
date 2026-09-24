@@ -14,7 +14,7 @@ import { envPublic } from "@server/env";
 import type { QueryClient } from "@tanstack/react-query";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
-import appCss from "@/styles/app.css?url";
+import mainCss from "@/styles/main.css?url";
 import { seo } from "@/utils/seo";
 import { ThemeProvider } from "@/components/theme/provider";
 
@@ -49,7 +49,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             }),
         ],
         links: [
-            { rel: "stylesheet", href: appCss },
+            { rel: "stylesheet", href: mainCss },
             {
                 rel: "apple-touch-icon",
                 sizes: "180x180",

@@ -1,0 +1,21 @@
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        @apply font-sans;
+    }
+
+    body {
+        @apply bg-background text-foreground text-sm-1;
+    }
+
+    div {
+        @apply scroll-smooth;
+    }
+
+    .grecaptcha-badge {
+        visibility: hidden;
+    }
+}

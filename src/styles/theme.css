@@ -1,0 +1,156 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-sidebar: var(--card);
+    --color-sidebar-foreground: var(--card-foreground);
+    --color-sidebar-primary: var(--primary);
+    --color-sidebar-primary-foreground: var(--primary-foreground);
+    --color-sidebar-accent: var(--accent);
+    --color-sidebar-accent-foreground: var(--accent-foreground);
+    --color-sidebar-border: var(--border);
+    --color-sidebar-ring: var(--ring);
+
+    --color-informative: var(--color1);
+    --color-success: var(--color2);
+    --color-warning: var(--color3);
+    --color-destructive: var(--color4);
+
+    --color-chart-1: color-mix(in oklab, white 30%, var(--color1));
+    --color-chart-2: color-mix(in oklab, white 15%, var(--color1));
+    --color-chart-3: var(--color1);
+    --color-chart-4: color-mix(in oklab, black 15%, var(--color1));
+    --color-chart-5: color-mix(in oklab, black 30%, var(--color1));
+
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    --font-sans: "Inter Variable", sans-serif;
+    --font-heading: "Inter Variable", sans-serif;
+    --font-mono: "JetBrains Mono Variable", monospace;
+
+    /* --container-8xl: 88rem; */
+    /* --spacing-screen-no-nav: calc(100dvh - 4rem); */
+    /* --spacing-screen-dynamic: 100dvh; */
+    /* --breakpoint-xs: 30rem; */
+}
+
+@utility theme-light {
+    --background: var(--light2);
+    --foreground: var(--dark1);
+
+    --card: var(--light1);
+    --card-foreground: var(--foreground);
+
+    --popover: var(--card);
+    --popover-foreground: var(--foreground);
+
+    --primary: var(--color1);
+    --primary-foreground: var(--light1);
+
+    --secondary: var(--light4);
+    --secondary-foreground: var(--dark3);
+
+    --muted: var(--light3);
+    --muted-foreground: var(--gray-dark);
+
+    --accent: var(--muted);
+    --accent-foreground: var(--secondary-foreground);
+
+    --border: var(--light5);
+    --input: var(--light5);
+    --ring: var(--primary);
+
+    @apply scheme-light text-foreground;
+}
+
+@utility theme-dark {
+    --background: var(--dark1);
+    --foreground: var(--light1);
+
+    --card: var(--dark3);
+    --card-foreground: var(--foreground);
+
+    --popover: var(--card);
+    --popover-foreground: var(--foreground);
+
+    --primary: var(--color1);
+    --primary-foreground: var(--light1);
+
+    --secondary: var(--dark5);
+    --secondary-foreground: var(--foreground);
+
+    --muted: var(--dark4);
+    --muted-foreground: var(--gray-light);
+
+    --accent: var(--muted);
+    --accent-foreground: var(--foreground);
+
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: var(--primary);
+
+    @apply scheme-dark text-foreground;
+}
+
+:root {
+    --radius: 0.625rem;
+
+    --color1: #4b71d8ff;
+    --color2: #2ac1a8ff;
+    --color3: #ebb447ff;
+    --color4: #f1414dff;
+
+    --light-base: color-mix(in oklab, var(--color1) 6%, #fefefeff);
+    --light1: color-mix(in oklab, black 0%, var(--light-base));
+    --light2: color-mix(in oklab, black 4%, var(--light-base));
+    --light3: color-mix(in oklab, black 8%, var(--light-base));
+    --light4: color-mix(in oklab, black 12%, var(--light-base));
+    --light5: color-mix(in oklab, black 16%, var(--light-base));
+
+    --gray-base: color-mix(in oklab, var(--color1) 6%, #888888ff);
+    --gray-light: color-mix(in oklab, white 15%, var(--gray-base));
+    --gray-dark: color-mix(in oklab, black 15%, var(--gray-base));
+
+    --dark-base: color-mix(in oklab, var(--color1) 6%, #121212ff);
+    --dark1: color-mix(in oklab, white 0%, var(--dark-base));
+    --dark2: color-mix(in oklab, white 6%, var(--dark-base));
+    --dark3: color-mix(in oklab, white 12%, var(--dark-base));
+    --dark4: color-mix(in oklab, white 18%, var(--dark-base));
+    --dark5: color-mix(in oklab, white 24%, var(--dark-base));
+
+    @apply theme-light;
+}
+
+.dark {
+    @apply theme-dark;
+}
