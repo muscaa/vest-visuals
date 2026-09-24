@@ -1,5 +1,5 @@
-import { getSession } from "@/functions/auth";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { getSession } from "@/functions/auth";
 
 export const Route = createFileRoute("/media/private/")({
     beforeLoad: async () => {

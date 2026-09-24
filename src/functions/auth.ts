@@ -3,16 +3,17 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import { redirect } from "@tanstack/react-router";
 
-export const getSession = createServerFn({ method: "GET" })
-    .handler(async () => {
+export const getSession = createServerFn({ method: "GET" }).handler(
+    async () => {
         const headers = getRequestHeaders();
         const session = await auth.api.getSession({ headers });
 
         return session;
-    });
+    },
+);
 
-export const ensureSession = createServerFn({ method: "GET" })
-    .handler(async () => {
+export const ensureSession = createServerFn({ method: "GET" }).handler(
+    async () => {
         const headers = getRequestHeaders();
         const session = await auth.api.getSession({ headers });
 
@@ -21,7 +22,8 @@ export const ensureSession = createServerFn({ method: "GET" })
         }
 
         return session;
-    });
+    },
+);
 
 export const login = createServerFn({ method: "POST" })
     .validator((data: FormData) => {
@@ -58,13 +60,12 @@ export const signup = createServerFn({ method: "POST" })
                 password: data.password,
             },
         });
-        
+
         throw redirect({ to: "/account/private" });
     });
 
-export const signout = createServerFn({ method: "GET" })
-    .handler(async () => {
-        const headers = getRequestHeaders();
+export const signout = createServerFn({ method: "GET" }).handler(async () => {
+    const headers = getRequestHeaders();
 
-        await auth.api.signOut({ headers });
-    });
+    await auth.api.signOut({ headers });
+});

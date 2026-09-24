@@ -15,6 +15,11 @@ export default [
         },
     },
     {
-        ignores: ["./src/lib/shared/paraglide/**"],
+        ignores: [
+            "./.tanstack/**",
+            "./.output/**",
+            "./project.inlang/**",
+            "./src/lib/shared/paraglide/**",
+        ],
     },
 ] satisfies Linter.Config[];

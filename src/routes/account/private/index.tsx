@@ -1,6 +1,7 @@
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { ThemeToggle } from "@/components/theme";
 import { Button } from "@/components/ui/button";
 import { getSession, signout } from "@/functions/auth";
-import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/account/private/")({
     beforeLoad: async () => {
@@ -21,6 +22,7 @@ function RouteComponent() {
     return (
         <div>
             <div>Hello "/account/private/"!</div>
+            <ThemeToggle />
             <Button onClick={() => signout()}>Sign Out</Button>
             <div className="flex flex-col whitespace-pre-wrap">
                 {JSON.stringify(user, null, 2)}
