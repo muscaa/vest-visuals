@@ -17,6 +17,8 @@ import { NotFound } from "@/components/NotFound";
 import mainCss from "@/styles/main.css?url";
 import { seo } from "@/utils/seo";
 import { ThemeProvider } from "@/components/theme/provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 
 interface RouterContext {
     queryClient: QueryClient;
@@ -88,19 +90,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 <HeadContent />
             </head>
             <body>
-                {/* <div className="p-2 flex gap-2 text-lg">
-                    <Link
-                        to="/"
-                        activeProps={{
-                            className: "font-bold",
-                        }}
-                        activeOptions={{ exact: true }}
-                    >
-                        Home
-                    </Link>{" "}
-                </div>
-                <hr /> */}
-                <ThemeProvider>{children}</ThemeProvider>
+                <ThemeProvider>
+                    <TooltipProvider>
+                        {children}
+                        <Toaster position="bottom-right" richColors />
+                    </TooltipProvider>
+                </ThemeProvider>
                 <TanStackDevtools
                     config={{
                         position: "bottom-right",
