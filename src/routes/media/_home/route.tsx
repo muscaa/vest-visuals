@@ -1,14 +1,6 @@
-import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { MediaNavbarLayout } from "@/components/media/layouts";
 
 export const Route = createFileRoute("/media/_home")({
-    component: RouteComponent,
+    component: MediaNavbarLayout,
 });
-
-function RouteComponent() {
-    return (
-        <div>
-            Hello "/media/_home"!
-            <Outlet />
-        </div>
-    );
-}
