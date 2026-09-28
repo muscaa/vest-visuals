@@ -58,10 +58,10 @@
     --font-heading: "Inter Variable", sans-serif;
     --font-mono: "JetBrains Mono Variable", monospace;
 
-    /* --container-8xl: 88rem; */
-    /* --spacing-screen-no-nav: calc(100dvh - 4rem); */
-    /* --spacing-screen-dynamic: 100dvh; */
-    /* --breakpoint-xs: 30rem; */
+    --container-8xl: 88rem;
+    --spacing-screen-no-nav: calc(100dvh - 4rem);
+    --spacing-screen-dynamic: 100dvh;
+    --breakpoint-xs: 30rem;
 }
 
 @utility theme-light {
