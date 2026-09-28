@@ -25,6 +25,8 @@ type CarouselContextProps = {
     scrollNext: () => void;
     canScrollPrev: boolean;
     canScrollNext: boolean;
+    at: number;
+    max: number;
 } & CarouselProps;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
@@ -55,13 +57,18 @@ function Carousel({
         },
         plugins,
     );
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false);
-    const [canScrollNext, setCanScrollNext] = React.useState(false);
+    const [canScrollPrev, setCanScrollPrev] = React.useState(!!opts?.loop);
+    const [canScrollNext, setCanScrollNext] = React.useState(!!opts?.loop);
+    const [at, setAt] = React.useState(0);
+    const [max, setMax] = React.useState(0);
 
     const onSelect = React.useCallback((api: CarouselApi) => {
         if (!api) return;
         setCanScrollPrev(api.canScrollPrev());
         setCanScrollNext(api.canScrollNext());
+
+        setAt(Math.min(api.selectedScrollSnap() + 1, api.slideNodes().length));
+        setMax(api.slideNodes().length);
     }, []);
 
     const scrollPrev = React.useCallback(() => {
@@ -114,6 +121,8 @@ function Carousel({
                 scrollNext,
                 canScrollPrev,
                 canScrollNext,
+                at,
+                max,
             }}
         >
             <div
@@ -130,18 +139,18 @@ function Carousel({
     );
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselContent({ className, extraClassName, ...props }: React.ComponentProps<"div"> & { extraClassName?: string; }) {
     const { carouselRef, orientation } = useCarousel();
 
     return (
         <div
             ref={carouselRef}
-            className="overflow-hidden"
+            className={cn("overflow-hidden size-full", extraClassName)}
             data-slot="carousel-content"
         >
             <div
                 className={cn(
-                    "flex",
+                    "flex size-full",
                     orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
                     className,
                 )}
@@ -229,6 +238,22 @@ function CarouselNext({
     );
 }
 
+function CarouselCounter({
+    className,
+    ...props
+}: React.ComponentProps<"span">) {
+    const { at, max } = useCarousel();
+
+    return (
+        <span
+            className={cn("tabular-nums", className)}
+            {...props}
+        >
+            {String(at).padStart(String(max).length, "0")}/{max}
+        </span>
+    );
+}
+
 export {
     type CarouselApi,
     Carousel,
@@ -236,5 +261,6 @@ export {
     CarouselItem,
     CarouselPrevious,
     CarouselNext,
+    CarouselCounter,
     useCarousel,
 };

@@ -1,3 +1,5 @@
+import { Main } from "@/components/main";
+import { HeroSection } from "@/components/media/sections/hero";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/media/_home/")({
@@ -5,5 +7,9 @@ export const Route = createFileRoute("/media/_home/")({
 });
 
 function RouteComponent() {
-    return <div>Hello "/media/_home/"!</div>;
+    return (
+        <Main>
+            <HeroSection />
+        </Main>
+    );
 }
