@@ -11,7 +11,7 @@ export function NavbarRoot(props: NavbarRootProps) {
     return (
         <nav
             className={cn(
-                "z-50 flex flex-col justify-center items-center w-full h-16 p-2 shrink-0 bg-background border-b",
+                "z-50 flex flex-col justify-center items-center w-full h-16 p-2 shrink-0 bg-card border-b",
                 props.className,
             )}
         >
