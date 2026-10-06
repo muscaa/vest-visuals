@@ -54,11 +54,11 @@ function CarouselOverlay() {
     );
 }
 
-interface Props {
+interface HeroSectionProps {
 
 }
 
-export function HeroSection(props: Props) {
+export function HeroSection(props: HeroSectionProps) {
     const images: Image[] = [
         {
             src: "https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/large", // majorate

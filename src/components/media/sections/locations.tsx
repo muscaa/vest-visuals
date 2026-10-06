@@ -18,8 +18,8 @@ function LocationsEntry({ name, county, image, description, accent, className, .
         <Link
             {...props}
             className={cn(
-                "group/locations-entry relative flex flex-col min-h-32 gap-1 p-6 theme-dark",
-                "rounded-2xl overflow-hidden transition-all bg-background hover:bg-muted",
+                "group/locations-entry relative flex flex-col min-h-32 gap-1 p-6",
+                "rounded-2xl overflow-hidden transition-all bg-card hover:bg-muted",
                 className,
             )}
         >
