@@ -1,10 +1,26 @@
 import { useIsMobile } from "@client/shadcn/hooks/use-mobile";
-import { IconChevronDown, IconChevronRight, IconMenu2 } from "@tabler/icons-react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
-import { Link, LinkOptions } from "@tanstack/react-router";
+import {
+    IconChevronDown,
+    IconChevronRight,
+    IconMenu2,
+} from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
 import { createContext, useContext, useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "./ui/navigation-menu";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "./ui/collapsible";
+import type { LinkOptions } from "@tanstack/react-router";
 
 //
 // mobile
@@ -50,7 +66,8 @@ function MobileNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
     );
 }
 
-function MobileNav(props: NavProps) { // TODO replace with right side sidebar
+function MobileNav(props: NavProps) {
+    // TODO replace with right side sidebar
     return (
         <Sheet>
             <SheetTrigger className="flex justify-center items-center size-8 mr-2">
@@ -72,9 +89,7 @@ function DesktopNavEntry({ text, ...props }: NavEntryProps) {
     return (
         <NavigationMenuItem>
             <NavigationMenuLink
-                render={(
-                    <Link {...props} />
-                )}
+                render={<Link {...props} />}
                 className="uppercase"
             >
                 {text}
@@ -89,21 +104,14 @@ function DesktopNavMenu(props: NavMenuProps) {
             <NavigationMenuTrigger className="uppercase">
                 {props.text}
             </NavigationMenuTrigger>
-            <NavigationMenuContent>
-                {props.children}
-            </NavigationMenuContent>
+            <NavigationMenuContent>{props.children}</NavigationMenuContent>
         </NavigationMenuItem>
     );
 }
 
 function DesktopNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
     return (
-        <NavigationMenuLink
-            render={(
-                <Link {...props} />
-            )}
-            className="uppercase"
-        >
+        <NavigationMenuLink render={<Link {...props} />} className="uppercase">
             {text}
         </NavigationMenuLink>
     );
@@ -112,9 +120,7 @@ function DesktopNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
 function DesktopNav(props: NavProps) {
     return (
         <NavigationMenu>
-            <NavigationMenuList>
-                {props.children}
-            </NavigationMenuList>
+            <NavigationMenuList>{props.children}</NavigationMenuList>
         </NavigationMenu>
     );
 }
@@ -146,9 +152,7 @@ export function NavEntry(props: NavEntryProps) {
     const { mobile } = useNav();
 
     return (
-        mobile && (
-            <MobileNavEntry {...props} />
-        ) || (
+        (mobile && <MobileNavEntry {...props} />) || (
             <DesktopNavEntry {...props} />
         )
     );
@@ -163,9 +167,7 @@ export function NavMenu(props: NavMenuProps) {
     const { mobile } = useNav();
 
     return (
-        mobile && (
-            <MobileNavMenu {...props} />
-        ) || (
+        (mobile && <MobileNavMenu {...props} />) || (
             <DesktopNavMenu {...props} />
         )
     );
@@ -179,9 +181,7 @@ export function NavMenuEntry(props: NavMenuEntryProps) {
     const { mobile } = useNav();
 
     return (
-        mobile && (
-            <MobileNavMenuEntry {...props} />
-        ) || (
+        (mobile && <MobileNavMenuEntry {...props} />) || (
             <DesktopNavMenuEntry {...props} />
         )
     );
@@ -204,13 +204,9 @@ export function Nav(props: NavProps) {
                 mobile: isMobileState,
             }}
         >
-            {
-                isMobileState && (
-                    <MobileNav {...props} />
-                ) || (
-                    <DesktopNav {...props} />
-                )
-            }
+            {(isMobileState && <MobileNav {...props} />) || (
+                <DesktopNav {...props} />
+            )}
         </NavContext.Provider>
     );
 }

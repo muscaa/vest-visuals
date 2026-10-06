@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
 import { cn } from "@shared/shadcn/utils";
+import { Card } from "@/components/ui/card";
 
 interface HoverCardProps {
     children?: React.ReactNode;
@@ -8,7 +8,12 @@ interface HoverCardProps {
 
 export function HoverCard(props: HoverCardProps) {
     return (
-        <Card className={cn("shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300", props.className)}>
+        <Card
+            className={cn(
+                "shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300",
+                props.className,
+            )}
+        >
             {props.children}
         </Card>
     );

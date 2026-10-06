@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
 import { cn } from "@shared/shadcn/utils";
 import { IconGripVertical } from "@tabler/icons-react";
+import { Button } from "./ui/button";
 
 interface Props {
     before: React.ReactNode;
@@ -35,7 +35,10 @@ export function Comparison(props: Props) {
 
     return (
         <div
-            className={cn("relative size-full overflow-hidden rounded-2xl select-none", props.className)}
+            className={cn(
+                "relative size-full overflow-hidden rounded-2xl select-none",
+                props.className,
+            )}
             onPointerMove={onPointerMove}
             onPointerUp={() => setActive(false)}
             onPointerEnter={() => setActive(false)}
@@ -44,7 +47,7 @@ export function Comparison(props: Props) {
             <div
                 className="absolute left-0 top-0 size-full"
                 style={{
-                    clipPath: `inset(0 ${100 - inset}% 0 0)`
+                    clipPath: `inset(0 ${100 - inset}% 0 0)`,
                 }}
             >
                 {props.before}
@@ -79,4 +82,4 @@ export function Comparison(props: Props) {
             </div>
         </div>
     );
-};
+}

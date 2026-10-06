@@ -7,46 +7,27 @@ import { LanguageToggle } from "../language-toggle";
 export function MediaNavbarLayout() {
     return (
         <NavbarLayout
-            navigation={(
+            navigation={
                 <Nav>
-                    <NavEntry
-                        text="Home"
-                        to="/media"
-                    />
+                    <NavEntry text="Home" to="/media" />
                     <NavMenu text="Events">
-                        <NavMenuEntry
-                            text="18th Birthday"
-                        />
-                        <NavMenuEntry
-                            text="Wedding"
-                        />
-                        <NavMenuEntry
-                            text="Christening"
-                        />
+                        <NavMenuEntry text="18th Birthday" />
+                        <NavMenuEntry text="Wedding" />
+                        <NavMenuEntry text="Christening" />
                     </NavMenu>
                     <NavMenu text="Portraits">
-                        <NavMenuEntry
-                            text="Photo session"
-                        />
+                        <NavMenuEntry text="Photo session" />
                     </NavMenu>
                     <NavMenu text="Commercial">
-                        <NavMenuEntry
-                            text="Real Estate"
-                        />
-                        <NavMenuEntry
-                            text="Automotive"
-                        />
-                        <NavMenuEntry
-                            text="Business Promotion"
-                        />
+                        <NavMenuEntry text="Real Estate" />
+                        <NavMenuEntry text="Automotive" />
+                        <NavMenuEntry text="Business Promotion" />
                     </NavMenu>
-                    <NavEntry
-                        text="Contact"
-                    />
+                    <NavEntry text="Contact" />
                     <ThemeToggle />
                     <LanguageToggle />
                 </Nav>
-            )}
+            }
         >
             <Outlet />
         </NavbarLayout>

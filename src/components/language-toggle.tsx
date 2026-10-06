@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { getLocale, locales, setLocale } from "@shared/paraglide/runtime";
+import { Button } from "@/components/ui/button";
 
 export function LanguageToggle() {
     const currentLocale = getLocale();

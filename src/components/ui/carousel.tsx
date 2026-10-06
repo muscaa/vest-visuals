@@ -139,7 +139,11 @@ function Carousel({
     );
 }
 
-function CarouselContent({ className, extraClassName, ...props }: React.ComponentProps<"div"> & { extraClassName?: string; }) {
+function CarouselContent({
+    className,
+    extraClassName,
+    ...props
+}: React.ComponentProps<"div"> & { extraClassName?: string }) {
     const { carouselRef, orientation } = useCarousel();
 
     return (
@@ -245,10 +249,7 @@ function CarouselCounter({
     const { at, max } = useCarousel();
 
     return (
-        <span
-            className={cn("tabular-nums", className)}
-            {...props}
-        >
+        <span className={cn("tabular-nums", className)} {...props}>
             {String(at).padStart(String(max).length, "0")}/{max}
         </span>
     );

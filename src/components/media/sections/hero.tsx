@@ -1,8 +1,17 @@
-import { Image, Img } from "@/components/img";
+import { useEffect } from "react";
+import type { Image} from "@/components/img";
+import { Img } from "@/components/img";
 import { TextH1, TextP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselCounter, CarouselItem, CarouselNext, CarouselPrevious, useCarousel } from "@/components/ui/carousel";
-import { useEffect } from "react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselCounter,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+    useCarousel,
+} from "@/components/ui/carousel";
 
 function CarouselOverlay() {
     const { api, at, max } = useCarousel();
@@ -28,7 +37,10 @@ function CarouselOverlay() {
                 </TextH1>
                 <div />
                 <TextP size="md-3" className="max-w-[60ch] text-pretty">
-                    Nunți, evenimente, portrete, automotive, imobiliare și brand content, filmate și editate de un studio căruia chiar îi pasă de rezultat. Oriunde se petrece povestea ta, suntem acolo pentru ea.
+                    Nunți, evenimente, portrete, automotive, imobiliare și brand
+                    content, filmate și editate de un studio căruia chiar îi
+                    pasă de rezultat. Oriunde se petrece povestea ta, suntem
+                    acolo pentru ea.
                 </TextP>
                 <div className="flex not-xs:flex-col gap-4 pointer-events-auto">
                     <Button variant="default" size="lg">
@@ -54,9 +66,7 @@ function CarouselOverlay() {
     );
 }
 
-interface HeroSectionProps {
-
-}
+interface HeroSectionProps {}
 
 export function HeroSection(props: HeroSectionProps) {
     const images: Image[] = [
@@ -103,17 +113,18 @@ export function HeroSection(props: HeroSectionProps) {
                 className="size-full"
             >
                 <CarouselOverlay />
-                <CarouselContent extraClassName="absolute inset-0 -z-10" className="m-0">
-                    {
-                        images.map((image, index) => (
-                            <CarouselItem key={index} className="p-0">
-                                <Img
-                                    className="size-full object-cover"
-                                    {...image}
-                                />
-                            </CarouselItem>
-                        ))
-                    }
+                <CarouselContent
+                    extraClassName="absolute inset-0 -z-10"
+                    className="m-0"
+                >
+                    {images.map((image, index) => (
+                        <CarouselItem key={index} className="p-0">
+                            <Img
+                                className="size-full object-cover"
+                                {...image}
+                            />
+                        </CarouselItem>
+                    ))}
                 </CarouselContent>
             </Carousel>
         </section>

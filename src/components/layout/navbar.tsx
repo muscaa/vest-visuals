@@ -19,8 +19,8 @@ export function NavbarLayout(props: NavbarLayoutProps) {
                 )}
             >
                 {props.children}
-                {props.footer ??
-                    props.footer // TODO
+                {
+                    props.footer ?? props.footer // TODO
                 }
             </div>
         </>

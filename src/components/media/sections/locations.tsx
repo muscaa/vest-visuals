@@ -1,8 +1,9 @@
+import { cn } from "@shared/shadcn/utils";
+import { Link } from "@tanstack/react-router";
+import type { LinkOptions } from "@tanstack/react-router";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
 import { TextH1, TextH2, TextP } from "@/components/typography";
-import { cn } from "@shared/shadcn/utils";
-import { Link, LinkOptions } from "@tanstack/react-router";
 
 type LocationsEntryProps = LinkOptions & {
     name: string;
@@ -13,7 +14,15 @@ type LocationsEntryProps = LinkOptions & {
     className?: string;
 };
 
-function LocationsEntry({ name, county, image, description, accent, className, ...props }: LocationsEntryProps) {
+function LocationsEntry({
+    name,
+    county,
+    image,
+    description,
+    accent,
+    className,
+    ...props
+}: LocationsEntryProps) {
     return (
         <Link
             {...props}
@@ -23,60 +32,59 @@ function LocationsEntry({ name, county, image, description, accent, className, .
                 className,
             )}
         >
-            {
-                image && (
-                    <Img
-                        src={image}
-                        alt="" // TODO
-                        className="absolute pointer-events-none inset-0 size-full object-cover brightness-75 mask-l-from-0% mask-l-to-100%"
-                    />
-                )
-            }
+            {image && (
+                <Img
+                    src={image}
+                    alt="" // TODO
+                    className="absolute pointer-events-none inset-0 size-full object-cover brightness-75 mask-l-from-0% mask-l-to-100%"
+                />
+            )}
             <TextH2 className={`z-10 ${accent ? "text-success" : ""}`}>
                 {name}
             </TextH2>
-            {
-                county && (
-                    <TextP variant="muted" size="sm-3" font="mono-1" className="z-10">
-                        {county}
-                    </TextP>
-                )
-            }
-            {
-                description && (
-                    <TextP size="md-3" className="z-10">
-                        {description}
-                    </TextP>
-                )
-            }
-            {
-                accent && (
-                    <TextP size="sm-1" className="z-10 text-success">
-                        {accent}
-                    </TextP>
-                )
-            }
+            {county && (
+                <TextP
+                    variant="muted"
+                    size="sm-3"
+                    font="mono-1"
+                    className="z-10"
+                >
+                    {county}
+                </TextP>
+            )}
+            {description && (
+                <TextP size="md-3" className="z-10">
+                    {description}
+                </TextP>
+            )}
+            {accent && (
+                <TextP size="sm-1" className="z-10 text-success">
+                    {accent}
+                </TextP>
+            )}
         </Link>
     );
 }
 
-interface LocationsSectionProps {
-
-}
+interface LocationsSectionProps {}
 
 export function LocationsSection(props: LocationsSectionProps) {
     return (
-        <section id="locations" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20">
+        <section
+            id="locations"
+            className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20"
+        >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="05">
-                    Unde filmam
-                </Eyebrow>
+                <Eyebrow num="05">Unde filmam</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
-                        Oriunde <i className="text-success">ne duce filmarea.</i>
+                        Oriunde{" "}
+                        <i className="text-success">ne duce filmarea.</i>
                     </TextH1>
                     <TextP variant="muted" size="md-3">
-                        Un proiect bun merită drumul. Ne strângem echipamentul și venim acolo unde ai nevoie de noi, aproape sau departe.
+                        Un proiect bun merită drumul. Ne strângem echipamentul
+                        și venim acolo unde ai nevoie de noi, aproape sau
+                        departe.
                     </TextP>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
