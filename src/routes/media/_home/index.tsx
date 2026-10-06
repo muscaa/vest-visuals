@@ -1,5 +1,6 @@
 import { Main } from "@/components/main";
 import { AboutSection } from "@/components/media/sections/about";
+import { BeforeAndAfterSection } from "@/components/media/sections/before-and-after";
 import { HeroSection } from "@/components/media/sections/hero";
 import { PortfolioSection } from "@/components/media/sections/portfolio";
 import { createFileRoute } from "@tanstack/react-router";
@@ -14,6 +15,7 @@ function RouteComponent() {
             <HeroSection />
             <AboutSection />
             <PortfolioSection />
+            <BeforeAndAfterSection />
         </Main>
     );
 }
