@@ -1,6 +1,8 @@
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavEntry, NavMenu, NavMenuEntry } from "../nav";
+import { ThemeToggle } from "../theme";
+import { LanguageToggle } from "../language-toggle";
 
 export function MediaNavbarLayout() {
     return (
@@ -41,6 +43,8 @@ export function MediaNavbarLayout() {
                     <NavEntry
                         text="Contact"
                     />
+                    <ThemeToggle />
+                    <LanguageToggle />
                 </Nav>
             )}
         >
