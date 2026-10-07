@@ -1,5 +1,6 @@
 import { cn } from "@shared/shadcn/utils";
 import { Navbar } from "../navbar";
+import { Footer } from "../footer";
 
 export interface NavbarLayoutProps {
     children: React.ReactNode;
@@ -20,7 +21,9 @@ export function NavbarLayout(props: NavbarLayoutProps) {
             >
                 {props.children}
                 {
-                    props.footer ?? props.footer // TODO
+                    props.footer ?? (
+                        <Footer />
+                    )
                 }
             </div>
         </>

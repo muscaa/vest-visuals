@@ -3,11 +3,12 @@ import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
+import { Footer } from "../footer";
 
 export function MediaNavbarLayout() {
     return (
         <NavbarLayout
-            navigation={
+            navigation={(
                 <Nav>
                     <NavEntry text="Home" to="/media" />
                     <NavMenu text="Events">
@@ -27,7 +28,40 @@ export function MediaNavbarLayout() {
                     <ThemeToggle />
                     <LanguageToggle />
                 </Nav>
-            }
+            )}
+            footer={(
+                <Footer
+                    sections={[
+                        {
+                            title: "Section 1",
+                            links: [
+                                {
+                                    name: "link 1",
+                                    to: "/media",
+                                }
+                            ],
+                        },
+                        {
+                            title: "Section 2",
+                            links: [
+                                {
+                                    name: "link 1",
+                                    to: "/media",
+                                }
+                            ],
+                        },
+                        {
+                            title: "Section 3",
+                            links: [
+                                {
+                                    name: "link 1",
+                                    to: "/media",
+                                }
+                            ],
+                        },
+                    ]}
+                />
+            )}
         >
             <Outlet />
         </NavbarLayout>
