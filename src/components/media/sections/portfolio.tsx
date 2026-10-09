@@ -23,7 +23,7 @@ function PortfolioEntry({
         <Link
             {...props}
             className={cn(
-                "group/portfolio-entry relative flex flex-col justify-end gap-1 p-6 aspect-square theme-dark",
+                "group/portfolio-entry relative flex flex-col justify-end gap-1 p-6 theme-dark",
                 "rounded-2xl overflow-hidden transition-all bg-linear-to-b from-30% from-transparent to-black/80",
                 className,
             )}
@@ -41,7 +41,7 @@ function PortfolioEntry({
     );
 }
 
-interface PortfolioSectionProps {}
+interface PortfolioSectionProps { }
 
 export function PortfolioSection(props: PortfolioSectionProps) {
     return (
@@ -49,7 +49,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
             id="portfolio"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
-            <div className="flex flex-col max-w-7xl w-full">
+            <div className="flex flex-col max-w-7xl w-full @container">
                 <Eyebrow num="02">Lucrari alese</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
@@ -60,7 +60,36 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         înainte de cantitate, de fiecare dată.
                     </TextP>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div
+                    className="
+                        grid gap-4
+                        [--cols:1] sm:[--cols:2] lg:[--cols:3]
+                        grid-cols-[repeat(var(--cols),minmax(0,1fr))]
+                        auto-rows-[calc((100cqw-(var(--cols)-1)*1rem)/var(--cols)*3/4)]
+                    "
+                >
+                    <PortfolioEntry
+                        to="/media"
+                        name={
+                            <>
+                                <i className="text-chart-1">Nunti</i>
+                            </>
+                        }
+                        description="O seară pe care n-o uiți prea curând"
+                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
+                        className="order-1 sm:col-span-2"
+                    />
+                    <PortfolioEntry
+                        to="/media"
+                        name={
+                            <>
+                                <i className="text-chart-1">Botezuri</i>
+                            </>
+                        }
+                        description="O seară pe care n-o uiți prea curând"
+                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
+                        className="order-2"
+                    />
                     <PortfolioEntry
                         to="/media"
                         name={
@@ -70,7 +99,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         }
                         description="O seară pe care n-o uiți prea curând"
                         image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
-                        className="sm:aspect-auto sm:col-span-2"
+                        className="order-3"
                     />
                     <PortfolioEntry
                         to="/media"
@@ -81,6 +110,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         }
                         description="Portrete în lumină naturală"
                         image="https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium"
+                        className="order-4"
                     />
                     <PortfolioEntry
                         to="/media"
@@ -91,6 +121,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         }
                         description="Mașini care arată ca-n reclame"
                         image="https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium"
+                        className="order-5"
                     />
                     <PortfolioEntry
                         to="/media"
@@ -101,6 +132,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         }
                         description="Proprietăți care se vând repede"
                         image="https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium"
+                        className="order-6"
                     />
                     <PortfolioEntry
                         to="/media"
@@ -111,6 +143,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         }
                         description="Conținut comercial cinematic"
                         image="https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium"
+                        className="order-7 lg:col-span-2"
                     />
                 </div>
             </div>
