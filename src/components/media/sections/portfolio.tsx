@@ -50,7 +50,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full @container">
-                <Eyebrow num="02">Lucrari alese</Eyebrow>
+                <Eyebrow>Lucrari alese</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         Vezi cu <i className="text-success">ochii tăi.</i>

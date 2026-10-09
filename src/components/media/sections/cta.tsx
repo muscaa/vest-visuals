@@ -11,7 +11,7 @@ export function CTASection(props: CTASectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col items-center max-w-7xl w-full">
-                <Eyebrow num="06" className="max-w-[58ch] w-full">
+                <Eyebrow align="center">
                     Saluta-ne
                 </Eyebrow>
                 <TextH1 size="lg-2" className="mb-8 text-center">

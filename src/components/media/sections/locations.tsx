@@ -75,7 +75,7 @@ export function LocationsSection(props: LocationsSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="05">Unde filmam</Eyebrow>
+                <Eyebrow>Unde filmam</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         Oriunde{" "}

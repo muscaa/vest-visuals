@@ -12,7 +12,7 @@ export function BeforeAndAfterSection(props: BeforeAndAfterSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-primary/20 to-transparent"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="03">Editarea</Eyebrow>
+                <Eyebrow>Editarea</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         Același cadru.{" "}

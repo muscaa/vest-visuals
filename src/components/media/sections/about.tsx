@@ -11,7 +11,7 @@ export function AboutSection(props: AboutSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-br from-transparent to-muted"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="01">Cine suntem</Eyebrow>
+                <Eyebrow>Cine suntem</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         Studio mic,{" "}
@@ -32,7 +32,6 @@ export function AboutSection(props: AboutSectionProps) {
                         firstName="Mihail"
                         lastName="Musca"
                         role="Fotograf principal & editor"
-                        skills={["foto", "edit foto", "edit video"]}
                         email="mihail@vestvisuals.ro"
                         instagram="musca.mihail"
                     />
@@ -41,7 +40,6 @@ export function AboutSection(props: AboutSectionProps) {
                         firstName="David"
                         lastName="Boștină"
                         role="Videograf principal & colorist"
-                        skills={["video", "foto", "edit video"]}
                         email="david@vestvisuals.ro"
                         instagram="david.bostina"
                     />
