@@ -2,7 +2,7 @@ import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 
-interface CTASectionProps {}
+interface CTASectionProps { }
 
 export function CTASection(props: CTASectionProps) {
     return (
@@ -27,8 +27,10 @@ export function CTASection(props: CTASectionProps) {
                     răspuns într-o zi lucrătoare.
                 </TextP>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Button size="lg">Mergi la pagina de contact</Button>
-                    <Button size="lg" variant="link">
+                    <Button size="xl">
+                        Mergi la pagina de contact
+                    </Button>
+                    <Button size="xl" variant="link">
                         contact@vestvisuals.ro
                     </Button>
                 </div>

@@ -43,10 +43,10 @@ function CarouselOverlay() {
                     acolo pentru ea.
                 </TextP>
                 <div className="flex not-xs:flex-col gap-4 pointer-events-auto">
-                    <Button variant="default" size="lg">
+                    <Button variant="white" size="xl">
                         Vezi lucrările
                     </Button>
-                    <Button variant="outline" size="lg">
+                    <Button variant="outline" size="xl">
                         Scrie-ne
                     </Button>
                 </div>
