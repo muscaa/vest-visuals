@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Img } from "./img";
 
 interface Props {
@@ -7,36 +6,34 @@ interface Props {
 
 export function SALLink(props: Props) {
     return (
-        // @ts-expect-error
-        <Link
+        <a
             href="https://anpc.ro/ce-este-sal/"
             target="_blank"
-            rel="nofollow"
-            {...props}
+            rel="noopener noreferrer nofollow"
+            className={props.className}
         >
             <Img
                 src="/anpc-sal.svg"
-                alt="Solutionarea Alternativa a Litigiilor"
-                className="w-50"
+                alt="ANPC SAL - Soluționarea Alternativă a Litigiilor"
+                className="h-10 w-auto"
             />
-        </Link>
+        </a>
     );
 }
 
 export function SOLLink(props: Props) {
     return (
-        // @ts-expect-error
-        <Link
-            href="https://ec.europa.eu/consumers/odr"
+        <a
+            href="https://consumer-redress.ec.europa.eu/index_ro"
             target="_blank"
-            rel="nofollow"
-            {...props}
+            rel="noopener noreferrer nofollow"
+            className={props.className}
         >
             <Img
                 src="/anpc-sol.svg"
-                alt="Solutionarea Online a Litigiilor"
-                className="w-50"
+                alt="ANPC SOL - Soluționarea Online a Litigiilor"
+                className="h-10 w-auto"
             />
-        </Link>
+        </a>
     );
 }

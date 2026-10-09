@@ -33,30 +33,39 @@ export function MediaNavbarLayout() {
                 <Footer
                     sections={[
                         {
-                            title: "Section 1",
+                            title: "Evenimente",
                             links: [
-                                {
-                                    name: "link 1",
-                                    to: "/media",
-                                }
+                                { name: "Nunți" },
+                                { name: "Botezuri" },
+                                { name: "Majorate" },
                             ],
                         },
                         {
-                            title: "Section 2",
+                            title: "Portrete",
+                            links: [{ name: "Ședințe foto" }],
+                        },
+                        {
+                            title: "Comercial",
                             links: [
-                                {
-                                    name: "link 1",
-                                    to: "/media",
-                                }
+                                { name: "Imobiliare" },
+                                { name: "Automotive" },
+                                { name: "Promovare afaceri" },
                             ],
                         },
                         {
-                            title: "Section 3",
+                            title: "Studio",
                             links: [
-                                {
-                                    name: "link 1",
-                                    to: "/media",
-                                }
+                                { name: "Despre noi", to: "/media", hash: "about" },
+                                { name: "Portofoliu", to: "/media", hash: "portfolio" },
+                                { name: "Contact" },
+                            ],
+                        },
+                        {
+                            title: "Legal",
+                            links: [
+                                { name: "Termeni și condiții" },
+                                { name: "Confidențialitate" },
+                                { name: "Cookies" },
                             ],
                         },
                     ]}
