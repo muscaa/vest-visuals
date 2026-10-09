@@ -1,5 +1,5 @@
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu";
-import { cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@shared/shadcn/utils";
 import { IconChevronDown } from "@tabler/icons-react";
 
@@ -54,19 +54,30 @@ function NavigationMenuItem({
     );
 }
 
-const navigationMenuTriggerStyle = cva(
-    "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-3xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted",
+const navigationMenuStyle = cva(
+    "",
+    {
+        variants: {
+            base: {
+                trigger: "group group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-3xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted",
+                link: "flex items-center gap-1.5 rounded-3xl p-3 text-sm transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-2xl data-[active=true]:bg-muted/50 data-[active=true]:hover:bg-muted data-[active=true]:focus:bg-muted [&_svg:not([class*='size-'])]:size-4",
+            },
+        },
+        defaultVariants: {
+        },
+    }
 );
 
 function NavigationMenuTrigger({
+    base = "trigger",
     className,
     children,
     ...props
-}: NavigationMenuPrimitive.Trigger.Props) {
+}: NavigationMenuPrimitive.Trigger.Props & VariantProps<typeof navigationMenuStyle>) {
     return (
         <NavigationMenuPrimitive.Trigger
             data-slot="navigation-menu-trigger"
-            className={cn(navigationMenuTriggerStyle(), "group", className)}
+            className={cn(navigationMenuStyle({ base, className }))}
             {...props}
         >
             {children}{" "}
@@ -124,16 +135,14 @@ function NavigationMenuPositioner({
 }
 
 function NavigationMenuLink({
+    base = "link",
     className,
     ...props
-}: NavigationMenuPrimitive.Link.Props) {
+}: NavigationMenuPrimitive.Link.Props & VariantProps<typeof navigationMenuStyle>) {
     return (
         <NavigationMenuPrimitive.Link
             data-slot="navigation-menu-link"
-            className={cn(
-                "flex items-center gap-1.5 rounded-3xl p-3 text-sm transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-2xl data-[active=true]:bg-muted/50 data-[active=true]:hover:bg-muted data-[active=true]:focus:bg-muted [&_svg:not([class*='size-'])]:size-4",
-                className,
-            )}
+            className={cn(navigationMenuStyle({ base, className }))}
             {...props}
         />
     );
@@ -165,6 +174,6 @@ export {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
+    navigationMenuStyle,
     NavigationMenuPositioner,
 };

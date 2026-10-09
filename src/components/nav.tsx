@@ -67,13 +67,17 @@ function MobileNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
 }
 
 function MobileNav(props: NavProps) {
-    // TODO replace with right side sidebar
     return (
         <Sheet>
             <SheetTrigger className="flex justify-center items-center size-8 mr-2">
                 <IconMenu2 />
             </SheetTrigger>
-            <SheetContent side="right" className="max-h-full overflow-y-auto">
+            <SheetContent
+                side="top"
+                showCloseButton={false}
+                showOverlay={false}
+                className="data-[side=top]:top-16 max-h-screen-no-nav overflow-y-auto"
+            >
                 <div className="flex flex-col mt-20 m-2 gap-1">
                     {props.children}
                 </div>
@@ -89,8 +93,8 @@ function DesktopNavEntry({ text, ...props }: NavEntryProps) {
     return (
         <NavigationMenuItem>
             <NavigationMenuLink
+                base="trigger"
                 render={<Link {...props} />}
-                className="uppercase"
             >
                 {text}
             </NavigationMenuLink>
@@ -101,7 +105,7 @@ function DesktopNavEntry({ text, ...props }: NavEntryProps) {
 function DesktopNavMenu(props: NavMenuProps) {
     return (
         <NavigationMenuItem>
-            <NavigationMenuTrigger className="uppercase">
+            <NavigationMenuTrigger>
                 {props.text}
             </NavigationMenuTrigger>
             <NavigationMenuContent>{props.children}</NavigationMenuContent>
@@ -111,7 +115,7 @@ function DesktopNavMenu(props: NavMenuProps) {
 
 function DesktopNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
     return (
-        <NavigationMenuLink render={<Link {...props} />} className="uppercase">
+        <NavigationMenuLink render={<Link {...props} />}>
             {text}
         </NavigationMenuLink>
     );

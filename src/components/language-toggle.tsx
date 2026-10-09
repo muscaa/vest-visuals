@@ -12,7 +12,7 @@ export function LanguageToggle() {
     };
 
     return (
-        <Button size="icon" onClick={handleClick} className="uppercase">
+        <Button variant="ghost" size="icon" onClick={handleClick} className="uppercase">
             {currentLocale}
         </Button>
     );

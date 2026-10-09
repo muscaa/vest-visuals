@@ -20,7 +20,7 @@ export function ThemeToggle() {
     };
 
     return (
-        <Button size="icon" onClick={() => handleToggle()}>
+        <Button variant="ghost" size="icon" onClick={() => handleToggle()}>
             <IconSun className="dark:hidden" />
             <IconMoonStars className="not-dark:hidden" />
         </Button>
