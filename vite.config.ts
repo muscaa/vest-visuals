@@ -5,6 +5,7 @@ import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 import { devtools } from "@tanstack/devtools-vite";
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
     server: {
@@ -22,6 +23,7 @@ export default defineConfig({
             srcDirectory: "src",
         }),
         viteReact(),
+        svgr(),
         nitro(),
         paraglideVitePlugin({
             project: "./project.inlang",
