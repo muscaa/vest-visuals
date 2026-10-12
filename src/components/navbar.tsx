@@ -1,6 +1,7 @@
 import { cn } from "@shared/shadcn/utils";
 import { Link } from "@tanstack/react-router";
 import { LogoSmall } from "./logo";
+import type { LinkOptions } from "@tanstack/react-router";
 
 export interface NavbarRootProps {
     children?: React.ReactNode;
@@ -23,6 +24,8 @@ export function NavbarRoot(props: NavbarRootProps) {
 export interface NavbarContentProps {
     children?: React.ReactNode;
     start?: React.ReactNode;
+    /** where the logo leads, the brand home by default */
+    home?: LinkOptions;
     className?: string;
 }
 
@@ -35,7 +38,7 @@ export function NavbarContent(props: NavbarContentProps) {
             )}
         >
             {props.start ?? (
-                <Link to="/home">
+                <Link {...(props.home ?? { to: "/home" })} aria-label="Acasă">
                     <LogoSmall />
                 </Link>
             )}

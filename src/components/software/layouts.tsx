@@ -9,9 +9,9 @@ import { serviceGroups } from "./sections/services";
 export function SoftwareNavbarLayout() {
     return (
         <NavbarLayout
+            home={{ to: "/software" }}
             navigation={
                 <Nav>
-                    <NavEntry text="Acasă" to="/software" />
                     <NavMenu text="Servicii">
                         {
                             serviceGroups.map((group) => (

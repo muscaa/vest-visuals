@@ -8,9 +8,9 @@ import { Footer } from "../footer";
 export function MediaNavbarLayout() {
     return (
         <NavbarLayout
+            home={{ to: "/media" }}
             navigation={(
                 <Nav>
-                    <NavEntry text="Home" to="/media" />
                     <NavMenu text="Events">
                         <NavMenuEntry text="18th Birthday" />
                         <NavMenuEntry text="Wedding" />
