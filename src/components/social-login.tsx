@@ -17,12 +17,14 @@ const providers = [
 export function SocialLogin() {
     return (
         <div className="grid grid-cols-2 gap-3">
-            {providers.map((provider) => (
-                <Button key={provider.name} type="button" variant="outline" size="lg">
-                    {provider.icon}
-                    {provider.name}
-                </Button>
-            ))}
+            {
+                providers.map((provider) => (
+                    <Button key={provider.name} type="button" variant="outline" size="lg">
+                        {provider.icon}
+                        {provider.name}
+                    </Button>
+                ))
+            }
         </div>
     );
 }

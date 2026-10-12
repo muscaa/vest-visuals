@@ -1,18 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { SplitCard } from "./cards/split";
-import CreateAccount1 from "./illustrations/create-account-1.svg?react";
-import { RecaptchaNotice } from "./recaptcha-notice";
-import { SocialLogin } from "./social-login";
-import { TextH1, TextP } from "./typography";
-import { Button } from "./ui/button";
+import { SplitCard } from "../cards/split";
+import CreateAccount1 from "../illustrations/create-account-1.svg?react";
+import { RecaptchaNotice } from "../recaptcha-notice";
+import { SocialLogin } from "../social-login";
+import { TextH1, TextP } from "../typography";
+import { Button } from "../ui/button";
 import {
     Field,
     FieldDescription,
     FieldGroup,
     FieldLabel,
     FieldSeparator,
-} from "./ui/field";
-import { Input } from "./ui/input";
+} from "../ui/field";
+import { Input } from "../ui/input";
 
 export function SignupForm() {
     return (

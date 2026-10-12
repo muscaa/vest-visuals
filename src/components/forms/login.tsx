@@ -1,18 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { SplitCard } from "./cards/split";
-import EnterPassword5 from "./illustrations/enter-password-5.svg?react";
-import { RecaptchaNotice } from "./recaptcha-notice";
-import { SocialLogin } from "./social-login";
-import { TextH1, TextP } from "./typography";
-import { Button } from "./ui/button";
+import { SplitCard } from "../cards/split";
+import EnterPassword5 from "../illustrations/enter-password-5.svg?react";
+import { RecaptchaNotice } from "../recaptcha-notice";
+import { SocialLogin } from "../social-login";
+import { TextH1, TextP } from "../typography";
+import { Button } from "../ui/button";
 import {
     Field,
     FieldDescription,
     FieldGroup,
     FieldLabel,
     FieldSeparator,
-} from "./ui/field";
-import { Input } from "./ui/input";
+} from "../ui/field";
+import { Input } from "../ui/input";
 
 export function LoginForm() {
     return (

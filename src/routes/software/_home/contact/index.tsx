@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContactPage } from "@/components/contact";
+import { Main } from "@/components/main";
+import { ContactForm } from "@/components/forms/contact";
 
 export const Route = createFileRoute("/software/_home/contact/")({
-    component: ContactPage,
+    component: RouteComponent,
 });
+
+function RouteComponent() {
+    return (
+        <Main className="justify-center items-center px-6 py-16">
+            <ContactForm />
+        </Main>
+    );
+}

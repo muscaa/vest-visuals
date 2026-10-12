@@ -26,11 +26,13 @@ export function SplitCard(props: SplitCardProps) {
                     </div>
                 </CardContent>
             </Card>
-            {props.footer && (
-                <FieldDescription className="px-6 text-center">
-                    {props.footer}
-                </FieldDescription>
-            )}
+            {
+                props.footer && (
+                    <FieldDescription className="px-6 text-center">
+                        {props.footer}
+                    </FieldDescription>
+                )
+            }
         </div>
     );
 }
