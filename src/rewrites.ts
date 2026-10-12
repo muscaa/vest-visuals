@@ -14,6 +14,7 @@ export const rewriteParaglide: LocationRewrite = {
 // internal bridges
 //
 const bridges = {
+    home: envClient.PUBLIC_REWRITE_BRIDGE_HOME,
     account: envClient.PUBLIC_REWRITE_BRIDGE_ACCOUNT,
     media: envClient.PUBLIC_REWRITE_BRIDGE_MEDIA,
     software: envClient.PUBLIC_REWRITE_BRIDGE_SOFTWARE,
@@ -26,7 +27,7 @@ function urlToBridge(url: URL): Bridge {
     return (
         bridgeKeys.find((value) => bridges[value] === url.host) ??
         bridgeKeys.find((value) => bridges[value] === url.hostname) ??
-        "software"
+        "home"
     );
 }
 

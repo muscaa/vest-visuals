@@ -12,6 +12,7 @@ export const auth = betterAuth({
     }),
     baseURL: envServer.BETTER_AUTH_URL,
     trustedOrigins: [
+        envServer.PUBLIC_REWRITE_BRIDGE_HOME,
         envServer.PUBLIC_REWRITE_BRIDGE_ACCOUNT,
         envServer.PUBLIC_REWRITE_BRIDGE_MEDIA,
         envServer.PUBLIC_REWRITE_BRIDGE_SOFTWARE,

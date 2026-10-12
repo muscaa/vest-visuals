@@ -35,7 +35,7 @@ export function NavbarContent(props: NavbarContentProps) {
             )}
         >
             {props.start ?? (
-                <Link to="/software">
+                <Link to="/home">
                     <LogoSmall />
                 </Link>
             )}

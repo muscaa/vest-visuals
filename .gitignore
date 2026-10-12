@@ -47,4 +47,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 # IDE
-/.vscode
+/.vscode/
+/.claude/
+/.playwright-mcp/
+/.mcp.json

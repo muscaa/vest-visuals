@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const client = z.object({
+    PUBLIC_REWRITE_BRIDGE_HOME: z.string(),
     PUBLIC_REWRITE_BRIDGE_ACCOUNT: z.string(),
     PUBLIC_REWRITE_BRIDGE_MEDIA: z.string(),
     PUBLIC_REWRITE_BRIDGE_SOFTWARE: z.string(),
