@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ScriptOnce } from "@tanstack/react-router";
+import { envClient } from "@client/env";
 
 type Theme = "dark" | "light" | "system";
 type SystemTheme = Exclude<Theme, "system"> | undefined;
@@ -16,11 +17,28 @@ type ThemeProviderState = {
     setTheme: (theme: Theme) => void;
 };
 
+// The theme lives in a cookie on the shared cookie domain, so every subdomain sees the same one.
+function readTheme(storageKey: string): string | undefined {
+    const match = document.cookie.match(new RegExp(`(?:^|; )${storageKey}=([^;]*)`));
+    return match?.[1];
+}
+
+function writeTheme(storageKey: string, theme: Theme) {
+    const domain = envClient.PUBLIC_COOKIE_DOMAIN;
+    document.cookie = [
+        `${storageKey}=${theme}`,
+        "path=/",
+        "max-age=31536000",
+        "samesite=lax",
+        ...(domain ? [`domain=${domain}`] : []),
+    ].join("; ");
+}
+
 function getThemeScript(storageKey: string, defaultTheme: Theme) {
     const key = JSON.stringify(storageKey);
     const fallback = JSON.stringify(defaultTheme);
 
-    return `(function(){try{var t=localStorage.getItem(${key});if(t!=='light'&&t!=='dark'&&t!=='system'){t=${fallback}}var d=matchMedia('(prefers-color-scheme: dark)').matches;var r=t==='system'?(d?'dark':'light'):t;var e=document.documentElement;e.classList.add(r);e.style.colorScheme=r}catch(e){}})();`;
+    return `(function(){try{var m=document.cookie.match(new RegExp('(?:^|; )'+${key}+'=([^;]*)'));var t=m&&m[1];if(t!=='light'&&t!=='dark'&&t!=='system'){t=${fallback}}var d=matchMedia('(prefers-color-scheme: dark)').matches;var r=t==='system'?(d?'dark':'light'):t;var e=document.documentElement;e.classList.add(r);e.style.colorScheme=r}catch(e){}})();`;
 }
 
 const ThemeProviderContext = createContext<ThemeProviderState>({
@@ -62,7 +80,7 @@ export function ThemeProvider({
     }, []);
 
     useEffect(() => {
-        const stored = localStorage.getItem(storageKey);
+        const stored = readTheme(storageKey);
         setThemeState(
             stored === "light" || stored === "dark" || stored === "system"
                 ? stored
@@ -86,7 +104,7 @@ export function ThemeProvider({
     }, [theme, mounted]);
 
     const setTheme = (next: Theme) => {
-        localStorage.setItem(storageKey, next);
+        writeTheme(storageKey, next);
         setThemeState(next);
     };
 

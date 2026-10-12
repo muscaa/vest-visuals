@@ -1,6 +1,6 @@
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
-import { Nav, NavEntry } from "../nav";
+import { Nav, NavActions, NavEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { Footer } from "../footer";
@@ -14,9 +14,11 @@ export function HomeNavbarLayout() {
                     {divisions.map((division) => (
                         <NavEntry key={division.id} text={division.name} {...division.link} />
                     ))}
-                    <NavEntry text="Contact" to="/home" hash="contact" />
-                    <ThemeToggle />
-                    <LanguageToggle />
+                    <NavEntry text="Contact" to="/home/contact" />
+                    <NavActions>
+                        <ThemeToggle />
+                        <LanguageToggle />
+                    </NavActions>
                 </Nav>
             }
             footer={

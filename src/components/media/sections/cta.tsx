@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -27,7 +28,11 @@ export function CTASection(props: CTASectionProps) {
                     răspuns într-o zi lucrătoare.
                 </TextP>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Button size="xl">
+                    <Button
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/media/contact" />}
+                    >
                         Mergi la pagina de contact
                     </Button>
                     <Button size="xl" variant="link">

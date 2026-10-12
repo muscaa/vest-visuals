@@ -1,6 +1,6 @@
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
-import { Nav, NavEntry, NavMenu, NavMenuEntry } from "../nav";
+import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { Footer } from "../footer";
@@ -24,9 +24,11 @@ export function MediaNavbarLayout() {
                         <NavMenuEntry text="Automotive" />
                         <NavMenuEntry text="Business Promotion" />
                     </NavMenu>
-                    <NavEntry text="Contact" />
-                    <ThemeToggle />
-                    <LanguageToggle />
+                    <NavEntry text="Contact" to="/media/contact" />
+                    <NavActions>
+                        <ThemeToggle />
+                        <LanguageToggle />
+                    </NavActions>
                 </Nav>
             )}
             footer={(
@@ -57,7 +59,7 @@ export function MediaNavbarLayout() {
                             links: [
                                 { name: "Despre noi", to: "/media", hash: "about" },
                                 { name: "Portofoliu", to: "/media", hash: "portfolio" },
-                                { name: "Contact" },
+                                { name: "Contact", to: "/media/contact" },
                             ],
                         },
                         {

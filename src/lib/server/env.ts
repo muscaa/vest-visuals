@@ -5,12 +5,12 @@ const client = z.object({
     PUBLIC_REWRITE_BRIDGE_ACCOUNT: z.string(),
     PUBLIC_REWRITE_BRIDGE_MEDIA: z.string(),
     PUBLIC_REWRITE_BRIDGE_SOFTWARE: z.string(),
+    PUBLIC_COOKIE_DOMAIN: z.string(),
 });
 const server = client.extend({
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32),
-    BETTER_AUTH_COOKIE_DOMAIN: z.string(),
 });
 
 const parsed = server.safeParse(process.env);

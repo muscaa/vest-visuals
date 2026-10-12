@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import Contact3 from "@/components/illustrations/contact-3.svg?react";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH2, TextP } from "@/components/typography";
@@ -26,7 +27,13 @@ export function ContactSection(props: ContactSectionProps) {
                     potrivită. Răspundem de obicei într-o zi lucrătoare.
                 </TextP>
                 <div className="flex flex-wrap justify-center items-center gap-4">
-                    <Button size="xl">Contactează-ne</Button>
+                    <Button
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/home/contact" />}
+                    >
+                        Contactează-ne
+                    </Button>
                     <Button
                         size="xl"
                         variant="link"

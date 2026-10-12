@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import MessageSent1 from "@/components/illustrations/message-sent-1.svg?react";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
@@ -24,7 +25,13 @@ export function CTASection(props: CTASectionProps) {
                     repede, de obicei într-o zi lucrătoare.
                 </TextP>
                 <div className="flex flex-wrap justify-center items-center gap-4">
-                    <Button size="xl">Contactează-ne</Button>
+                    <Button
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/software/contact" />}
+                    >
+                        Contactează-ne
+                    </Button>
                     <Button
                         size="xl"
                         variant="link"

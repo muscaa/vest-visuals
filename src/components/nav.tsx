@@ -1,11 +1,8 @@
-import { useIsMobile } from "@client/shadcn/hooks/use-mobile";
-import {
-    IconChevronDown,
-    IconChevronRight,
-    IconMenu2,
-} from "@tabler/icons-react";
+import { IconChevronRight, IconMenu2, IconX } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { createContext, useContext, useState } from "react";
+import { cn } from "@shared/shadcn/utils";
+import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import {
     NavigationMenu,
@@ -22,15 +19,17 @@ import {
 } from "./ui/collapsible";
 import type { LinkOptions } from "@tanstack/react-router";
 
+const mobileEntry =
+    "flex justify-between items-center w-full h-12 px-4 rounded-2xl text-md-3 transition-all outline-none hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30";
+
 //
 // mobile
 //
 function MobileNavEntry({ text, ...props }: NavEntryProps) {
+    const { close } = useNav();
+
     return (
-        <Link
-            {...props}
-            className="flex justify-between items-center h-9 rounded-3xl px-4.5 py-2.5 text-md-3 transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50"
-        >
+        <Link {...props} onClick={close} className={mobileEntry}>
             {text}
         </Link>
     );
@@ -42,13 +41,12 @@ function MobileNavMenu(props: NavMenuProps) {
     return (
         <Collapsible open={open} onOpenChange={setOpen}>
             <CollapsibleTrigger
-                data-open={open}
-                className="group group/collapsible-trigger flex justify-between items-center w-full h-9 rounded-3xl px-4.5 py-2.5 text-md-3 transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted"
+                className={cn(mobileEntry, "group/nav-menu data-panel-open:bg-muted/60")}
             >
                 {props.text}
-                <IconChevronRight className="transition duration-300 group-data-open/collapsible-trigger:rotate-90" />
+                <IconChevronRight className="size-5 text-muted-foreground transition-transform duration-200 group-data-panel-open/nav-menu:rotate-90" />
             </CollapsibleTrigger>
-            <CollapsibleContent className="flex flex-col gap-1 mt-1">
+            <CollapsibleContent className="flex flex-col gap-1 ml-4 my-1 pl-3 border-l">
                 {props.children}
             </CollapsibleContent>
         </Collapsible>
@@ -56,33 +54,42 @@ function MobileNavMenu(props: NavMenuProps) {
 }
 
 function MobileNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
+    const { close } = useNav();
+
     return (
         <Link
             {...props}
-            className="flex justify-between items-center h-9 rounded-3xl ml-4 px-4.5 py-2.5 text-md-3 transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50"
+            onClick={close}
+            className={cn(mobileEntry, "h-11 text-md-4 text-muted-foreground hover:text-foreground")}
         >
             {text}
         </Link>
     );
 }
 
-function MobileNav(props: NavProps) {
+function MobileNav(props: NavProps & { className?: string }) {
+    const [open, setOpen] = useState(false);
+
     return (
-        <Sheet>
-            <SheetTrigger className="flex justify-center items-center size-8 mr-2">
-                <IconMenu2 />
-            </SheetTrigger>
-            <SheetContent
-                side="top"
-                showCloseButton={false}
-                showOverlay={false}
-                className="data-[side=top]:top-16 max-h-screen-no-nav overflow-y-auto"
-            >
-                <div className="flex flex-col mt-20 m-2 gap-1">
-                    {props.children}
-                </div>
-            </SheetContent>
-        </Sheet>
+        <NavContext value={{ mobile: true, close: () => setOpen(false) }}>
+            <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger
+                    render={<Button variant="ghost" size="icon-lg" className={props.className} />}
+                    aria-label={open ? "Închide meniul" : "Deschide meniul"}
+                >
+                    {open ? <IconX className="size-6" /> : <IconMenu2 className="size-6" />}
+                </SheetTrigger>
+                <SheetContent
+                    side="top"
+                    showCloseButton={false}
+                    className="data-[side=top]:top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-b-3xl"
+                >
+                    <div className="flex flex-col gap-1 px-2 py-4">
+                        {props.children}
+                    </div>
+                </SheetContent>
+            </Sheet>
+        </NavContext>
     );
 }
 
@@ -121,11 +128,13 @@ function DesktopNavMenuEntry({ text, ...props }: NavMenuEntryProps) {
     );
 }
 
-function DesktopNav(props: NavProps) {
+function DesktopNav(props: NavProps & { className?: string }) {
     return (
-        <NavigationMenu>
-            <NavigationMenuList>{props.children}</NavigationMenuList>
-        </NavigationMenu>
+        <NavContext value={{ mobile: false, close: () => {} }}>
+            <NavigationMenu className={props.className}>
+                <NavigationMenuList>{props.children}</NavigationMenuList>
+            </NavigationMenu>
+        </NavContext>
     );
 }
 
@@ -134,6 +143,8 @@ function DesktopNav(props: NavProps) {
 //
 interface NavContext {
     mobile: boolean;
+    /** closes the mobile menu, does nothing on desktop */
+    close: () => void;
 }
 
 const NavContext = createContext<NavContext | null>(null);
@@ -155,11 +166,7 @@ export type NavEntryProps = LinkOptions & {
 export function NavEntry(props: NavEntryProps) {
     const { mobile } = useNav();
 
-    return (
-        (mobile && <MobileNavEntry {...props} />) || (
-            <DesktopNavEntry {...props} />
-        )
-    );
+    return mobile ? <MobileNavEntry {...props} /> : <DesktopNavEntry {...props} />;
 }
 
 export type NavMenuProps = {
@@ -170,11 +177,7 @@ export type NavMenuProps = {
 export function NavMenu(props: NavMenuProps) {
     const { mobile } = useNav();
 
-    return (
-        (mobile && <MobileNavMenu {...props} />) || (
-            <DesktopNavMenu {...props} />
-        )
-    );
+    return mobile ? <MobileNavMenu {...props} /> : <DesktopNavMenu {...props} />;
 }
 
 export type NavMenuEntryProps = LinkOptions & {
@@ -184,10 +187,25 @@ export type NavMenuEntryProps = LinkOptions & {
 export function NavMenuEntry(props: NavMenuEntryProps) {
     const { mobile } = useNav();
 
-    return (
-        (mobile && <MobileNavMenuEntry {...props} />) || (
-            <DesktopNavMenuEntry {...props} />
-        )
+    return mobile ? <MobileNavMenuEntry {...props} /> : <DesktopNavMenuEntry {...props} />;
+}
+
+export type NavActionsProps = {
+    children?: React.ReactNode;
+};
+
+/** Small controls like the theme and language toggles: inline on desktop, their own row at the bottom of the mobile menu. */
+export function NavActions(props: NavActionsProps) {
+    const { mobile } = useNav();
+
+    return mobile ? (
+        <div className="flex items-center gap-2 mt-2 pt-4 px-2 border-t">
+            {props.children}
+        </div>
+    ) : (
+        <NavigationMenuItem className="flex items-center gap-1 ml-2">
+            {props.children}
+        </NavigationMenuItem>
     );
 }
 
@@ -195,22 +213,12 @@ export type NavProps = {
     children?: React.ReactNode;
 };
 
+/** Renders both variants and lets CSS pick one, so the right one is there from the first paint. */
 export function Nav(props: NavProps) {
-    const { isMobileState } = useIsMobile();
-
-    if (isMobileState === undefined) {
-        return null;
-    }
-
     return (
-        <NavContext.Provider
-            value={{
-                mobile: isMobileState,
-            }}
-        >
-            {(isMobileState && <MobileNav {...props} />) || (
-                <DesktopNav {...props} />
-            )}
-        </NavContext.Provider>
+        <>
+            <DesktopNav className="hidden md:flex">{props.children}</DesktopNav>
+            <MobileNav className="md:hidden">{props.children}</MobileNav>
+        </>
     );
 }

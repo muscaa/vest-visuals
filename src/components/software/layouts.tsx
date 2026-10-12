@@ -1,6 +1,6 @@
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
-import { Nav, NavEntry, NavMenu, NavMenuEntry } from "../nav";
+import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { Footer } from "../footer";
@@ -25,9 +25,11 @@ export function SoftwareNavbarLayout() {
                         }
                     </NavMenu>
                     <NavEntry text="Portofoliu" to="/software" hash="portofoliu" />
-                    <NavEntry text="Contact" />
-                    <ThemeToggle />
-                    <LanguageToggle />
+                    <NavEntry text="Contact" to="/software/contact" />
+                    <NavActions>
+                        <ThemeToggle />
+                        <LanguageToggle />
+                    </NavActions>
                 </Nav>
             }
             footer={
@@ -46,7 +48,7 @@ export function SoftwareNavbarLayout() {
                             title: "Companie",
                             links: [
                                 { name: "Portofoliu", to: "/software", hash: "portofoliu" },
-                                { name: "Contact" },
+                                { name: "Contact", to: "/software/contact" },
                             ],
                         },
                         {

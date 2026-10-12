@@ -23,7 +23,13 @@ export function HeroSection(props: HeroSectionProps) {
                         și rămânem alături și după lansare.
                     </TextP>
                     <div className="flex flex-wrap gap-4">
-                        <Button size="xl">Spune-ne ce ai nevoie</Button>
+                        <Button
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/software/contact" />}
+                    >
+                        Spune-ne ce ai nevoie
+                    </Button>
                         <Button
                             size="xl"
                             variant="outline"
