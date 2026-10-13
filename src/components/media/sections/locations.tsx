@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import type { LinkOptions } from "@tanstack/react-router";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
+import { mediaLocations } from "@/components/media/location";
 import { TextH1, TextH2, TextP } from "@/components/typography";
 
 type LocationsEntryProps = LinkOptions & {
@@ -88,45 +89,20 @@ export function LocationsSection(props: LocationsSectionProps) {
                     </TextP>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {
+                        mediaLocations.map(({ name, county, image, ...link }, index) => (
+                            <LocationsEntry
+                                key={name}
+                                {...link}
+                                name={name}
+                                county={county}
+                                image={image}
+                                className={index === 0 ? "sm:col-span-2 lg:col-span-3" : undefined}
+                            />
+                        ))
+                    }
                     <LocationsEntry
-                        to="/media"
-                        name="Timișoara"
-                        county="Timiș"
-                        image="https://images.unsplash.com/photo-1687696162729-a75f9ddc004d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        className="sm:col-span-2 lg:col-span-3"
-                    />
-                    <LocationsEntry
-                        to="/media"
-                        name="Arad"
-                        county="Arad"
-                        image="https://images.unsplash.com/photo-1632207857925-a4d52c54d683?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <LocationsEntry
-                        to="/media"
-                        name="Oradea"
-                        county="Bihor"
-                        image="https://images.unsplash.com/photo-1654172054677-9a8cd7a8c04a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <LocationsEntry
-                        to="/media"
-                        name="Drobeta-Turnu Severin"
-                        county="Mehedinți"
-                        image="https://images.unsplash.com/photo-1592335234454-1454bd449a2c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <LocationsEntry
-                        to="/media"
-                        name="Cluj-Napoca"
-                        county="Cluj"
-                        image="https://images.unsplash.com/photo-1678736680989-195226823176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <LocationsEntry
-                        to="/media"
-                        name="București"
-                        county="București"
-                        image="https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <LocationsEntry
-                        to="/media"
+                        to="/media/contact"
                         name="În altă parte?"
                         description="Mergem în toată țara pentru filmarea potrivită"
                         accent="Spune-ne unde"

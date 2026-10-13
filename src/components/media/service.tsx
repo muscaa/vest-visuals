@@ -7,6 +7,7 @@ import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
+import { MediaBreadcrumbs } from "@/components/media/breadcrumbs";
 import { Img } from "@/components/img";
 import { Main } from "@/components/main";
 import {
@@ -24,14 +25,6 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -50,17 +43,19 @@ import { Separator } from "@/components/ui/separator";
 //
 export type MediaService = LinkOptions & {
     name: string;
+    /** cover photo for cards linking to the service */
+    image: string;
 };
 
 /** Every media service page, used for related links, the home page and anywhere else they're listed. */
 export const mediaServices: MediaService[] = [
-    { name: "Nunți", to: "/media/services/wedding" },
-    { name: "Botezuri", to: "/media/services/christening" },
-    { name: "Majorate", to: "/media/services/18th-birthday" },
-    { name: "Ședințe foto", to: "/media/services/photo-session" },
-    { name: "Imobiliare", to: "/media/services/real-estate" },
-    { name: "Automotive", to: "/media/services/automotive" },
-    { name: "Promovare afaceri", to: "/media/services/business-promotion" },
+    { name: "Nunți", to: "/media/services/wedding", image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium" },
+    { name: "Botezuri", to: "/media/services/christening", image: "https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/medium" },
+    { name: "Majorate", to: "/media/services/18th-birthday", image: "https://cdn0.vestvisuals.ro/portfolio/qyko3rjjfg14yjhvs2l45wck/medium" },
+    { name: "Ședințe foto", to: "/media/services/photo-session", image: "https://s3.vestvisuals.ro/portfolio/tp2e4xpmgdo71mx3q8ixtt0f/medium" },
+    { name: "Imobiliare", to: "/media/services/real-estate", image: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium" },
+    { name: "Automotive", to: "/media/services/automotive", image: "https://s3.vestvisuals.ro/portfolio/ok1f6eurgum0dnwollokpqzv/medium" },
+    { name: "Promovare afaceri", to: "/media/services/business-promotion", image: "https://s3.vestvisuals.ro/portfolio/xrja8xss5xpgf6ytj14rvcr0/medium" },
 ];
 
 //
@@ -117,29 +112,9 @@ function HeroOverlay(
     }, [api]);
 
     return (
-        <div className="flex flex-col items-center px-6 py-10 min-h-screen-no-nav pointer-events-none theme-dark bg-linear-to-b from-black/30 via-black/10 to-black/60">
+        <div className="flex flex-col items-center px-6 py-10 min-h-[80dvh] pointer-events-none theme-dark bg-linear-to-b from-black/30 via-black/10 to-black/60">
             <div className="flex flex-col justify-between gap-8 max-w-7xl w-full grow">
-                <Breadcrumb className="pointer-events-auto">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/media" />}>
-                                Media
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink
-                                render={<Link to="/media" hash="portfolio" />}
-                            >
-                                Servicii
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>{props.name}</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
+                <div />
                 <TextH1 size="lg-1">{props.title}</TextH1>
                 <div className="flex flex-col gap-8">
                     <TextP size="md-3" className="max-w-[60ch] text-pretty">
@@ -368,7 +343,7 @@ function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
                             Alte servicii
                         </TextH3>
                         <ul className="flex flex-col gap-3">
-                            {related.map(({ name, ...link }) => (
+                            {related.map(({ name, image, ...link }) => (
                                 <li key={name}>
                                     <Link
                                         {...link}
@@ -394,7 +369,7 @@ function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
 //
 // faq
 //
-function FAQSection(props: Pick<ServicePageProps, "faq">) {
+export function FAQSection(props: Pick<ServicePageProps, "faq">) {
     return (
         <section
             id="intrebari"
@@ -440,6 +415,7 @@ function FAQSection(props: Pick<ServicePageProps, "faq">) {
 export function ServicePage(props: ServicePageProps) {
     return (
         <Main>
+            <MediaBreadcrumbs section={{ name: "Servicii", to: "/media", hash: "portfolio" }} page={props.name} />
             <HeroSection {...props} />
             <PackagesSection packages={props.packages} />
             <AboutSection name={props.name} about={props.about} />

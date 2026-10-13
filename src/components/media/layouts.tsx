@@ -4,6 +4,7 @@ import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { Footer } from "../footer";
+import { mediaLocations } from "./location";
 
 export function MediaNavbarLayout() {
     return (
@@ -53,6 +54,10 @@ export function MediaNavbarLayout() {
                                 { name: "Automotive", to: "/media/services/automotive" },
                                 { name: "Promovare afaceri", to: "/media/services/business-promotion" },
                             ],
+                        },
+                        {
+                            title: "Locații",
+                            links: mediaLocations.map(({ name, image, county, ...link }) => ({ name, ...link })),
                         },
                         {
                             title: "Studio",

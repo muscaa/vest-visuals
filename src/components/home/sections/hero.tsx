@@ -129,7 +129,7 @@ export const divisions: Division[] = [
         keywords: ["foto", "video"],
         link: { to: "/media" },
         audience: ["evenimente", "afaceri"],
-        services: mediaServices,
+        services: mediaServices.map(({ image, ...service }) => service),
         business: {
             title: "Foto și video pentru brand",
             description:
