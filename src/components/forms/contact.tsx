@@ -2,6 +2,7 @@ import { IconMail, IconPhone } from "@tabler/icons-react";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { SplitCard } from "../cards/split";
 import Contact3 from "../illustrations/contact-3.svg?react";
+import { LegalLink } from "../legal";
 import { RecaptchaNotice } from "../recaptcha-notice";
 import { TextH1, TextP } from "../typography";
 import { Button } from "../ui/button";
@@ -18,6 +19,7 @@ import {
     InputGroupText,
     InputGroupTextarea,
 } from "../ui/input-group";
+import type { LegalDivision } from "../legal";
 
 const email = "contact@vestvisuals.ro";
 const phone = "+40723971618";
@@ -28,15 +30,20 @@ const direct = [
     { name: "WhatsApp", href: `https://wa.me/${phone.slice(1)}`, icon: SiWhatsapp },
 ];
 
-export function ContactForm() {
+export interface ContactFormProps {
+    /** which division's legal pages to link */
+    division?: LegalDivision;
+}
+
+export function ContactForm(props: ContactFormProps) {
     return (
         <SplitCard
             aside={<Contact3 aria-hidden className="w-full max-w-xs h-auto" />}
             footer={
                 <>
                     Trimițând un mesaj, ești de acord cu{" "}
-                    <a href="#">Termenii și condițiile</a> și{" "}
-                    <a href="#">Politica de confidențialitate</a>.
+                    <LegalLink division={props.division} document="terms">Termenii și condițiile</LegalLink> și{" "}
+                    <LegalLink division={props.division} document="privacy">Politica de confidențialitate</LegalLink>.
                 </>
             }
         >

@@ -5,6 +5,7 @@ import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { AccountButton } from "../account-button";
 import { Footer } from "../footer";
+import { legalPages } from "../legal";
 import { serviceGroups } from "./sections/services";
 
 export function SoftwareNavbarLayout() {
@@ -53,11 +54,7 @@ export function SoftwareNavbarLayout() {
                         },
                         {
                             title: "Legal",
-                            links: [
-                                { name: "Termeni și condiții" },
-                                { name: "Confidențialitate" },
-                                { name: "Cookies" },
-                            ],
+                            links: legalPages("software"),
                         },
                     ]}
                 />

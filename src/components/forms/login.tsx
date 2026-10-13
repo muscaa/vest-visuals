@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { SplitCard } from "../cards/split";
 import EnterPassword5 from "../illustrations/enter-password-5.svg?react";
+import { LegalLink } from "../legal";
 import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import { TextH1, TextP } from "../typography";
@@ -21,8 +22,8 @@ export function LoginForm() {
             footer={
                 <>
                     Continuând, ești de acord cu{" "}
-                    <a href="#">Termenii și condițiile</a> și{" "}
-                    <a href="#">Politica de confidențialitate</a>.
+                    <LegalLink document="terms">Termenii și condițiile</LegalLink> și{" "}
+                    <LegalLink document="privacy">Politica de confidențialitate</LegalLink>.
                 </>
             }
         >

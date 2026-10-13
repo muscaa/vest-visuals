@@ -5,6 +5,7 @@ import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
 import { AccountButton } from "../account-button";
 import { Footer } from "../footer";
+import { legalPages } from "../legal";
 import { mediaLocations } from "./location";
 
 export function MediaNavbarLayout() {
@@ -71,11 +72,7 @@ export function MediaNavbarLayout() {
                         },
                         {
                             title: "Legal",
-                            links: [
-                                { name: "Termeni și condiții" },
-                                { name: "Confidențialitate" },
-                                { name: "Cookies" },
-                            ],
+                            links: legalPages("media"),
                         },
                     ]}
                 />

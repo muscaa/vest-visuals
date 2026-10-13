@@ -9,7 +9,7 @@ export const Route = createFileRoute("/software/contact/")({
 function RouteComponent() {
     return (
         <Main className="justify-center items-center px-6 py-16">
-            <ContactForm />
+            <ContactForm division="software" />
         </Main>
     );
 }
