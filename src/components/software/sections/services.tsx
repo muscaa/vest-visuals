@@ -9,7 +9,7 @@ import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextH2, TextH3, TextP } from "@/components/typography";
 
 export interface Service {
-    /** url of the service page: /software/servicii/<slug> */
+    /** url of the service page: /software/services/<slug> */
     slug: string;
     title: string;
     description: string;
@@ -102,7 +102,7 @@ export const serviceGroups: ServiceGroup[] = [
 function ServiceCard({ service }: { service: Service }) {
     return (
         <Link
-            to="/software/servicii/$service"
+            to="/software/services/$service"
             params={{ service: service.slug }}
             className="group/service"
         >

@@ -12,17 +12,17 @@ export function MediaNavbarLayout() {
             navigation={(
                 <Nav>
                     <NavMenu text="Events">
-                        <NavMenuEntry text="18th Birthday" />
-                        <NavMenuEntry text="Wedding" />
-                        <NavMenuEntry text="Christening" />
+                        <NavMenuEntry text="18th Birthday" to="/media/services/18th-birthday" />
+                        <NavMenuEntry text="Wedding" to="/media/services/wedding" />
+                        <NavMenuEntry text="Christening" to="/media/services/christening" />
                     </NavMenu>
                     <NavMenu text="Portraits">
-                        <NavMenuEntry text="Photo session" />
+                        <NavMenuEntry text="Photo session" to="/media/services/photo-session" />
                     </NavMenu>
                     <NavMenu text="Commercial">
-                        <NavMenuEntry text="Real Estate" />
-                        <NavMenuEntry text="Automotive" />
-                        <NavMenuEntry text="Business Promotion" />
+                        <NavMenuEntry text="Real Estate" to="/media/services/real-estate" />
+                        <NavMenuEntry text="Automotive" to="/media/services/automotive" />
+                        <NavMenuEntry text="Business Promotion" to="/media/services/business-promotion" />
                     </NavMenu>
                     <NavEntry text="Contact" to="/media/contact" />
                     <NavActions>
@@ -37,21 +37,21 @@ export function MediaNavbarLayout() {
                         {
                             title: "Evenimente",
                             links: [
-                                { name: "Nunți" },
-                                { name: "Botezuri" },
-                                { name: "Majorate" },
+                                { name: "Nunți", to: "/media/services/wedding" },
+                                { name: "Botezuri", to: "/media/services/christening" },
+                                { name: "Majorate", to: "/media/services/18th-birthday" },
                             ],
                         },
                         {
                             title: "Portrete",
-                            links: [{ name: "Ședințe foto" }],
+                            links: [{ name: "Ședințe foto", to: "/media/services/photo-session" }],
                         },
                         {
                             title: "Comercial",
                             links: [
-                                { name: "Imobiliare" },
-                                { name: "Automotive" },
-                                { name: "Promovare afaceri" },
+                                { name: "Imobiliare", to: "/media/services/real-estate" },
+                                { name: "Automotive", to: "/media/services/automotive" },
+                                { name: "Promovare afaceri", to: "/media/services/business-promotion" },
                             ],
                         },
                         {

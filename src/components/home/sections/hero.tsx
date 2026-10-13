@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
 import { cn } from "@shared/shadcn/utils";
 import { serviceGroups } from "../../software/sections/services";
+import { mediaServices } from "../../media/service";
 import type { LinkOptions } from "@tanstack/react-router";
 import Wireframe from "@/components/illustrations/wireframe.svg?react";
 import { Img } from "@/components/img";
@@ -128,15 +129,7 @@ export const divisions: Division[] = [
         keywords: ["foto", "video"],
         link: { to: "/media" },
         audience: ["evenimente", "afaceri"],
-        services: [
-            "Nunți",
-            "Botezuri",
-            "Majorate",
-            "Ședințe foto",
-            "Imobiliare",
-            "Automotive",
-            "Promovare afaceri",
-        ].map((name) => ({ name, to: "/media" })),
+        services: mediaServices,
         business: {
             title: "Foto și video pentru brand",
             description:
