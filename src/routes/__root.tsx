@@ -12,8 +12,7 @@ import * as React from "react";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { envPublic } from "@server/env";
 import type { QueryClient } from "@tanstack/react-query";
-import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
-import { NotFound } from "@/components/NotFound";
+import { CatchBoundary, NotFound } from "@/components/errors";
 import mainCss from "@/styles/main.css?url";
 import { seo } from "@/utils/seo";
 import { ThemeProvider } from "@/components/theme/provider";
@@ -78,8 +77,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             },
         ],
     }),
-    errorComponent: DefaultCatchBoundary,
-    notFoundComponent: () => <NotFound />,
+    // nothing above the root renders a header, so these bring their own
+    errorComponent: (props) => <CatchBoundary {...props} standalone />,
+    notFoundComponent: () => <NotFound standalone />,
     shellComponent: RootDocument,
 });
 
