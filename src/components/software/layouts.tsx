@@ -3,6 +3,7 @@ import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
+import { AccountButton } from "../account-button";
 import { Footer } from "../footer";
 import { serviceGroups } from "./sections/services";
 
@@ -27,8 +28,9 @@ export function SoftwareNavbarLayout() {
                     <NavEntry text="Portofoliu" to="/software" hash="portofoliu" />
                     <NavEntry text="Contact" to="/software/contact" />
                     <NavActions>
-                        <ThemeToggle />
                         <LanguageToggle />
+                        <ThemeToggle />
+                        <AccountButton />
                     </NavActions>
                 </Nav>
             }

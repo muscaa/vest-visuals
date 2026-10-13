@@ -3,6 +3,7 @@ import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
+import { AccountButton } from "../account-button";
 import { Footer } from "../footer";
 import { mediaLocations } from "./location";
 
@@ -27,8 +28,9 @@ export function MediaNavbarLayout() {
                     </NavMenu>
                     <NavEntry text="Contact" to="/media/contact" />
                     <NavActions>
-                        <ThemeToggle />
                         <LanguageToggle />
+                        <ThemeToggle />
+                        <AccountButton />
                     </NavActions>
                 </Nav>
             )}

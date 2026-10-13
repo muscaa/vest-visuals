@@ -3,6 +3,7 @@ import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavActions, NavEntry } from "../nav";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
+import { AccountButton } from "../account-button";
 import { Footer } from "../footer";
 import { divisions } from "./sections/hero";
 
@@ -16,8 +17,9 @@ export function HomeNavbarLayout() {
                     ))}
                     <NavEntry text="Contact" to="/home/contact" />
                     <NavActions>
-                        <ThemeToggle />
                         <LanguageToggle />
+                        <ThemeToggle />
+                        <AccountButton />
                     </NavActions>
                 </Nav>
             }
