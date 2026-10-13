@@ -24,8 +24,8 @@ export function ScreenLayout(props: ScreenLayoutProps) {
                         <LogoLarge className="hidden md:block w-auto h-12" />
                     </Link>
                     <div className="flex items-center gap-1">
-                        <ThemeToggle />
                         <LanguageToggle />
+                        <ThemeToggle />
                     </div>
                 </header>
                 {props.children}
