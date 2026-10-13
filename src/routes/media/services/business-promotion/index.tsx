@@ -73,7 +73,7 @@ const faq: ServiceQuestion[] = [
     },
 ];
 
-export const Route = createFileRoute("/media/_home/services/business-promotion/")({
+export const Route = createFileRoute("/media/services/business-promotion/")({
     component: RouteComponent,
 });
 

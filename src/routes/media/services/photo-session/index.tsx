@@ -78,7 +78,7 @@ const faq: ServiceQuestion[] = [
     },
 ];
 
-export const Route = createFileRoute("/media/_home/services/photo-session/")({
+export const Route = createFileRoute("/media/services/photo-session/")({
     component: RouteComponent,
 });
 

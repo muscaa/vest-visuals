@@ -99,7 +99,7 @@ const faq: ServiceQuestion[] = [
     },
 ];
 
-export const Route = createFileRoute("/media/_home/services/wedding/")({
+export const Route = createFileRoute("/media/services/wedding/")({
     component: RouteComponent,
 });
 

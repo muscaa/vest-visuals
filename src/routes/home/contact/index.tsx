@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Main } from "@/components/main";
 import { ContactForm } from "@/components/forms/contact";
 
-export const Route = createFileRoute("/media/_home/contact/")({
+export const Route = createFileRoute("/home/contact/")({
     component: RouteComponent,
 });
 
