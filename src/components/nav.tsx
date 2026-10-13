@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { createContext, useContext, useState } from "react";
 import { cn } from "@shared/shadcn/utils";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetOverlay, SheetTrigger } from "./ui/sheet";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -81,8 +81,9 @@ function MobileNav(props: NavProps & { className?: string }) {
                 </SheetTrigger>
                 <SheetContent
                     side="top"
+                    overlay={<SheetOverlay className="z-49" />}
                     showCloseButton={false}
-                    className="data-[side=top]:top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-b-3xl"
+                    className="data-[side=top]:top-16 z-49 max-h-screen-no-nav overflow-y-auto rounded-b-3xl"
                 >
                     <div className="flex flex-col gap-1 px-2 py-4">
                         {props.children}

@@ -12,7 +12,7 @@ export function NavbarRoot(props: NavbarRootProps) {
     return (
         <nav
             className={cn(
-                "relative z-60 flex flex-col justify-center items-center w-full h-16 px-6 py-2 shrink-0 bg-card shadow-sm transition-all duration-200 ease-in-out",
+                "relative z-50 flex flex-col justify-center items-center w-full h-16 px-6 py-2 shrink-0 bg-card shadow-sm transition-all duration-200 ease-in-out",
                 props.className,
             )}
         >
