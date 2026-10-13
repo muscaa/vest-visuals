@@ -112,8 +112,7 @@ export const divisions: Division[] = [
         services: serviceGroups.flatMap((group) =>
             group.services.map((service) => ({
                 name: service.title,
-                to: "/software",
-                hash: group.id,
+                ...service.link,
             })),
         ),
         business: {

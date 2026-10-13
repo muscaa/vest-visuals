@@ -11,7 +11,7 @@ import type { ServiceQuestion } from "./service";
 import type { LinkOptions } from "@tanstack/react-router";
 import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
-import { MediaBreadcrumbs } from "@/components/media/breadcrumbs";
+import { PageBreadcrumbs } from "@/components/breadcrumbs";
 import { Img } from "@/components/img";
 import { Main } from "@/components/main";
 import { TextH1, TextH2, TextH3, TextP, TextSpan } from "@/components/typography";
@@ -421,7 +421,7 @@ export function LocationPage(props: LocationPageProps) {
 
     return (
         <Main>
-            <MediaBreadcrumbs section={{ name: "Locații", to: "/media", hash: "locations" }} page={props.name} />
+            <PageBreadcrumbs items={[{ name: "Media", to: "/media" }, { name: "Locații", to: "/media", hash: "locations" }]} page={props.name} />
             <HeroSection {...props} location={location} />
             <ServicesSection inCity={props.inCity} />
             <SpotsSection inCity={props.inCity} spots={props.spots} />

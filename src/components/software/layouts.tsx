@@ -12,19 +12,18 @@ export function SoftwareNavbarLayout() {
         <NavbarLayout
             home={{ to: "/software" }}
             navigation={
-                <Nav>
-                    <NavMenu text="Servicii">
-                        {
-                            serviceGroups.map((group) => (
-                                <NavMenuEntry
-                                    key={group.id}
-                                    text={group.title}
-                                    to="/software"
-                                    hash={group.id}
-                                />
-                            ))
-                        }
-                    </NavMenu>
+                <Nav breakpoint="lg">
+                    {
+                        serviceGroups.map((group) => (
+                            <NavMenu key={group.id} text={group.navTitle}>
+                                {
+                                    group.services.map((service) => (
+                                        <NavMenuEntry key={service.title} text={service.title} {...service.link} />
+                                    ))
+                                }
+                            </NavMenu>
+                        ))
+                    }
                     <NavEntry text="Portofoliu" to="/software" hash="portofoliu" />
                     <NavEntry text="Contact" to="/software/contact" />
                     <NavActions>
@@ -38,14 +37,13 @@ export function SoftwareNavbarLayout() {
                 <Footer
                     description="Software la comandă, cloud, date și automatizări, construite pentru felul în care lucrează afacerea ta."
                     sections={[
-                        {
-                            title: "Servicii",
-                            links: serviceGroups.map((group) => ({
-                                name: group.title,
-                                to: "/software",
-                                hash: group.id,
+                        ...serviceGroups.map((group) => ({
+                            title: group.title,
+                            links: group.services.map((service) => ({
+                                name: service.title,
+                                ...service.link,
                             })),
-                        },
+                        })),
                         {
                             title: "Companie",
                             links: [

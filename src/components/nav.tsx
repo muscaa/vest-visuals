@@ -212,14 +212,22 @@ export function NavActions(props: NavActionsProps) {
 
 export type NavProps = {
     children?: React.ReactNode;
+    /** screen size from which the desktop menu is shown; use lg when there are many entries */
+    breakpoint?: "md" | "lg";
 };
 
 /** Renders both variants and lets CSS pick one, so the right one is there from the first paint. */
-export function Nav(props: NavProps) {
+// full class names, so tailwind can find them
+const breakpoints = {
+    md: { desktop: "hidden md:flex", mobile: "md:hidden" },
+    lg: { desktop: "hidden lg:flex", mobile: "lg:hidden" },
+};
+
+export function Nav({ breakpoint = "md", ...props }: NavProps) {
     return (
         <>
-            <DesktopNav className="hidden md:flex">{props.children}</DesktopNav>
-            <MobileNav className="md:hidden">{props.children}</MobileNav>
+            <DesktopNav className={breakpoints[breakpoint].desktop}>{props.children}</DesktopNav>
+            <MobileNav className={breakpoints[breakpoint].mobile}>{props.children}</MobileNav>
         </>
     );
 }

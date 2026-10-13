@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
+import type { LinkOptions } from "@tanstack/react-router";
 import Database4 from "@/components/illustrations/database-4.svg?react";
 import Maintenance1 from "@/components/illustrations/maintenance-1.svg?react";
 import Wireframe from "@/components/illustrations/wireframe.svg?react";
@@ -9,8 +10,8 @@ import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextH2, TextH3, TextP } from "@/components/typography";
 
 export interface Service {
-    /** url of the service page: /software/services/<slug> */
-    slug: string;
+    /** the service's own page */
+    link: LinkOptions;
     title: string;
     description: string;
 }
@@ -19,6 +20,8 @@ export interface ServiceGroup {
     /** section anchor on the home page */
     id: string;
     title: string;
+    /** shorter title for the navbar */
+    navTitle: string;
     illustration: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     services: Service[];
 }
@@ -27,20 +30,21 @@ export const serviceGroups: ServiceGroup[] = [
     {
         id: "dezvoltare-software",
         title: "Dezvoltare software",
+        navTitle: "Dezvoltare",
         illustration: Wireframe,
         services: [
             {
-                slug: "aplicatii-web",
+                link: { to: "/software/services/web-apps" },
                 title: "Aplicații web",
                 description: "De la landing page-uri și magazine online la platforme web complexe. Design curat, responsive, și SEO făcut corect din prima zi.",
             },
             {
-                slug: "aplicatii-mobile",
+                link: { to: "/software/services/mobile-apps" },
                 title: "Aplicații mobile",
                 description: "Aplicații pentru iOS și Android pe care oamenii chiar le folosesc cu plăcere. Intuitive, rapide și finisate până la detaliu.",
             },
             {
-                slug: "software-personalizat",
+                link: { to: "/software/services/custom-software" },
                 title: "Software personalizat",
                 description: "Aplicații desktop, unelte interne și integrări între sistemele pe care le folosești deja, construite exact pe procesele tale.",
             },
@@ -49,20 +53,21 @@ export const serviceGroups: ServiceGroup[] = [
     {
         id: "cloud-date",
         title: "Cloud & date",
+        navTitle: "Cloud & date",
         illustration: Database4,
         services: [
             {
-                slug: "cloud-devops",
+                link: { to: "/software/services/cloud-devops" },
                 title: "Cloud & DevOps",
                 description: "Migrăm, scalăm sau optimizăm infrastructura ta. Deployment-uri fără bătăi de cap și sisteme care rămân fiabile pe măsură ce crești.",
             },
             {
-                slug: "data-engineering",
+                link: { to: "/software/services/data-engineering" },
                 title: "Data Engineering",
                 description: "Colectare din orice sursă, ETL, baze de date și data warehousing. Construim și administrăm tot pipeline-ul, oricât de mari devin datele.",
             },
             {
-                slug: "business-intelligence",
+                link: { to: "/software/services/business-intelligence" },
                 title: "Business Intelligence",
                 description: "Dashboard-uri și rapoarte care răspund la întrebări reale despre afacerea ta, nu doar cifre puse pe un grafic.",
             },
@@ -71,10 +76,11 @@ export const serviceGroups: ServiceGroup[] = [
     {
         id: "automatizari",
         title: "Automatizări",
+        navTitle: "Automatizări",
         illustration: Workflow2,
         services: [
             {
-                slug: "automatizarea-proceselor",
+                link: { to: "/software/services/process-automation" },
                 title: "Automatizarea proceselor",
                 description: "Îți analizăm fluxurile de lucru și automatizăm părțile repetitive: emailuri, rapoarte, procese întregi și pipeline-uri care rulează singure.",
             },
@@ -83,15 +89,16 @@ export const serviceGroups: ServiceGroup[] = [
     {
         id: "consultanta-mentenanta",
         title: "Consultanță & mentenanță",
+        navTitle: "Consultanță",
         illustration: Maintenance1,
         services: [
             {
-                slug: "consultanta-tehnica",
+                link: { to: "/software/services/technical-consulting" },
                 title: "Consultanță tehnică",
                 description: "Când ai nevoie de un plan mai mult decât de mâini în plus. Te ajutăm cu arhitectura, codebase-ul existent și deciziile despre ce merită construit.",
             },
             {
-                slug: "suport-mentenanta",
+                link: { to: "/software/services/support-maintenance" },
                 title: "Suport & mentenanță",
                 description: "Ținem sistemele tale rapide, sigure și la zi, ca ce construim împreună să meargă bine ani buni după lansare.",
             },
@@ -101,11 +108,7 @@ export const serviceGroups: ServiceGroup[] = [
 
 function ServiceCard({ service }: { service: Service }) {
     return (
-        <Link
-            to="/software/services/$service"
-            params={{ service: service.slug }}
-            className="group/service"
-        >
+        <Link {...service.link} className="group/service">
             <HoverCard className="gap-1 px-6">
                 <div className="flex justify-between items-center gap-4">
                     <TextH3 size="md-4" className="font-medium">
@@ -134,7 +137,7 @@ function ServiceGroupEntry({ group }: { group: ServiceGroup }) {
             <div className="flex flex-col gap-3">
                 {
                     group.services.map((service) => (
-                        <ServiceCard key={service.slug} service={service} />
+                        <ServiceCard key={service.title} service={service} />
                     ))
                 }
             </div>
@@ -168,4 +171,13 @@ export function ServicesSection(props: ServicesSectionProps) {
             </div>
         </section>
     );
+}
+
+/** Finds a service and the group it belongs to, by its title. */
+export function findService(title: string) {
+    for (const group of serviceGroups) {
+        const service = group.services.find((value) => value.title === title);
+        if (service) return { group, service };
+    }
+    throw new Error(`Unknown software service: ${title}`);
 }

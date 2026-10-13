@@ -7,7 +7,7 @@ import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
-import { MediaBreadcrumbs } from "@/components/media/breadcrumbs";
+import { PageBreadcrumbs } from "@/components/breadcrumbs";
 import { Img } from "@/components/img";
 import { Main } from "@/components/main";
 import {
@@ -415,7 +415,7 @@ export function FAQSection(props: Pick<ServicePageProps, "faq">) {
 export function ServicePage(props: ServicePageProps) {
     return (
         <Main>
-            <MediaBreadcrumbs section={{ name: "Servicii", to: "/media", hash: "portfolio" }} page={props.name} />
+            <PageBreadcrumbs items={[{ name: "Media", to: "/media" }, { name: "Servicii", to: "/media", hash: "portfolio" }]} page={props.name} />
             <HeroSection {...props} />
             <PackagesSection packages={props.packages} />
             <AboutSection name={props.name} about={props.about} />
