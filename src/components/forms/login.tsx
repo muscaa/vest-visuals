@@ -6,6 +6,7 @@ import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import { TextH1, TextP } from "../typography";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import {
     Field,
     FieldDescription,
@@ -53,12 +54,12 @@ export function LoginForm() {
                     <Field>
                         <div className="flex items-center">
                             <FieldLabel htmlFor="password">Parolă</FieldLabel>
-                            <a
-                                href="#"
+                            <Link
+                                to="/account/forgot-password"
                                 className="ml-auto text-sm text-muted-foreground underline-offset-4 hover:underline"
                             >
                                 Ai uitat parola?
-                            </a>
+                            </Link>
                         </div>
                         <Input
                             id="password"
@@ -67,6 +68,12 @@ export function LoginForm() {
                             autoComplete="current-password"
                             required
                         />
+                    </Field>
+                    <Field orientation="horizontal">
+                        <Checkbox id="remember-me" name="rememberMe" defaultChecked />
+                        <FieldLabel htmlFor="remember-me" className="font-normal">
+                            Ține-mă minte
+                        </FieldLabel>
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
