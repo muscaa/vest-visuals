@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { SplitCard } from "../cards/split";
 import ResetPassword2 from "../illustrations/reset-password-2.svg?react";
@@ -20,13 +21,13 @@ export function ResetPasswordForm() {
             <form>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">Alege o parolă nouă</TextH1>
+                        <TextH1 size="md-2">{m.reset_title()}</TextH1>
                         <TextP variant="muted" className="text-balance">
-                            După ce o schimbi, te poți autentifica cu noua parolă.
+                            {m.reset_description()}
                         </TextP>
                     </div>
                     <Field>
-                        <FieldLabel htmlFor="password">Parolă nouă</FieldLabel>
+                        <FieldLabel htmlFor="password">{m.reset_password()}</FieldLabel>
                         <Input
                             id="password"
                             name="password"
@@ -35,10 +36,10 @@ export function ResetPasswordForm() {
                             minLength={8}
                             required
                         />
-                        <FieldDescription>Cel puțin 8 caractere.</FieldDescription>
+                        <FieldDescription>{m.common_password_hint()}</FieldDescription>
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="confirm-password">Confirmă parola</FieldLabel>
+                        <FieldLabel htmlFor="confirm-password">{m.reset_confirm()}</FieldLabel>
                         <Input
                             id="confirm-password"
                             name="confirmPassword"
@@ -50,11 +51,11 @@ export function ResetPasswordForm() {
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
-                            Schimbă parola
+                            {m.reset_submit()}
                         </Button>
                     </Field>
                     <FieldDescription className="text-center">
-                        <Link to="/account/login">Înapoi la autentificare</Link>
+                        <Link to="/account/login">{m.common_back_to_login()}</Link>
                     </FieldDescription>
                 </FieldGroup>
             </form>

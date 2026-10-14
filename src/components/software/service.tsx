@@ -1,13 +1,16 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
 import { CTASection } from "./sections/cta";
 import { findService, serviceGroups } from "./sections/services";
+import type { SoftwareServiceId } from "./sections/services";
 import type { Icon } from "@tabler/icons-react";
+import type { Localized } from "@/i18n";
 import { PageBreadcrumbs } from "@/components/breadcrumbs";
 import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
 import { Main } from "@/components/main";
-import { TextH1, TextH2, TextH3, TextLink, TextP, TextSpan } from "@/components/typography";
+import { TextH1, TextH2, TextH3, TextP, TextSpan } from "@/components/typography";
 import {
     Accordion,
     AccordionContent,
@@ -16,6 +19,8 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Rich } from "@/components/rich";
+import { localize } from "@/i18n";
 
 //
 // types
@@ -31,14 +36,12 @@ export interface ServiceQuestion {
     answer: string;
 }
 
-export interface ServicePageProps {
-    /** the service's title, as listed in the services section */
-    name: string;
+/** A software service page's text in one locale, see src/i18n/software/services. */
+export interface SoftwareServiceContent {
     /** the page h1: says what the service is, the way people search for it */
     title: string;
     description: string;
     features: ServiceFeature[];
-    technologies: string[];
     about: {
         title: string;
         paragraphs: string[];
@@ -46,11 +49,20 @@ export interface ServicePageProps {
     faq: ServiceQuestion[];
 }
 
+export interface ServicePageProps {
+    service: SoftwareServiceId;
+    /** usually the same in every locale; localized when they're words, not product names */
+    technologies: string[] | Localized<string[]>;
+    content: Localized<SoftwareServiceContent>;
+}
+
+type SectionProps = SoftwareServiceContent & { service: SoftwareServiceId };
+
 //
 // hero
 //
-function HeroSection(props: Pick<ServicePageProps, "name" | "title" | "description">) {
-    const { group } = findService(props.name);
+function HeroSection(props: Pick<SectionProps, "service" | "title" | "description">) {
+    const { group } = findService(props.service);
     const Illustration = group.illustration;
 
     return (
@@ -62,7 +74,7 @@ function HeroSection(props: Pick<ServicePageProps, "name" | "title" | "descripti
             <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] items-center gap-16 max-w-7xl w-full">
                 <div className="flex flex-col">
                     <TextSpan variant="muted" size="sm-3" font="mono-1" className="mb-4">
-                        {group.title}
+                        {group.title()}
                     </TextSpan>
                     <TextH1 size="lg-3" className="max-w-[18ch]">
                         {props.title}
@@ -76,7 +88,7 @@ function HeroSection(props: Pick<ServicePageProps, "name" | "title" | "descripti
                             nativeButton={false}
                             render={<Link to="/software/contact" />}
                         >
-                            Cere o ofertă
+                            {m.common_request_quote()}
                         </Button>
                         <Button
                             size="xl"
@@ -84,7 +96,7 @@ function HeroSection(props: Pick<ServicePageProps, "name" | "title" | "descripti
                             nativeButton={false}
                             render={<Link to="." hash="ce-include" />}
                         >
-                            Ce include
+                            {m.software_service_whats_included()}
                         </Button>
                     </div>
                 </div>
@@ -97,16 +109,16 @@ function HeroSection(props: Pick<ServicePageProps, "name" | "title" | "descripti
 //
 // features
 //
-function FeaturesSection(props: Pick<ServicePageProps, "features">) {
+function FeaturesSection(props: Pick<SectionProps, "features">) {
     return (
         <section
             id="ce-include"
             className="flex flex-col justify-center items-center px-6 py-16 scroll-mt-4"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Ce include</Eyebrow>
+                <Eyebrow>{m.software_service_whats_included()}</Eyebrow>
                 <TextH2 size="md-1" className="mb-14 max-w-[24ch]">
-                    Ce primești când lucrezi cu noi
+                    {m.software_service_features_title()}
                 </TextH2>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12">
                     {
@@ -129,7 +141,7 @@ function FeaturesSection(props: Pick<ServicePageProps, "features">) {
 //
 // technologies
 //
-function TechnologiesSection(props: Pick<ServicePageProps, "technologies">) {
+function TechnologiesSection(props: { technologies: string[] }) {
     return (
         <section
             id="tehnologii"
@@ -137,8 +149,8 @@ function TechnologiesSection(props: Pick<ServicePageProps, "technologies">) {
         >
             <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] items-start gap-6 md:gap-16 max-w-7xl w-full">
                 <div className="flex flex-col gap-2">
-                    <TextH2 size="md-2">Tehnologii</TextH2>
-                    <TextP variant="muted">Alegem ce se potrivește proiectului, nu ce e la modă.</TextP>
+                    <TextH2 size="md-2">{m.software_service_technologies()}</TextH2>
+                    <TextP variant="muted">{m.software_service_technologies_description()}</TextP>
                 </div>
                 <ul className="flex flex-wrap gap-2">
                     {
@@ -159,9 +171,9 @@ function TechnologiesSection(props: Pick<ServicePageProps, "technologies">) {
 //
 // about
 //
-function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
+function AboutSection(props: Pick<SectionProps, "service" | "about">) {
     const related = serviceGroups.flatMap((group) =>
-        group.services.filter((service) => service.title !== props.name),
+        group.services.filter((service) => service.id !== props.service),
     );
 
     return (
@@ -170,7 +182,7 @@ function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Despre serviciu</Eyebrow>
+                <Eyebrow>{m.common_about_service()}</Eyebrow>
                 <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-12 lg:gap-24">
                     <div className="flex flex-col">
                         <TextH2 size="md-1" className="mb-8">{props.about.title}</TextH2>
@@ -184,15 +196,15 @@ function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
                             }
                         </div>
                     </div>
-                    <nav aria-label="Alte servicii software" className="flex flex-col gap-4">
-                        <TextH3 size="sm-3" font="mono-1" variant="muted">Alte servicii</TextH3>
+                    <nav aria-label={m.software_service_other_label()} className="flex flex-col gap-4">
+                        <TextH3 size="sm-3" font="mono-1" variant="muted">{m.common_other_services()}</TextH3>
                         <ul className="flex flex-col gap-2">
                             {
                                 related.map((service) => (
-                                    <li key={service.title}>
+                                    <li key={service.id}>
                                         <Link {...service.link} className="group/related block">
                                             <HoverCard className="flex-row justify-between items-center px-5 py-3">
-                                                <TextSpan size="md-4">{service.title}</TextSpan>
+                                                <TextSpan size="md-4">{service.title()}</TextSpan>
                                                 <IconArrowRight className="size-5 text-muted-foreground transition-all group-hover/related:translate-x-1 group-hover/related:text-primary" />
                                             </HoverCard>
                                         </Link>
@@ -210,21 +222,19 @@ function AboutSection(props: Pick<ServicePageProps, "name" | "about">) {
 //
 // faq
 //
-function FAQSection(props: Pick<ServicePageProps, "faq">) {
+function FAQSection(props: Pick<SectionProps, "faq">) {
     return (
         <section
             id="intrebari"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Întrebări</Eyebrow>
+                <Eyebrow>{m.common_faq_eyebrow()}</Eyebrow>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-12 md:gap-16">
                     <div className="flex flex-col gap-4">
-                        <TextH2 size="md-1">Întrebări frecvente</TextH2>
+                        <TextH2 size="md-1">{m.common_faq_title()}</TextH2>
                         <TextP variant="muted" size="md-3">
-                            Nu ai găsit răspunsul? Scrie-ne la{" "}
-                            <TextLink href="mailto:contact@vestvisuals.ro">contact@vestvisuals.ro</TextLink>{" "}
-                            și îți răspundem direct.
+                            <Rich message={m.common_faq_more} />
                         </TextP>
                     </div>
                     <Accordion className="rounded-xl bg-card">
@@ -252,20 +262,23 @@ function FAQSection(props: Pick<ServicePageProps, "faq">) {
 //
 /** A software service page: hero, what's included, technologies, a description for search engines and the FAQ. */
 export function ServicePage(props: ServicePageProps) {
+    const content = localize(props.content);
+    const { service } = findService(props.service);
+
     return (
         <Main>
             <PageBreadcrumbs
                 items={[
                     { name: "Software", to: "/software" },
-                    { name: "Servicii", to: "/software", hash: "servicii" },
+                    { name: m.common_services(), to: "/software", hash: "servicii" },
                 ]}
-                page={props.name}
+                page={service.title()}
             />
-            <HeroSection name={props.name} title={props.title} description={props.description} />
-            <FeaturesSection features={props.features} />
-            <TechnologiesSection technologies={props.technologies} />
-            <AboutSection name={props.name} about={props.about} />
-            <FAQSection faq={props.faq} />
+            <HeroSection service={props.service} title={content.title} description={content.description} />
+            <FeaturesSection features={content.features} />
+            <TechnologiesSection technologies={Array.isArray(props.technologies) ? props.technologies : localize(props.technologies)} />
+            <AboutSection service={props.service} about={content.about} />
+            <FAQSection faq={content.faq} />
             <CTASection />
         </Main>
     );

@@ -1,11 +1,11 @@
-import { LegalLink } from ".";
-import type { LegalDocument, LegalSection } from ".";
+import type { LegalContent, LegalSection } from "@/components/legal";
+import { LegalLink } from "@/components/legal";
 
 // TODO: draft, have it reviewed by a lawyer before going live; keep the table in sync with the cookies the site really sets
 
 const usedCookies = [
     { name: "theme", purpose: "Ține minte tema aleasă (luminoasă sau întunecată) pe toate site-urile Vest Visuals.", duration: "1 an" },
-    { name: "PARAGLIDE_LOCALE", purpose: "Ține minte limba aleasă.", duration: "aprox. 400 de zile" },
+    { name: "PARAGLIDE_LOCALE", purpose: "Ține minte limba aleasă pe toate site-urile Vest Visuals.", duration: "aprox. 400 de zile" },
     { name: "better-auth.session_token", purpose: "Te ține autentificat în contul tău.", duration: "până la deconectare sau expirarea sesiunii" },
     { name: "_GRECAPTCHA", purpose: "Setat de Google reCAPTCHA, protejează formularele de spam și abuz.", duration: "6 luni" },
 ];
@@ -97,9 +97,8 @@ const sections: LegalSection[] = [
     },
 ];
 
-export const cookies: LegalDocument = {
+const content: LegalContent = {
     title: "Politica de cookie-uri",
-    updated: "13 octombrie 2026",
     intro: (
         <p>
             Pe această pagină explicăm ce cookie-uri folosesc site-urile
@@ -108,3 +107,5 @@ export const cookies: LegalDocument = {
     ),
     sections,
 };
+
+export default content;

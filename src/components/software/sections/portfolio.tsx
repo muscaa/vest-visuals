@@ -1,12 +1,14 @@
+import { m } from "@shared/paraglide/messages";
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
 import { TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 
+// the description is a message function, called while rendering
 interface Project {
     name: string;
-    description: string;
+    description: () => string;
     image: string;
     url: string;
 }
@@ -14,7 +16,7 @@ interface Project {
 const projects: Project[] = [
     {
         name: "Aerionic",
-        description: "Aerionic conectează camerele, senzorii și alarmele unui sit la drone autonome și echipe de intervenție, ca fiecare alarmă să fie verificată în câteva secunde.",
+        description: m.software_project_aerionic,
         image: "/portfolio/aerionic.webp",
         url: "https://aerionic.co.uk",
     },
@@ -31,7 +33,7 @@ function ProjectEntry({ project }: { project: Project }) {
             >
                 <Img
                     src={project.image}
-                    alt={`Captură de ecran ${project.name}`}
+                    alt={m.software_portfolio_screenshot({ name: project.name })}
                     className="w-full aspect-16/10 object-cover object-top transition-all duration-300 group-hover/project:scale-102"
                 />
             </a>
@@ -40,14 +42,14 @@ function ProjectEntry({ project }: { project: Project }) {
                     {project.name}
                 </TextH2>
                 <TextP variant="muted" className="mb-8">
-                    {project.description}
+                    {project.description()}
                 </TextP>
                 <Button
                     variant="outline"
                     nativeButton={false}
                     render={<a href={project.url} target="_blank" rel="noopener noreferrer" />}
                 >
-                    Vezi proiectul
+                    {m.software_portfolio_view()}
                     <IconArrowUpRight data-icon="inline-end" />
                 </Button>
             </div>
@@ -64,11 +66,10 @@ export function PortfolioSection(props: PortfolioSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-muted"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Portofoliu</Eyebrow>
-                <TextH1 className="mb-4 max-w-[20ch]">Ce am construit</TextH1>
+                <Eyebrow>{m.common_portfolio()}</Eyebrow>
+                <TextH1 className="mb-4 max-w-[20ch]">{m.software_portfolio_title()}</TextH1>
                 <TextP variant="muted" size="md-3" className="max-w-[56ch] mb-14">
-                    Proiecte reale, pentru clienți reali. Fiecare făcut de la
-                    zero, pe măsura problemei pe care o rezolvă.
+                    {m.software_portfolio_description()}
                 </TextP>
                 <div className="flex flex-col gap-8">
                     {

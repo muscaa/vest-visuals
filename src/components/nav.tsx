@@ -2,6 +2,7 @@ import { IconChevronRight, IconMenu2, IconX } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { createContext, useContext, useState } from "react";
 import { cn } from "@shared/shadcn/utils";
+import { m } from "@shared/paraglide/messages";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetOverlay, SheetTrigger } from "./ui/sheet";
 import {
@@ -75,7 +76,7 @@ function MobileNav(props: NavProps & { className?: string }) {
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger
                     render={<Button variant="ghost" size="icon-lg" className={props.className} />}
-                    aria-label={open ? "Închide meniul" : "Deschide meniul"}
+                    aria-label={open ? m.nav_close_menu() : m.nav_open_menu()}
                 >
                     {open ? <IconX className="size-6" /> : <IconMenu2 className="size-6" />}
                 </SheetTrigger>

@@ -1,14 +1,20 @@
+import { m } from "@shared/paraglide/messages";
 import { cn } from "@shared/shadcn/utils";
 import { Link } from "@tanstack/react-router";
+import { findMediaService } from "../service";
 import type { LinkOptions } from "@tanstack/react-router";
+import type { RichProps } from "@/components/rich";
+import type { MediaServiceId } from "../service";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
 import { TextH1, TextH2, TextP } from "@/components/typography";
+import { Rich } from "@/components/rich";
 
 type PortfolioEntryProps = LinkOptions & {
     name: React.ReactNode;
     description: string;
     image: string;
+    alt: string;
     className?: string;
 };
 
@@ -16,6 +22,7 @@ function PortfolioEntry({
     name,
     description,
     image,
+    alt,
     className,
     ...props
 }: PortfolioEntryProps) {
@@ -30,7 +37,7 @@ function PortfolioEntry({
         >
             <Img
                 src={image}
-                alt="" // TODO
+                alt={alt}
                 className="absolute pointer-events-none -z-10 inset-0 size-full object-cover transition-all group-hover/portfolio-entry:scale-105 group-hover/portfolio-entry:brightness-75"
             />
             <TextH2 variant="foreground" size="lg-4">
@@ -41,6 +48,68 @@ function PortfolioEntry({
     );
 }
 
+interface PortfolioItem {
+    service: MediaServiceId;
+    /** the name with its accent word, from the messages */
+    title: RichProps["message"];
+    description: () => string;
+    image: string;
+    className: string;
+}
+
+// text is stored as message functions, called while rendering
+const items: PortfolioItem[] = [
+    {
+        service: "wedding",
+        title: m.media_portfolio_wedding,
+        description: m.media_portfolio_event_description,
+        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        className: "order-1 sm:col-span-2",
+    },
+    {
+        service: "christening",
+        title: m.media_portfolio_christening,
+        description: m.media_portfolio_event_description,
+        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        className: "order-2",
+    },
+    {
+        service: "18th-birthday",
+        title: m.media_portfolio_18th_birthday,
+        description: m.media_portfolio_event_description,
+        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        className: "order-3",
+    },
+    {
+        service: "photo-session",
+        title: m.media_portfolio_photo_session,
+        description: m.media_portfolio_photo_session_description,
+        image: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
+        className: "order-4",
+    },
+    {
+        service: "automotive",
+        title: m.media_portfolio_automotive,
+        description: m.media_portfolio_automotive_description,
+        image: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
+        className: "order-5",
+    },
+    {
+        service: "real-estate",
+        title: m.media_portfolio_real_estate,
+        description: m.media_portfolio_real_estate_description,
+        image: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
+        className: "order-6",
+    },
+    {
+        service: "business-promotion",
+        title: m.media_portfolio_business_promotion,
+        description: m.media_portfolio_business_promotion_description,
+        image: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
+        className: "order-7 lg:col-span-2",
+    },
+];
+
 interface PortfolioSectionProps { }
 
 export function PortfolioSection(props: PortfolioSectionProps) {
@@ -50,14 +119,13 @@ export function PortfolioSection(props: PortfolioSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full @container">
-                <Eyebrow>Lucrari alese</Eyebrow>
+                <Eyebrow>{m.media_portfolio_eyebrow()}</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
-                        Vezi cu <i className="text-success">ochii tăi.</i>
+                        <Rich message={m.media_portfolio_title} />
                     </TextH1>
                     <TextP variant="muted" size="md-3">
-                        Câteva proiecte recente de care suntem mândri. Calitate
-                        înainte de cantitate, de fiecare dată.
+                        {m.media_portfolio_description()}
                     </TextP>
                 </div>
                 <div
@@ -68,83 +136,23 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                         auto-rows-[calc((100cqw-(var(--cols)-1)*1rem)/var(--cols)*3/4)]
                     "
                 >
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                <i className="text-chart-1">Nunti</i>
-                            </>
-                        }
-                        description="O seară pe care n-o uiți prea curând"
-                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
-                        className="order-1 sm:col-span-2"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                <i className="text-chart-1">Botezuri</i>
-                            </>
-                        }
-                        description="O seară pe care n-o uiți prea curând"
-                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
-                        className="order-2"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                <i className="text-chart-1">Majorate</i>
-                            </>
-                        }
-                        description="O seară pe care n-o uiți prea curând"
-                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
-                        className="order-3"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                Ședințe <i className="text-success">Foto</i>
-                            </>
-                        }
-                        description="Portrete în lumină naturală"
-                        image="https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium"
-                        className="order-4"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                <i className="text-chart-1">Automotive</i>
-                            </>
-                        }
-                        description="Mașini care arată ca-n reclame"
-                        image="https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium"
-                        className="order-5"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                <i className="text-success">Imobiliare</i>
-                            </>
-                        }
-                        description="Proprietăți care se vând repede"
-                        image="https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium"
-                        className="order-6"
-                    />
-                    <PortfolioEntry
-                        to="/media"
-                        name={
-                            <>
-                                Promovare <i className="text-chart-1">Firme</i>
-                            </>
-                        }
-                        description="Conținut comercial cinematic"
-                        image="https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium"
-                        className="order-7 lg:col-span-2"
-                    />
+                    {
+                        items.map((item) => {
+                            const { id, name, image, ...link } = findMediaService(item.service);
+
+                            return (
+                                <PortfolioEntry
+                                    key={id}
+                                    {...link}
+                                    name={<Rich message={item.title} />}
+                                    description={item.description()}
+                                    image={item.image}
+                                    alt={m.media_portfolio_alt({ service: name() })}
+                                    className={item.className}
+                                />
+                            );
+                        })
+                    }
                 </div>
             </div>
         </section>

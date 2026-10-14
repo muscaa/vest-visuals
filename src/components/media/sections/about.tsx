@@ -1,6 +1,8 @@
+import { m } from "@shared/paraglide/messages";
 import { MemberCard } from "@/components/cards/member";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
+import { Rich } from "@/components/rich";
 
 interface AboutSectionProps {}
 
@@ -11,19 +13,13 @@ export function AboutSection(props: AboutSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-br from-transparent to-muted"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Cine suntem</Eyebrow>
+                <Eyebrow>{m.media_about_eyebrow()}</Eyebrow>
                 <div className="grid grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
-                        Studio mic,{" "}
-                        <i className="text-primary">atenție maximă.</i>
+                        <Rich message={m.media_about_title} />
                     </TextH1>
                     <TextP variant="muted" size="md-3">
-                        Am pornit Vest Visuals pentru că iubim ce facem și
-                        suntem pretențioși cu felul în care iese. De la primul
-                        mesaj până la galeria finală, vorbești cu oamenii care
-                        chiar stau în spatele aparatului și al editării. Luăm
-                        proiectele cărora le putem da toată atenția, așa că
-                        filmarea ta nu se simte nici pe fugă, nici banală.
+                        {m.media_about_description()}
                     </TextP>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -31,7 +27,7 @@ export function AboutSection(props: AboutSectionProps) {
                         image="https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/medium"
                         firstName="Mihail"
                         lastName="Musca"
-                        role="Fotograf principal & editor"
+                        role={m.media_member_photographer()}
                         email="mihail@vestvisuals.ro"
                         instagram="musca.mihail"
                     />
@@ -39,7 +35,7 @@ export function AboutSection(props: AboutSectionProps) {
                         image="https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium"
                         firstName="David"
                         lastName="Boștină"
-                        role="Videograf principal & colorist"
+                        role={m.media_member_videographer()}
                         email="david@vestvisuals.ro"
                         instagram="david.bostina"
                     />

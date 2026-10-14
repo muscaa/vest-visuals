@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { IconUser } from "@tabler/icons-react";
+import { m } from "@shared/paraglide/messages";
 import { Button } from "@/components/ui/button";
 
 export function AccountButton() {
@@ -9,8 +10,8 @@ export function AccountButton() {
             size="icon"
             nativeButton={false}
             render={<Link to="/account" />}
-            aria-label="Contul meu"
-            title="Contul meu"
+            aria-label={m.nav_account()}
+            title={m.nav_account()}
         >
             <IconUser />
         </Button>

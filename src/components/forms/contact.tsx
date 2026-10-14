@@ -1,8 +1,9 @@
+import { m } from "@shared/paraglide/messages";
 import { IconMail, IconPhone } from "@tabler/icons-react";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { SplitCard } from "../cards/split";
 import Contact3 from "../illustrations/contact-3.svg?react";
-import { LegalLink } from "../legal";
+import { LegalAgreement } from "../legal";
 import { RecaptchaNotice } from "../recaptcha-notice";
 import { TextH1, TextP } from "../typography";
 import { Button } from "../ui/button";
@@ -25,9 +26,9 @@ const email = "contact@vestvisuals.ro";
 const phone = "+40723971618";
 
 const direct = [
-    { name: "Email", href: `mailto:${email}`, icon: IconMail },
-    { name: "Telefon", href: `tel:${phone}`, icon: IconPhone },
-    { name: "WhatsApp", href: `https://wa.me/${phone.slice(1)}`, icon: SiWhatsapp },
+    { name: m.common_email, href: `mailto:${email}`, icon: IconMail },
+    { name: m.contact_phone, href: `tel:${phone}`, icon: IconPhone },
+    { name: () => "WhatsApp", href: `https://wa.me/${phone.slice(1)}`, icon: SiWhatsapp },
 ];
 
 export interface ContactFormProps {
@@ -39,83 +40,76 @@ export function ContactForm(props: ContactFormProps) {
     return (
         <SplitCard
             aside={<Contact3 aria-hidden className="w-full max-w-xs h-auto" />}
-            footer={
-                <>
-                    Trimițând un mesaj, ești de acord cu{" "}
-                    <LegalLink division={props.division} document="terms">Termenii și condițiile</LegalLink> și{" "}
-                    <LegalLink division={props.division} document="privacy">Politica de confidențialitate</LegalLink>.
-                </>
-            }
+            footer={<LegalAgreement message={m.legal_agree_contact} division={props.division} />}
         >
             <form>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">Hai să vorbim</TextH1>
+                        <TextH1 size="md-2">{m.contact_title()}</TextH1>
                         <TextP variant="muted" className="text-balance">
-                            Ai o întrebare sau un proiect în minte? Scrie-ne și
-                            îți răspundem într-o zi lucrătoare.
+                            {m.contact_description()}
                         </TextP>
                     </div>
                     <div className="grid grid-cols-1 xs:grid-cols-3 gap-3">
                         {direct.map(({ name, href, icon: Icon }) => (
                             <Button
-                                key={name}
+                                key={href}
                                 variant="outline"
                                 size="lg"
                                 nativeButton={false}
                                 render={<a href={href} target="_blank" rel="noopener noreferrer" />}
                             >
                                 <Icon data-icon="inline-start" />
-                                {name}
+                                {name()}
                             </Button>
                         ))}
                     </div>
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                        Sau trimite-ne un mesaj
+                        {m.contact_or_message()}
                     </FieldSeparator>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Field>
-                            <FieldLabel htmlFor="name">Nume</FieldLabel>
+                            <FieldLabel htmlFor="name">{m.common_name()}</FieldLabel>
                             <Input
                                 id="name"
                                 name="name"
                                 autoComplete="name"
-                                placeholder="Numele tău"
+                                placeholder={m.common_your_name()}
                                 required
                             />
                         </Field>
                         <Field>
-                            <FieldLabel htmlFor="email">Email</FieldLabel>
+                            <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                             <Input
                                 id="email"
                                 name="email"
                                 type="email"
                                 autoComplete="email"
-                                placeholder="nume@exemplu.ro"
+                                placeholder={m.common_email_placeholder()}
                                 required
                             />
                         </Field>
                     </div>
                     <Field>
-                        <FieldLabel htmlFor="message">Mesaj</FieldLabel>
+                        <FieldLabel htmlFor="message">{m.contact_message()}</FieldLabel>
                         <InputGroup>
                             <InputGroupTextarea
                                 id="message"
                                 name="message"
                                 rows={5}
                                 maxLength={1000}
-                                placeholder="Spune-ne pe scurt de ce ai nevoie…"
+                                placeholder={m.contact_message_placeholder()}
                                 className="min-h-32"
                                 required
                             />
                             <InputGroupAddon align="block-end">
-                                <InputGroupText>Maxim 1.000 de caractere</InputGroupText>
+                                <InputGroupText>{m.contact_message_limit()}</InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
-                            Trimite mesajul
+                            {m.contact_send()}
                         </Button>
                         <RecaptchaNotice />
                     </Field>

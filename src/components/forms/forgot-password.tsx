@@ -1,4 +1,6 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
+import { Rich } from "../rich";
 import { SplitCard } from "../cards/split";
 import ResetPassword6 from "../illustrations/reset-password-6.svg?react";
 import { RecaptchaNotice } from "../recaptcha-notice";
@@ -20,30 +22,30 @@ export function ForgotPasswordForm() {
             <form>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">Ai uitat parola?</TextH1>
+                        <TextH1 size="md-2">{m.forgot_title()}</TextH1>
                         <TextP variant="muted" className="text-balance">
-                            Introdu adresa de email a contului și îți trimitem un link ca să-ți alegi o parolă nouă.
+                            {m.forgot_description()}
                         </TextP>
                     </div>
                     <Field>
-                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                        <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                         <Input
                             id="email"
                             name="email"
                             type="email"
                             autoComplete="email"
-                            placeholder="nume@exemplu.ro"
+                            placeholder={m.common_email_placeholder()}
                             required
                         />
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
-                            Trimite linkul
+                            {m.forgot_submit()}
                         </Button>
                         <RecaptchaNotice />
                     </Field>
                     <FieldDescription className="text-center">
-                        Ți-ai amintit parola? <Link to="/account/login">Intră în cont</Link>
+                        <Rich message={m.forgot_remembered} tags={{ login: ({ children }) => <Link to="/account/login">{children}</Link> }} />
                     </FieldDescription>
                 </FieldGroup>
             </form>

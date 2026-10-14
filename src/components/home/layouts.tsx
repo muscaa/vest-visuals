@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavActions, NavEntry } from "../nav";
@@ -16,7 +17,7 @@ export function HomeNavbarLayout() {
                     {divisions.map((division) => (
                         <NavEntry key={division.id} text={division.name} {...division.link} />
                     ))}
-                    <NavEntry text="Contact" to="/home/contact" />
+                    <NavEntry text={m.common_contact()} to="/home/contact" />
                     <NavActions>
                         <LanguageToggle />
                         <ThemeToggle />
@@ -26,14 +27,14 @@ export function HomeNavbarLayout() {
             }
             footer={
                 <Footer
-                    description="Software, foto și video pentru clienți din toată Europa, cu echipe dedicate pentru fiecare domeniu."
+                    description={m.home_footer_description()}
                     sections={[
                         ...divisions.map((division) => ({
                             title: division.name,
-                            links: division.services,
+                            links: division.services.map(({ name, ...link }) => ({ name: name(), ...link })),
                         })),
                         {
-                            title: "Legal",
+                            title: m.common_legal(),
                             links: legalPages("home"),
                         },
                     ]}

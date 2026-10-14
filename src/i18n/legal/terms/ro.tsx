@@ -1,5 +1,5 @@
-import { LegalLink } from ".";
-import type { LegalDocument, LegalSection } from ".";
+import type { LegalContent, LegalSection } from "@/components/legal";
+import { LegalLink } from "@/components/legal";
 
 // TODO: draft, have it reviewed by a lawyer before going live
 
@@ -164,9 +164,8 @@ const sections: LegalSection[] = [
     },
 ];
 
-export const terms: LegalDocument = {
+const content: LegalContent = {
     title: "Termeni și condiții",
-    updated: "13 octombrie 2026",
     intro: (
         <p>
             Acești termeni stabilesc regulile de folosire a site-urilor
@@ -176,3 +175,5 @@ export const terms: LegalDocument = {
     ),
     sections,
 };
+
+export default content;

@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import {
     IconArrowRight,
@@ -9,6 +10,7 @@ import { cn } from "@shared/shadcn/utils";
 import { FAQSection, mediaServices } from "./service";
 import type { ServiceQuestion } from "./service";
 import type { LinkOptions } from "@tanstack/react-router";
+import type { Localized } from "@/i18n";
 import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
 import { PageBreadcrumbs } from "@/components/breadcrumbs";
@@ -16,51 +18,69 @@ import { Img } from "@/components/img";
 import { Main } from "@/components/main";
 import { TextH1, TextH2, TextH3, TextP, TextSpan } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { Rich } from "@/components/rich";
+import { localize } from "@/i18n";
 
 //
 // locations
 //
+export type MediaLocationId =
+    | "timisoara"
+    | "arad"
+    | "oradea"
+    | "drobeta-turnu-severin"
+    | "cluj-napoca"
+    | "bucuresti";
+
+/** Text is stored as message functions and only called while rendering, so it's in the visitor's locale. */
 export type MediaLocation = LinkOptions & {
-    name: string;
-    county: string;
+    id: MediaLocationId;
+    name: () => string;
+    county: () => string;
     image: string;
 };
 
 /** Every city with its own page, used for the home page section and the "other cities" links. */
 export const mediaLocations: MediaLocation[] = [
     {
-        name: "Timișoara",
-        county: "Timiș",
+        id: "timisoara",
+        name: m.location_timisoara,
+        county: m.county_timis,
         to: "/media/locations/timisoara",
         image: "https://images.unsplash.com/photo-1687696162729-a75f9ddc004d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-        name: "Arad",
-        county: "Arad",
+        id: "arad",
+        name: m.location_arad,
+        county: m.county_arad,
         to: "/media/locations/arad",
         image: "https://images.unsplash.com/photo-1632207857925-a4d52c54d683?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-        name: "Oradea",
-        county: "Bihor",
+        id: "oradea",
+        name: m.location_oradea,
+        county: m.county_bihor,
         to: "/media/locations/oradea",
         image: "https://images.unsplash.com/photo-1654172054677-9a8cd7a8c04a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-        name: "Drobeta-Turnu Severin",
-        county: "Mehedinți",
+        id: "drobeta-turnu-severin",
+        name: m.location_drobeta,
+        county: m.county_mehedinti,
         to: "/media/locations/drobeta-turnu-severin",
         image: "https://images.unsplash.com/photo-1592335234454-1454bd449a2c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-        name: "Cluj-Napoca",
-        county: "Cluj",
+        id: "cluj-napoca",
+        name: m.location_cluj,
+        county: m.county_cluj,
         to: "/media/locations/cluj-napoca",
         image: "https://images.unsplash.com/photo-1678736680989-195226823176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-        name: "București",
-        county: "București",
+        id: "bucuresti",
+        name: m.location_bucuresti,
+        county: m.county_bucuresti,
         to: "/media/locations/bucuresti",
         image: "https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -74,33 +94,39 @@ export interface LocationSpot {
     description: string;
 }
 
-export interface LocationPageProps {
-    /** the city's name, as listed in {@link mediaLocations} */
-    name: string;
-    /** the city in the locative, e.g. "în Timișoara" */
+/** A location page's text in one locale, see src/i18n/media/locations. */
+export interface LocationContent {
+    /** the city in the locative, e.g. "în Timișoara" / "in Timișoara" */
     inCity: string;
     description: string;
-    /** no travel costs for this city */
-    freeTravel?: boolean;
     spots: LocationSpot[];
     faq: ServiceQuestion[];
 }
 
-function findLocation(name: string) {
-    const location = mediaLocations.find((value) => value.name === name);
-    if (!location) throw new Error(`Unknown location: ${name}`);
+export interface LocationPageProps {
+    location: MediaLocationId;
+    /** no travel costs for this city */
+    freeTravel?: boolean;
+    content: Localized<LocationContent>;
+}
+
+type SectionProps = LocationContent & { location: MediaLocation; freeTravel?: boolean };
+
+function findLocation(id: MediaLocationId) {
+    const location = mediaLocations.find((value) => value.id === id);
+    if (!location) throw new Error(`Unknown location: ${id}`);
     return location;
 }
 
 //
 // hero
 //
-function HeroSection(props: LocationPageProps & { location: MediaLocation }) {
+function HeroSection(props: SectionProps) {
     return (
         <section id="hero" className="relative isolate flex w-full theme-dark">
             <Img
                 src={props.location.image}
-                alt={`${props.name}, ${props.location.county}`}
+                alt={m.media_location_alt({ city: props.location.name(), county: props.location.county() })}
                 loading="eager"
                 fetchPriority="high"
                 className="absolute -z-10 inset-0 size-full object-cover"
@@ -111,11 +137,15 @@ function HeroSection(props: LocationPageProps & { location: MediaLocation }) {
                     <div />
                     <div className="flex flex-col gap-4">
                         <TextSpan size="sm-3" font="mono-1" className="text-foreground/70">
-                            Județul {props.location.county}
+                            {
+                                // Bucharest is a municipality, not a county
+                                props.location.id === "bucuresti"
+                                    ? m.media_location_bucharest_region()
+                                    : m.media_location_county({ county: props.location.county() })
+                            }
                         </TextSpan>
                         <TextH1 size="lg-1">
-                            Fotograf și videograf{" "}
-                            <i className="text-chart-1">{props.inCity}</i>
+                            <Rich message={m.media_location_title} inputs={{ inCity: props.inCity }} />
                         </TextH1>
                     </div>
                     <div className="flex flex-col gap-8">
@@ -129,7 +159,7 @@ function HeroSection(props: LocationPageProps & { location: MediaLocation }) {
                                 nativeButton={false}
                                 render={<Link to="/media/contact" />}
                             >
-                                Cere o ofertă
+                                {m.common_request_quote()}
                             </Button>
                             <Button
                                 variant="outline"
@@ -137,7 +167,7 @@ function HeroSection(props: LocationPageProps & { location: MediaLocation }) {
                                 nativeButton={false}
                                 render={<Link to="." hash="servicii" />}
                             >
-                                Vezi serviciile
+                                {m.media_location_see_services()}
                             </Button>
                         </div>
                     </div>
@@ -201,27 +231,27 @@ function ContactTile(props: { title: string; description: string; accent: string
 //
 // services
 //
-function ServicesSection(props: Pick<LocationPageProps, "inCity">) {
+function ServicesSection(props: Pick<SectionProps, "inCity">) {
     return (
         <section
             id="servicii"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent scroll-mt-4"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Servicii</Eyebrow>
+                <Eyebrow>{m.common_services()}</Eyebrow>
                 <TextH2 size="lg-2" className="mb-12">
-                    Ce facem <i className="text-primary">{props.inCity}.</i>
+                    <Rich message={m.media_location_services_title} inputs={{ inCity: props.inCity }} />
                 </TextH2>
                 <ul className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
-                        mediaServices.map(({ name, image, ...link }) => (
-                            <li key={name}>
+                        mediaServices.map(({ id, name, image, ...link }) => (
+                            <li key={id}>
                                 <PhotoTile
                                     {...link}
-                                    name={name}
+                                    name={name()}
                                     label={props.inCity}
                                     image={image}
-                                    alt={`${name} ${props.inCity}, fotografie Vest Visuals`}
+                                    alt={m.media_location_service_alt({ service: name(), inCity: props.inCity })}
                                     className="h-52"
                                 />
                             </li>
@@ -229,9 +259,9 @@ function ServicesSection(props: Pick<LocationPageProps, "inCity">) {
                     }
                     <li>
                         <ContactTile
-                            title="Altceva?"
-                            description="Spune-ne de ce ai nevoie și găsim o soluție."
-                            accent="Scrie-ne"
+                            title={m.media_location_other()}
+                            description={m.media_location_other_description()}
+                            accent={m.common_write_us()}
                             className="h-52"
                         />
                     </li>
@@ -244,22 +274,20 @@ function ServicesSection(props: Pick<LocationPageProps, "inCity">) {
 //
 // spots
 //
-function SpotsSection(props: Pick<LocationPageProps, "inCity" | "spots">) {
+function SpotsSection(props: Pick<SectionProps, "inCity" | "spots">) {
     return (
         <section
             id="locuri"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Locuri pentru fotografii</Eyebrow>
+                <Eyebrow>{m.media_location_spots_eyebrow()}</Eyebrow>
                 <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-12">
                     <TextH2 size="lg-2">
-                        Unde fotografiem <i className="text-success">{props.inCity}.</i>
+                        <Rich message={m.media_location_spots_title} inputs={{ inCity: props.inCity }} />
                     </TextH2>
                     <TextP variant="muted" size="md-3">
-                        Câteva locuri pe care le recomandăm pentru ședințe foto
-                        și cadre de eveniment. Nu e o listă închisă: venim
-                        oriunde ai tu un loc drag.
+                        {m.media_location_spots_description()}
                     </TextP>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -285,19 +313,20 @@ function SpotsSection(props: Pick<LocationPageProps, "inCity" | "spots">) {
 //
 // travel
 //
-function TravelSection(props: Pick<LocationPageProps, "name" | "freeTravel">) {
+function TravelSection(props: Pick<SectionProps, "location" | "freeTravel">) {
+    const city = props.location.name();
     const items = [
         {
             icon: IconCar,
-            title: props.freeTravel ? "Fără cost de deplasare" : "Deplasare inclusă în ofertă",
+            title: props.freeTravel ? m.media_location_free_travel() : m.media_location_paid_travel(),
             text: props.freeTravel
-                ? `Pentru ${props.name} nu cerem nimic în plus pentru drum. Prețul din ofertă e prețul final.`
-                : `Venim din Timișoara, așa că pentru ${props.name} adăugăm costul de deplasare și, dacă e nevoie, de cazare. Le discutăm transparent, de la început.`,
+                ? m.media_location_free_travel_description({ city })
+                : m.media_location_paid_travel_description({ city }),
         },
         {
             icon: IconCalendarEvent,
-            title: "Rezervă din timp",
-            text: "Pentru nunți și evenimente mari, recomandăm să ne scrii cu cel puțin 3-6 luni înainte. Ședințele foto le putem programa de obicei în câteva săptămâni.",
+            title: m.media_location_book_early(),
+            text: m.media_location_book_early_description(),
         },
     ];
 
@@ -337,8 +366,8 @@ function TravelSection(props: Pick<LocationPageProps, "name" | "freeTravel">) {
 //
 // other cities
 //
-function OtherCitiesSection(props: Pick<LocationPageProps, "name">) {
-    const others = mediaLocations.filter((location) => location.name !== props.name);
+function OtherCitiesSection(props: Pick<SectionProps, "location">) {
+    const others = mediaLocations.filter((location) => location.id !== props.location.id);
 
     return (
         <section
@@ -346,17 +375,17 @@ function OtherCitiesSection(props: Pick<LocationPageProps, "name">) {
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Alte orașe</Eyebrow>
+                <Eyebrow>{m.media_location_other_cities()}</Eyebrow>
                 <ul className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4">
                     {
-                        others.map(({ name, county, image, ...link }) => (
-                            <li key={name}>
+                        others.map(({ id, name, county, image, ...link }) => (
+                            <li key={id}>
                                 <PhotoTile
                                     {...link}
-                                    name={name}
-                                    label={county}
+                                    name={name()}
+                                    label={county()}
                                     image={image}
-                                    alt={`${name}, ${county}`}
+                                    alt={m.media_location_alt({ city: name(), county: county() })}
                                     className="h-40"
                                 />
                             </li>
@@ -364,9 +393,9 @@ function OtherCitiesSection(props: Pick<LocationPageProps, "name">) {
                     }
                     <li>
                         <ContactTile
-                            title="În altă parte?"
-                            description="Mergem în toată țara pentru proiectul potrivit."
-                            accent="Spune-ne unde"
+                            title={m.media_locations_elsewhere()}
+                            description={m.media_location_elsewhere_description()}
+                            accent={m.media_locations_elsewhere_accent()}
                             className="h-40"
                         />
                     </li>
@@ -379,24 +408,23 @@ function OtherCitiesSection(props: Pick<LocationPageProps, "name">) {
 //
 // cta
 //
-function CTASection(props: Pick<LocationPageProps, "inCity">) {
+function CTASection(props: Pick<SectionProps, "inCity">) {
     return (
         <section
             id="cta"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col items-center max-w-7xl w-full">
-                <Eyebrow align="center" className="w-full">Contact</Eyebrow>
+                <Eyebrow align="center" className="w-full">{m.common_contact()}</Eyebrow>
                 <TextH2 size="lg-2" className="mb-8 text-center">
-                    Organizezi ceva <i className="text-primary">{props.inCity}?</i>
+                    <Rich message={m.media_location_cta_title} inputs={{ inCity: props.inCity }} />
                 </TextH2>
                 <TextP variant="muted" size="md-3" className="max-w-[58ch] mb-12 text-center">
-                    Spune-ne data, locul și de ce ai nevoie, și îți trimitem o
-                    ofertă personalizată într-o zi lucrătoare.
+                    {m.media_location_cta_description()}
                 </TextP>
                 <div className="flex flex-wrap justify-center items-center gap-4">
                     <Button size="xl" nativeButton={false} render={<Link to="/media/contact" />}>
-                        Cere o ofertă
+                        {m.common_request_quote()}
                     </Button>
                     <Button
                         size="xl"
@@ -417,18 +445,19 @@ function CTASection(props: Pick<LocationPageProps, "inCity">) {
 //
 /** A media location page: city hero, services, photo spots, travel, FAQ and other cities. */
 export function LocationPage(props: LocationPageProps) {
-    const location = findLocation(props.name);
+    const location = findLocation(props.location);
+    const content = localize(props.content);
 
     return (
         <Main>
-            <PageBreadcrumbs items={[{ name: "Media", to: "/media" }, { name: "Locații", to: "/media", hash: "locations" }]} page={props.name} />
-            <HeroSection {...props} location={location} />
-            <ServicesSection inCity={props.inCity} />
-            <SpotsSection inCity={props.inCity} spots={props.spots} />
-            <TravelSection name={props.name} freeTravel={props.freeTravel} />
-            <FAQSection faq={props.faq} />
-            <OtherCitiesSection name={props.name} />
-            <CTASection inCity={props.inCity} />
+            <PageBreadcrumbs items={[{ name: "Media", to: "/media" }, { name: m.common_locations(), to: "/media", hash: "locations" }]} page={location.name()} />
+            <HeroSection {...content} location={location} freeTravel={props.freeTravel} />
+            <ServicesSection inCity={content.inCity} />
+            <SpotsSection inCity={content.inCity} spots={content.spots} />
+            <TravelSection location={location} freeTravel={props.freeTravel} />
+            <FAQSection faq={content.faq} />
+            <OtherCitiesSection location={location} />
+            <CTASection inCity={content.inCity} />
         </Main>
     );
 }

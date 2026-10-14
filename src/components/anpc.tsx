@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Img } from "./img";
 
 interface Props {
@@ -14,7 +15,7 @@ export function SALLink(props: Props) {
         >
             <Img
                 src="/anpc-sal.svg"
-                alt="ANPC SAL - Soluționarea Alternativă a Litigiilor"
+                alt={m.footer_anpc_sal()}
                 className="h-10 w-auto"
             />
         </a>
@@ -31,7 +32,7 @@ export function SOLLink(props: Props) {
         >
             <Img
                 src="/anpc-sol.svg"
-                alt="ANPC SOL - Soluționarea Online a Litigiilor"
+                alt={m.footer_anpc_sol()}
                 className="h-10 w-auto"
             />
         </a>

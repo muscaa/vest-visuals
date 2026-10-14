@@ -6,6 +6,7 @@ import {
     SiX,
     SiYoutube,
 } from "@icons-pack/react-simple-icons";
+import { m } from "@shared/paraglide/messages";
 import { TextH5, TextLink, TextP } from "./typography";
 import { Separator } from "./ui/separator";
 import { LogoLarge } from "./logo";
@@ -74,10 +75,9 @@ function FooterBrand(props: {
                 props.socials.length > 0 && (
                     <div className="flex flex-col items-start md:items-end gap-4 md:text-right">
                         <div className="flex flex-col gap-2">
-                            <TextH5>Urmărește-ne</TextH5>
+                            <TextH5>{m.footer_follow_title()}</TextH5>
                             <TextP variant="muted" className="max-w-sm">
-                                Culise, proiecte noi și cadre care nu ajung în
-                                portofoliu.
+                                {m.footer_follow_description()}
                             </TextP>
                         </div>
                         <div className="flex flex-wrap items-center gap-4">
@@ -88,7 +88,7 @@ function FooterBrand(props: {
                                         href={href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        aria-label={`Vest Visuals pe ${name}`}
+                                        aria-label={m.footer_social_label({ network: name })}
                                         className="hover:text-primary transition-all"
                                     >
                                         <Icon className="size-6" />
@@ -136,11 +136,10 @@ function FooterLegal() {
                     {business.name}
                 </TextP>
                 <TextP variant="muted" size="sm-2">
-                    CUI {business.cui} · {business.address}
+                    {m.footer_company_details({ cui: business.cui, address: business.address })}
                 </TextP>
                 <TextP variant="muted" size="sm-2" className="mt-3">
-                    © {new Date().getFullYear()} Vest Visuals. Toate drepturile
-                    rezervate.
+                    {m.footer_copyright({ year: new Date().getFullYear() })}
                 </TextP>
             </div>
             <div className="flex flex-wrap md:flex-col lg:flex-row justify-center items-center md:items-end gap-4">
@@ -166,7 +165,7 @@ export interface FooterProps {
 
 export function Footer({
     sections = [],
-    description = "Foto și video pentru nunți, evenimente, portrete și branduri. Un studio mic din Timișoara, cu ochi pentru detalii.",
+    description,
     socials = footerSocials,
     className,
 }: FooterProps) {
@@ -174,7 +173,7 @@ export function Footer({
 
     return (
         <footer className={cn("flex flex-col bg-muted", className)}>
-            <FooterBrand description={description} socials={socials} />
+            <FooterBrand description={description ?? m.footer_default_description()} socials={socials} />
             {
                 hasLinks && (
                     <>

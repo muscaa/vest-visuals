@@ -1,6 +1,7 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { IconArrowDown } from "@tabler/icons-react";
-import { headline } from "./hero";
+import { getHeadline } from "./hero";
 import DiscussionWhiteBoard from "@/components/illustrations/discussion-white-board.svg?react";
 import { TextH1, TextP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -16,25 +17,23 @@ export function WelcomeSection(props: WelcomeSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] items-center gap-12 max-w-7xl w-full">
                 <div className="flex flex-col items-start">
                     <TextH1 size="lg-2" className="mb-8">
-                        Bun venit la Vest Visuals
+                        {m.home_welcome_title()}
                     </TextH1>
                     <TextP variant="muted" size="md-3" className="max-w-[48ch] mb-12">
-                        {headline} pentru afaceri și oameni din toată Europa.
-                        Echipe dedicate pentru fiecare domeniu, aceeași grijă
-                        pentru fiecare proiect.
+                        {m.home_welcome_description({ headline: getHeadline() })}
                     </TextP>
                     <Button
                         size="xl"
                         nativeButton={false}
                         render={<Link to="/home" hash="domenii" />}
                     >
-                        Descoperă ce facem
+                        {m.home_welcome_cta()}
                         <IconArrowDown data-icon="inline-end" />
                     </Button>
                 </div>
                 <DiscussionWhiteBoard
                     role="img"
-                    aria-label="Echipa Vest Visuals lucrând la o tablă cu logo-ul Vest Visuals"
+                    aria-label={m.home_welcome_illustration()}
                     className="w-full max-w-md h-auto justify-self-center"
                 />
             </div>

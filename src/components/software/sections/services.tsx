@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
@@ -9,19 +10,32 @@ import { HoverCard } from "@/components/cards/hover";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextH2, TextH3, TextP } from "@/components/typography";
 
+export type SoftwareServiceId =
+    | "web-apps"
+    | "mobile-apps"
+    | "custom-software"
+    | "cloud-devops"
+    | "data-engineering"
+    | "business-intelligence"
+    | "process-automation"
+    | "technical-consulting"
+    | "support-maintenance";
+
+/** Text is stored as message functions and only called while rendering, so it's in the visitor's locale. */
 export interface Service {
+    id: SoftwareServiceId;
     /** the service's own page */
     link: LinkOptions;
-    title: string;
-    description: string;
+    title: () => string;
+    description: () => string;
 }
 
 export interface ServiceGroup {
     /** section anchor on the home page */
     id: string;
-    title: string;
+    title: () => string;
     /** shorter title for the navbar */
-    navTitle: string;
+    navTitle: () => string;
     illustration: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     services: Service[];
 }
@@ -29,78 +43,87 @@ export interface ServiceGroup {
 export const serviceGroups: ServiceGroup[] = [
     {
         id: "dezvoltare-software",
-        title: "Dezvoltare software",
-        navTitle: "Dezvoltare",
+        title: m.software_group_development,
+        navTitle: m.software_group_development_nav,
         illustration: Wireframe,
         services: [
             {
+                id: "web-apps",
                 link: { to: "/software/services/web-apps" },
-                title: "Aplicații web",
-                description: "De la landing page-uri și magazine online la platforme web complexe. Design curat, responsive, și SEO făcut corect din prima zi.",
+                title: m.software_service_web_apps,
+                description: m.software_service_web_apps_description,
             },
             {
+                id: "mobile-apps",
                 link: { to: "/software/services/mobile-apps" },
-                title: "Aplicații mobile",
-                description: "Aplicații pentru iOS și Android pe care oamenii chiar le folosesc cu plăcere. Intuitive, rapide și finisate până la detaliu.",
+                title: m.software_service_mobile_apps,
+                description: m.software_service_mobile_apps_description,
             },
             {
+                id: "custom-software",
                 link: { to: "/software/services/custom-software" },
-                title: "Software personalizat",
-                description: "Aplicații desktop, unelte interne și integrări între sistemele pe care le folosești deja, construite exact pe procesele tale.",
+                title: m.software_service_custom_software,
+                description: m.software_service_custom_software_description,
             },
         ],
     },
     {
         id: "cloud-date",
-        title: "Cloud & date",
-        navTitle: "Cloud & date",
+        title: m.software_group_cloud_data,
+        navTitle: m.software_group_cloud_data,
         illustration: Database4,
         services: [
             {
+                id: "cloud-devops",
                 link: { to: "/software/services/cloud-devops" },
-                title: "Cloud & DevOps",
-                description: "Migrăm, scalăm sau optimizăm infrastructura ta. Deployment-uri fără bătăi de cap și sisteme care rămân fiabile pe măsură ce crești.",
+                title: m.software_service_cloud_devops,
+                description: m.software_service_cloud_devops_description,
             },
             {
+                id: "data-engineering",
                 link: { to: "/software/services/data-engineering" },
-                title: "Data Engineering",
-                description: "Colectare din orice sursă, ETL, baze de date și data warehousing. Construim și administrăm tot pipeline-ul, oricât de mari devin datele.",
+                title: m.software_service_data_engineering,
+                description: m.software_service_data_engineering_description,
             },
             {
+                id: "business-intelligence",
                 link: { to: "/software/services/business-intelligence" },
-                title: "Business Intelligence",
-                description: "Dashboard-uri și rapoarte care răspund la întrebări reale despre afacerea ta, nu doar cifre puse pe un grafic.",
+                title: m.software_service_business_intelligence,
+                description: m.software_service_business_intelligence_description,
             },
         ],
     },
     {
         id: "automatizari",
-        title: "Automatizări",
-        navTitle: "Automatizări",
+        title: m.software_group_automation,
+        navTitle: m.software_group_automation,
         illustration: Workflow2,
         services: [
             {
+                id: "process-automation",
                 link: { to: "/software/services/process-automation" },
-                title: "Automatizarea proceselor",
-                description: "Îți analizăm fluxurile de lucru și automatizăm părțile repetitive: emailuri, rapoarte, procese întregi și pipeline-uri care rulează singure.",
+                title: m.software_service_process_automation,
+                description: m.software_service_process_automation_description,
             },
         ],
     },
     {
         id: "consultanta-mentenanta",
-        title: "Consultanță & mentenanță",
-        navTitle: "Consultanță",
+        title: m.software_group_consulting,
+        navTitle: m.software_group_consulting_nav,
         illustration: Maintenance1,
         services: [
             {
+                id: "technical-consulting",
                 link: { to: "/software/services/technical-consulting" },
-                title: "Consultanță tehnică",
-                description: "Când ai nevoie de un plan mai mult decât de mâini în plus. Te ajutăm cu arhitectura, codebase-ul existent și deciziile despre ce merită construit.",
+                title: m.software_service_technical_consulting,
+                description: m.software_service_technical_consulting_description,
             },
             {
+                id: "support-maintenance",
                 link: { to: "/software/services/support-maintenance" },
-                title: "Suport & mentenanță",
-                description: "Ținem sistemele tale rapide, sigure și la zi, ca ce construim împreună să meargă bine ani buni după lansare.",
+                title: m.software_service_support_maintenance,
+                description: m.software_service_support_maintenance_description,
             },
         ],
     },
@@ -112,12 +135,12 @@ function ServiceCard({ service }: { service: Service }) {
             <HoverCard className="gap-1 px-6">
                 <div className="flex justify-between items-center gap-4">
                     <TextH3 size="md-4" className="font-medium">
-                        {service.title}
+                        {service.title()}
                     </TextH3>
                     <IconArrowRight className="shrink-0 text-muted-foreground transition-all group-hover/service:translate-x-1 group-hover/service:text-primary" />
                 </div>
                 <TextP variant="muted" size="sm-2">
-                    {service.description}
+                    {service.description()}
                 </TextP>
             </HoverCard>
         </Link>
@@ -133,11 +156,11 @@ function ServiceGroupEntry({ group }: { group: ServiceGroup }) {
                 aria-hidden
                 className="absolute -z-10 -top-8 right-0 size-96 opacity-50 pointer-events-none mask-b-from-50%"
             />
-            <TextH2 size="md-2">{group.title}</TextH2>
+            <TextH2 size="md-2">{group.title()}</TextH2>
             <div className="flex flex-col gap-3">
                 {
                     group.services.map((service) => (
-                        <ServiceCard key={service.title} service={service} />
+                        <ServiceCard key={service.id} service={service} />
                     ))
                 }
             </div>
@@ -154,12 +177,10 @@ export function ServicesSection(props: ServicesSectionProps) {
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow>Servicii</Eyebrow>
-                <TextH1 className="mb-4 max-w-[24ch]">Ce facem</TextH1>
+                <Eyebrow>{m.common_services()}</Eyebrow>
+                <TextH1 className="mb-4 max-w-[24ch]">{m.software_services_title()}</TextH1>
                 <TextP variant="muted" size="md-3" className="max-w-[56ch] mb-14">
-                    Fiecare serviciu, de la aplicații la cloud și date, e făcut
-                    de oameni cu experiență exact în acel domeniu. Așa păstrăm
-                    calitatea ridicată în tipuri de muncă foarte diferite.
+                    {m.software_services_description()}
                 </TextP>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-20">
                     {
@@ -173,11 +194,11 @@ export function ServicesSection(props: ServicesSectionProps) {
     );
 }
 
-/** Finds a service and the group it belongs to, by its title. */
-export function findService(title: string) {
+/** Finds a service and the group it belongs to. */
+export function findService(id: SoftwareServiceId) {
     for (const group of serviceGroups) {
-        const service = group.services.find((value) => value.title === title);
+        const service = group.services.find((value) => value.id === id);
         if (service) return { group, service };
     }
-    throw new Error(`Unknown software service: ${title}`);
+    throw new Error(`Unknown software service: ${id}`);
 }

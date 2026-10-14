@@ -1,5 +1,6 @@
 import { GB, RO } from "country-flag-icons/react/3x2";
 import { getLocale, locales, setLocale } from "@shared/paraglide/runtime";
+import { m } from "@shared/paraglide/messages";
 import type { FlagComponent } from "country-flag-icons/react/3x2";
 import { Button } from "@/components/ui/button";
 
@@ -26,7 +27,7 @@ export function LanguageToggle() {
             variant="ghost"
             size="icon"
             onClick={handleClick}
-            aria-label={`Limba: ${current?.name ?? currentLocale}`}
+            aria-label={m.nav_language({ language: current?.name ?? currentLocale })}
             title={current?.name}
             className="uppercase"
         >

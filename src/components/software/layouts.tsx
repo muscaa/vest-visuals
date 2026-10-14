@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Outlet } from "@tanstack/react-router";
 import { NavbarLayout } from "../layout/navbar";
 import { Nav, NavActions, NavEntry, NavMenu, NavMenuEntry } from "../nav";
@@ -16,17 +17,17 @@ export function SoftwareNavbarLayout() {
                 <Nav breakpoint="lg">
                     {
                         serviceGroups.map((group) => (
-                            <NavMenu key={group.id} text={group.navTitle}>
+                            <NavMenu key={group.id} text={group.navTitle()}>
                                 {
                                     group.services.map((service) => (
-                                        <NavMenuEntry key={service.title} text={service.title} {...service.link} />
+                                        <NavMenuEntry key={service.id} text={service.title()} {...service.link} />
                                     ))
                                 }
                             </NavMenu>
                         ))
                     }
-                    <NavEntry text="Portofoliu" to="/software" hash="portofoliu" />
-                    <NavEntry text="Contact" to="/software/contact" />
+                    <NavEntry text={m.common_portfolio()} to="/software" hash="portofoliu" />
+                    <NavEntry text={m.common_contact()} to="/software/contact" />
                     <NavActions>
                         <LanguageToggle />
                         <ThemeToggle />
@@ -36,24 +37,24 @@ export function SoftwareNavbarLayout() {
             }
             footer={
                 <Footer
-                    description="Software la comandă, cloud, date și automatizări, construite pentru felul în care lucrează afacerea ta."
+                    description={m.software_footer_description()}
                     sections={[
                         ...serviceGroups.map((group) => ({
-                            title: group.title,
+                            title: group.title(),
                             links: group.services.map((service) => ({
-                                name: service.title,
+                                name: service.title(),
                                 ...service.link,
                             })),
                         })),
                         {
-                            title: "Companie",
+                            title: m.software_company(),
                             links: [
-                                { name: "Portofoliu", to: "/software", hash: "portofoliu" },
-                                { name: "Contact", to: "/software/contact" },
+                                { name: m.common_portfolio(), to: "/software", hash: "portofoliu" },
+                                { name: m.common_contact(), to: "/software/contact" },
                             ],
                         },
                         {
-                            title: "Legal",
+                            title: m.common_legal(),
                             links: legalPages("software"),
                         },
                     ]}

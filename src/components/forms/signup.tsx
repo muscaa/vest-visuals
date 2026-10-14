@@ -1,7 +1,9 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { SplitCard } from "../cards/split";
 import CreateAccount1 from "../illustrations/create-account-1.svg?react";
-import { LegalLink } from "../legal";
+import { LegalAgreement } from "../legal";
+import { Rich } from "../rich";
 import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import { TextH1, TextP } from "../typography";
@@ -19,49 +21,43 @@ export function SignupForm() {
     return (
         <SplitCard
             aside={<CreateAccount1 aria-hidden className="w-full max-w-xs h-auto" />}
-            footer={
-                <>
-                    Creându-ți un cont, ești de acord cu{" "}
-                    <LegalLink document="terms">Termenii și condițiile</LegalLink> și{" "}
-                    <LegalLink document="privacy">Politica de confidențialitate</LegalLink>.
-                </>
-            }
+            footer={<LegalAgreement message={m.legal_agree_signup} />}
         >
             <form>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">Creează-ți contul</TextH1>
+                        <TextH1 size="md-2">{m.signup_title()}</TextH1>
                         <TextP variant="muted" className="text-balance">
-                            Durează mai puțin de un minut.
+                            {m.signup_description()}
                         </TextP>
                     </div>
                     <SocialLogin />
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                        Sau cu email
+                        {m.auth_or_email()}
                     </FieldSeparator>
                     <Field>
-                        <FieldLabel htmlFor="name">Nume</FieldLabel>
+                        <FieldLabel htmlFor="name">{m.common_name()}</FieldLabel>
                         <Input
                             id="name"
                             name="name"
                             autoComplete="name"
-                            placeholder="Numele tău"
+                            placeholder={m.common_your_name()}
                             required
                         />
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                        <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                         <Input
                             id="email"
                             name="email"
                             type="email"
                             autoComplete="email"
-                            placeholder="nume@exemplu.ro"
+                            placeholder={m.common_email_placeholder()}
                             required
                         />
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="password">Parolă</FieldLabel>
+                        <FieldLabel htmlFor="password">{m.common_password()}</FieldLabel>
                         <Input
                             id="password"
                             name="password"
@@ -70,16 +66,16 @@ export function SignupForm() {
                             minLength={8}
                             required
                         />
-                        <FieldDescription>Cel puțin 8 caractere.</FieldDescription>
+                        <FieldDescription>{m.common_password_hint()}</FieldDescription>
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
-                            Creează contul
+                            {m.signup_submit()}
                         </Button>
                         <RecaptchaNotice />
                     </Field>
                     <FieldDescription className="text-center">
-                        Ai deja cont? <Link to="/account/login">Intră în cont</Link>
+                        <Rich message={m.signup_has_account} tags={{ login: ({ children }) => <Link to="/account/login">{children}</Link> }} />
                     </FieldDescription>
                 </FieldGroup>
             </form>

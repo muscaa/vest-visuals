@@ -1,5 +1,7 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { Rich } from "../rich";
 import { SplitCard } from "../cards/split";
 import ReceiveNotification2 from "../illustrations/receive-notification-2.svg?react";
 import { TextH1, TextP } from "../typography";
@@ -29,13 +31,13 @@ export function VerifyForm() {
             <form>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">Verifică-ți emailul</TextH1>
+                        <TextH1 size="md-2">{m.verify_title()}</TextH1>
                         <TextP variant="muted" className="text-balance">
-                            Ți-am trimis un cod de {codeLength} cifre. Introdu-l mai jos ca să intri în cont.
+                            {m.verify_description({ length: codeLength })}
                         </TextP>
                     </div>
                     <Field>
-                        <FieldLabel htmlFor="code" className="sr-only">Cod de verificare</FieldLabel>
+                        <FieldLabel htmlFor="code" className="sr-only">{m.verify_code()}</FieldLabel>
                         <InputOTP
                             id="code"
                             name="code"
@@ -65,14 +67,17 @@ export function VerifyForm() {
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
-                            Verifică
+                            {m.verify_submit()}
                         </Button>
                     </Field>
                     <FieldDescription className="text-center">
-                        Nu ai primit codul? <button type="button" className="underline underline-offset-4 hover:text-primary">Retrimite-l</button>
+                        <Rich
+                            message={m.verify_resend}
+                            tags={{ resend: ({ children }) => <button type="button" className="underline underline-offset-4 hover:text-primary">{children}</button> }}
+                        />
                     </FieldDescription>
                     <FieldDescription className="text-center">
-                        <Link to="/account/login">Înapoi la autentificare</Link>
+                        <Link to="/account/login">{m.common_back_to_login()}</Link>
                     </FieldDescription>
                 </FieldGroup>
             </form>

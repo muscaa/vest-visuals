@@ -1,7 +1,9 @@
+import { m } from "@shared/paraglide/messages";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import PageNotFound4 from "./illustrations/page-not-found-4.svg?react";
 import SomethingWentWrong1 from "./illustrations/something-went-wrong-1.svg?react";
 import { Main } from "./main";
+import { Rich } from "./rich";
 import { TextH1, TextP } from "./typography";
 import { Button } from "./ui/button";
 import type { ErrorComponentProps, LinkOptions } from "@tanstack/react-router";
@@ -57,15 +59,15 @@ export function NotFound(props: { standalone?: boolean }) {
         <Status
             standalone={props.standalone}
             illustration={PageNotFound4}
-            title="Pagina nu există"
-            description="Poate a fost mutată, sau linkul are o greșeală. Te ducem înapoi pe drumul cel bun."
+            title={m.error_not_found_title()}
+            description={m.error_not_found_description()}
             actions={
                 <>
                     <Button size="lg" nativeButton={false} render={<Link {...home} />}>
-                        Pagina principală
+                        {m.error_home()}
                     </Button>
                     <Button size="lg" variant="outline" onClick={() => window.history.back()}>
-                        Înapoi
+                        {m.error_back()}
                     </Button>
                 </>
             }
@@ -83,23 +85,15 @@ export function CatchBoundary(props: ErrorComponentProps & { standalone?: boolea
         <Status
             standalone={props.standalone}
             illustration={SomethingWentWrong1}
-            title="Ceva n-a mers bine"
-            description={
-                <>
-                    A apărut o problemă neașteptată. Încearcă din nou, iar dacă se repetă, scrie-ne la{" "}
-                    <a href="mailto:contact@vestvisuals.ro" className="underline underline-offset-4 hover:text-foreground">
-                        contact@vestvisuals.ro
-                    </a>
-                    .
-                </>
-            }
+            title={m.error_title()}
+            description={<Rich message={m.error_description} />}
             actions={
                 <>
                     <Button size="lg" onClick={() => router.invalidate()}>
-                        Încearcă din nou
+                        {m.error_retry()}
                     </Button>
                     <Button size="lg" variant="outline" nativeButton={false} render={<Link {...home} />}>
-                        Pagina principală
+                        {m.error_home()}
                     </Button>
                 </>
             }

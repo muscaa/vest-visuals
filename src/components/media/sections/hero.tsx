@@ -1,4 +1,6 @@
+import { m } from "@shared/paraglide/messages";
 import { useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import type { Image} from "@/components/img";
 import { Img } from "@/components/img";
 import { TextH1, TextP } from "@/components/typography";
@@ -12,6 +14,7 @@ import {
     CarouselPrevious,
     useCarousel,
 } from "@/components/ui/carousel";
+import { Rich } from "@/components/rich";
 
 function CarouselOverlay() {
     const { api, at, max } = useCarousel();
@@ -31,23 +34,28 @@ function CarouselOverlay() {
             <div className="flex flex-col justify-between gap-8 max-w-8xl w-full grow">
                 <div />
                 <TextH1 size="lg-1">
-                    Momentele care <i className="text-chart-1">contează,</i>
-                    <br />
-                    surprinse cum <i className="text-success">trebuie.</i>
+                    <Rich message={m.media_hero_title} />
                 </TextH1>
                 <div />
                 <TextP size="md-3" className="max-w-[60ch] text-pretty">
-                    Nunți, evenimente, portrete, automotive, imobiliare și brand
-                    content, filmate și editate de un studio căruia chiar îi
-                    pasă de rezultat. Oriunde se petrece povestea ta, suntem
-                    acolo pentru ea.
+                    {m.media_hero_description()}
                 </TextP>
                 <div className="flex not-xs:flex-col gap-4 pointer-events-auto">
-                    <Button variant="white" size="xl">
-                        Vezi lucrările
+                    <Button
+                        variant="white"
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/media" hash="portfolio" />}
+                    >
+                        {m.media_hero_work()}
                     </Button>
-                    <Button variant="outline" size="xl">
-                        Scrie-ne
+                    <Button
+                        variant="outline"
+                        size="xl"
+                        nativeButton={false}
+                        render={<Link to="/media/contact" />}
+                    >
+                        {m.common_write_us()}
                     </Button>
                 </div>
                 <div className="flex justify-center sm:justify-end items-center gap-2 pointer-events-auto">
@@ -122,6 +130,9 @@ export function HeroSection(props: HeroSectionProps) {
                             <Img
                                 className="size-full object-cover"
                                 {...image}
+                                alt={m.media_hero_alt({ number: index + 1 })}
+                                loading={index === 0 ? "eager" : "lazy"}
+                                fetchPriority={index === 0 ? "high" : "low"}
                             />
                         </CarouselItem>
                     ))}

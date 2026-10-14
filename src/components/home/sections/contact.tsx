@@ -1,3 +1,4 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import Contact3 from "@/components/illustrations/contact-3.svg?react";
 import { Eyebrow } from "@/components/eyebrow";
@@ -16,15 +17,14 @@ export function ContactSection(props: ContactSectionProps) {
         >
             <div className="flex flex-col items-center max-w-7xl w-full">
                 <Eyebrow align="center" className="w-full">
-                    Contact
+                    {m.common_contact()}
                 </Eyebrow>
                 <Contact3 aria-hidden className="size-56 mb-4" />
                 <TextH2 size="lg-3" className="mb-6 text-center max-w-[20ch]">
-                    Hai să vorbim despre proiectul tău
+                    {m.home_contact_title()}
                 </TextH2>
                 <TextP variant="muted" size="md-3" className="max-w-[52ch] mb-12 text-center">
-                    Spune-ne ce ai în minte și te punem în legătură cu echipa
-                    potrivită. Răspundem de obicei într-o zi lucrătoare.
+                    {m.home_contact_description()}
                 </TextP>
                 <div className="flex flex-wrap justify-center items-center gap-4">
                     <Button
@@ -32,7 +32,7 @@ export function ContactSection(props: ContactSectionProps) {
                         nativeButton={false}
                         render={<Link to="/home/contact" />}
                     >
-                        Contactează-ne
+                        {m.common_contact_us()}
                     </Button>
                     <Button
                         size="xl"

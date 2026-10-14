@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { createContext, useContext } from "react";
+import { m } from "@shared/paraglide/messages";
 import { Main } from "../main";
+import { Rich } from "../rich";
 import { TextH1, TextH2, TextP, TextSpan } from "../typography";
 import type { LinkOptions } from "@tanstack/react-router";
+import type { Localized } from "@/i18n";
+import { formatDate, localize } from "@/i18n";
 
 export interface LegalSection {
     /** anchor for the table of contents */
@@ -11,22 +15,27 @@ export interface LegalSection {
     content: React.ReactNode;
 }
 
-/** The text of a legal document, shared by every division. */
-export interface LegalDocument {
+/** The text of a legal document in one locale, see src/i18n/legal. */
+export interface LegalContent {
     title: string;
-    /** e.g. "12 octombrie 2026" */
-    updated: string;
     intro: React.ReactNode;
     sections: LegalSection[];
+}
+
+/** A legal document in every locale, shared by every division. */
+export interface LegalDocument {
+    /** ISO date, e.g. "2026-10-13", formatted for each locale */
+    updated: string;
+    content: Localized<LegalContent>;
 }
 
 export type LegalDivision = "home" | "media" | "software";
 export type LegalDocumentId = "terms" | "privacy" | "cookies";
 
-const names: Record<LegalDocumentId, string> = {
-    terms: "Termeni și condiții",
-    privacy: "Politica de confidențialitate",
-    cookies: "Politica de cookie-uri",
+const names: Record<LegalDocumentId, () => string> = {
+    terms: m.legal_terms,
+    privacy: m.legal_privacy,
+    cookies: m.legal_cookies,
 };
 
 // full paths, so the router can type check them
@@ -48,12 +57,14 @@ const links: Record<LegalDivision, Record<LegalDocumentId, LinkOptions>> = {
     },
 };
 
-/** Every legal page of a division, for its footer and the links between them. */
-export function legalPages(division: LegalDivision): (LinkOptions & { name: string })[] {
-    return (Object.keys(names) as LegalDocumentId[]).map((id) => ({
-        name: names[id],
-        ...links[division][id],
-    }));
+/** Every legal page of a division, for its footer and the links between them. Call it while rendering. */
+export function legalPages(division: LegalDivision, except?: LegalDocumentId): (LinkOptions & { name: string })[] {
+    return (Object.keys(names) as LegalDocumentId[])
+        .filter((id) => id !== except)
+        .map((id) => ({
+            name: names[id](),
+            ...links[division][id],
+        }));
 }
 
 const LegalDivisionContext = createContext<LegalDivision>("home");
@@ -73,20 +84,43 @@ export function LegalLink(props: LegalLinkProps) {
     return <Link {...links[division][props.document]}>{props.children}</Link>;
 }
 
-export type LegalPageProps = LegalDocument & {
+export interface LegalAgreementProps {
+    /** a message with {#terms} and {#privacy} tags */
+    message: Parameters<typeof Rich>[0]["message"];
+    division?: LegalDivision;
+}
+
+/** The "by continuing, you agree to…" line under forms, linking the division's terms and privacy policy. */
+export function LegalAgreement(props: LegalAgreementProps) {
+    return (
+        <Rich
+            message={props.message}
+            tags={{
+                terms: ({ children }) => <LegalLink division={props.division} document="terms">{children}</LegalLink>,
+                privacy: ({ children }) => <LegalLink division={props.division} document="privacy">{children}</LegalLink>,
+            }}
+        />
+    );
+}
+
+export interface LegalPageProps {
     division: LegalDivision;
-};
+    id: LegalDocumentId;
+    document: LegalDocument;
+}
 
 /** A long legal document: title, table of contents and numbered sections. */
-export function LegalPage(props: LegalPageProps) {
+export function LegalPage({ division, id, document }: LegalPageProps) {
+    const props = { division, ...localize(document.content) };
+
     return (
         <LegalDivisionContext value={props.division}>
             <Main className="items-center px-6 py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-[16rem_1fr] gap-12 lg:gap-16 max-w-6xl w-full">
                     {/* on small screens the title comes first; the footer still links the other documents */}
                     <aside className="hidden lg:flex flex-col gap-8 sticky top-8 self-start">
-                        <nav aria-label="Cuprins" className="flex flex-col gap-3">
-                            <TextSpan variant="muted" size="sm-3" font="mono-1">Cuprins</TextSpan>
+                        <nav aria-label={m.legal_contents()} className="flex flex-col gap-3">
+                            <TextSpan variant="muted" size="sm-3" font="mono-1">{m.legal_contents()}</TextSpan>
                             <ol className="flex flex-col gap-2">
                                 {
                                     props.sections.map((section, index) => (
@@ -104,12 +138,11 @@ export function LegalPage(props: LegalPageProps) {
                                 }
                             </ol>
                         </nav>
-                        <nav aria-label="Alte documente" className="flex flex-col gap-3">
-                            <TextSpan variant="muted" size="sm-3" font="mono-1">Alte documente</TextSpan>
+                        <nav aria-label={m.legal_other_documents()} className="flex flex-col gap-3">
+                            <TextSpan variant="muted" size="sm-3" font="mono-1">{m.legal_other_documents()}</TextSpan>
                             <ul className="flex flex-col gap-2">
                                 {
-                                    legalPages(props.division)
-                                        .filter((page) => page.name !== props.title)
+                                    legalPages(props.division, id)
                                         .map(({ name, ...link }) => (
                                             <li key={name}>
                                                 <Link {...link} className="text-sm-2 text-muted-foreground transition-colors hover:text-foreground">
@@ -124,7 +157,7 @@ export function LegalPage(props: LegalPageProps) {
                     <article className="flex flex-col max-w-[72ch]">
                         <TextH1 size="md-1" className="mb-3">{props.title}</TextH1>
                         <TextSpan variant="muted" size="sm-2" className="mb-10">
-                            Ultima actualizare: {props.updated}
+                            {m.legal_updated({ date: formatDate(document.updated) })}
                         </TextSpan>
                         <div className="flex flex-col gap-4 mb-12 text-md-4 text-muted-foreground">
                             {props.intro}
@@ -144,11 +177,7 @@ export function LegalPage(props: LegalPageProps) {
                             }
                         </div>
                         <TextP variant="muted" size="sm-2" className="mt-16 pt-8 border-t">
-                            Pentru orice întrebare despre acest document, scrie-ne la{" "}
-                            <a href="mailto:contact@vestvisuals.ro" className="underline underline-offset-4 hover:text-foreground">
-                                contact@vestvisuals.ro
-                            </a>
-                            .
+                            <Rich message={m.legal_questions} />
                         </TextP>
                     </article>
                 </div>

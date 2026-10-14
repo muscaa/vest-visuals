@@ -1,5 +1,6 @@
 import { cn } from "@shared/shadcn/utils";
 import { Link } from "@tanstack/react-router";
+import { m } from "@shared/paraglide/messages";
 import { LogoSmall } from "./logo";
 import type { LinkOptions } from "@tanstack/react-router";
 
@@ -38,7 +39,7 @@ export function NavbarContent(props: NavbarContentProps) {
             )}
         >
             {props.start ?? (
-                <Link {...(props.home ?? { to: "/home" })} aria-label="Acasă">
+                <Link {...(props.home ?? { to: "/home" })} aria-label={m.nav_home()}>
                     <LogoSmall />
                 </Link>
             )}

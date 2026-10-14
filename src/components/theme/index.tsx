@@ -1,4 +1,5 @@
 import { IconMoonStars, IconSun, IconSunMoon } from "@tabler/icons-react";
+import { m } from "@shared/paraglide/messages";
 import { useTheme } from "./provider";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +21,7 @@ export function ThemeToggle() {
     };
 
     return (
-        <Button variant="ghost" size="icon" onClick={() => handleToggle()}>
+        <Button variant="ghost" size="icon" onClick={() => handleToggle()} aria-label={m.nav_theme()} title={m.nav_theme()}>
             <IconSun className="dark:hidden" />
             <IconMoonStars className="not-dark:hidden" />
         </Button>

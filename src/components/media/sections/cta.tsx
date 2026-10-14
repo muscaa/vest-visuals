@@ -1,7 +1,9 @@
+import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { Rich } from "@/components/rich";
 
 interface CTASectionProps { }
 
@@ -13,19 +15,17 @@ export function CTASection(props: CTASectionProps) {
         >
             <div className="flex flex-col items-center max-w-7xl w-full">
                 <Eyebrow align="center">
-                    Saluta-ne
+                    {m.media_cta_eyebrow()}
                 </Eyebrow>
                 <TextH1 size="lg-2" className="mb-8 text-center">
-                    Ai ceva în minte?{" "}
-                    <i className="text-primary">Hai să vorbim.</i>
+                    <Rich message={m.media_cta_title} />
                 </TextH1>
                 <TextP
                     variant="muted"
                     size="md-3"
                     className="max-w-[58ch] mb-16 text-center"
                 >
-                    Trimite-ne câteva detalii despre ce ai nevoie și primești
-                    răspuns într-o zi lucrătoare.
+                    {m.media_cta_description()}
                 </TextP>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Button
@@ -33,9 +33,14 @@ export function CTASection(props: CTASectionProps) {
                         nativeButton={false}
                         render={<Link to="/media/contact" />}
                     >
-                        Mergi la pagina de contact
+                        {m.media_cta_contact_page()}
                     </Button>
-                    <Button size="xl" variant="link">
+                    <Button
+                        size="xl"
+                        variant="link"
+                        nativeButton={false}
+                        render={<a href="mailto:contact@vestvisuals.ro" />}
+                    >
                         contact@vestvisuals.ro
                     </Button>
                 </div>
