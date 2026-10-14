@@ -1,5 +1,7 @@
 /**
- * Translated urls for paraglide, read by vite.config.ts at build time (not bundled).
+ * Paraglide setup that doesn't fit in the vite plugin's options, read by vite.config.ts at build time (not bundled).
+ *
+ * ## Translated urls
  *
  * Routes and links stay in english in the code. Paraglide's url rewrite turns them into
  * `/ro/servicii/nunta` for romanian and `/en/services/wedding` for english.
@@ -10,7 +12,8 @@
  * - add a whole pattern to `patterns`, in paraglide's own format, when a word by word translation doesn't fit
  */
 import { globSync } from "node:fs";
-import { sep } from "node:path";
+import { join, sep } from "node:path";
+import type { Plugin } from "vite";
 
 type Locale = "ro" | "en";
 
@@ -118,4 +121,38 @@ export function urlPatterns(routesDirectory: string): UrlPattern[] {
     };
 
     return [...patterns, ...generated, catchAll];
+}
+
+/**
+ * Sets paraglide's `cookieDomain` from the runtime env instead of the build, so the locale cookie is shared by every subdomain.
+ * Paraglide only accepts a fixed string for it, so this rewrites that one line of the generated runtime as vite loads it.
+ * The file on disk stays as paraglide wrote it. Fails the build if paraglide ever changes the line.
+ *
+ * Only read in the browser, which is the only place the cookie gets written. On the server this line can run before
+ * `@server/env` fills the public env, and `envClient` would throw.
+ */
+export function paraglideCookieDomain(): Plugin {
+    const generated = 'export const cookieDomain = "";';
+    let envModule = "";
+
+    return {
+        name: "paraglide-cookie-domain",
+        configResolved(config) {
+            // absolute path: tsconfig aliases don't apply to the generated js
+            envModule = join(config.root, "src/lib/client/env.ts");
+        },
+        transform(code, id) {
+            if (!id.split("?")[0].endsWith("/paraglide/runtime.js")) {
+                return;
+            }
+            if (!code.includes(generated)) {
+                this.error(`Couldn't find \`${generated}\` in paraglide's runtime, update paraglideCookieDomain() in paraglide.config.ts`);
+            }
+
+            return [
+                `import { envClient } from ${JSON.stringify(envModule)};`,
+                code.replace(generated, 'export const cookieDomain = typeof window === "undefined" ? "" : envClient.PUBLIC_COOKIE_DOMAIN;'),
+            ].join("\n");
+        },
+    };
 }
