@@ -5,7 +5,7 @@ import { LegalLink } from "@/components/legal";
 
 const sections: LegalSection[] = [
     {
-        id: "cine-suntem",
+        id: "who-we-are",
         title: "Who we are",
         content: (
             <>
@@ -24,7 +24,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "acceptare",
+        id: "acceptance",
         title: "Accepting these terms",
         content: (
             <p>
@@ -36,7 +36,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "servicii",
+        id: "services",
         title: "Our services",
         content: (
             <>
@@ -56,7 +56,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "cont",
+        id: "account",
         title: "Your account",
         content: (
             <>
@@ -78,7 +78,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "proprietate-intelectuala",
+        id: "intellectual-property",
         title: "Intellectual property",
         content: (
             <>
@@ -96,7 +96,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "utilizare",
+        id: "use",
         title: "Using the site",
         content: (
             <>
@@ -110,7 +110,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "raspundere",
+        id: "liability",
         title: "Limitation of liability",
         content: (
             <p>
@@ -124,7 +124,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "date-personale",
+        id: "personal-data",
         title: "Personal data and cookies",
         content: (
             <p>
@@ -136,7 +136,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "litigii",
+        id: "disputes",
         title: "Governing law and disputes",
         content: (
             <>

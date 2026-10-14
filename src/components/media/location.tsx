@@ -165,7 +165,7 @@ function HeroSection(props: SectionProps) {
                                 variant="outline"
                                 size="xl"
                                 nativeButton={false}
-                                render={<Link to="." hash="servicii" />}
+                                render={<Link to="." hash="services" />}
                             >
                                 {m.media_location_see_services()}
                             </Button>
@@ -234,7 +234,7 @@ function ContactTile(props: { title: string; description: string; accent: string
 function ServicesSection(props: Pick<SectionProps, "inCity">) {
     return (
         <section
-            id="servicii"
+            id="services"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent scroll-mt-4"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -277,7 +277,7 @@ function ServicesSection(props: Pick<SectionProps, "inCity">) {
 function SpotsSection(props: Pick<SectionProps, "inCity" | "spots">) {
     return (
         <section
-            id="locuri"
+            id="spots"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -332,7 +332,7 @@ function TravelSection(props: Pick<SectionProps, "location" | "freeTravel">) {
 
     return (
         <section
-            id="deplasare"
+            id="travel"
             className="flex flex-col justify-center items-center px-6 pb-16"
         >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl w-full">
@@ -371,7 +371,7 @@ function OtherCitiesSection(props: Pick<SectionProps, "location">) {
 
     return (
         <section
-            id="alte-orase"
+            id="other-cities"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">

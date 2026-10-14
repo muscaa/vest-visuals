@@ -26,7 +26,7 @@ export function SoftwareNavbarLayout() {
                             </NavMenu>
                         ))
                     }
-                    <NavEntry text={m.common_portfolio()} to="/software" hash="portofoliu" />
+                    <NavEntry text={m.common_portfolio()} to="/software" hash="portfolio" />
                     <NavEntry text={m.common_contact()} to="/software/contact" />
                     <NavActions>
                         <LanguageToggle />
@@ -49,7 +49,7 @@ export function SoftwareNavbarLayout() {
                         {
                             title: m.software_company(),
                             links: [
-                                { name: m.common_portfolio(), to: "/software", hash: "portofoliu" },
+                                { name: m.common_portfolio(), to: "/software", hash: "portfolio" },
                                 { name: m.common_contact(), to: "/software/contact" },
                             ],
                         },

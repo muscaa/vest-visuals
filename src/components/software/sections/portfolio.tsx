@@ -62,7 +62,7 @@ interface PortfolioSectionProps { }
 export function PortfolioSection(props: PortfolioSectionProps) {
     return (
         <section
-            id="portofoliu"
+            id="portfolio"
             className="flex flex-col justify-center items-center px-6 py-16 bg-muted"
         >
             <div className="flex flex-col max-w-7xl w-full">

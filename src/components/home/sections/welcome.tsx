@@ -11,7 +11,7 @@ interface WelcomeSectionProps {}
 export function WelcomeSection(props: WelcomeSectionProps) {
     return (
         <section
-            id="bun-venit"
+            id="welcome"
             className="flex flex-col justify-center items-center px-6 py-24 md:py-32 bg-linear-to-b from-transparent to-muted"
         >
             <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] items-center gap-12 max-w-7xl w-full">
@@ -25,7 +25,7 @@ export function WelcomeSection(props: WelcomeSectionProps) {
                     <Button
                         size="xl"
                         nativeButton={false}
-                        render={<Link to="/home" hash="domenii" />}
+                        render={<Link to="/home" hash="divisions" />}
                     >
                         {m.home_welcome_cta()}
                         <IconArrowDown data-icon="inline-end" />

@@ -34,7 +34,7 @@ const work: WorkItem[] = [
         image: "/portfolio/aerionic.webp",
         alt: m.home_work_aerionic_alt,
         position: "object-left",
-        link: { to: "/software", hash: "portofoliu" },
+        link: { to: "/software", hash: "portfolio" },
     },
     {
         id: "automotive",
@@ -59,7 +59,7 @@ interface WorkSectionProps {}
 export function WorkSection(props: WorkSectionProps) {
     return (
         <section
-            id="lucrari"
+            id="work"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">

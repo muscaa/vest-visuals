@@ -5,7 +5,7 @@ import { LegalLink } from "@/components/legal";
 
 const sections: LegalSection[] = [
     {
-        id: "cine-suntem",
+        id: "who-we-are",
         title: "Cine suntem",
         content: (
             <>
@@ -24,7 +24,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "acceptare",
+        id: "acceptance",
         title: "Acceptarea termenilor",
         content: (
             <p>
@@ -36,7 +36,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "servicii",
+        id: "services",
         title: "Serviciile noastre",
         content: (
             <>
@@ -57,7 +57,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "cont",
+        id: "account",
         title: "Contul tău",
         content: (
             <>
@@ -79,7 +79,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "proprietate-intelectuala",
+        id: "intellectual-property",
         title: "Proprietate intelectuală",
         content: (
             <>
@@ -99,7 +99,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "utilizare",
+        id: "use",
         title: "Utilizarea site-ului",
         content: (
             <>
@@ -113,7 +113,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "raspundere",
+        id: "liability",
         title: "Limitarea răspunderii",
         content: (
             <p>
@@ -127,7 +127,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "date-personale",
+        id: "personal-data",
         title: "Date personale și cookie-uri",
         content: (
             <p>
@@ -139,7 +139,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "litigii",
+        id: "disputes",
         title: "Legea aplicabilă și litigii",
         content: (
             <>

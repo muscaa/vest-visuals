@@ -42,7 +42,7 @@ export interface ServiceGroup {
 
 export const serviceGroups: ServiceGroup[] = [
     {
-        id: "dezvoltare-software",
+        id: "software-development",
         title: m.software_group_development,
         navTitle: m.software_group_development_nav,
         illustration: Wireframe,
@@ -68,7 +68,7 @@ export const serviceGroups: ServiceGroup[] = [
         ],
     },
     {
-        id: "cloud-date",
+        id: "cloud-data",
         title: m.software_group_cloud_data,
         navTitle: m.software_group_cloud_data,
         illustration: Database4,
@@ -94,7 +94,7 @@ export const serviceGroups: ServiceGroup[] = [
         ],
     },
     {
-        id: "automatizari",
+        id: "automation",
         title: m.software_group_automation,
         navTitle: m.software_group_automation,
         illustration: Workflow2,
@@ -108,7 +108,7 @@ export const serviceGroups: ServiceGroup[] = [
         ],
     },
     {
-        id: "consultanta-mentenanta",
+        id: "consulting-maintenance",
         title: m.software_group_consulting,
         navTitle: m.software_group_consulting_nav,
         illustration: Maintenance1,
@@ -173,7 +173,7 @@ interface ServicesSectionProps { }
 export function ServicesSection(props: ServicesSectionProps) {
     return (
         <section
-            id="servicii"
+            id="services"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">

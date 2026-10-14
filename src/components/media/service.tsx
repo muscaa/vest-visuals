@@ -151,7 +151,7 @@ function HeroOverlay(props: Pick<SectionProps, "title" | "description">) {
                             variant="white"
                             size="xl"
                             nativeButton={false}
-                            render={<Link to="." hash="pachete" />}
+                            render={<Link to="." hash="packages" />}
                         >
                             {m.media_service_see_packages()}
                         </Button>
@@ -293,7 +293,7 @@ function PackagesSection(props: Pick<SectionProps, "packages">) {
 
     return (
         <section
-            id="pachete"
+            id="packages"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent scroll-mt-4"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -332,7 +332,7 @@ function AboutSection(props: Pick<SectionProps, "service" | "about">) {
 
     return (
         <section
-            id="despre"
+            id="about"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -391,7 +391,7 @@ function AboutSection(props: Pick<SectionProps, "service" | "about">) {
 export function FAQSection(props: Pick<SectionProps, "faq">) {
     return (
         <section
-            id="intrebari"
+            id="faq"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent"
         >
             <div className="flex flex-col max-w-7xl w-full">

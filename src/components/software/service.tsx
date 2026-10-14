@@ -94,7 +94,7 @@ function HeroSection(props: Pick<SectionProps, "service" | "title" | "descriptio
                             size="xl"
                             variant="outline"
                             nativeButton={false}
-                            render={<Link to="." hash="ce-include" />}
+                            render={<Link to="." hash="whats-included" />}
                         >
                             {m.software_service_whats_included()}
                         </Button>
@@ -112,7 +112,7 @@ function HeroSection(props: Pick<SectionProps, "service" | "title" | "descriptio
 function FeaturesSection(props: Pick<SectionProps, "features">) {
     return (
         <section
-            id="ce-include"
+            id="whats-included"
             className="flex flex-col justify-center items-center px-6 py-16 scroll-mt-4"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -144,7 +144,7 @@ function FeaturesSection(props: Pick<SectionProps, "features">) {
 function TechnologiesSection(props: { technologies: string[] }) {
     return (
         <section
-            id="tehnologii"
+            id="technologies"
             className="flex flex-col justify-center items-center px-6 pb-16"
         >
             <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] items-start gap-6 md:gap-16 max-w-7xl w-full">
@@ -178,7 +178,7 @@ function AboutSection(props: Pick<SectionProps, "service" | "about">) {
 
     return (
         <section
-            id="despre"
+            id="about"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -225,7 +225,7 @@ function AboutSection(props: Pick<SectionProps, "service" | "about">) {
 function FAQSection(props: Pick<SectionProps, "faq">) {
     return (
         <section
-            id="intrebari"
+            id="faq"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">
@@ -270,7 +270,7 @@ export function ServicePage(props: ServicePageProps) {
             <PageBreadcrumbs
                 items={[
                     { name: "Software", to: "/software" },
-                    { name: m.common_services(), to: "/software", hash: "servicii" },
+                    { name: m.common_services(), to: "/software", hash: "services" },
                 ]}
                 page={service.title()}
             />

@@ -157,7 +157,7 @@ interface DivisionsSectionProps {}
 export function DivisionsSection(props: DivisionsSectionProps) {
     return (
         <section
-            id="domenii"
+            id="divisions"
             className="flex flex-col justify-center items-center px-6 py-16"
         >
             <div className="flex flex-col max-w-7xl w-full">

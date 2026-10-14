@@ -5,7 +5,7 @@ import { LegalLink } from "@/components/legal";
 
 const sections: LegalSection[] = [
     {
-        id: "operator",
+        id: "controller",
         title: "Who processes your data",
         content: (
             <p>
@@ -18,7 +18,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "date",
+        id: "data-collected",
         title: "What data we collect",
         content: (
             <ul>
@@ -48,7 +48,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "scop",
+        id: "purpose",
         title: "Why we use your data and on what basis",
         content: (
             <ul>
@@ -78,7 +78,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "destinatari",
+        id: "recipients",
         title: "Who we share your data with",
         content: (
             <>
@@ -103,7 +103,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "durata",
+        id: "retention",
         title: "How long we keep your data",
         content: (
             <ul>
@@ -115,7 +115,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "drepturi",
+        id: "rights",
         title: "Your rights",
         content: (
             <>
@@ -140,7 +140,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "securitate",
+        id: "security",
         title: "Data security",
         content: (
             <p>

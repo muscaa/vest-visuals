@@ -33,7 +33,7 @@ export function HeroSection(props: HeroSectionProps) {
                             size="xl"
                             variant="outline"
                             nativeButton={false}
-                            render={<Link to="/software" hash="servicii" />}
+                            render={<Link to="/software" hash="services" />}
                         >
                             {m.software_hero_secondary()}
                         </Button>

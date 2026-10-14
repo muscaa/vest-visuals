@@ -16,7 +16,7 @@ export function BusinessSection(props: BusinessSectionProps) {
 
     return (
         <section
-            id="afaceri"
+            id="business"
             className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-muted to-transparent"
         >
             <div className="flex flex-col max-w-7xl w-full">

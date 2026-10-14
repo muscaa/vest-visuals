@@ -12,7 +12,7 @@ const usedCookies = [
 
 const sections: LegalSection[] = [
     {
-        id: "ce-sunt",
+        id: "what-are-cookies",
         title: "Ce sunt cookie-urile",
         content: (
             <p>
@@ -23,7 +23,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "ce-folosim",
+        id: "cookies-we-use",
         title: "Ce cookie-uri folosim",
         content: (
             <>
@@ -58,7 +58,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "terti",
+        id: "third-parties",
         title: "Cookie-uri de la terți",
         content: (
             <p>
@@ -86,7 +86,7 @@ const sections: LegalSection[] = [
         ),
     },
     {
-        id: "date-personale",
+        id: "personal-data",
         title: "Date personale",
         content: (
             <p>
