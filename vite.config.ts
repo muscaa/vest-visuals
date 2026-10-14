@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import svgr from "vite-plugin-svgr";
+import { urlPatterns } from "./paraglide.config.ts";
 
 export default defineConfig({
     server: {
@@ -43,14 +44,7 @@ export default defineConfig({
                     exclude: true,
                 },
             ],
-            // urlPatterns: [
-            //     {
-            //         pattern: "/:path(.*)?",
-            //         localized: [
-            //             ["en", "/en/:path(.*)?"],
-            //         ],
-            //     }
-            // ],
+            urlPatterns: urlPatterns("./src/routes"),
         }),
     ],
 });

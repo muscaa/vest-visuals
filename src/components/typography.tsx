@@ -120,7 +120,8 @@ export function TextLink({
             variant={variant}
             size={size}
             font={font}
-            render={<Link to={to} params={params} search={search} />}
+            // external links like mailto: skip the router, which would resolve them against the current page
+            render={props.href ? <a /> : <Link to={to} params={params} search={search} />}
         />
     );
 }

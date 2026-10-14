@@ -1,6 +1,0 @@
-{
-    "$schema": "https://inlang.com/schema/inlang-message-format",
-    "example_message": "Guten Tag {username}",
-    "language_label": "Sprache",
-    "current_locale": "Aktuelle Sprache: {locale}"
-}

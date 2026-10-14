@@ -1,4 +1,4 @@
-import { DE, GB, RO } from "country-flag-icons/react/3x2";
+import { GB, RO } from "country-flag-icons/react/3x2";
 import { getLocale, locales, setLocale } from "@shared/paraglide/runtime";
 import type { FlagComponent } from "country-flag-icons/react/3x2";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 /** Languages aren't countries, so each locale picks the flag people associate with it. */
 const flags: Record<string, { flag: FlagComponent; name: string }> = {
     en: { flag: GB, name: "English" },
-    de: { flag: DE, name: "Deutsch" },
     ro: { flag: RO, name: "Română" },
 };
 
