@@ -16,8 +16,6 @@ import { formatList } from "@/i18n";
 //
 // divisions
 //
-export type Audience = "afaceri" | "evenimente";
-
 /** Text is stored as message functions and only called while rendering, so it's in the visitor's locale. */
 export type DivisionLink = LinkOptions & {
     name: () => string;
@@ -30,13 +28,7 @@ export interface Division {
     keywords: (() => string)[];
     /** home page of the division */
     link: LinkOptions;
-    audience: Audience[];
     services: DivisionLink[];
-    /** what the division does for businesses, shown in the business section */
-    business?: {
-        title: () => string;
-        description: () => string;
-    };
     /** each division draws its own tile, in its own style */
     tile: React.ComponentType;
 }
@@ -104,17 +96,12 @@ export const divisions: Division[] = [
         name: "Software",
         keywords: [m.home_keyword_software],
         link: { to: "/software" },
-        audience: ["afaceri"],
         services: serviceGroups.flatMap((group) =>
             group.services.map((service) => ({
                 name: service.title,
                 ...service.link,
             })),
         ),
-        business: {
-            title: m.home_software_business_title,
-            description: m.home_software_business_description,
-        },
         tile: SoftwareTile,
     },
     {
@@ -122,12 +109,7 @@ export const divisions: Division[] = [
         name: "Media",
         keywords: [m.home_keyword_photo, m.home_keyword_video],
         link: { to: "/media" },
-        audience: ["evenimente", "afaceri"],
         services: mediaServices.map(({ id, image, ...service }) => service),
-        business: {
-            title: m.home_media_business_title,
-            description: m.home_media_business_description,
-        },
         tile: MediaTile,
     },
 ];
