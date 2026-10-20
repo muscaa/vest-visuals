@@ -40,6 +40,14 @@ const segments: Record<string, Partial<Record<Locale, string>>> = {
     verify: { ro: "verificare" },
     "forgot-password": { ro: "parola-uitata" },
     "reset-password": { ro: "resetare-parola" },
+    // account & admin
+    albums: { ro: "albume" },
+    settings: { ro: "setari" },
+    users: { ro: "utilizatori" },
+    assets: { ro: "fisiere" },
+    portfolio: { ro: "portofoliu" },
+    categories: { ro: "categorii" },
+    groups: { ro: "grupuri" },
     // media
     locations: { ro: "locatii" },
     wedding: { ro: "nunta" },

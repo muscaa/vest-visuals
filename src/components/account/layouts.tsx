@@ -13,25 +13,24 @@ export function AccountScreenLayout() {
     );
 }
 
-// TODO: link the entries once their pages exist
 const groups: SidebarEntryGroup[] = [
     {
         title: m.dashboard_general,
         entries: [
-            { text: m.account_overview, icon: IconHome, link: { to: "/account" } },
+            { text: m.account_overview, icon: IconHome, link: { to: "/account" }, exact: true },
         ],
     },
     {
         title: () => "Media",
         entries: [
             // the client's digital albums
-            { text: m.account_albums, icon: IconLibraryPhoto },
+            { text: m.account_albums, icon: IconLibraryPhoto, link: { to: "/account/albums" } },
         ],
     },
     {
         title: () => "Software",
         entries: [
-            // demo: the client's software projects and how they're going
+            // TODO: demo, the client's software projects and how they're going
             { text: m.dashboard_projects, icon: IconCode },
         ],
     },
@@ -41,7 +40,7 @@ const groups: SidebarEntryGroup[] = [
 export function AccountSidebarLayout() {
     return (
         <SidebarLayout
-            title={m.nav_account}
+            title={m.account_area}
             home={{ to: "/account" }}
             groups={groups}
             switchTo={{ text: m.dashboard_switch_admin, icon: IconShield, link: { to: "/admin" }, admin: true }}

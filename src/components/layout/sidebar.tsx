@@ -1,10 +1,22 @@
+import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
-import { Link, Outlet, useMatchRoute } from "@tanstack/react-router";
-import { IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
+import { Link, Outlet, useMatchRoute, useMatches } from "@tanstack/react-router";
+import { Fragment, useState  } from "react";
+import { IconChevronRight, IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
 import { LanguageToggle } from "../language-toggle";
 import { LogoSmall } from "../logo";
 import { ThemeToggle } from "../theme";
+import { TextH1, TextP } from "../typography";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "../ui/breadcrumb";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,20 +37,47 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
     SidebarProvider,
     SidebarRail,
     SidebarTrigger,
     useSidebar,
 } from "../ui/sidebar";
+import { Separator } from "../ui/separator";
 import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 
+export interface DashboardCrumb {
+    label: string;
+    /** missing for the current page and for sections without a page of their own, like "Portofoliu" */
+    link?: LinkOptions;
+}
+
+declare module "@tanstack/react-router" {
+    interface StaticDataRouteOption {
+        /**
+         * The page's place in the account or admin area, after the area's home, shown in the top bar.
+         * Called while rendering, with the route's loader data for names like a category's tag.
+         */
+        breadcrumbs?: (loaderData: any) => DashboardCrumb[];
+    }
+}
+
 // text is stored as message functions and only called while rendering, so it's in the visitor's locale
-export interface SidebarEntry {
+export interface SidebarSubEntry {
     text: () => string;
-    icon: Icon;
     /** missing while the page doesn't exist yet */
     link?: LinkOptions;
+    /** only active on the link itself, not its sub pages; for the area's home */
+    exact?: boolean;
+}
+
+export interface SidebarEntry extends SidebarSubEntry {
+    icon: Icon;
+    /** shown as a collapsible menu, open while one of its pages is */
+    children?: SidebarSubEntry[];
 }
 
 export interface SidebarEntryGroup {
@@ -67,16 +106,58 @@ const user = {
     admin: true,
 };
 
-function Entry({ entry }: { entry: SidebarEntry }) {
+/** Whether an entry is the current page, or one of its sub pages (an album is under "Albums"). */
+function useIsActive() {
     const matchRoute = useMatchRoute();
+    return (entry: SidebarSubEntry) => (entry.link ? Boolean(matchRoute({ ...entry.link, fuzzy: !entry.exact })) : false);
+}
+
+function Entry({ entry }: { entry: SidebarEntry }) {
+    const isActive = useIsActive();
+    const childActive = entry.children?.some(isActive) ?? false;
+    // controlled, so it can open when navigating to one of its pages
+    const [open, setOpen] = useState(childActive);
+    const [wasActive, setWasActive] = useState(childActive);
+    if (childActive !== wasActive) {
+        setWasActive(childActive);
+        if (childActive) setOpen(true);
+    }
     const EntryIcon = entry.icon;
     const text = entry.text();
+
+    if (entry.children) {
+        return (
+            <Collapsible open={open} onOpenChange={setOpen} render={<SidebarMenuItem />}>
+                <CollapsibleTrigger render={<SidebarMenuButton tooltip={text} className="group/sidebar-menu" />}>
+                    <EntryIcon />
+                    <span>{text}</span>
+                    <IconChevronRight className="ml-auto transition-transform duration-200 group-data-panel-open/sidebar-menu:rotate-90" />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                    <SidebarMenuSub>
+                        {
+                            entry.children.map((child) => (
+                                <SidebarMenuSubItem key={child.text()}>
+                                    <SidebarMenuSubButton
+                                        isActive={isActive(child)}
+                                        render={child.link ? <Link {...child.link} /> : <button type="button" className="w-full" />}
+                                    >
+                                        <span>{child.text()}</span>
+                                    </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                            ))
+                        }
+                    </SidebarMenuSub>
+                </CollapsibleContent>
+            </Collapsible>
+        );
+    }
 
     return (
         <SidebarMenuItem>
             <SidebarMenuButton
                 tooltip={text}
-                isActive={entry.link ? Boolean(matchRoute(entry.link)) : false}
+                isActive={isActive(entry)}
                 render={entry.link ? <Link {...entry.link} /> : undefined}
             >
                 <EntryIcon />
@@ -128,8 +209,7 @@ function UserMenu(props: Pick<SidebarLayoutProps, "switchTo">) {
                             </DropdownMenuLabel>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        {/* TODO: link the account settings once the page exists */}
-                        <DropdownMenuItem>
+                        <DropdownMenuItem render={<Link to="/account/settings" />}>
                             <IconSettings />
                             {m.account_settings()}
                         </DropdownMenuItem>
@@ -158,12 +238,62 @@ function UserMenu(props: Pick<SidebarLayoutProps, "switchTo">) {
     );
 }
 
+/** The current page's breadcrumbs, from its route's `staticData`. On small screens only the last two show. */
+function DashboardBreadcrumbs(props: Pick<SidebarLayoutProps, "title" | "home">) {
+    const matches = useMatches();
+    const match = [...matches].reverse().find((value) => value.staticData.breadcrumbs);
+    const crumbs: DashboardCrumb[] = [
+        { label: props.title(), link: props.home },
+        ...(match?.staticData.breadcrumbs?.(match.loaderData) ?? []),
+    ];
+
+    return (
+        <Breadcrumb className="min-w-0">
+            <BreadcrumbList>
+                {
+                    crumbs.map((crumb, index) => {
+                        const last = index === crumbs.length - 1;
+                        const hidden = index < crumbs.length - 2 && "hidden md:inline-flex";
+
+                        return (
+                            <Fragment key={index}>
+                                {index > 0 && <BreadcrumbSeparator className={cn(index < crumbs.length - 1 && "hidden md:inline-flex")} />}
+                                <BreadcrumbItem className={cn(hidden, "min-w-0")}>
+                                    {
+                                        last
+                                            ? <BreadcrumbPage className="truncate">{crumb.label}</BreadcrumbPage>
+                                            : crumb.link
+                                                ? <BreadcrumbLink render={<Link {...crumb.link} />}>{crumb.label}</BreadcrumbLink>
+                                                : <span>{crumb.label}</span>
+                                    }
+                                </BreadcrumbItem>
+                            </Fragment>
+                        );
+                    })
+                }
+            </BreadcrumbList>
+        </Breadcrumb>
+    );
+}
+
+/**
+ * Whether the sidebar is open, kept across page groups: each group has its own layout route, so the sidebar remounts
+ * when moving between them. Only for the browser session; a fresh load starts open.
+ */
+let sidebarOpen = true;
+
 /** The signed in areas (account, admin): a sidebar with grouped entries and the user menu, a slim top bar and the page. */
 export function SidebarLayout(props: SidebarLayoutProps) {
     const title = props.title();
+    const [open, setOpen] = useState(sidebarOpen);
+
+    const handleOpenChange = (value: boolean) => {
+        sidebarOpen = value;
+        setOpen(value);
+    };
 
     return (
-        <SidebarProvider className="h-full min-h-0">
+        <SidebarProvider open={open} onOpenChange={handleOpenChange} className="h-full min-h-0">
             <Sidebar collapsible="icon">
                 <SidebarHeader>
                     <SidebarMenu>
@@ -200,9 +330,11 @@ export function SidebarLayout(props: SidebarLayoutProps) {
                 <SidebarRail />
             </Sidebar>
             <SidebarInset className="overflow-hidden">
-                <header className="flex justify-between items-center gap-2 h-16 shrink-0 px-4">
+                <header className="flex items-center gap-2 h-16 shrink-0 px-4">
                     <SidebarTrigger className="-ml-1" />
-                    <div className="flex items-center gap-1">
+                    <Separator orientation="vertical" className="mr-2 data-vertical:h-4 data-vertical:self-center" />
+                    <DashboardBreadcrumbs title={props.title} home={props.home} />
+                    <div className="flex items-center gap-1 ml-auto">
                         <LanguageToggle />
                         <ThemeToggle />
                     </div>
@@ -212,5 +344,37 @@ export function SidebarLayout(props: SidebarLayoutProps) {
                 </div>
             </SidebarInset>
         </SidebarProvider>
+    );
+}
+
+export interface DashboardPageProps {
+    title: string;
+    description?: string;
+    /** e.g. an "Add" button, next to the title */
+    action?: React.ReactNode;
+    /** a centered, readable column, for forms like settings; lists and tables use the full width */
+    narrow?: boolean;
+    children?: React.ReactNode;
+}
+
+/** A page in the account or admin area: title, short description, an optional action and the content. */
+export function DashboardPage(props: DashboardPageProps) {
+    return (
+        <main className={cn("flex flex-col gap-8 w-full px-6 pb-10 md:px-10", props.narrow && "max-w-4xl mx-auto")}>
+            <div className="flex flex-wrap justify-between items-end gap-4">
+                <div className="flex flex-col gap-2">
+                    <TextH1 size="md-1">{props.title}</TextH1>
+                    {
+                        props.description && (
+                            <TextP variant="muted" size="md-4" className="max-w-[60ch]">
+                                {props.description}
+                            </TextP>
+                        )
+                    }
+                </div>
+                {props.action}
+            </div>
+            {props.children}
+        </main>
     );
 }

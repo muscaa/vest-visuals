@@ -3,27 +3,34 @@ import { IconCode, IconFiles, IconHome, IconLibraryPhoto, IconPhoto, IconUser, I
 import { SidebarLayout } from "../layout/sidebar";
 import type { SidebarEntryGroup } from "../layout/sidebar";
 
-// TODO: link the entries once their pages exist
 const groups: SidebarEntryGroup[] = [
     {
         title: m.dashboard_general,
         entries: [
-            { text: m.account_overview, icon: IconHome, link: { to: "/admin" } },
-            { text: m.account_users, icon: IconUsers },
-            { text: m.account_assets, icon: IconFiles },
+            { text: m.account_overview, icon: IconHome, link: { to: "/admin" }, exact: true },
+            { text: m.account_users, icon: IconUsers, link: { to: "/admin/users" } },
+            { text: m.account_assets, icon: IconFiles, link: { to: "/admin/assets" } },
         ],
     },
     {
         title: () => "Media",
         entries: [
-            { text: m.common_portfolio, icon: IconPhoto },
-            { text: m.account_albums, icon: IconLibraryPhoto },
+            {
+                text: m.common_portfolio,
+                icon: IconPhoto,
+                children: [
+                    { text: m.account_portfolio_categories, link: { to: "/admin/portfolio/categories" } },
+                    { text: m.account_portfolio_groups, link: { to: "/admin/portfolio/groups" } },
+                    { text: m.admin_portfolio_media, link: { to: "/admin/portfolio/media" } },
+                ],
+            },
+            { text: m.account_albums, icon: IconLibraryPhoto, link: { to: "/admin/albums" } },
         ],
     },
     {
         title: () => "Software",
         entries: [
-            // demo: every client's software projects, the other side of "Proiecte" in the account
+            // TODO: demo, every client's software projects, the other side of "Proiecte" in the account
             { text: m.dashboard_projects, icon: IconCode },
         ],
     },
