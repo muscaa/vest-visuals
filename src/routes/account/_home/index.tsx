@@ -2,7 +2,7 @@ import { m } from "@shared/paraglide/messages";
 import { createFileRoute } from "@tanstack/react-router";
 import { TextH1, TextP } from "@/components/typography";
 
-export const Route = createFileRoute("/account/_dashboard/")({
+export const Route = createFileRoute("/account/_home/")({
     component: RouteComponent,
 });
 
