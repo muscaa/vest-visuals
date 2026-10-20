@@ -7,6 +7,7 @@ const usedCookies = [
     { name: "theme", purpose: "Remembers the theme you chose (light or dark) on every Vest Visuals site.", duration: "1 year" },
     { name: "PARAGLIDE_LOCALE", purpose: "Remembers the language you chose on every Vest Visuals site.", duration: "about 400 days" },
     { name: "better-auth.session_token", purpose: "Keeps you signed in to your account.", duration: "until you sign out or the session expires" },
+    { name: "sidebar_state", purpose: "Remembers whether the menu in your account is open or closed.", duration: "7 days" },
     { name: "_GRECAPTCHA", purpose: "Set by Google reCAPTCHA, protects the forms from spam and abuse.", duration: "6 months" },
 ];
 

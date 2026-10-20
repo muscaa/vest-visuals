@@ -7,6 +7,7 @@ const usedCookies = [
     { name: "theme", purpose: "Ține minte tema aleasă (luminoasă sau întunecată) pe toate site-urile Vest Visuals.", duration: "1 an" },
     { name: "PARAGLIDE_LOCALE", purpose: "Ține minte limba aleasă pe toate site-urile Vest Visuals.", duration: "aprox. 400 de zile" },
     { name: "better-auth.session_token", purpose: "Te ține autentificat în contul tău.", duration: "până la deconectare sau expirarea sesiunii" },
+    { name: "sidebar_state", purpose: "Ține minte dacă meniul din contul tău e deschis sau închis.", duration: "7 zile" },
     { name: "_GRECAPTCHA", purpose: "Setat de Google reCAPTCHA, protejează formularele de spam și abuz.", duration: "6 luni" },
 ];
 
