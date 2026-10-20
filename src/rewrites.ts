@@ -18,6 +18,7 @@ const bridges = {
     account: envClient.PUBLIC_REWRITE_BRIDGE_ACCOUNT,
     media: envClient.PUBLIC_REWRITE_BRIDGE_MEDIA,
     software: envClient.PUBLIC_REWRITE_BRIDGE_SOFTWARE,
+    admin: envClient.PUBLIC_REWRITE_BRIDGE_ADMIN,
 } satisfies Record<string, string>;
 
 type Bridge = keyof typeof bridges;

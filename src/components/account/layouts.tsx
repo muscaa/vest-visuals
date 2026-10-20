@@ -1,9 +1,9 @@
+import { m } from "@shared/paraglide/messages";
 import { Outlet } from "@tanstack/react-router";
+import { IconCode, IconHome, IconLibraryPhoto, IconShield } from "@tabler/icons-react";
 import { ScreenLayout } from "../layout/screen";
-import { LanguageToggle } from "../language-toggle";
-import { ThemeToggle } from "../theme";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar";
-import { AccountSidebar } from "./sidebar";
+import { SidebarLayout } from "../layout/sidebar";
+import type { SidebarEntryGroup } from "../layout/sidebar";
 
 export function AccountScreenLayout() {
     return (
@@ -13,23 +13,38 @@ export function AccountScreenLayout() {
     );
 }
 
-/** The signed in part of the account site: sidebar on the left, a slim top bar and the page. */
+// TODO: link the entries once their pages exist
+const groups: SidebarEntryGroup[] = [
+    {
+        title: m.dashboard_general,
+        entries: [
+            { text: m.account_overview, icon: IconHome, link: { to: "/account" } },
+        ],
+    },
+    {
+        title: () => "Media",
+        entries: [
+            // the client's digital albums
+            { text: m.account_albums, icon: IconLibraryPhoto },
+        ],
+    },
+    {
+        title: () => "Software",
+        entries: [
+            // demo: the client's software projects and how they're going
+            { text: m.dashboard_projects, icon: IconCode },
+        ],
+    },
+];
+
+/** The signed in part of the account site. */
 export function AccountSidebarLayout() {
     return (
-        <SidebarProvider className="h-full min-h-0">
-            <AccountSidebar />
-            <SidebarInset className="overflow-hidden">
-                <header className="flex justify-between items-center gap-2 h-16 shrink-0 px-4">
-                    <SidebarTrigger className="-ml-1" />
-                    <div className="flex items-center gap-1">
-                        <LanguageToggle />
-                        <ThemeToggle />
-                    </div>
-                </header>
-                <div className="flex flex-col grow overflow-y-auto">
-                    <Outlet />
-                </div>
-            </SidebarInset>
-        </SidebarProvider>
+        <SidebarLayout
+            title={m.nav_account}
+            home={{ to: "/account" }}
+            groups={groups}
+            switchTo={{ text: m.dashboard_switch_admin, icon: IconShield, link: { to: "/admin" }, admin: true }}
+        />
     );
 }

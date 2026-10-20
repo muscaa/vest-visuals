@@ -258,14 +258,8 @@
     "media_location_bucharest_region": "Municipiul București",
     "account_overview": "Prezentare generală",
     "account_settings": "Setări",
-    "account_profile": "Cont",
-    "account_preferences": "Preferințe",
-    "account_admin": "Administrare",
     "account_users": "Utilizatori",
     "account_assets": "Fișiere",
-    "account_portfolio_categories": "Categorii",
-    "account_portfolio_groups": "Grupuri",
-    "account_registries": "Registre",
     "account_albums": "Albume",
     "account_back_to_site": "Înapoi la site",
     "account_logout": "Deconectează-te",
@@ -274,5 +268,12 @@
     "account_welcome_description": "Aici vei găsi albumele, setările și tot ce ține de colaborarea cu noi.",
     "ui_toggle_sidebar": "Afișează sau ascunde meniul",
     "ui_sidebar": "Meniu",
-    "ui_sidebar_description": "Afișează meniul pe telefon."
+    "ui_sidebar_description": "Afișează meniul pe telefon.",
+    "dashboard_general": "General",
+    "dashboard_projects": "Proiecte",
+    "dashboard_switch_admin": "Administrare",
+    "dashboard_switch_account": "Contul meu",
+    "admin_title": "Administrare",
+    "admin_welcome_title": "Bun venit în administrare",
+    "admin_welcome_description": "De aici gestionezi utilizatorii, fișierele, portofoliul, albumele și proiectele."
 }

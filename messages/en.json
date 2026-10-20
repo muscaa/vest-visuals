@@ -258,14 +258,8 @@
     "media_location_bucharest_region": "Municipality of Bucharest",
     "account_overview": "Overview",
     "account_settings": "Settings",
-    "account_profile": "Account",
-    "account_preferences": "Preferences",
-    "account_admin": "Admin",
     "account_users": "Users",
     "account_assets": "Assets",
-    "account_portfolio_categories": "Categories",
-    "account_portfolio_groups": "Groups",
-    "account_registries": "Registries",
     "account_albums": "Albums",
     "account_back_to_site": "Back to the site",
     "account_logout": "Log out",
@@ -274,5 +268,12 @@
     "account_welcome_description": "This is where you'll find your albums, settings and everything about working with us.",
     "ui_toggle_sidebar": "Toggle sidebar",
     "ui_sidebar": "Menu",
-    "ui_sidebar_description": "Shows the menu on mobile."
+    "ui_sidebar_description": "Shows the menu on mobile.",
+    "dashboard_general": "General",
+    "dashboard_projects": "Projects",
+    "dashboard_switch_admin": "Admin",
+    "dashboard_switch_account": "My account",
+    "admin_title": "Admin",
+    "admin_welcome_title": "Welcome to the admin area",
+    "admin_welcome_description": "This is where you manage users, assets, the portfolio, albums and projects."
 }

@@ -5,6 +5,7 @@ const client = z.object({
     PUBLIC_REWRITE_BRIDGE_ACCOUNT: z.string(),
     PUBLIC_REWRITE_BRIDGE_MEDIA: z.string(),
     PUBLIC_REWRITE_BRIDGE_SOFTWARE: z.string(),
+    PUBLIC_REWRITE_BRIDGE_ADMIN: z.string(),
     PUBLIC_COOKIE_DOMAIN: z.string(),
 });
 const server = client.extend({

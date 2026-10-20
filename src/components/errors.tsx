@@ -13,6 +13,7 @@ const homes: { prefix: string; link: LinkOptions }[] = [
     { prefix: "/media", link: { to: "/media" } },
     { prefix: "/software", link: { to: "/software" } },
     { prefix: "/account", link: { to: "/account" } },
+    { prefix: "/admin", link: { to: "/admin" } },
 ];
 
 /** The home page of the site the visitor is on, so they don't get thrown to another division. */
