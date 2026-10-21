@@ -36,16 +36,6 @@ export function SignupForm() {
                         {m.auth_or_email()}
                     </FieldSeparator>
                     <Field>
-                        <FieldLabel htmlFor="name">{m.common_name()}</FieldLabel>
-                        <Input
-                            id="name"
-                            name="name"
-                            autoComplete="name"
-                            placeholder={m.common_your_name()}
-                            required
-                        />
-                    </Field>
-                    <Field>
                         <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                         <Input
                             id="email"
@@ -67,6 +57,17 @@ export function SignupForm() {
                             required
                         />
                         <FieldDescription>{m.common_password_hint()}</FieldDescription>
+                    </Field>
+                    <Field>
+                        <FieldLabel htmlFor="confirm-password">{m.common_password_confirm()}</FieldLabel>
+                        <Input
+                            id="confirm-password"
+                            name="confirmPassword"
+                            type="password"
+                            autoComplete="new-password"
+                            minLength={8}
+                            required
+                        />
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">

@@ -39,7 +39,7 @@ export function ResetPasswordForm() {
                         <FieldDescription>{m.common_password_hint()}</FieldDescription>
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="confirm-password">{m.reset_confirm()}</FieldLabel>
+                        <FieldLabel htmlFor="confirm-password">{m.common_password_confirm()}</FieldLabel>
                         <Input
                             id="confirm-password"
                             name="confirmPassword"

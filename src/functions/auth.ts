@@ -2,70 +2,41 @@ import { auth } from "@server/auth";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import { redirect } from "@tanstack/react-router";
+import { isAdmin } from "@shared/auth";
 
-export const getSession = createServerFn({ method: "GET" }).handler(
-    async () => {
-        const headers = getRequestHeaders();
-        const session = await auth.api.getSession({ headers });
+/** The signed in user's session, or null. */
+export const getSession = createServerFn({ method: "GET" }).handler(async () => {
+    return await auth.api.getSession({ headers: getRequestHeaders() });
+});
 
-        return session;
-    },
-);
+/**
+ * The signed in user's session; signed out visitors are sent to the login page.
+ * For a route: `beforeLoad: async () => ({ session: await requireSession() })`.
+ */
+export const requireSession = createServerFn({ method: "GET" }).handler(async () => {
+    const session = await auth.api.getSession({ headers: getRequestHeaders() });
 
-export const ensureSession = createServerFn({ method: "GET" }).handler(
-    async () => {
-        const headers = getRequestHeaders();
-        const session = await auth.api.getSession({ headers });
+    if (!session) {
+        throw redirect({ to: "/account/login" });
+    }
 
-        if (!session) {
-            throw new Error("Unauthorized");
-        }
+    return session;
+});
 
-        return session;
-    },
-);
+/** Like {@link requireSession}, but only for admins; other users are sent to their account. */
+export const requireAdmin = createServerFn({ method: "GET" }).handler(async () => {
+    const session = await auth.api.getSession({ headers: getRequestHeaders() });
 
-export const login = createServerFn({ method: "POST" })
-    .validator((data: FormData) => {
-        const email = data.get("email") as string;
-        const password = data.get("password") as string;
+    if (!session) {
+        throw redirect({ to: "/account/login" });
+    }
+    if (!isAdmin(session.user)) {
+        throw redirect({ to: "/account" });
+    }
 
-        return { email, password };
-    })
-    .handler(async ({ data }) => {
-        await auth.api.signInEmail({
-            body: {
-                email: data.email,
-                password: data.password,
-                rememberMe: true,
-            },
-        });
+    return session;
+});
 
-        throw redirect({ to: "/account/private" });
-    });
-
-export const signup = createServerFn({ method: "POST" })
-    .validator((data: FormData) => {
-        const email = data.get("email") as string;
-        const password = data.get("password") as string;
-        const name = email.split("@")[0];
-
-        return { name, email, password };
-    })
-    .handler(async ({ data }) => {
-        await auth.api.signUpEmail({
-            body: {
-                name: data.name,
-                email: data.email,
-                password: data.password,
-            },
-        });
-
-        throw redirect({ to: "/account/private" });
-    });
-
-export const signout = createServerFn({ method: "GET" }).handler(async () => {
-    const headers = getRequestHeaders();
-
-    await auth.api.signOut({ headers });
+export const signout = createServerFn({ method: "POST" }).handler(async () => {
+    await auth.api.signOut({ headers: getRequestHeaders() });
 });

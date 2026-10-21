@@ -8,7 +8,6 @@ import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import { TextH1, TextP } from "../typography";
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
 import {
     Field,
     FieldDescription,
@@ -17,6 +16,7 @@ import {
     FieldSeparator,
 } from "../ui/field";
 import { Input } from "../ui/input";
+import { Switch } from "../ui/switch";
 
 export function LoginForm() {
     return (
@@ -65,11 +65,11 @@ export function LoginForm() {
                             required
                         />
                     </Field>
-                    <Field orientation="horizontal">
-                        <Checkbox id="remember-me" name="rememberMe" defaultChecked />
+                    <Field orientation="horizontal" className="justify-between">
                         <FieldLabel htmlFor="remember-me" className="font-normal">
                             {m.login_remember()}
                         </FieldLabel>
+                        <Switch id="remember-me" name="rememberMe" defaultChecked />
                     </Field>
                     <Field>
                         <Button type="submit" size="lg">
