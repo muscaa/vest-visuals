@@ -17,7 +17,8 @@ import {
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { FormMessage, SubmitButton } from "./form-parts";
-import { useAuthForm, usePublicUrl } from "@/hooks/auth";
+import { usePublicUrl } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 
 const route = getRouteApi("/account/_auth/login");
 
@@ -26,7 +27,7 @@ export function LoginForm() {
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
 
-    const { onSubmit, pending, error } = useAuthForm(async (field) => {
+    const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         const { data, error: failed } = await authClient.signIn.email({
             email: field("email").trim(),
             password: field("password"),

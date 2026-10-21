@@ -20,37 +20,54 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { FieldGroup } from "./ui/field";
+import { FormMessage, SubmitButton } from "./forms/form-parts";
 import type { LinkOptions, RegisteredRouter } from "@tanstack/react-router";
+import type { useFormSubmit } from "@/hooks/form";
 
 export interface FormDialogProps {
-    /** the button's content, e.g. an icon and "Add user" */
-    trigger: React.ReactNode;
+    /** the button's content, e.g. an icon and "Add user"; left out for dialogs opened from a menu, with `open` */
+    trigger?: React.ReactNode;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     title: string;
     description?: string;
     /** the submit button, "Create" by default */
     submit?: string;
+    /** a red submit button, for deleting */
+    destructive?: boolean;
+    /** from {@link useFormSubmit}; without it the form isn't sent yet */
+    form?: ReturnType<typeof useFormSubmit>;
     /** the form fields */
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-/** A button opening a form in a dialog, for creating things in the admin. */
+/** A form in a dialog, for creating and changing things in the admin. Opened by its own button, or from outside. */
 export function FormDialog(props: FormDialogProps) {
+    const onOpenChange = (open: boolean) => {
+        // a new start each time it opens
+        props.form?.setError(undefined);
+        props.onOpenChange?.(open);
+    };
+
     return (
-        <Dialog>
-            <DialogTrigger render={<Button />}>{props.trigger}</DialogTrigger>
+        <Dialog open={props.open} onOpenChange={onOpenChange}>
+            {props.trigger && <DialogTrigger render={<Button />}>{props.trigger}</DialogTrigger>}
             <DialogContent className="sm:max-w-lg">
-                {/* TODO: submit once the backend is there */}
-                <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-6">
+                {/* TODO: the demo pages pass no `form` until their backend is there */}
+                <form method="post" onSubmit={props.form?.onSubmit ?? ((event) => event.preventDefault())} className="flex flex-col gap-6">
                     <DialogHeader>
                         <DialogTitle>{props.title}</DialogTitle>
                         {props.description && <DialogDescription>{props.description}</DialogDescription>}
                     </DialogHeader>
-                    <FieldGroup>{props.children}</FieldGroup>
+                    {props.children && <FieldGroup>{props.children}</FieldGroup>}
+                    {props.form?.error && <FormMessage>{props.form.error}</FormMessage>}
                     <DialogFooter>
                         <DialogClose render={<Button type="button" variant="outline" />}>
                             {m.dialog_cancel()}
                         </DialogClose>
-                        <Button type="submit">{props.submit ?? m.dialog_create()}</Button>
+                        <SubmitButton pending={props.form?.pending ?? false} size="default" variant={props.destructive ? "destructive" : "default"}>
+                            {props.submit ?? m.dialog_create()}
+                        </SubmitButton>
                     </DialogFooter>
                 </form>
             </DialogContent>

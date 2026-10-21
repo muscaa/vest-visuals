@@ -1,3 +1,4 @@
+import { and, eq } from "drizzle-orm";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, twoFactor } from "better-auth/plugins";
@@ -8,6 +9,16 @@ import { envServer } from "@server/env";
 import { sendMail } from "@server/mail";
 import * as templates from "@server/mail/templates";
 import { nameFromEmail } from "@shared/auth";
+
+/** Whether a user can sign in with a password; accounts created by an admin start without one. */
+async function hasPassword(userId: string) {
+    const credentials = await db
+        .select({ id: schema.account.id })
+        .from(schema.account)
+        .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")))
+        .limit(1);
+    return credentials.length > 0;
+}
 
 export const auth = betterAuth({
     appName: "Vest Visuals",
@@ -34,8 +45,10 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: false,
         requireEmailVerification: true,
+        // the same link sets the first password of accounts created by an admin
         sendResetPassword: async ({ user, url }) => {
-            await sendMail(user.email, templates.resetPassword(url));
+            const mail = (await hasPassword(user.id)) ? templates.resetPassword(url) : templates.choosePassword(url);
+            await sendMail(user.email, mail);
         },
     },
     emailVerification: {
@@ -71,9 +84,9 @@ export const auth = betterAuth({
     databaseHooks: {
         user: {
             create: {
-                // names aren't asked for at sign up, they come from the email
+                // names aren't asked for at sign up, they come from the email; admins can set one
                 before: async (user) => ({
-                    data: { ...user, name: nameFromEmail(user.email) },
+                    data: { ...user, name: user.name.trim() || nameFromEmail(user.email) },
                 }),
             },
         },
@@ -105,3 +118,12 @@ export const auth = betterAuth({
 });
 
 export type Session = typeof auth.$Infer.Session;
+
+/**
+ * Better Auth's endpoints as route handlers, served at `/api/auth` on every site whose pages use the auth client
+ * (it calls the site it's on): see `routes/account/api/auth/$.ts` and `routes/admin/api/auth/$.ts`.
+ */
+export const authHandlers = {
+    GET: ({ request }: { request: Request }) => auth.handler(request),
+    POST: ({ request }: { request: Request }) => auth.handler(request),
+};

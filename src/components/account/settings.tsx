@@ -24,10 +24,11 @@ import { Field, FieldDescription, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
-import { useAuthForm, usePublicUrl, useRefreshUser, useUser } from "@/hooks/auth";
+import { usePublicUrl, useRefreshUser, useUser } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 
 /** One settings section. With `form`, it's a form with a single save button in its footer. */
-function SettingsSection(props: { title: string; children: React.ReactNode; form?: ReturnType<typeof useAuthForm> }) {
+function SettingsSection(props: { title: string; children: React.ReactNode; form?: ReturnType<typeof useFormSubmit> }) {
     const content = (
         <>
             <div className="flex flex-col gap-6 p-6">
@@ -70,7 +71,7 @@ export function ProfileSettings() {
     const user = useUser();
     const refreshUser = useRefreshUser();
 
-    const form = useAuthForm(async (field) => {
+    const form = useFormSubmit(async (field) => {
         const name = field("name").trim();
 
         if (name !== user.name) {
@@ -118,7 +119,7 @@ export function SecuritySettings() {
     /** bumped after saving, so the password fields start over */
     const [saves, setSaves] = useState(0);
 
-    const form = useAuthForm(async (field) => {
+    const form = useFormSubmit(async (field) => {
         const email = field("email").trim();
         const currentPassword = field("currentPassword");
         const newPassword = field("newPassword");
@@ -212,7 +213,7 @@ export function DeleteAccount() {
     const publicUrl = usePublicUrl();
     const [open, setOpen] = useState(false);
 
-    const form = useAuthForm(async () => {
+    const form = useFormSubmit(async () => {
         const { error: failed } = await authClient.deleteUser({
             callbackURL: publicUrl({ to: "/account/status/$status", params: { status: "account-deleted" } }),
         });

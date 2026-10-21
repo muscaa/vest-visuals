@@ -13,13 +13,14 @@ import {
 } from "../ui/field";
 import { Input } from "../ui/input";
 import { FormMessage, SubmitButton } from "./form-parts";
-import { useAuthForm, usePublicUrl } from "@/hooks/auth";
+import { usePublicUrl } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 
 export function ForgotPasswordForm() {
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
 
-    const { onSubmit, pending, error } = useAuthForm(async (field) => {
+    const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         const email = field("email").trim();
         // same answer whether the account exists or not
         const { error: failed } = await authClient.requestPasswordReset({

@@ -5,7 +5,7 @@ import { SplitCard, SplitCardHeader } from "../cards/split";
 import ResetPassword2 from "../illustrations/reset-password-2.svg?react";
 import { Field, FieldDescription, FieldGroup } from "../ui/field";
 import { FormMessage, NewPasswordFields, SubmitButton, passwordsMatch } from "./form-parts";
-import { useAuthForm } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 
 const route = getRouteApi("/account/_auth/reset-password/");
 
@@ -14,7 +14,7 @@ export function ResetPasswordForm() {
     const { token } = route.useSearch();
     const navigate = useNavigate();
 
-    const { onSubmit, pending, error } = useAuthForm(async (field) => {
+    const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         if (!passwordsMatch(field)) {
             return m.auth_error_password_mismatch();
         }

@@ -17,13 +17,14 @@ import {
 } from "../ui/field";
 import { Input } from "../ui/input";
 import { FormMessage, NewPasswordFields, SubmitButton, passwordsMatch } from "./form-parts";
-import { useAuthForm, usePublicUrl } from "@/hooks/auth";
+import { usePublicUrl } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 
 export function SignupForm() {
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
 
-    const { onSubmit, pending, error } = useAuthForm(async (field) => {
+    const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         if (!passwordsMatch(field)) {
             return m.auth_error_password_mismatch();
         }

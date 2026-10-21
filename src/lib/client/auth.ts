@@ -30,6 +30,8 @@ const errorMessages: Record<string, () => string> = {
     TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE: m.auth_error_code_attempts,
     ACCOUNT_TEMPORARILY_LOCKED: m.auth_error_locked,
     INVALID_TWO_FACTOR_COOKIE: m.auth_error_sign_in_expired,
+    // admin plugin
+    BANNED_USER: m.auth_error_banned,
 };
 
 /** A message for an error from the auth client. */

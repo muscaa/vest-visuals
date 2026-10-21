@@ -25,6 +25,13 @@ export function resetPassword(url: string): Mail {
     };
 }
 
+export function choosePassword(url: string): Mail {
+    return {
+        subject: `${appName}: your account is ready`,
+        text: `An account was created for you. Choose a password to sign in:\n${url}`,
+    };
+}
+
 export function confirmEmailChange(newEmail: string, url: string): Mail {
     return {
         subject: `${appName}: confirm your new email`,

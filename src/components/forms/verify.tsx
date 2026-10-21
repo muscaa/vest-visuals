@@ -21,7 +21,7 @@ import {
 } from "../ui/input-otp";
 import { Switch } from "../ui/switch";
 import { FormMessage, SubmitButton } from "./form-parts";
-import { useAuthForm } from "@/hooks/auth";
+import { useFormSubmit } from "@/hooks/form";
 import { redirectTarget, sessionQuery } from "@/functions/auth";
 
 const route = getRouteApi("/account/_auth/login");
@@ -66,7 +66,7 @@ export function VerifyForm() {
     const [code, setCode] = useState("");
     const [resent, setResent] = useState(false);
 
-    const { onSubmit, pending, error, setError } = useAuthForm(async (field) => {
+    const { onSubmit, pending, error, setError } = useFormSubmit(async (field) => {
         const { error: failed } = await authClient.twoFactor.verifyOtp({
             code,
             trustDevice: field("trustDevice") === "on",

@@ -21,8 +21,8 @@ export function localize<T>(value: Localized<T>): T {
     return value[getLocale()];
 }
 
-/** e.g. "13 octombrie 2026" / "13 October 2026". Takes an ISO date, like "2026-10-13". */
-export function formatDate(date: string): string {
+/** e.g. "13 octombrie 2026" / "13 October 2026". Takes a date, or an ISO one like "2026-10-13". */
+export function formatDate(date: string | Date): string {
     return new Intl.DateTimeFormat(intlLocales[getLocale()], { dateStyle: "long", timeZone: "UTC" }).format(new Date(date));
 }
 
