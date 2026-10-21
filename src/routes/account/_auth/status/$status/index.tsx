@@ -21,7 +21,7 @@ export const Route = createFileRoute("/account/_auth/status/$status/")({
     },
     validateSearch: searchSchema,
     beforeLoad: async ({ params, search, context }) => {
-        const session = await context.queryClient.fetchQuery(sessionQuery);
+        const session = await context.queryClient.query(sessionQuery);
 
         // the login form's callbackURL: Better Auth also opens it right after signing in, so continue from there
         if (params.status === "email-verified" && session) {

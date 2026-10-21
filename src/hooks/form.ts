@@ -12,7 +12,7 @@ export function useFormSubmit(submit: (field: FieldReader) => Promise<string | v
     const [pending, setPending] = useState(false);
     const [error, setError] = useState<string>();
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (pending) return;
 

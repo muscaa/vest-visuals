@@ -1,5 +1,5 @@
 import { m } from "@shared/paraglide/messages";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { IconClock } from "@tabler/icons-react";
 import { Img } from "@/components/img";
 import { DashboardPage } from "@/components/layout/sidebar";
@@ -31,8 +31,11 @@ const albums: Album[] = [
 
 function AlbumTile({ album }: { album: Album }) {
     return (
-        // TODO: link to the album once its page exists
-        <article className="group/album relative isolate flex flex-col justify-end aspect-4/3 p-5 rounded-3xl overflow-hidden shadow-md theme-dark cursor-pointer">
+        <Link
+            to="/account/albums/$id"
+            params={{ id: album.id }}
+            className="group/album relative isolate flex flex-col justify-end aspect-4/3 p-5 rounded-3xl overflow-hidden shadow-md theme-dark outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
             <Img
                 src={album.cover}
                 alt={album.title}
@@ -45,7 +48,7 @@ function AlbumTile({ album }: { album: Album }) {
                 {m.account_albums_expires({ date: formatDate(album.lockAt) })}
             </span>
             <h2 className="text-md-2 font-medium text-foreground text-balance">{album.title}</h2>
-        </article>
+        </Link>
     );
 }
 

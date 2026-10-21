@@ -50,6 +50,8 @@ function PortfolioEntry({
 
 interface PortfolioItem {
     service: MediaServiceId;
+    /** the portfolio category's tag, as set in the admin */
+    category: string;
     /** the name with its accent word, from the messages */
     title: RichProps["message"];
     description: () => string;
@@ -61,6 +63,7 @@ interface PortfolioItem {
 const items: PortfolioItem[] = [
     {
         service: "wedding",
+        category: "nunta",
         title: m.media_portfolio_wedding,
         description: m.media_portfolio_event_description,
         image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
@@ -68,6 +71,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "christening",
+        category: "botez",
         title: m.media_portfolio_christening,
         description: m.media_portfolio_event_description,
         image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
@@ -75,6 +79,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "18th-birthday",
+        category: "majorat",
         title: m.media_portfolio_18th_birthday,
         description: m.media_portfolio_event_description,
         image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
@@ -82,6 +87,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "photo-session",
+        category: "sedinta-foto",
         title: m.media_portfolio_photo_session,
         description: m.media_portfolio_photo_session_description,
         image: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
@@ -89,6 +95,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "automotive",
+        category: "auto",
         title: m.media_portfolio_automotive,
         description: m.media_portfolio_automotive_description,
         image: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
@@ -96,6 +103,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "real-estate",
+        category: "imobiliare",
         title: m.media_portfolio_real_estate,
         description: m.media_portfolio_real_estate_description,
         image: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
@@ -103,6 +111,7 @@ const items: PortfolioItem[] = [
     },
     {
         service: "business-promotion",
+        category: "promovare-afaceri",
         title: m.media_portfolio_business_promotion,
         description: m.media_portfolio_business_promotion_description,
         image: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
@@ -138,12 +147,13 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                 >
                     {
                         items.map((item) => {
-                            const { id, name, image, ...link } = findMediaService(item.service);
+                            const { name } = findMediaService(item.service);
 
                             return (
                                 <PortfolioEntry
-                                    key={id}
-                                    {...link}
+                                    key={item.category}
+                                    to="/media/portfolio/$category"
+                                    params={{ category: item.category }}
                                     name={<Rich message={item.title} />}
                                     description={item.description()}
                                     image={item.image}

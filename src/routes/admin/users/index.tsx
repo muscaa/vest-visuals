@@ -10,7 +10,7 @@ export const Route = createFileRoute("/admin/users/")({
     staticData: {
         breadcrumbs: () => [{ label: m.account_users() }],
     },
-    loader: ({ context }) => context.queryClient.ensureQueryData(usersQuery),
+    loader: ({ context }) => context.queryClient.query(usersQuery),
     component: RouteComponent,
 });
 

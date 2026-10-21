@@ -46,7 +46,7 @@ interface GuardOptions {
 }
 
 async function sessionOrLogin({ context, location }: GuardOptions) {
-    const session = await context.queryClient.fetchQuery(sessionQuery);
+    const session = await context.queryClient.query(sessionQuery);
 
     if (!session) {
         // back to this page after signing in
@@ -72,7 +72,7 @@ export async function requireAdmin(options: GuardOptions) {
 
 /** The login, signup and forgot password pages; signed in users go on to their account, or the login's `redirect`. */
 export async function requireGuest({ context, search }: Pick<GuardOptions, "context"> & { search: { redirect?: string } }) {
-    if (await context.queryClient.fetchQuery(sessionQuery)) {
+    if (await context.queryClient.query(sessionQuery)) {
         throw redirect(redirectTarget(search.redirect));
     }
 }

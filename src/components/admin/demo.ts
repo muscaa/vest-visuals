@@ -6,7 +6,7 @@ import type { MediaVariant } from "./media";
 
 export interface PortfolioCategory {
     id: string;
-    /** used in urls and to match a service, e.g. "nunti" */
+    /** used in urls and to match a service, e.g. "nunta" for /portofoliu/nunta */
     tag: string;
     /** ISO date */
     updatedAt: string;
@@ -57,8 +57,8 @@ const portfolio = (id: string, host = "s3.vestvisuals.ro"): MediaVariant[] => [
 ];
 
 export const portfolioCategories: PortfolioCategory[] = [
-    { id: "c1", tag: "majorate", updatedAt: "2026-09-28" },
-    { id: "c2", tag: "automotive", updatedAt: "2026-08-14" },
+    { id: "c1", tag: "majorat", updatedAt: "2026-09-28" },
+    { id: "c2", tag: "auto", updatedAt: "2026-08-14" },
     { id: "c3", tag: "imobiliare", updatedAt: "2026-10-03" },
 ];
 
