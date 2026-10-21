@@ -1,6 +1,5 @@
 import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
-import { useHydrated } from "@tanstack/react-router";
 import { IconLoader2 } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Field, FieldDescription, FieldLabel } from "../ui/field";
@@ -30,14 +29,12 @@ export interface SubmitButtonProps extends Pick<React.ComponentProps<typeof Butt
 }
 
 /**
- * The form's button, busy while it's sent. Disabled until the page is interactive, otherwise the browser would
- * send the form itself; the forms also use `method="post"`, so the fields never end up in the url.
+ * The form's button, busy while it's sent. Clicked before the page is interactive, the browser sends the form
+ * itself, which only reloads the page: the forms use `method="post"`, so the fields never end up in the url.
  */
 export function SubmitButton({ pending, children, size = "lg", variant }: SubmitButtonProps) {
-    const hydrated = useHydrated();
-
     return (
-        <Button type="submit" size={size} variant={variant} disabled={!hydrated || pending} aria-busy={pending}>
+        <Button type="submit" size={size} variant={variant} disabled={pending} aria-busy={pending}>
             {pending && <IconLoader2 data-icon="inline-start" className="animate-spin" />}
             {children}
         </Button>
