@@ -7,11 +7,7 @@ import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { envServer } from "@server/env";
 import { sendMail } from "@server/mail";
 import * as templates from "@server/mail/templates";
-
-/** The part of an email before the @, used as the name of new accounts: "ion.popescu@exemplu.ro" → "ion.popescu". */
-export function nameFromEmail(email: string) {
-    return email.split("@")[0];
-}
+import { nameFromEmail } from "@shared/auth";
 
 export const auth = betterAuth({
     appName: "Vest Visuals",

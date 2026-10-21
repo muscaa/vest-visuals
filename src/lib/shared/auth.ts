@@ -5,3 +5,8 @@ export type Role = "user" | "admin";
 export function isAdmin(user: { role?: string | null } | null | undefined) {
     return user?.role === "admin";
 }
+
+/** The part of an email before the @, used as the name of new accounts: "ion.popescu@exemplu.ro" → "ion.popescu". */
+export function nameFromEmail(email: string) {
+    return email.split("@")[0];
+}

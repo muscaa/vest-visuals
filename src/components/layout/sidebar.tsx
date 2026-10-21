@@ -1,5 +1,7 @@
 import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
+import { isAdmin } from "@shared/auth";
+import { authClient, usePublicUrl, useUser } from "@client/auth";
 import { Link, Outlet, useMatchRoute, useMatches } from "@tanstack/react-router";
 import { Fragment, useState  } from "react";
 import { IconChevronRight, IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
@@ -98,14 +100,6 @@ export interface SidebarLayoutProps {
     };
 }
 
-// TODO: the signed in user, once login works
-const user = {
-    name: "Ion Popescu",
-    email: "ion@exemplu.ro",
-    image: undefined as string | undefined,
-    admin: true,
-};
-
 /** Whether an entry is the current page, or one of its sub pages (an album is under "Albums"). */
 function useIsActive() {
     const matchRoute = useMatchRoute();
@@ -168,10 +162,12 @@ function Entry({ entry }: { entry: SidebarEntry }) {
 }
 
 function UserDetails() {
+    const user = useUser();
+
     return (
         <>
             <Avatar>
-                <AvatarImage src={user.image} alt={user.name} />
+                <AvatarImage src={user.image ?? undefined} alt={user.name} />
                 <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0 text-left">
@@ -184,7 +180,15 @@ function UserDetails() {
 
 function UserMenu(props: Pick<SidebarLayoutProps, "switchTo">) {
     const { isMobile } = useSidebar();
-    const switchTo = props.switchTo && (!props.switchTo.admin || user.admin) ? props.switchTo : undefined;
+    const user = useUser();
+    const publicUrl = usePublicUrl();
+    const switchTo = props.switchTo && (!props.switchTo.admin || isAdmin(user)) ? props.switchTo : undefined;
+
+    const signOut = async () => {
+        await authClient.signOut();
+        // a full load, so nothing of the account stays in memory
+        window.location.assign(publicUrl({ to: "/account/login" }));
+    };
     const SwitchIcon = switchTo?.icon;
 
     return (
@@ -226,8 +230,7 @@ function UserMenu(props: Pick<SidebarLayoutProps, "switchTo">) {
                             {m.account_back_to_site()}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        {/* TODO: sign out once login works */}
-                        <DropdownMenuItem variant="destructive">
+                        <DropdownMenuItem variant="destructive" onClick={signOut}>
                             <IconLogout />
                             {m.account_logout()}
                         </DropdownMenuItem>
