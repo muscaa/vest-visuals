@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /** The roles of the admin plugin, see src/lib/server/auth. */
 export type Role = "user" | "admin";
 
@@ -10,3 +12,6 @@ export function isAdmin(user: { role?: string | null } | null | undefined) {
 export function nameFromEmail(email: string) {
     return email.split("@")[0];
 }
+
+/** The `redirect` search param: where to go after signing in, a path of this site (never `//other.site`). */
+export const redirectParam = z.string().regex(/^\/(?![/\\])/).optional().catch(undefined);

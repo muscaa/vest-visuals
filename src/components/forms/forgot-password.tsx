@@ -1,12 +1,10 @@
 import { m } from "@shared/paraglide/messages";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { authClient, usePublicUrl } from "@client/auth";
-import { Rich } from "../rich";
-import { SplitCard } from "../cards/split";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { authClient, authErrorMessage } from "@client/auth";
+import { SplitCard, SplitCardHeader } from "../cards/split";
 import ResetPassword6 from "../illustrations/reset-password-6.svg?react";
+import { Rich } from "../rich";
 import { RecaptchaNotice } from "../recaptcha-notice";
-import { TextH1, TextP } from "../typography";
 import {
     Field,
     FieldDescription,
@@ -14,15 +12,15 @@ import {
     FieldLabel,
 } from "../ui/field";
 import { Input } from "../ui/input";
-import { EmailSent, FormMessage, SubmitButton, authErrorMessage, field, useAuthForm } from "./auth";
+import { FormMessage, SubmitButton } from "./form-parts";
+import { useAuthForm, usePublicUrl } from "@/hooks/auth";
 
 export function ForgotPasswordForm() {
+    const navigate = useNavigate();
     const publicUrl = usePublicUrl();
-    /** the address the link went to */
-    const [sent, setSent] = useState<string>();
 
-    const { onSubmit, pending, error } = useAuthForm(async (fields) => {
-        const email = field(fields, "email").trim();
+    const { onSubmit, pending, error } = useAuthForm(async (field) => {
+        const email = field("email").trim();
         // same answer whether the account exists or not
         const { error: failed } = await authClient.requestPasswordReset({
             email,
@@ -32,23 +30,16 @@ export function ForgotPasswordForm() {
         if (failed) {
             return authErrorMessage(failed);
         }
-        setSent(email);
+        await navigate({ to: "/account/status/$status", params: { status: "password-requested" }, search: { email } });
     });
 
     return (
         <SplitCard
             aside={<ResetPassword6 aria-hidden className="w-full max-w-xs h-auto" />}
         >
-            {
-                sent ? <EmailSent>{m.forgot_sent({ email: sent })}</EmailSent> : (
             <form method="post" onSubmit={onSubmit}>
                 <FieldGroup>
-                    <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">{m.forgot_title()}</TextH1>
-                        <TextP variant="muted" className="text-balance">
-                            {m.forgot_description()}
-                        </TextP>
-                    </div>
+                    <SplitCardHeader title={m.forgot_title()} description={m.forgot_description()} />
                     <Field>
                         <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                         <Input
@@ -70,8 +61,6 @@ export function ForgotPasswordForm() {
                     </FieldDescription>
                 </FieldGroup>
             </form>
-                )
-            }
         </SplitCard>
     );
 }

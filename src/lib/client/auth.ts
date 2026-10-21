@@ -1,9 +1,6 @@
+import { m } from "@shared/paraglide/messages";
 import { createAuthClient } from "better-auth/react";
 import { adminClient, twoFactorClient } from "better-auth/client/plugins";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
-import type { RegisteredRouter, ToOptions } from "@tanstack/react-router";
-import { sessionQuery } from "@/functions/auth";
 
 /**
  * Sign in, sign up and account changes go through Better Auth's own endpoints, not server functions:
@@ -16,24 +13,30 @@ export const authClient = createAuthClient({
     ],
 });
 
-/** The signed in user, for pages behind `requireSession`. Refreshed with `invalidateQueries(sessionQuery)`. */
-export function useUser() {
-    const { data } = useSuspenseQuery(sessionQuery);
+/** Better Auth error codes, see `BASE_ERROR_CODES` and the two factor plugin's codes. Others get a generic message. */
+const errorMessages: Record<string, () => string> = {
+    INVALID_EMAIL_OR_PASSWORD: m.auth_error_credentials,
+    EMAIL_NOT_VERIFIED: m.auth_error_email_not_verified,
+    INVALID_EMAIL: m.auth_error_email_invalid,
+    PASSWORD_TOO_SHORT: m.auth_error_password_length,
+    PASSWORD_TOO_LONG: m.auth_error_password_length,
+    INVALID_PASSWORD: m.auth_error_password_wrong,
+    USER_ALREADY_EXISTS: m.auth_error_email_taken,
+    USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: m.auth_error_email_taken,
+    // a reset link that expired while its page was open
+    INVALID_TOKEN: m.auth_error_link,
+    INVALID_CODE: m.auth_error_code,
+    OTP_HAS_EXPIRED: m.auth_error_code_expired,
+    TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE: m.auth_error_code_attempts,
+    ACCOUNT_TEMPORARILY_LOCKED: m.auth_error_locked,
+    INVALID_TWO_FACTOR_COOKIE: m.auth_error_sign_in_expired,
+};
 
-    if (!data) {
-        throw new Error("useUser is only for pages behind requireSession");
+/** A message for an error from the auth client. */
+export function authErrorMessage(error: { code?: string; status?: number }) {
+    if (error.status === 429) {
+        return m.auth_error_rate_limit();
     }
 
-    return data.user;
-}
-
-/**
- * Full url of a page as visitors see it (`https://account.…/ro/autentificare`), for the links in auth emails
- * and full page loads.
- * Only in the browser, from event handlers.
- */
-export function usePublicUrl() {
-    const router = useRouter();
-    return <const TTo extends string>(options: ToOptions<RegisteredRouter, "/", TTo>) =>
-        new URL(router.buildLocation(options as Parameters<typeof router.buildLocation>[0]).publicHref, window.location.origin).href;
+    return (error.code && errorMessages[error.code]?.()) || m.auth_error_generic();
 }

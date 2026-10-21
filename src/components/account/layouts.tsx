@@ -2,13 +2,17 @@ import { m } from "@shared/paraglide/messages";
 import { Outlet } from "@tanstack/react-router";
 import { IconCode, IconHome, IconLibraryPhoto, IconShield } from "@tabler/icons-react";
 import { ScreenLayout } from "../layout/screen";
+import { Main } from "../main";
 import { SidebarLayout } from "../layout/sidebar";
 import type { SidebarEntryGroup } from "../layout/sidebar";
 
+/** Signing in and around it: the page's card in the middle of the screen. */
 export function AccountScreenLayout() {
     return (
         <ScreenLayout>
-            <Outlet />
+            <Main variant="screen" className="justify-center items-center">
+                <Outlet />
+            </Main>
         </ScreenLayout>
     );
 }

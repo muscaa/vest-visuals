@@ -22,7 +22,24 @@ export const sessionQuery = queryOptions({
     staleTime: 60_000,
 });
 
-/** What the guards need from `beforeLoad`. */
+/**
+ * Router options for the login's `redirect`, a path as the router sees it (`/admin/users?page=2`), or the account.
+ * Through `to`, so it's rewritten to its subdomain; `href` would skip that.
+ */
+export function redirectTarget(path = "/account") {
+    const url = new URL(path, "http://internal");
+    // any page can be the target, which the route types can't know
+    return {
+        to: url.pathname,
+        search: Object.fromEntries(url.searchParams),
+        hash: url.hash.slice(1),
+    } as unknown as { to: "/account" };
+}
+
+//
+// guards, for `beforeLoad`
+//
+
 interface GuardOptions {
     context: { queryClient: QueryClient };
     location: ParsedLocation;
@@ -39,7 +56,7 @@ async function sessionOrLogin({ context, location }: GuardOptions) {
     return session;
 }
 
-/** For pages of signed in users: `beforeLoad: requireSession`. Signed out visitors are sent to the login page. */
+/** Pages of signed in users; signed out visitors are sent to the login page. */
 export async function requireSession(options: GuardOptions) {
     await sessionOrLogin(options);
 }
@@ -53,24 +70,7 @@ export async function requireAdmin(options: GuardOptions) {
     }
 }
 
-/**
- * Router options for the login's `redirect`, a path as the router sees it (`/admin/users?page=2`), or the account.
- * Through `to`, so it's rewritten to its subdomain; `href` would skip that.
- */
-export function redirectTarget(path = "/account") {
-    const url = new URL(path, "http://internal");
-    // any page can be the target, which the route types can't know
-    return {
-        to: url.pathname,
-        search: Object.fromEntries(url.searchParams),
-        hash: url.hash.slice(1),
-    } as unknown as { to: "/account" };
-}
-
-/**
- * For the login and signup pages: signed in users are sent to their account, or to the login's `redirect`.
- * That's also how signing in ends: Better Auth reloads the login page once the session is there.
- */
+/** The login, signup and forgot password pages; signed in users go on to their account, or the login's `redirect`. */
 export async function requireGuest({ context, search }: Pick<GuardOptions, "context"> & { search: { redirect?: string } }) {
     if (await context.queryClient.fetchQuery(sessionQuery)) {
         throw redirect(redirectTarget(search.redirect));

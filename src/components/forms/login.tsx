@@ -1,13 +1,12 @@
 import { m } from "@shared/paraglide/messages";
 import { Link, getRouteApi, useNavigate } from "@tanstack/react-router";
-import { authClient, usePublicUrl } from "@client/auth";
-import { SplitCard } from "../cards/split";
+import { authClient, authErrorMessage } from "@client/auth";
+import { SplitCard, SplitCardHeader } from "../cards/split";
 import EnterPassword5 from "../illustrations/enter-password-5.svg?react";
 import { LegalAgreement } from "../legal";
 import { Rich } from "../rich";
 import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
-import { TextH1, TextP } from "../typography";
 import {
     Field,
     FieldDescription,
@@ -17,29 +16,24 @@ import {
 } from "../ui/field";
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
-import { FormMessage, SubmitButton, authErrorMessage, field, useAuthForm } from "./auth";
+import { FormMessage, SubmitButton } from "./form-parts";
+import { useAuthForm, usePublicUrl } from "@/hooks/auth";
 
-const route = getRouteApi("/account/login");
-
-const notices = {
-    verified: m.login_notice_verified,
-    reset: m.login_notice_reset,
-    deleted: m.login_notice_deleted,
-};
+const route = getRouteApi("/account/_auth/login");
 
 export function LoginForm() {
-    const search = route.useSearch();
+    const { redirect } = route.useSearch();
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
 
-    const { onSubmit, pending, error } = useAuthForm(async (fields) => {
+    const { onSubmit, pending, error } = useAuthForm(async (field) => {
         const { data, error: failed } = await authClient.signIn.email({
-            email: field(fields, "email").trim(),
-            password: field(fields, "password"),
-            rememberMe: fields.get("rememberMe") === "on",
-            // the client reloads it once signed in, then the page's guard continues to `redirect`;
-            // also where the new verification link leads, when the email isn't confirmed yet
-            callbackURL: publicUrl({ to: "/account/login", search: { notice: "verified", redirect: search.redirect } }),
+            email: field("email").trim(),
+            password: field("password"),
+            rememberMe: field("rememberMe") === "on",
+            // where the new confirmation link leads when the email isn't confirmed yet; Better Auth also opens it
+            // right after signing in, and the page sends signed in visitors on to `redirect`
+            callbackURL: publicUrl({ to: "/account/status/$status", params: { status: "email-verified" }, search: { redirect } }),
         });
 
         if (failed) {
@@ -50,14 +44,9 @@ export function LoginForm() {
             if (sent.error) {
                 return authErrorMessage(sent.error);
             }
-            await navigate({ to: "/account/login/verify", search: { redirect: search.redirect } });
+            await navigate({ to: "/account/login/verify", search: { redirect } });
         }
     });
-
-    // an email link that didn't work wins over its notice
-    const notice = search.error
-        ? <FormMessage>{authErrorMessage(search.error)}</FormMessage>
-        : search.notice && <FormMessage variant="success">{notices[search.notice]()}</FormMessage>;
 
     return (
         <SplitCard
@@ -66,13 +55,7 @@ export function LoginForm() {
         >
             <form method="post" onSubmit={onSubmit}>
                 <FieldGroup>
-                    <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">{m.login_title()}</TextH1>
-                        <TextP variant="muted" className="text-balance">
-                            {m.login_description()}
-                        </TextP>
-                    </div>
-                    {notice}
+                    <SplitCardHeader title={m.login_title()} description={m.login_description()} />
                     <SocialLogin />
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                         {m.auth_or_email()}

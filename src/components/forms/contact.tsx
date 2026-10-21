@@ -1,11 +1,10 @@
 import { m } from "@shared/paraglide/messages";
 import { IconMail, IconPhone } from "@tabler/icons-react";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
-import { SplitCard } from "../cards/split";
+import { SplitCard, SplitCardHeader } from "../cards/split";
 import Contact3 from "../illustrations/contact-3.svg?react";
 import { LegalAgreement } from "../legal";
 import { RecaptchaNotice } from "../recaptcha-notice";
-import { TextH1, TextP } from "../typography";
 import { Button } from "../ui/button";
 import {
     Field,
@@ -44,12 +43,7 @@ export function ContactForm(props: ContactFormProps) {
         >
             <form>
                 <FieldGroup>
-                    <div className="flex flex-col items-center gap-2 text-center">
-                        <TextH1 size="md-2">{m.contact_title()}</TextH1>
-                        <TextP variant="muted" className="text-balance">
-                            {m.contact_description()}
-                        </TextP>
-                    </div>
+                    <SplitCardHeader title={m.contact_title()} description={m.contact_description()} />
                     <div className="grid grid-cols-1 xs:grid-cols-3 gap-3">
                         {direct.map(({ name, href, icon: Icon }) => (
                             <Button

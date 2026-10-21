@@ -1,6 +1,7 @@
 import { cn } from "@shared/shadcn/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { FieldDescription } from "@/components/ui/field";
+import { TextH1, TextP } from "@/components/typography";
 
 interface SplitCardProps {
     /** main side, usually a form */
@@ -33,6 +34,18 @@ export function SplitCard(props: SplitCardProps) {
                     </FieldDescription>
                 )
             }
+        </div>
+    );
+}
+
+/** The page's title and a short description, at the top of the card's main side. */
+export function SplitCardHeader(props: { title: string; description: React.ReactNode }) {
+    return (
+        <div className="flex flex-col items-center gap-2 text-center">
+            <TextH1 size="md-2">{props.title}</TextH1>
+            <TextP variant="muted" className="text-balance">
+                {props.description}
+            </TextP>
         </div>
     );
 }

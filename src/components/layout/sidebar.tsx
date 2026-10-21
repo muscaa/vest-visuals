@@ -1,7 +1,6 @@
 import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
 import { isAdmin } from "@shared/auth";
-import { authClient, usePublicUrl, useUser } from "@client/auth";
 import { Link, Outlet, useMatchRoute, useMatches } from "@tanstack/react-router";
 import { Fragment, useState  } from "react";
 import { IconChevronRight, IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
@@ -50,6 +49,7 @@ import {
 import { Separator } from "../ui/separator";
 import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
+import { useSignOut, useUser } from "@/hooks/auth";
 
 export interface DashboardCrumb {
     label: string;
@@ -181,14 +181,8 @@ function UserDetails() {
 function UserMenu(props: Pick<SidebarLayoutProps, "switchTo">) {
     const { isMobile } = useSidebar();
     const user = useUser();
-    const publicUrl = usePublicUrl();
+    const signOut = useSignOut();
     const switchTo = props.switchTo && (!props.switchTo.admin || isAdmin(user)) ? props.switchTo : undefined;
-
-    const signOut = async () => {
-        await authClient.signOut();
-        // a full load, so nothing of the account stays in memory
-        window.location.assign(publicUrl({ to: "/account/login" }));
-    };
     const SwitchIcon = switchTo?.icon;
 
     return (
