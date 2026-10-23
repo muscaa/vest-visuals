@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+/** An empty `KEY=` in .env counts as not set, so the default applies. */
+const orDefault = <T extends z.ZodType>(schema: T) => z.preprocess((value) => (value === "" ? undefined : value), schema);
+
 const client = z.object({
     PUBLIC_REWRITE_BRIDGE_HOME: z.string(),
     PUBLIC_REWRITE_BRIDGE_ACCOUNT: z.string(),
@@ -12,6 +15,12 @@ const server = client.extend({
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32),
+    S3_ENDPOINT: z.url(),
+    S3_REGION: orDefault(z.string().default("us-east-1")),
+    S3_ACCESS_KEY: z.string(),
+    S3_SECRET_KEY: z.string(),
+    S3_FORCE_PATH_STYLE: orDefault(z.stringbool().default(true)),
+    S3_PUBLIC_URL: z.url(),
 });
 
 const parsed = server.safeParse(process.env);

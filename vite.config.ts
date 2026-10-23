@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
+import { workflow } from "workflow/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import svgr from "vite-plugin-svgr";
 import { paraglideCookieDomain, urlPatterns } from "./paraglide.config.ts";
@@ -18,6 +19,7 @@ export default defineConfig({
         tsconfigPaths: true,
     },
     plugins: [
+        workflow(),
         devtools(),
         tailwindcss(),
         tanstackStart({
