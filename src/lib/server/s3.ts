@@ -46,8 +46,8 @@ function isNotFound(error: unknown) {
 // urls
 //
 
-/** Where anyone can open a public bucket's file (portfolio, assets): `{S3_PUBLIC_URL}/{bucket}/{key}`. */
-export function publicUrl(bucket: Exclude<Bucket, "albums">, key: string) {
+/** Where anyone can open a file: `{S3_PUBLIC_URL}/{bucket}/{key}`. */
+export function publicUrl(bucket: Bucket, key: string) {
     return `${envServer.S3_PUBLIC_URL}/${buckets[bucket]}/${key}`;
 }
 
