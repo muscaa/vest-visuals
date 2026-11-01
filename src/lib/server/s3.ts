@@ -1,6 +1,7 @@
 /**
- * The S3 storage: one client, the buckets by what they hold, and the few operations the site needs.
- * Keys are paths inside a bucket, like `{mediaId}/large`; never write a bucket's name, use `buckets`.
+ * The S3 storage: one client and the few operations the site needs. The buckets and their public urls are shared with
+ * the browser, in `@shared/s3`. Keys are paths inside a bucket, like `{mediaId}/large`; never write a bucket's
+ * name, use `buckets`.
  */
 import {
     DeleteObjectsCommand,
@@ -13,7 +14,9 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { envServer } from "@server/env";
+import { buckets } from "@shared/s3";
 import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
+import type { Bucket } from "@shared/s3";
 
 export const s3 = new S3Client({
     endpoint: envServer.S3_ENDPOINT,
@@ -24,15 +27,6 @@ export const s3 = new S3Client({
         secretAccessKey: envServer.S3_SECRET_KEY,
     },
 });
-
-/** The buckets' names, the only place they're written. */
-export const buckets = {
-    portfolio: "vestvisuals-portfolio",
-    albums: "vestvisuals-albums",
-    assets: "vestvisuals-assets",
-} as const;
-
-export type Bucket = keyof typeof buckets;
 
 /** How long signed links work, in seconds. */
 const signedFor = 60 * 60;
@@ -45,11 +39,6 @@ function isNotFound(error: unknown) {
 //
 // urls
 //
-
-/** Where anyone can open a file: `{S3_PUBLIC_URL}/{bucket}/{key}`. */
-export function publicUrl(bucket: Bucket, key: string) {
-    return `${envServer.S3_PUBLIC_URL}/${buckets[bucket]}/${key}`;
-}
 
 /**
  * A temporary link to a private file, an hour by default. With `filename`, the browser saves it under that name

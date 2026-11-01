@@ -10,6 +10,10 @@ const client = z.object({
     PUBLIC_REWRITE_BRIDGE_SOFTWARE: z.string(),
     PUBLIC_REWRITE_BRIDGE_ADMIN: z.string(),
     PUBLIC_COOKIE_DOMAIN: z.string(),
+    /** where public files are served from, `{bucket}` standing for the bucket; see `publicUrl` */
+    PUBLIC_S3_URL: z.string()
+        .refine((url) => url.includes("{bucket}"), "PUBLIC_S3_URL needs a {bucket} placeholder")
+        .transform((url) => url.replace(/\/+$/, "")),
 });
 const server = client.extend({
     DATABASE_URL: z.url(),
@@ -20,7 +24,6 @@ const server = client.extend({
     S3_ACCESS_KEY: z.string(),
     S3_SECRET_KEY: z.string(),
     S3_FORCE_PATH_STYLE: orDefault(z.stringbool().default(true)),
-    S3_PUBLIC_URL: z.url(),
 });
 
 const parsed = server.safeParse(process.env);
