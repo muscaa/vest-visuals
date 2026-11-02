@@ -4,13 +4,19 @@
  * name, use `buckets`.
  */
 import {
+    AbortMultipartUploadCommand,
+    CompleteMultipartUploadCommand,
+    CopyObjectCommand,
+    CreateMultipartUploadCommand,
     DeleteObjectsCommand,
     GetObjectCommand,
     HeadObjectCommand,
+    ListMultipartUploadsCommand,
     ListObjectsV2Command,
     PutObjectCommand,
     S3Client,
     S3ServiceException,
+    UploadPartCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { envServer } from "@server/env";
@@ -31,9 +37,11 @@ export const s3 = new S3Client({
 /** How long signed links work, in seconds. */
 const signedFor = 60 * 60;
 
-/** Whether S3 answered "not found", for a missing object or bucket. */
+/** Whether S3 answered "not found", for a missing object, bucket or multipart upload. */
 function isNotFound(error: unknown) {
-    return error instanceof S3ServiceException && (error.$metadata.httpStatusCode === 404 || error.name === "NotFound" || error.name === "NoSuchKey");
+    return error instanceof S3ServiceException && (
+        error.$metadata.httpStatusCode === 404 || error.name === "NotFound" || error.name === "NoSuchKey" || error.name === "NoSuchUpload"
+    );
 }
 
 //
@@ -136,4 +144,74 @@ export async function deletePrefix(bucket: Bucket, prefix: string) {
     for await (const key of listKeys(bucket, prefix)) keys.push(key);
     await deleteObjects(bucket, keys);
     return keys.length;
+}
+
+/** Copies a file within the storage, between buckets too, without downloading it. Up to 5 GB, S3's limit for one copy. */
+export async function copyObject(from: { bucket: Bucket; key: string }, to: { bucket: Bucket; key: string }, options: PutOptions = {}) {
+    await s3.send(new CopyObjectCommand({
+        CopySource: `${buckets[from.bucket]}/${encodeURIComponent(from.key)}`,
+        Bucket: buckets[to.bucket],
+        Key: to.key,
+        // the copy gets these instead of the source's
+        MetadataDirective: "REPLACE",
+        ContentType: options.contentType,
+        CacheControl: options.cacheControl,
+    }));
+}
+
+//
+// multipart uploads: the browser uploads a big file in parts, each to its own signed link, then they're joined
+//
+
+/** Starts one, returning S3's id for it. */
+export async function createMultipartUpload(bucket: Bucket, key: string, contentType: string) {
+    const { UploadId } = await s3.send(new CreateMultipartUploadCommand({ Bucket: buckets[bucket], Key: key, ContentType: contentType }));
+    if (!UploadId) throw new Error(`S3 didn't start a multipart upload for ${buckets[bucket]}/${key}`);
+    return UploadId;
+}
+
+/** A temporary link the browser uploads one part to (PUT); the response's ETag header is needed to complete it. */
+export function signedUploadPartUrl(bucket: Bucket, key: string, multipartId: string, partNumber: number) {
+    const command = new UploadPartCommand({ Bucket: buckets[bucket], Key: key, UploadId: multipartId, PartNumber: partNumber });
+    return getSignedUrl(s3, command, { expiresIn: signedFor });
+}
+
+export interface UploadedPart {
+    partNumber: number;
+    etag: string;
+}
+
+/** Joins the parts into the file, in order. */
+export async function completeMultipartUpload(bucket: Bucket, key: string, multipartId: string, parts: UploadedPart[]) {
+    await s3.send(new CompleteMultipartUploadCommand({
+        Bucket: buckets[bucket],
+        Key: key,
+        UploadId: multipartId,
+        MultipartUpload: {
+            Parts: parts.toSorted((a, b) => a.partNumber - b.partNumber).map((part) => ({ PartNumber: part.partNumber, ETag: part.etag })),
+        },
+    }));
+}
+
+/** Throws away the parts uploaded so far. One already completed or aborted is fine. */
+export async function abortMultipartUpload(bucket: Bucket, key: string, multipartId: string) {
+    try {
+        await s3.send(new AbortMultipartUploadCommand({ Bucket: buckets[bucket], Key: key, UploadId: multipartId }));
+    } catch (error) {
+        if (!isNotFound(error)) throw error;
+    }
+}
+
+/** Every multipart upload not completed or aborted yet, page by page as S3 lists them. */
+export async function* listMultipartUploads(bucket: Bucket) {
+    let keyMarker: string | undefined;
+    let idMarker: string | undefined;
+    do {
+        const page = await s3.send(new ListMultipartUploadsCommand({ Bucket: buckets[bucket], KeyMarker: keyMarker, UploadIdMarker: idMarker }));
+        for (const upload of page.Uploads ?? []) {
+            if (upload.Key && upload.UploadId) yield { key: upload.Key, multipartId: upload.UploadId, startedAt: upload.Initiated };
+        }
+        keyMarker = page.IsTruncated ? page.NextKeyMarker : undefined;
+        idMarker = page.IsTruncated ? page.NextUploadIdMarker : undefined;
+    } while (keyMarker);
 }

@@ -2,7 +2,7 @@ import { auth } from "@server/auth";
 import { isAdmin } from "@shared/auth";
 import { queryOptions } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
+import { createMiddleware, createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import type { QueryClient } from "@tanstack/react-query";
 import type { ParsedLocation } from "@tanstack/react-router";
@@ -76,3 +76,26 @@ export async function requireGuest({ context, search }: Pick<GuardOptions, "cont
         throw redirect(redirectTarget(search.redirect));
     }
 }
+
+//
+// middleware, for server functions working with private data
+//
+
+/** Only for signed in users, who are then in the context as `user`. */
+export const sessionMiddleware = createMiddleware({ type: "function" }).server(async ({ next }) => {
+    const session = await auth.api.getSession({ headers: getRequestHeaders() });
+    if (!session) {
+        throw new Error("Not signed in");
+    }
+    return next({ context: { user: session.user } });
+});
+
+/** Like {@link sessionMiddleware}, but only for admins. */
+export const adminMiddleware = createMiddleware({ type: "function" })
+    .middleware([sessionMiddleware])
+    .server(async ({ next, context }) => {
+        if (!isAdmin(context.user)) {
+            throw new Error("Not an admin");
+        }
+        return next();
+    });

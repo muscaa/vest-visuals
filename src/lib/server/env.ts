@@ -24,6 +24,9 @@ const server = client.extend({
     S3_ACCESS_KEY: z.string(),
     S3_SECRET_KEY: z.string(),
     S3_FORCE_PATH_STYLE: orDefault(z.stringbool().default(true)),
+    /** both optional: without them, nothing is purged from Cloudflare's cache (fine with MinIO) */
+    CLOUDFLARE_ZONE_ID: orDefault(z.string().optional()),
+    CLOUDFLARE_API_TOKEN: orDefault(z.string().optional()),
 });
 
 const parsed = server.safeParse(process.env);
