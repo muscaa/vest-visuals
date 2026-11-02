@@ -3,7 +3,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { IconDots, IconPhoto, IconReplace, IconStack2, IconTrash, IconUpload } from "@tabler/icons-react";
 import { toast } from "sonner";
-import { assetFile, assetKeys, assetSizeNames, assetSizes } from "@shared/assets";
+import { assetDefaultSizes, assetKeys } from "@shared/assets";
+import { imageSizeNames, imageSizes, variantFile } from "@shared/images";
 import { publicUrl } from "@shared/s3";
 import { uploadContentTypes } from "@shared/uploads";
 import { SortableHeader, createDataColumns } from "../data-table";
@@ -17,7 +18,7 @@ import { Input } from "../ui/input";
 import { Progress } from "../ui/progress";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { MediaVariants } from "./media";
-import type { AssetSize } from "@shared/assets";
+import type { ImageSize } from "@shared/images";
 import type { DataTableFilter } from "../data-table";
 import type { MediaVariant } from "./media";
 import type { AdminAsset, AssetStatus } from "@/functions/assets";
@@ -50,7 +51,7 @@ function variantUrls(asset: AdminAsset): MediaVariant[] {
     const version = asset.updatedAt ? `?v=${asset.updatedAt.getTime()}` : "";
     return asset.variants
         .toSorted((a, b) => (a.variant === "original" ? -1 : b.variant === "original" ? 1 : a.width - b.width))
-        .map(({ variant, contentType }) => ({ tag: variant, url: publicUrl("assets", assetFile(asset.key, variant, contentType)) + version }));
+        .map(({ variant, contentType }) => ({ tag: variant, url: publicUrl("assets", variantFile(asset.key, variant, contentType)) + version }));
 }
 
 /** Reloads the table after changing an asset. */
@@ -60,7 +61,7 @@ function useRefreshAssets() {
 }
 
 /** Which sizes to make: the original is always there, each size can be left out. */
-function SizePicker(props: { value: AssetSize[]; onChange: (sizes: AssetSize[]) => void; disabled?: boolean }) {
+function SizePicker(props: { value: ImageSize[]; onChange: (sizes: ImageSize[]) => void; disabled?: boolean }) {
     return (
         <Field>
             <FieldLabel>{m.dashboard_variants()}</FieldLabel>
@@ -68,13 +69,13 @@ function SizePicker(props: { value: AssetSize[]; onChange: (sizes: AssetSize[]) 
                 multiple
                 variant="outline"
                 value={["original", ...props.value]}
-                onValueChange={(value) => props.onChange(assetSizeNames.filter((size) => value.includes(size)))}
+                onValueChange={(value) => props.onChange(imageSizeNames.filter((size) => value.includes(size)))}
                 disabled={props.disabled}
             >
                 <ToggleGroupItem value="original" disabled>original</ToggleGroupItem>
                 {
-                    assetSizeNames.map((size) => (
-                        <ToggleGroupItem key={size} value={size} title={`${assetSizes[size].short}px`}>
+                    imageSizeNames.map((size) => (
+                        <ToggleGroupItem key={size} value={size} title={`${imageSizes[size]}px`}>
                             {size}
                         </ToggleGroupItem>
                     ))
@@ -92,14 +93,14 @@ function SizePicker(props: { value: AssetSize[]; onChange: (sizes: AssetSize[]) 
 export function UploadAssetDialog(props: { assetKey?: string; open?: boolean; onOpenChange?: (open: boolean) => void }) {
     const [ownOpen, setOwnOpen] = useState(false);
     const [file, setFile] = useState<File>();
-    const [sizes, setSizes] = useState(assetSizeNames);
+    const [sizes, setSizes] = useState(assetDefaultSizes);
     const { uploading, progress, upload, cancel } = useUpload();
     const refreshAssets = useRefreshAssets();
 
     const onOpenChange = (open: boolean) => {
         if (!open) cancel();
         setFile(undefined);
-        setSizes(assetSizeNames);
+        setSizes(assetDefaultSizes);
         setOwnOpen(open);
         props.onOpenChange?.(open);
     };
@@ -170,7 +171,7 @@ export function UploadAssetDialog(props: { assetKey?: string; open?: boolean; on
 /** Remakes the asset's sizes from its original, the chosen ones; it happens in the background, like an upload. */
 function ChangeVariantsDialog(props: { asset: AdminAsset; open: boolean; onOpenChange: (open: boolean) => void }) {
     const { asset } = props;
-    const current = assetSizeNames.filter((size) => asset.variants.some((variant) => variant.variant === size));
+    const current = imageSizeNames.filter((size) => asset.variants.some((variant) => variant.variant === size));
     const [sizes, setSizes] = useState(current);
     const refreshAssets = useRefreshAssets();
 

@@ -3,7 +3,7 @@
  * turns it into what it was uploaded for. What it's for is its type, and each type has its own data.
  */
 import { z } from "zod";
-import { assetSizeList } from "./assets";
+import { imageSizeList } from "./images";
 
 /** Lowercase words joined by dashes, as asset keys are; they end up in urls. */
 const slug = z.string().max(100).regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
@@ -15,7 +15,7 @@ export const uploadTarget = z.discriminatedUnion("type", [
         data: z.object({
             key: slug,
             /** the sizes to make; the original is always kept */
-            sizes: assetSizeList,
+            sizes: imageSizeList,
         }),
     }),
 ]);

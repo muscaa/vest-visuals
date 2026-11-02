@@ -1,6 +1,7 @@
-import { bigint, jsonb, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { bigint, jsonb, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 import { uploadStatuses, uploadTypes } from "@shared/uploads";
 import { user } from "./auth";
+import { id, timestamps } from "./columns";
 import type { UploadData } from "@shared/uploads";
 
 export const uploadType = pgEnum("upload_type", uploadTypes);
@@ -11,7 +12,8 @@ export const uploadStatus = pgEnum("upload_status", uploadStatuses);
  * where its type says. Rows only matter while that runs; the daily cleanup removes the abandoned ones.
  */
 export const uploads = pgTable("uploads", {
-    id: text("id").primaryKey(),
+    /** also its file's key in the uploads bucket */
+    id: id(),
     userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
     type: uploadType("type").notNull(),
     /** what the type needs, e.g. the asset's key; parsed with `uploadTarget` before it's used */
@@ -27,6 +29,5 @@ export const uploads = pgTable("uploads", {
     multipartId: text("multipart_id").notNull(),
     /** the `processUpload` run, once started */
     workflowRunId: text("workflow_run_id"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+    ...timestamps(),
 });

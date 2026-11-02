@@ -6,8 +6,8 @@ import { db } from "@server/db";
 import { publish } from "@server/events";
 import { assets } from "@server/db/schema";
 import { copyObject, deleteObjects, getObject, putObject } from "@server/s3";
-import { assetFile, assetSizes } from "@shared/assets";
-import type { AssetSize } from "@shared/assets";
+import { imageQuality, imageSizes, variantFile } from "@shared/images";
+import type { ImageSize } from "@shared/images";
 import type { Bucket } from "@shared/s3";
 
 /** Browsers keep a file for an hour, Cloudflare for a year; a replaced asset is purged from Cloudflare instead. */
@@ -57,7 +57,7 @@ export async function findAssetOriginal(key: string) {
     }
 
     const variant: AssetVariant = { variant: "original", contentType: original.contentType, width: original.width, height: original.height };
-    const source: ImageSource = { bucket: "assets", key: assetFile(key, "original", original.contentType) };
+    const source: ImageSource = { bucket: "assets", key: variantFile(key, "original", original.contentType) };
     return { variant, source };
 }
 
@@ -65,23 +65,21 @@ export async function findAssetOriginal(key: string) {
 export async function copyAssetOriginal(uploadId: string, key: string, contentType: string) {
     "use step";
 
-    await copyObject({ bucket: "uploads", key: uploadId }, { bucket: "assets", key: assetFile(key, "original", contentType) }, { contentType, cacheControl });
+    await copyObject({ bucket: "uploads", key: uploadId }, { bucket: "assets", key: variantFile(key, "original", contentType) }, { contentType, cacheControl });
 }
 
 /** One size, as WebP; metadata like the location is left out. */
-export async function makeAssetSize(source: ImageSource, key: string, size: AssetSize): Promise<AssetVariant> {
+export async function makeAssetSize(source: ImageSource, key: string, size: ImageSize): Promise<AssetVariant> {
     "use step";
 
-    const { short, quality } = assetSizes[size];
     const { data, info } = await sharp(await readFile(source))
         .rotate()
-        // the shorter side becomes `short`
-        .resize({ width: short, height: short, fit: "outside", withoutEnlargement: true })
-        .webp({ quality })
+        .resize({ width: imageSizes[size], withoutEnlargement: true })
+        .webp({ quality: imageQuality })
         .toBuffer({ resolveWithObject: true });
 
     const contentType = "image/webp";
-    await putObject("assets", assetFile(key, size, contentType), data, { contentType, cacheControl });
+    await putObject("assets", variantFile(key, size, contentType), data, { contentType, cacheControl });
     return { variant: size, contentType, width: info.width, height: info.height };
 }
 
@@ -104,8 +102,8 @@ export async function saveAssetVariants(key: string, variants: AssetVariant[]) {
         return rows;
     });
 
-    const files = new Set(variants.map((variant) => assetFile(key, variant.variant, variant.contentType)));
-    const stale = before.map((row) => assetFile(key, row.variant, row.contentType)).filter((file) => !files.has(file));
+    const files = new Set(variants.map((variant) => variantFile(key, variant.variant, variant.contentType)));
+    const stale = before.map((row) => variantFile(key, row.variant, row.contentType)).filter((file) => !files.has(file));
     await deleteObjects("assets", stale);
     await publish("assets", { key });
 }

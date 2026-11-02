@@ -4,6 +4,7 @@
  */
 import { createServerFn } from "@tanstack/react-start";
 import { eq } from "drizzle-orm";
+import { v7 as uuidv7 } from "uuid";
 import { start } from "workflow/api";
 import { z } from "zod";
 import { db } from "@server/db";
@@ -53,7 +54,7 @@ export const startUpload = createServerFn({ method: "POST" })
             throw new Error(`An upload of type ${target.type} can't be ${file.type || "this file"}`);
         }
 
-        const id = crypto.randomUUID();
+        const id = uuidv7();
         const multipartId = await createMultipartUpload("uploads", id, file.type);
         await db.insert(uploads).values({
             id,
@@ -72,7 +73,7 @@ export const startUpload = createServerFn({ method: "POST" })
 /** Links to upload these parts to, in the same order; asked for a few at a time, since they expire. */
 export const signUploadParts = createServerFn({ method: "POST" })
     .middleware([sessionMiddleware])
-    .validator(z.object({ id: z.string(), partNumbers: z.array(z.number().int().min(1)).min(1).max(100) }))
+    .validator(z.object({ id: z.uuid(), partNumbers: z.array(z.number().int().min(1)).min(1).max(100) }))
     .handler(async ({ data, context }) => {
         const upload = await ownUpload(data.id, context.user.id, "pending");
         const partCount = uploadPartCount(upload.size);
@@ -87,7 +88,7 @@ export const signUploadParts = createServerFn({ method: "POST" })
 export const completeUpload = createServerFn({ method: "POST" })
     .middleware([sessionMiddleware])
     .validator(z.object({
-        id: z.string(),
+        id: z.uuid(),
         parts: z.array(z.object({ partNumber: z.number().int().min(1), etag: z.string().min(1) })).min(1),
     }))
     .handler(async ({ data, context }) => {
@@ -126,7 +127,7 @@ export const completeUpload = createServerFn({ method: "POST" })
 /** Stops an upload before it's complete, throwing away what was uploaded. */
 export const cancelUpload = createServerFn({ method: "POST" })
     .middleware([sessionMiddleware])
-    .validator(z.object({ id: z.string() }))
+    .validator(z.object({ id: z.uuid() }))
     .handler(async ({ data, context }) => {
         const upload = await ownUpload(data.id, context.user.id);
         if (!await moveUpload(upload.id, "pending", "failed")) return;

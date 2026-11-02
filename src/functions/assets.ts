@@ -7,7 +7,8 @@ import { db } from "@server/db";
 import { publish } from "@server/events";
 import { assets, uploads } from "@server/db/schema";
 import { deletePrefix } from "@server/s3";
-import { assetKeys, assetSizeList } from "@shared/assets";
+import { assetKeys } from "@shared/assets";
+import { imageSizeList } from "@shared/images";
 import { adminMiddleware } from "./auth";
 import { reprocessAsset } from "@/workflows/assets";
 
@@ -75,7 +76,7 @@ export const deleteAsset = createServerFn({ method: "POST" })
 /** Remakes an asset's sizes from its original in the background, only the chosen ones; the others are deleted. */
 export const changeAssetVariants = createServerFn({ method: "POST" })
     .middleware([adminMiddleware])
-    .validator(z.object({ key: z.string().min(1), sizes: assetSizeList }))
+    .validator(z.object({ key: z.string().min(1), sizes: imageSizeList }))
     .handler(async ({ data }) => {
         const [original] = await db.select({ key: assets.key }).from(assets).where(and(eq(assets.key, data.key), eq(assets.variant, "original")));
         if (!original) {

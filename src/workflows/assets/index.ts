@@ -1,11 +1,11 @@
 import { findAssetOriginal, makeAssetSize, saveAssetVariants } from "./steps";
-import type { AssetSize } from "@shared/assets";
+import type { ImageSize } from "@shared/images";
 
 /**
  * Makes an asset's sizes again from its stored original, only the ones given: new ones are added, the others deleted.
  * Started by `changeAssetVariants`.
  */
-export async function reprocessAsset(key: string, sizes: AssetSize[]) {
+export async function reprocessAsset(key: string, sizes: ImageSize[]) {
     "use workflow";
 
     const original = await findAssetOriginal(key);
