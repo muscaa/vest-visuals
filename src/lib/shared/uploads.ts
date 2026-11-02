@@ -5,8 +5,8 @@
 import { z } from "zod";
 import { imageSizeList } from "./images";
 
-/** Lowercase words joined by dashes, as asset keys are; they end up in urls. */
-const slug = z.string().max(100).regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+/** Lowercase words joined by dashes, as asset and category keys are; they end up in urls. */
+export const slug = z.string().max(100).regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
 
 /** What an upload is for, checked on the way in; the workflow parses it again, so the row can be trusted. */
 export const uploadTarget = z.discriminatedUnion("type", [
@@ -18,17 +18,26 @@ export const uploadTarget = z.discriminatedUnion("type", [
             sizes: imageSizeList,
         }),
     }),
+    z.object({
+        type: z.literal("portfolio"),
+        data: z.object({
+            /** the group it's added to, at the end */
+            groupId: z.uuid(),
+            sizes: imageSizeList,
+        }),
+    }),
 ]);
 
 export type UploadTarget = z.infer<typeof uploadTarget>;
 export type UploadType = UploadTarget["type"];
 export type UploadData = UploadTarget["data"];
 
-export const uploadTypes = ["asset"] as const satisfies readonly UploadType[];
+export const uploadTypes = ["asset", "portfolio"] as const satisfies readonly UploadType[];
 
 /** The files each type takes, by MIME type. */
 export const uploadContentTypes: Record<UploadType, readonly string[]> = {
     asset: ["image/jpeg", "image/png", "image/webp"],
+    portfolio: ["image/jpeg", "image/png", "image/webp"],
 };
 
 /**

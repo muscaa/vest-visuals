@@ -176,6 +176,12 @@ function SortableRow(props: { id: string; disabled: boolean; children: React.Rea
 export function DataTable<TData extends RowData>(props: DataTableProps<TData>) {
     const [globalFilter, setGlobalFilter] = useState("");
     const [order, setOrder] = useState(props.data);
+    // new data, e.g. reloaded after a change, replaces the order dragged so far
+    const [source, setSource] = useState(props.data);
+    if (props.data !== source) {
+        setSource(props.data);
+        setOrder(props.data);
+    }
     const dndId = useId();
     const reorder = props.reorder;
     const data = reorder ? order : props.data;

@@ -1,4 +1,5 @@
 import { processAsset } from "./asset";
+import { processPortfolio } from "./portfolio";
 import { deleteUploadedFile, loadUpload, setUploadStatus } from "./steps";
 
 /**
@@ -15,6 +16,9 @@ export async function processUpload(id: string) {
         switch (upload.type) {
             case "asset":
                 await processAsset(upload);
+                break;
+            case "portfolio":
+                await processPortfolio(upload);
                 break;
         }
         await setUploadStatus(upload, "done");

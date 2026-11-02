@@ -36,5 +36,8 @@ export async function publishUploadChange(target: UploadTarget) {
         case "asset":
             await publish("assets", { key: target.data.key });
             break;
+        case "portfolio":
+            await publish("portfolio", {});
+            break;
     }
 }

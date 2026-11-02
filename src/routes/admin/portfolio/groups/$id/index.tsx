@@ -1,67 +1,43 @@
 import { m } from "@shared/paraglide/messages";
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { IconUpload } from "@tabler/icons-react";
-import type { PortfolioMedia } from "@/components/admin/demo";
-import { portfolioGroups, portfolioMedia } from "@/components/admin/demo";
-import { mediaColumns } from "@/components/admin/media";
+import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { groupName } from "@/components/admin/portfolio-groups";
+import { AddMediaDialog, portfolioMediaColumns } from "@/components/admin/portfolio-media";
 import { DataTable } from "@/components/data-table";
-import { FormDialog } from "@/components/form-dialog";
 import { DashboardPage } from "@/components/layout/sidebar";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-
-const columns = mediaColumns<PortfolioMedia>({ sortable: false });
+import { portfolioGroupQuery, reorderPortfolioGroup } from "@/functions/portfolio-groups";
+import { useLiveRefresh } from "@/hooks/events";
 
 export const Route = createFileRoute("/admin/portfolio/groups/$id/")({
     staticData: {
-        breadcrumbs: (data: { group: { id: string; description?: string } }) => [
+        breadcrumbs: (data: { group: { id: string; description: string | null; location: string | null } }) => [
             { label: m.common_portfolio() },
             { label: m.account_portfolio_groups(), link: { to: "/admin/portfolio/groups" } },
-            { label: data.group.description ?? data.group.id },
+            { label: groupName(data.group) },
         ],
     },
-    // TODO: load the group and its media, in their saved order, from the backend
-    loader: ({ params }) => {
-        const group = portfolioGroups.find((value) => value.id === params.id);
-        if (!group) throw notFound();
-
-        return { group, media: portfolioMedia.filter((item) => item.groupId === group.id) };
-    },
+    loader: ({ context, params }) => context.queryClient.query(portfolioGroupQuery(params.id)),
     component: RouteComponent,
 });
 
+/** A group's photos and videos, in the order the site shows them; dragging saves the new order. */
 function RouteComponent() {
-    const { group, media } = Route.useLoaderData();
+    const { id } = Route.useParams();
+    const { data: { group, media } } = useSuspenseQuery(portfolioGroupQuery(id));
+    const columns = useMemo(() => portfolioMediaColumns({ groupId: id }), [id]);
+    useLiveRefresh("portfolio", ["admin", "portfolio"]);
 
     return (
-        <DashboardPage
-            title={group.description ?? group.id}
-            description={m.admin_portfolio_group_contents()}
-        >
+        <DashboardPage title={groupName(group)} description={m.admin_portfolio_group_contents()}>
             <DataTable
-                key={group.id}
                 data={media}
                 columns={columns}
-                // TODO: save the new order once the backend is there
-                reorder={{ getId: (item) => item.id }}
-                actions={
-                    <FormDialog
-                        trigger={
-                            <>
-                                <IconUpload data-icon="inline-start" />
-                                {m.dashboard_upload()}
-                            </>
-                        }
-                        title={m.dashboard_upload()}
-                        description={m.admin_portfolio_upload_description()}
-                        submit={m.dashboard_upload()}
-                    >
-                        <Field>
-                            <FieldLabel htmlFor="media-files">{m.admin_files()}</FieldLabel>
-                            <Input id="media-files" name="files" type="file" accept="image/*,video/*" multiple required />
-                        </Field>
-                    </FormDialog>
-                }
+                reorder={{
+                    getId: (item) => item.id,
+                    onReorder: (rows) => void reorderPortfolioGroup({ data: { id, mediaIds: rows.map((item) => item.id) } }),
+                }}
+                actions={<AddMediaDialog groupId={id} inGroup={media.map((item) => item.id)} />}
             />
         </DashboardPage>
     );

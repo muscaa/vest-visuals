@@ -17,10 +17,11 @@ import { sessionMiddleware } from "./auth";
 import type { UploadTarget } from "@shared/uploads";
 import { processUpload } from "@/workflows/process-upload";
 
-/** Who may upload what: assets are the admins'. */
+/** Who may upload what: assets and the portfolio are the admins'. */
 function mayUpload(user: { role?: string | null }, target: UploadTarget) {
     switch (target.type) {
         case "asset":
+        case "portfolio":
             return isAdmin(user);
     }
 }

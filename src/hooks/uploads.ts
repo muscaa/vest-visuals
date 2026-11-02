@@ -22,8 +22,11 @@ export function useUpload() {
         setProgress(0);
         try {
             await uploadFile({ file, target, signal, onProgress: setProgress });
-        } catch {
-            return signal.aborted ? undefined : m.admin_upload_failed();
+        } catch (error) {
+            if (signal.aborted) return;
+            // the message stays short; what really went wrong is in the console
+            console.error("Upload failed:", error);
+            return m.admin_upload_failed();
         } finally {
             setUploading(false);
         }

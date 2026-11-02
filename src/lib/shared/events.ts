@@ -5,6 +5,8 @@
 export interface Events {
     /** an asset's variants or its last upload changed */
     assets: { key: string };
+    /** something in the portfolio changed: a category's or a group's contents, a media's variants */
+    portfolio: Record<string, never>;
 }
 
 export type EventTopic = keyof Events;

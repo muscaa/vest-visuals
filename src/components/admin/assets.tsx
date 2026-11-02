@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IconDots, IconPhoto, IconReplace, IconStack2, IconTrash, IconUpload } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { assetDefaultSizes, assetKeys } from "@shared/assets";
-import { imageSizeNames, imageSizes, variantFile } from "@shared/images";
+import { imageSizeNames, variantFile } from "@shared/images";
 import { publicUrl } from "@shared/s3";
 import { uploadContentTypes } from "@shared/uploads";
 import { SortableHeader, createDataColumns } from "../data-table";
@@ -16,8 +16,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Field, FieldDescription, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Progress } from "../ui/progress";
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { MediaVariants } from "./media";
+import { SizePicker } from "./size-picker";
 import type { ImageSize } from "@shared/images";
 import type { DataTableFilter } from "../data-table";
 import type { MediaVariant } from "./media";
@@ -58,32 +58,6 @@ function variantUrls(asset: AdminAsset): MediaVariant[] {
 function useRefreshAssets() {
     const queryClient = useQueryClient();
     return () => queryClient.invalidateQueries({ queryKey: assetsQuery.queryKey });
-}
-
-/** Which sizes to make: the original is always there, each size can be left out. */
-function SizePicker(props: { value: ImageSize[]; onChange: (sizes: ImageSize[]) => void; disabled?: boolean }) {
-    return (
-        <Field>
-            <FieldLabel>{m.dashboard_variants()}</FieldLabel>
-            <ToggleGroup
-                multiple
-                variant="outline"
-                value={["original", ...props.value]}
-                onValueChange={(value) => props.onChange(imageSizeNames.filter((size) => value.includes(size)))}
-                disabled={props.disabled}
-            >
-                <ToggleGroupItem value="original" disabled>original</ToggleGroupItem>
-                {
-                    imageSizeNames.map((size) => (
-                        <ToggleGroupItem key={size} value={size} title={`${imageSizes[size]}px`}>
-                            {size}
-                        </ToggleGroupItem>
-                    ))
-                }
-            </ToggleGroup>
-            <FieldDescription>{m.admin_assets_variants_hint()}</FieldDescription>
-        </Field>
-    );
 }
 
 /**
