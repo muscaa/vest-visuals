@@ -5,6 +5,7 @@ import { UploadAssetDialog, assetColumns, assetFilters } from "@/components/admi
 import { DataTable } from "@/components/data-table";
 import { DashboardPage } from "@/components/layout/sidebar";
 import { assetsQuery } from "@/functions/assets";
+import { useLiveRefresh } from "@/hooks/events";
 
 export const Route = createFileRoute("/admin/assets/")({
     staticData: {
@@ -16,6 +17,8 @@ export const Route = createFileRoute("/admin/assets/")({
 
 function RouteComponent() {
     const { data: assets } = useSuspenseQuery(assetsQuery);
+    // uploads are processed in the background; the table follows them as they go
+    useLiveRefresh("assets", assetsQuery.queryKey);
 
     return (
         <DashboardPage title={m.account_assets()} description={m.admin_assets_description()}>

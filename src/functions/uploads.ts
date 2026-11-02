@@ -9,7 +9,7 @@ import { z } from "zod";
 import { db } from "@server/db";
 import { uploads } from "@server/db/schema";
 import { abortMultipartUpload, completeMultipartUpload, createMultipartUpload, deleteObjects, headObject, signedUploadPartUrl } from "@server/s3";
-import { findUpload, moveUpload } from "@server/uploads";
+import { findUpload, moveUpload, publishUploadChange } from "@server/uploads";
 import { isAdmin } from "@shared/auth";
 import { uploadContentTypes, uploadPartCount, uploadPartSize, uploadTarget } from "@shared/uploads";
 import { sessionMiddleware } from "./auth";
@@ -114,8 +114,10 @@ export const completeUpload = createServerFn({ method: "POST" })
             await moveUpload(upload.id, "uploaded", "failed");
             await abortMultipartUpload("uploads", upload.id, upload.multipartId);
             await deleteObjects("uploads", [upload.id]);
+            await publishUploadChange(upload);
             throw error;
         }
+        await publishUploadChange(upload);
 
         const run = await start(processUpload, [upload.id]);
         await db.update(uploads).set({ workflowRunId: run.runId }).where(eq(uploads.id, upload.id));

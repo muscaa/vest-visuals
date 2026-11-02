@@ -4,7 +4,8 @@ import { FatalError } from "workflow";
 import { db } from "@server/db";
 import { uploads } from "@server/db/schema";
 import { deleteObjects } from "@server/s3";
-import { findUpload } from "@server/uploads";
+import { findUpload, publishUploadChange } from "@server/uploads";
+import type { Upload } from "@server/uploads";
 import type { UploadStatus } from "@shared/uploads";
 
 /** The upload, its type and data checked again; one that's gone or broken can't be processed, so it's not retried. */
@@ -20,10 +21,12 @@ export async function loadUpload(id: string) {
     throw new FatalError(`There's no upload ${id}`);
 }
 
-export async function setUploadStatus(id: string, status: UploadStatus) {
+/** Saves the upload's status, and tells the pages showing what it's for. */
+export async function setUploadStatus(upload: Upload, status: UploadStatus) {
     "use step";
 
-    await db.update(uploads).set({ status }).where(eq(uploads.id, id));
+    await db.update(uploads).set({ status }).where(eq(uploads.id, upload.id));
+    await publishUploadChange(upload);
 }
 
 export async function deleteUploadedFile(id: string) {

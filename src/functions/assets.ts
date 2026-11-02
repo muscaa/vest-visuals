@@ -4,6 +4,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { start } from "workflow/api";
 import { z } from "zod";
 import { db } from "@server/db";
+import { publish } from "@server/events";
 import { assets, uploads } from "@server/db/schema";
 import { deletePrefix } from "@server/s3";
 import { assetKeys, assetSizeList } from "@shared/assets";
@@ -67,6 +68,7 @@ export const deleteAsset = createServerFn({ method: "POST" })
     .handler(async ({ data }) => {
         await deletePrefix("assets", `${data.key}/`);
         await db.delete(assets).where(eq(assets.key, data.key));
+        await publish("assets", { key: data.key });
         // TODO: once Cloudflare is in front of the assets, purge its urls too (`purgeUrls` in @server/cloudflare)
     });
 

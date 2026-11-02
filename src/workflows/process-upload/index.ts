@@ -9,7 +9,7 @@ export async function processUpload(id: string) {
     "use workflow";
 
     const upload = await loadUpload(id);
-    await setUploadStatus(id, "processing");
+    await setUploadStatus(upload, "processing");
 
     try {
         switch (upload.type) {
@@ -17,9 +17,9 @@ export async function processUpload(id: string) {
                 await processAsset(upload);
                 break;
         }
-        await setUploadStatus(id, "done");
+        await setUploadStatus(upload, "done");
     } catch (error) {
-        await setUploadStatus(id, "failed");
+        await setUploadStatus(upload, "failed");
         throw error;
     } finally {
         await deleteUploadedFile(id);

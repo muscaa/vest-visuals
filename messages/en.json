@@ -437,7 +437,7 @@
     "admin_assets_key_hint": "Lowercase letters, digits and dashes, as in the code. One that isn't in the code yet can be uploaded anyway.",
     "admin_assets_file": "Image",
     "admin_assets_file_hint": "JPG, PNG or WebP, of any size.",
-    "admin_assets_uploaded": "{key} was uploaded and is being processed in the background. Reload the page to see when it's ready.",
+    "admin_assets_uploaded": "{key} was uploaded and is being processed in the background; the table shows when it's ready.",
     "admin_assets_delete": "Delete the image",
     "admin_assets_delete_description": "Every size of {key} is deleted. Pages using it show no image until you upload it again.",
     "admin_assets_deleted": "{key} was deleted.",
@@ -448,6 +448,6 @@
     "admin_assets_variants_hint": "The original is always kept; the chosen sizes are made from it.",
     "admin_assets_variants_change": "Change variants",
     "admin_assets_variants_change_description": "The chosen sizes are made again from the original, and the others are deleted.",
-    "admin_assets_variants_changing": "{key} is being reprocessed in the background. Reload the page to see its new variants.",
+    "admin_assets_variants_changing": "{key} is being reprocessed in the background; the table shows its new variants when it's done.",
     "admin_assets_reprocess": "Reprocess"
 }

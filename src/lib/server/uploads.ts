@@ -1,8 +1,9 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "@server/db";
+import { publish } from "@server/events";
 import { uploads } from "@server/db/schema";
 import { uploadTarget } from "@shared/uploads";
-import type { UploadStatus } from "@shared/uploads";
+import type { UploadStatus, UploadTarget } from "@shared/uploads";
 
 /**
  * An upload with its type and data parsed, so what it's for can be trusted; null when there's none. Only the user who
@@ -27,4 +28,13 @@ export async function moveUpload(id: string, from: UploadStatus, status: UploadS
         .where(and(eq(uploads.id, id), eq(uploads.status, from)))
         .returning({ id: uploads.id });
     return moved.length > 0;
+}
+
+/** Tells the pages showing what an upload is for that its status changed, e.g. the assets page for an asset. */
+export async function publishUploadChange(target: UploadTarget) {
+    switch (target.type) {
+        case "asset":
+            await publish("assets", { key: target.data.key });
+            break;
+    }
 }

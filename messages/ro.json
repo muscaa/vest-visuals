@@ -437,7 +437,7 @@
     "admin_assets_key_hint": "Litere mici, cifre și cratime, ca în cod. Una care nu e încă în cod poate fi încărcată oricum.",
     "admin_assets_file": "Imagine",
     "admin_assets_file_hint": "JPG, PNG sau WebP, de orice mărime.",
-    "admin_assets_uploaded": "{key} s-a încărcat și se procesează în fundal. Reîncarcă pagina ca să vezi când e gata.",
+    "admin_assets_uploaded": "{key} s-a încărcat și se procesează în fundal; tabelul arată când e gata.",
     "admin_assets_delete": "Șterge imaginea",
     "admin_assets_delete_description": "Se șterg toate dimensiunile lui {key}. Paginile care îl folosesc rămân fără imagine până îl încarci din nou.",
     "admin_assets_deleted": "{key} a fost șters.",
@@ -448,6 +448,6 @@
     "admin_assets_variants_hint": "Originalul se păstrează mereu; dimensiunile alese se fac din el.",
     "admin_assets_variants_change": "Schimbă variantele",
     "admin_assets_variants_change_description": "Dimensiunile alese se refac din original, iar celelalte se șterg.",
-    "admin_assets_variants_changing": "{key} se reprocesează în fundal. Reîncarcă pagina ca să vezi variantele noi.",
+    "admin_assets_variants_changing": "{key} se reprocesează în fundal; tabelul arată variantele noi când e gata.",
     "admin_assets_reprocess": "Reprocesează"
 }

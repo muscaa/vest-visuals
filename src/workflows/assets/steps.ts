@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import sharp from "sharp";
 import { FatalError } from "workflow";
 import { db } from "@server/db";
+import { publish } from "@server/events";
 import { assets } from "@server/db/schema";
 import { copyObject, deleteObjects, getObject, putObject } from "@server/s3";
 import { assetFile, assetSizes } from "@shared/assets";
@@ -106,4 +107,5 @@ export async function saveAssetVariants(key: string, variants: AssetVariant[]) {
     const files = new Set(variants.map((variant) => assetFile(key, variant.variant, variant.contentType)));
     const stale = before.map((row) => assetFile(key, row.variant, row.contentType)).filter((file) => !files.has(file));
     await deleteObjects("assets", stale);
+    await publish("assets", { key });
 }
