@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { bigint, jsonb, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 import { uploadStatuses, uploadTypes } from "@shared/uploads";
 import { user } from "./auth";
@@ -31,3 +32,11 @@ export const uploads = pgTable("uploads", {
     workflowRunId: text("workflow_run_id"),
     ...timestamps(),
 });
+
+/** For `db.query`; the user's side can't list them, `auth.ts` is generated. */
+export const uploadsRelations = relations(uploads, ({ one }) => ({
+    user: one(user, {
+        fields: [uploads.userId],
+        references: [user.id],
+    }),
+}));

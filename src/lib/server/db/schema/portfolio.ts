@@ -2,7 +2,7 @@
  * The portfolio: categories hold groups (one event or shoot each), groups hold media (photos and YouTube videos). Both
  * links are many to many, each with its own order, so a group or a photo can be in several places without copies.
  */
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { check, index, integer, pgTable, primaryKey, text, uuid } from "drizzle-orm/pg-core";
 import { id, timestamps } from "./columns";
 
@@ -69,3 +69,50 @@ export const portfolioMediaVariants = pgTable("portfolio_media_variants", {
     // a file or a YouTube video, never both or neither
     check("portfolio_media_variants_file_or_youtube", sql`(${table.contentType} is null) <> (${table.youtubeId} is null)`),
 ]);
+
+//
+// relations, for `db.query` to load them nested: a category with its groups, a group with its media and their variants
+//
+
+export const portfolioCategoriesRelations = relations(portfolioCategories, ({ many }) => ({
+    groups: many(portfolioCategoryGroups),
+}));
+
+export const portfolioCategoryGroupsRelations = relations(portfolioCategoryGroups, ({ one }) => ({
+    category: one(portfolioCategories, {
+        fields: [portfolioCategoryGroups.categoryKey],
+        references: [portfolioCategories.key],
+    }),
+    group: one(portfolioGroups, {
+        fields: [portfolioCategoryGroups.groupId],
+        references: [portfolioGroups.id],
+    }),
+}));
+
+export const portfolioGroupsRelations = relations(portfolioGroups, ({ many }) => ({
+    categories: many(portfolioCategoryGroups),
+    media: many(portfolioGroupMedia),
+}));
+
+export const portfolioGroupMediaRelations = relations(portfolioGroupMedia, ({ one }) => ({
+    group: one(portfolioGroups, {
+        fields: [portfolioGroupMedia.groupId],
+        references: [portfolioGroups.id],
+    }),
+    media: one(portfolioMedia, {
+        fields: [portfolioGroupMedia.mediaId],
+        references: [portfolioMedia.id],
+    }),
+}));
+
+export const portfolioMediaRelations = relations(portfolioMedia, ({ many }) => ({
+    groups: many(portfolioGroupMedia),
+    variants: many(portfolioMediaVariants),
+}));
+
+export const portfolioMediaVariantsRelations = relations(portfolioMediaVariants, ({ one }) => ({
+    media: one(portfolioMedia, {
+        fields: [portfolioMediaVariants.mediaId],
+        references: [portfolioMedia.id],
+    }),
+}));
