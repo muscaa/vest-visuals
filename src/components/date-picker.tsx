@@ -11,20 +11,47 @@ import { formatDate } from "@/i18n";
 
 const calendarLocales = { ro, en: enGB };
 
+/** A day as the picker takes and submits it, an ISO date: "2026-10-20", in the visitor's own time zone. */
+export function dateValue(date: Date | null | undefined) {
+    if (!date) return "";
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+/** The day of an ISO date, at its start where the visitor is. */
+function dayOf(value: string | undefined) {
+    if (!value) return undefined;
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(year, month - 1, day);
+}
+
 export interface DatePickerProps {
     id?: string;
     /** submitted with the form as an ISO date, e.g. "2026-10-20" */
     name: string;
     required?: boolean;
+    /** the day it starts with; or `value` and `onChange`, to set it from outside */
+    defaultValue?: string;
+    value?: string;
+    onChange?: (value: string) => void;
+    /** the earliest day that can be picked */
+    min?: string;
     className?: string;
 }
 
 /** shadcn's date picker: a button opening a calendar, in the visitor's language. */
 export function DatePicker(props: DatePickerProps) {
-    const [date, setDate] = useState<Date>();
+    const [own, setOwn] = useState(props.defaultValue ?? "");
     const [open, setOpen] = useState(false);
-    // local date, so the submitted day is the one picked whatever the time zone
-    const value = date ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}` : "";
+    const value = props.value ?? own;
+    const date = dayOf(value);
+    const min = dayOf(props.min);
+
+    const select = (selected: Date | undefined) => {
+        const next = dateValue(selected);
+        setOwn(next);
+        props.onChange?.(next);
+        setOpen(false);
+    };
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -45,10 +72,9 @@ export function DatePicker(props: DatePickerProps) {
                 <Calendar
                     mode="single"
                     selected={date}
-                    onSelect={(selected) => {
-                        setDate(selected);
-                        setOpen(false);
-                    }}
+                    defaultMonth={date}
+                    onSelect={select}
+                    disabled={min ? { before: min } : undefined}
                     locale={calendarLocales[getLocale()]}
                 />
             </PopoverContent>

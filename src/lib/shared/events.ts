@@ -7,6 +7,8 @@ export interface Events {
     assets: { key: string };
     /** something in the portfolio changed: a category's or a group's contents, a media's variants */
     portfolio: Record<string, never>;
+    /** something in an album changed: its details, its entries, its zip */
+    albums: { albumId: string };
 }
 
 export type EventTopic = keyof Events;

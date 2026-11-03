@@ -1,3 +1,4 @@
+import { processAlbum, processAlbumVideo } from "./album";
 import { processAsset } from "./asset";
 import { processPortfolio } from "./portfolio";
 import { deleteUploadedFile, loadUpload, setUploadStatus } from "./steps";
@@ -19,6 +20,12 @@ export async function processUpload(id: string) {
                 break;
             case "portfolio":
                 await processPortfolio(upload);
+                break;
+            case "album":
+                await processAlbum(upload);
+                break;
+            case "album_video":
+                await processAlbumVideo(upload);
                 break;
         }
         await setUploadStatus(upload, "done");

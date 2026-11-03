@@ -45,3 +45,10 @@ export function confirmAccountDeletion(url: string): Mail {
         text: `Confirm deleting your account and all its data. This can't be undone:\n${url}`,
     };
 }
+
+export function albumPublished(title: string, url: string): Mail {
+    return {
+        subject: `${appName}: your album "${title}" is ready`,
+        text: `Your photos and videos are ready to see and download:\n${url}`,
+    };
+}

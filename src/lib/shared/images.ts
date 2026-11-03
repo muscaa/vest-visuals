@@ -24,10 +24,14 @@ export const imageQuality = 80;
 export const imageSizeList = z.array(z.enum(imageSizeNames as [ImageSize, ...ImageSize[]]))
     .refine((sizes) => new Set(sizes).size === sizes.length, "Each size only once");
 
-const extensions: Record<string, string> = {
+/** The extension of each type stored, photos and the video files kept for downloading. */
+export const extensions: Record<string, string> = {
     "image/jpeg": "jpg",
     "image/png": "png",
     "image/webp": "webp",
+    "video/mp4": "mp4",
+    "video/quicktime": "mov",
+    "video/webm": "webm",
 };
 
 /**
@@ -37,4 +41,13 @@ const extensions: Record<string, string> = {
  */
 export function variantFile(folder: string, variant: string, contentType: string) {
     return `${folder}/${variant}.${extensions[contentType] ?? "bin"}`;
+}
+
+/** A stored variant as pages need it: a file (its type set), or for a video, its YouTube id. */
+export interface StoredVariant {
+    variant: string;
+    contentType: string | null;
+    youtubeId: string | null;
+    width: number;
+    height: number;
 }

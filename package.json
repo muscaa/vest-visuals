@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.1161.0",
+        "@aws-sdk/lib-storage": "^3.1161.0",
         "@aws-sdk/s3-request-presigner": "^3.1161.0",
         "@base-ui/react": "^1.9.0",
         "@beautiful-qr-code/react": "^1.0.11",
@@ -43,6 +44,7 @@
         "@tanstack/react-table": "^9.3.1",
         "@uidotdev/usehooks": "^2.4.1",
         "animejs": "^4.5.0",
+        "archiver": "^8.0.0",
         "better-auth": "^1.7.15",
         "class-variance-authority": "^0.7.1",
         "country-flag-icons": "^1.6.20",
@@ -73,6 +75,7 @@
         "@tailwindcss/vite": "^4.3.3",
         "@tanstack/devtools-vite": "^0.8.6",
         "@tanstack/eslint-config": "^0.4.0",
+        "@types/archiver": "^8.0.0",
         "@types/node": "^22.20.5",
         "@types/pg": "^8.23.1",
         "@types/react": "^19.3.0",

@@ -39,5 +39,9 @@ export async function publishUploadChange(target: UploadTarget) {
         case "portfolio":
             await publish("portfolio", {});
             break;
+        case "album":
+        case "album_video":
+            await publish("albums", { albumId: target.data.albumId });
+            break;
     }
 }

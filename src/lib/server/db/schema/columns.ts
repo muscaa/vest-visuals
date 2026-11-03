@@ -10,3 +10,11 @@ export const timestamps = () => ({
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
+
+/** Crockford's base32: no i, l, o or u, so a link read aloud or typed can't be mistaken */
+const tokenAlphabet = "0123456789abcdefghjkmnpqrstvwxyz";
+
+/** A random, url-safe token like `k3x9q2m7vt8wpz4h6nra`: 20 characters, 100 random bits, impossible to guess. */
+export function randomToken() {
+    return Array.from(crypto.getRandomValues(new Uint8Array(20)), (byte) => tokenAlphabet[byte % 32]).join("");
+}

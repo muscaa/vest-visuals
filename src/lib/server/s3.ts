@@ -17,7 +17,9 @@ import {
     S3Client,
     S3ServiceException,
     UploadPartCommand,
+    UploadPartCopyCommand,
 } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { envServer } from "@server/env";
 import { buckets } from "@shared/s3";
@@ -56,9 +58,7 @@ export function signedDownloadUrl(bucket: Bucket, key: string, options: { filena
     const command = new GetObjectCommand({
         Bucket: buckets[bucket],
         Key: key,
-        ResponseContentDisposition: options.filename
-            ? `attachment; filename*=UTF-8''${encodeURIComponent(options.filename)}`
-            : undefined,
+        ResponseContentDisposition: attachment(options.filename),
     });
     return getSignedUrl(s3, command, { expiresIn: options.expiresIn ?? signedFor });
 }
@@ -77,6 +77,13 @@ export interface PutOptions {
     contentType?: string;
     /** e.g. `public, max-age=31536000, immutable` for files that never change under the same key */
     cacheControl?: string;
+    /** with it, opening the file saves it under this name instead of showing it */
+    filename?: string;
+}
+
+/** The header that makes browsers save a file under its name; any name, as it's encoded. */
+function attachment(filename: string | undefined) {
+    return filename ? `attachment; filename*=UTF-8''${encodeURIComponent(filename)}` : undefined;
 }
 
 /** Uploads one file from the server. */
@@ -87,7 +94,46 @@ export async function putObject(bucket: Bucket, key: string, body: PutObjectComm
         Body: body,
         ContentType: options.contentType,
         CacheControl: options.cacheControl,
+        ContentDisposition: attachment(options.filename),
     }));
+}
+
+/**
+ * Uploads a stream of unknown length from the server, in parts as it comes, so it's never all in memory; for big files
+ * made on the fly, like an album's zip. Returns its size.
+ */
+export async function putStream(bucket: Bucket, key: string, body: NodeJS.ReadableStream, options: PutOptions = {}) {
+    let size = 0;
+    const upload = new Upload({
+        client: s3,
+        params: {
+            Bucket: buckets[bucket],
+            Key: key,
+            Body: body as PutObjectCommandInput["Body"],
+            ContentType: options.contentType,
+            CacheControl: options.cacheControl,
+            ContentDisposition: attachment(options.filename),
+        },
+        // big parts, so even a huge zip stays under S3's 10 000 parts
+        partSize: 64 * 1024 * 1024,
+        queueSize: 4,
+    });
+    upload.on("httpUploadProgress", (progress) => {
+        size = progress.loaded ?? size;
+    });
+    await upload.done();
+    return size;
+}
+
+/** A file's contents as a stream, to pass on without holding it in memory; null when there's none under this key. */
+export async function getObjectStream(bucket: Bucket, key: string) {
+    try {
+        const object = await s3.send(new GetObjectCommand({ Bucket: buckets[bucket], Key: key }));
+        return (object.Body as NodeJS.ReadableStream | undefined) ?? null;
+    } catch (error) {
+        if (isNotFound(error)) return null;
+        throw error;
+    }
 }
 
 /** A file's contents, or null when there's none under this key. */
@@ -146,8 +192,17 @@ export async function deletePrefix(bucket: Bucket, prefix: string) {
     return keys.length;
 }
 
-/** Copies a file within the storage, between buckets too, without downloading it. Up to 5 GB, S3's limit for one copy. */
+/** S3 copies up to 5 GB at once; bigger files are copied in parts of this size */
+const copyPartSize = 1024 * 1024 * 1024;
+
+/** Copies a file within the storage, between buckets too, without downloading it, whatever its size. */
 export async function copyObject(from: { bucket: Bucket; key: string }, to: { bucket: Bucket; key: string }, options: PutOptions = {}) {
+    const source = await headObject(from.bucket, from.key);
+    if (source && source.size > 5 * 1024 * 1024 * 1024) {
+        await copyInParts(from, to, source.size, options);
+        return;
+    }
+
     await s3.send(new CopyObjectCommand({
         CopySource: `${buckets[from.bucket]}/${encodeURIComponent(from.key)}`,
         Bucket: buckets[to.bucket],
@@ -156,7 +211,32 @@ export async function copyObject(from: { bucket: Bucket; key: string }, to: { bu
         MetadataDirective: "REPLACE",
         ContentType: options.contentType,
         CacheControl: options.cacheControl,
+        ContentDisposition: attachment(options.filename),
     }));
+}
+
+/** A big file copied range by range, as one multipart upload; on failure the parts are thrown away. */
+async function copyInParts(from: { bucket: Bucket; key: string }, to: { bucket: Bucket; key: string }, size: number, options: PutOptions) {
+    const multipartId = await createMultipartUpload(to.bucket, to.key, options.contentType ?? "application/octet-stream", options);
+    try {
+        const parts: UploadedPart[] = [];
+        for (let start = 0, partNumber = 1; start < size; start += copyPartSize, partNumber++) {
+            const end = Math.min(start + copyPartSize, size) - 1;
+            const { CopyPartResult } = await s3.send(new UploadPartCopyCommand({
+                Bucket: buckets[to.bucket],
+                Key: to.key,
+                UploadId: multipartId,
+                PartNumber: partNumber,
+                CopySource: `${buckets[from.bucket]}/${encodeURIComponent(from.key)}`,
+                CopySourceRange: `bytes=${start}-${end}`,
+            }));
+            parts.push({ partNumber, etag: CopyPartResult?.ETag ?? "" });
+        }
+        await completeMultipartUpload(to.bucket, to.key, multipartId, parts);
+    } catch (error) {
+        await abortMultipartUpload(to.bucket, to.key, multipartId);
+        throw error;
+    }
 }
 
 //
@@ -164,8 +244,14 @@ export async function copyObject(from: { bucket: Bucket; key: string }, to: { bu
 //
 
 /** Starts one, returning S3's id for it. */
-export async function createMultipartUpload(bucket: Bucket, key: string, contentType: string) {
-    const { UploadId } = await s3.send(new CreateMultipartUploadCommand({ Bucket: buckets[bucket], Key: key, ContentType: contentType }));
+export async function createMultipartUpload(bucket: Bucket, key: string, contentType: string, options: PutOptions = {}) {
+    const { UploadId } = await s3.send(new CreateMultipartUploadCommand({
+        Bucket: buckets[bucket],
+        Key: key,
+        ContentType: contentType,
+        CacheControl: options.cacheControl,
+        ContentDisposition: attachment(options.filename),
+    }));
     if (!UploadId) throw new Error(`S3 didn't start a multipart upload for ${buckets[bucket]}/${key}`);
     return UploadId;
 }

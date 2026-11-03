@@ -57,14 +57,6 @@ export async function deleteOrphanMedia(ids: string[]) {
     await deleteMedia(orphans.map((orphan) => orphan.id));
 }
 
-/** Sets the order of a category's groups or a group's media, as given; every one of them must be there, once. */
-export async function reorder(tx: Transaction, current: string[], order: string[], update: (id: string, position: number) => Promise<unknown>) {
-    if (order.length !== current.length || new Set(order).size !== order.length || order.some((id) => !current.includes(id))) {
-        throw new Error("The new order must hold the same items, each once");
-    }
-    for (const [position, id] of order.entries()) await update(id, position);
-}
-
 //
 // shapes sent to the admin and the gallery
 //

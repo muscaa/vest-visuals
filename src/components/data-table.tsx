@@ -108,6 +108,8 @@ export interface DataTableProps<TData extends RowData> {
     filters?: DataTableFilter[];
     /** on the right of the toolbar, e.g. an "Add" button */
     actions?: React.ReactNode;
+    /** right after the search, e.g. a menu for what the whole table is about */
+    nextToSearch?: React.ReactNode;
     /**
      * Rows are ordered by hand, by dragging a handle. Every row is shown (no pagination) and dragging is off while
      * searching, since reordering part of the list is ambiguous. Don't combine it with sortable headers.
@@ -291,6 +293,7 @@ export function DataTable<TData extends RowData>(props: DataTableProps<TData>) {
                         aria-label={m.table_search()}
                     />
                 </InputGroup>
+                {props.nextToSearch}
                 {
                     props.filters?.map((filter) => {
                         const column = table.getColumn(filter.column);
@@ -320,7 +323,7 @@ export function DataTable<TData extends RowData>(props: DataTableProps<TData>) {
                         );
                     })
                 }
-                {props.actions && <div className="flex items-center gap-2 ml-auto">{props.actions}</div>}
+                {props.actions && <div className="flex flex-wrap items-center justify-end gap-2 ml-auto">{props.actions}</div>}
             </div>
 {
                 // outside the table: dnd-kit adds a screen reader announcement element, which can't live in a <tbody>

@@ -8,6 +8,8 @@ export interface GalleryItem {
     images: { url: string; width: number }[];
     /** only for videos: they play from YouTube, and the file in storage is for downloading */
     video?: { youtube: string; download?: string };
+    /** the original file, saved under its own name; for albums, where clients download what they got */
+    download?: string;
     alt?: string;
 }
 
@@ -41,8 +43,7 @@ export function youtubeItem(youtube: string, options: { download?: string; width
     };
 }
 
-/** What the viewer's download button saves: the video's file, or the largest photo. */
+/** What the viewer's download button saves: the original file when there is one, else the video's or the largest photo. */
 export function galleryDownload(item: GalleryItem) {
-    // TODO: the original file from storage, with a link that makes the browser save it (Content-Disposition)
-    return item.video ? item.video.download : item.images.at(-1)?.url;
+    return item.download ?? (item.video ? item.video.download : item.images.at(-1)?.url);
 }

@@ -72,6 +72,14 @@ const segments: Record<string, Partial<Record<Locale, string>>> = {
  * Same format as paraglide's `urlPatterns`: https://paraglidejs.com/i18n-routing
  */
 const patterns: UrlPattern[] = [
+    // an album's directories, any number of them deep, after its token
+    {
+        pattern: "/albums/:token/:path(.*)?",
+        localized: [
+            ["ro", "/ro/albume/:token/:path(.*)?"],
+            ["en", "/en/albums/:token/:path(.*)?"],
+        ],
+    },
     // {
     //     pattern: "/services/wedding",
     //     localized: [

@@ -7,7 +7,8 @@ import { z } from "zod";
 import { db } from "@server/db";
 import { portfolioGroupMedia, portfolioGroups, portfolioMedia, portfolioMediaVariants } from "@server/db/schema";
 import { publish } from "@server/events";
-import { adminGroup, adminMedia, appendGroups, appendMedia, deleteOrphanMedia, groupMediaCounts, reorder } from "@server/portfolio";
+import { adminGroup, adminMedia, appendGroups, appendMedia, deleteOrphanMedia, groupMediaCounts } from "@server/portfolio";
+import { reorder } from "@server/order";
 import { youtubeShapes } from "@shared/portfolio";
 import { adminMiddleware } from "./auth";
 import type { YoutubeShape } from "@shared/portfolio";
@@ -110,7 +111,7 @@ export const reorderPortfolioGroup = createServerFn({ method: "POST" })
     .handler(async ({ data }) => {
         await db.transaction(async (tx) => {
             const current = await tx.select({ id: portfolioGroupMedia.mediaId }).from(portfolioGroupMedia).where(eq(portfolioGroupMedia.groupId, data.id));
-            await reorder(tx, current.map((row) => row.id), data.mediaIds, (mediaId, position) => tx.update(portfolioGroupMedia)
+            await reorder(current.map((row) => row.id), data.mediaIds, (mediaId, position) => tx.update(portfolioGroupMedia)
                 .set({ position })
                 .where(and(eq(portfolioGroupMedia.groupId, data.id), eq(portfolioGroupMedia.mediaId, mediaId))));
         });

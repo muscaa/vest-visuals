@@ -8,7 +8,8 @@ import { z } from "zod";
 import { db } from "@server/db";
 import { portfolioCategories, portfolioCategoryGroups } from "@server/db/schema";
 import { publish } from "@server/events";
-import { adminGroup, appendGroups, groupMediaCounts, reorder } from "@server/portfolio";
+import { adminGroup, appendGroups, groupMediaCounts } from "@server/portfolio";
+import { reorder } from "@server/order";
 import { slug } from "@shared/uploads";
 import { adminMiddleware } from "./auth";
 
@@ -119,7 +120,7 @@ export const reorderPortfolioCategory = createServerFn({ method: "POST" })
             const current = await tx.select({ id: portfolioCategoryGroups.groupId })
                 .from(portfolioCategoryGroups)
                 .where(eq(portfolioCategoryGroups.categoryKey, data.key));
-            await reorder(tx, current.map((row) => row.id), data.groupIds, (groupId, position) => tx.update(portfolioCategoryGroups)
+            await reorder(current.map((row) => row.id), data.groupIds, (groupId, position) => tx.update(portfolioCategoryGroups)
                 .set({ position })
                 .where(and(eq(portfolioCategoryGroups.categoryKey, data.key), eq(portfolioCategoryGroups.groupId, groupId))));
         });

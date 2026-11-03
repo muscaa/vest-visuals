@@ -1,7 +1,7 @@
 /** What the portfolio's server and admin both need: its files' urls, video shapes, and reading YouTube links. */
 import { imageSizeNames, variantFile } from "./images";
 import { publicUrl } from "./s3";
-import type { ImageSize } from "./images";
+import type { ImageSize, StoredVariant } from "./images";
 
 /** A portfolio upload starts with every size: the gallery's viewer uses the biggest on large screens. */
 export const portfolioDefaultSizes: ImageSize[] = imageSizeNames;
@@ -31,13 +31,7 @@ export function youtubeId(input: string) {
     }
 }
 
-export interface PortfolioVariant {
-    variant: string;
-    contentType: string | null;
-    youtubeId: string | null;
-    width: number;
-    height: number;
-}
+export type PortfolioVariant = StoredVariant;
 
 /** A variant's url: its file in the portfolio bucket, or for a video, YouTube's thumbnail. */
 export function portfolioVariantUrl(mediaId: string, variant: PortfolioVariant) {

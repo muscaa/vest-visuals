@@ -50,12 +50,15 @@ export async function readImageSize(source: ImageSource) {
     }
 }
 
-/** An uploaded file becomes the image's original, as it was uploaded, with the extension of its type. */
-export async function copyOriginal(uploadId: string, target: ImageTarget, contentType: string) {
+/**
+ * An uploaded file becomes the image's original, as it was uploaded, with the extension of its type. With `filename`,
+ * opening it saves it under that name, for files clients download.
+ */
+export async function copyOriginal(uploadId: string, target: ImageTarget, contentType: string, filename?: string) {
     "use step";
 
     const key = variantFile(target.folder, "original", contentType);
-    await copyObject({ bucket: "uploads", key: uploadId }, { bucket: target.bucket, key }, { contentType, cacheControl });
+    await copyObject({ bucket: "uploads", key: uploadId }, { bucket: target.bucket, key }, { contentType, cacheControl, filename });
 }
 
 /** One size, as WebP; metadata like the location is left out. */
