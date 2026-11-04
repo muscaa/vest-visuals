@@ -554,6 +554,7 @@
     "cookies_text": "Folosim cookie-uri ca site-ul să funcționeze corect și, cu acordul tău, pentru a analiza traficul. Află mai multe în {#link}politica de cookie-uri{/link}.",
     "cookies_necessary": "Doar esențiale",
     "cookies_accept": "Acceptă toate",
+    "cookies_settings": "Setări cookie-uri",
     "mail_footer": "Primești acest email de la Vest Visuals, pentru contul tău sau pentru ceva cerut pe site.",
     "mail_ignore": "Dacă nu ai cerut tu asta, poți ignora emailul.",
     "mail_link_fallback": "Dacă butonul nu funcționează, deschide linkul:",

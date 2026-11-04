@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { createContext, useContext } from "react";
 import { m } from "@shared/paraglide/messages";
+import { openCookieSettings } from "@client/consent";
 import { pageHead } from "@shared/seo";
 import { Main } from "../main";
 import { Rich } from "../rich";
 import { TextH1, TextH2, TextP, TextSpan } from "../typography";
+import { Button } from "../ui/button";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { PageHeadContext } from "@shared/seo";
 import type { Localized } from "@/i18n";
@@ -84,6 +86,51 @@ export function LegalLink(props: LegalLinkProps) {
     const division = props.division ?? context;
 
     return <Link {...links[division][props.document]}>{props.children}</Link>;
+}
+
+const contactLinks: Record<LegalDivision, LinkOptions> = {
+    home: { to: "/home/contact" },
+    media: { to: "/media/contact" },
+    software: { to: "/software/contact" },
+};
+
+/** Links to the contact page of the division the legal page is on. */
+export function ContactLink(props: { children: React.ReactNode }) {
+    const division = useContext(LegalDivisionContext);
+    return <Link {...contactLinks[division]}>{props.children}</Link>;
+}
+
+/** A table in a legal document, like the cookie list; scrolls sideways on small screens instead of squeezing. */
+export function LegalTable(props: { head: string[]; rows: React.ReactNode[][] }) {
+    return (
+        <div className="overflow-x-auto rounded-xl border">
+            <table className="w-full text-left text-sm-2">
+                <thead className="bg-muted text-foreground">
+                    <tr>
+                        {props.head.map((cell) => <th key={cell} className="px-4 py-3 font-medium">{cell}</th>)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.rows.map((row, index) => (
+                            <tr key={index} className="border-t align-top">
+                                {row.map((cell, column) => <td key={column} className="px-4 py-3 first:font-mono first:text-foreground first:[overflow-wrap:anywhere] first:min-w-36">{cell}</td>)}
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+/** Opens the cookie banner again, to change the choice made in it. */
+export function CookieSettingsButton() {
+    return (
+        <Button variant="outline" className="self-start" onClick={openCookieSettings}>
+            {m.cookies_settings()}
+        </Button>
+    );
 }
 
 export interface LegalAgreementProps {
@@ -171,7 +218,7 @@ export function LegalPage({ division, id, document }: LegalPageProps) {
                                         <TextH2 size="md-3" className="font-medium">
                                             {index + 1}. {section.title}
                                         </TextH2>
-                                        <div className="flex flex-col gap-3 text-sm-1 text-muted-foreground [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-1.5 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-foreground [&_strong]:text-foreground [&_strong]:font-medium">
+                                        <div className="flex flex-col gap-3 text-sm-1 text-muted-foreground [&_h3]:mt-3 [&_h3]:text-md-4 [&_h3]:font-medium [&_h3]:text-foreground [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-1.5 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-foreground [&_strong]:text-foreground [&_strong]:font-medium">
                                             {section.content}
                                         </div>
                                     </section>

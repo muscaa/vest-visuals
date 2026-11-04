@@ -554,6 +554,7 @@
     "cookies_text": "We use cookies to make the site work properly and, with your consent, to analyse traffic. Learn more in our {#link}cookie policy{/link}.",
     "cookies_necessary": "Essential only",
     "cookies_accept": "Accept all",
+    "cookies_settings": "Cookie settings",
     "mail_footer": "You're getting this email from Vest Visuals, for your account or something you asked for on the site.",
     "mail_ignore": "If you didn't ask for this, you can ignore this email.",
     "mail_link_fallback": "If the button doesn't work, open this link:",
