@@ -12,7 +12,7 @@ export const business = {
 /** The company's social profiles. */
 export const socialLinks = {
     instagram: "https://instagram.com/vest.visuals",
-    tiktok: "https://tiktok.com/@vest_visuals",
+    tiktok: "https://tiktok.com/@vest.visuals",
     youtube: "https://youtube.com/@VestVisuals",
     facebook: "https://facebook.com/VestVisuals",
     x: "https://x.com/VestVisual",
