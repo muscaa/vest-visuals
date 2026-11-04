@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-success">Real estate</i> photography <br /> in Timișoara
     </>
     ),
+    metaTitle: "Real estate photography in Timișoara",
     description: "Photos and video for apartments, houses and commercial spaces, so your listing stands out and the property sells or rents faster.",
     imageAlt: "Real estate",
     packages: [

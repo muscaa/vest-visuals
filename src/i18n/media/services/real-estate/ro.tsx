@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Fotografie <i className="text-success">imobiliară</i> <br /> în Timișoara
     </>
     ),
+    metaTitle: "Fotografie imobiliară în Timișoara",
     description: "Fotografii și video pentru apartamente, case și spații comerciale, ca anunțul tău să iasă în evidență și proprietatea să se vândă sau să se închirieze mai repede.",
     imageAlt: "imobiliară",
     packages: [

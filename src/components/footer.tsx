@@ -7,6 +7,7 @@ import {
     SiYoutube,
 } from "@icons-pack/react-simple-icons";
 import { m } from "@shared/paraglide/messages";
+import { business, socialLinks } from "@shared/business";
 import { TextH5, TextLink, TextP } from "./typography";
 import { Separator } from "./ui/separator";
 import { LogoLarge } from "./logo";
@@ -32,18 +33,12 @@ export interface FooterSocial {
 }
 
 export const footerSocials: FooterSocial[] = [
-    { name: "Instagram", href: "https://instagram.com/vest.visuals", icon: SiInstagram },
-    { name: "TikTok", href: "https://tiktok.com/@vest_visuals", icon: SiTiktok },
-    { name: "YouTube", href: "https://youtube.com/@VestVisuals", icon: SiYoutube },
-    { name: "Facebook", href: "https://facebook.com/VestVisuals", icon: SiFacebook },
-    { name: "X", href: "https://x.com/VestVisual", icon: SiX },
+    { name: "Instagram", href: socialLinks.instagram, icon: SiInstagram },
+    { name: "TikTok", href: socialLinks.tiktok, icon: SiTiktok },
+    { name: "YouTube", href: socialLinks.youtube, icon: SiYoutube },
+    { name: "Facebook", href: socialLinks.facebook, icon: SiFacebook },
+    { name: "X", href: socialLinks.x, icon: SiX },
 ];
-
-const business = {
-    name: "VEST VISUALS SRL",
-    cui: "54191210",
-    address: "Timișoara, Timiș",
-};
 
 //
 // parts
@@ -134,10 +129,10 @@ function FooterLegal() {
         <FooterContainer className="flex flex-col md:flex-row justify-between items-center gap-8 py-8">
             <div className="flex flex-col items-center md:items-start gap-1 text-center md:text-left">
                 <TextP size="md-4" className="font-medium">
-                    {business.name}
+                    {business.legalName}
                 </TextP>
                 <TextP variant="muted" size="sm-2">
-                    {m.footer_company_details({ cui: business.cui, address: business.address })}
+                    {m.footer_company_details({ cui: business.taxId, address: `${business.city}, ${business.county}` })}
                 </TextP>
                 <TextP variant="muted" size="sm-2" className="mt-3">
                     {m.footer_copyright({ year: new Date().getFullYear() })}

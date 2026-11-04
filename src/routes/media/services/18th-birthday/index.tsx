@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { AssetKey } from "@shared/assets";
-import { ServicePage } from "@/components/media/service";
+import { ServicePage, mediaServiceHead } from "@/components/media/service";
 import { eighteenthBirthday } from "@/i18n/media/services/18th-birthday";
 
 const images: AssetKey[] = [
@@ -14,6 +14,7 @@ const images: AssetKey[] = [
 ];
 
 export const Route = createFileRoute("/media/services/18th-birthday/")({
+    head: (context) => mediaServiceHead(context, eighteenthBirthday, images[0]),
     component: RouteComponent,
 });
 

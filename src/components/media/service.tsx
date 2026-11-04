@@ -4,8 +4,10 @@ import { Link } from "@tanstack/react-router";
 import { IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { cn } from "@shared/shadcn/utils";
 import { asset } from "@shared/assets";
+import { pageHead } from "@shared/seo";
 import { CTASection } from "./sections/cta";
 import type { AssetKey } from "@shared/assets";
+import type { PageHeadContext } from "@shared/seo";
 import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { Localized } from "@/i18n";
@@ -106,6 +108,8 @@ export interface ServiceQuestion {
 export interface MediaServiceContent {
     /** the page h1: says what and where, the way people search for it */
     title: React.ReactNode;
+    /** the title in search results and shared links, plain text and short: "Fotograf și videograf de nuntă în Timișoara" */
+    metaTitle: string;
     description: string;
     /** what the photos show, in the photos' alt text: "Fotografie {de nuntă} …" / "{Wedding} photo …" */
     imageAlt: string;
@@ -446,4 +450,10 @@ export function ServicePage(props: ServicePageProps) {
             <CTASection />
         </Main>
     );
+}
+
+/** A service page's head: its search title and description, with the first photo of its hero on the card. */
+export function mediaServiceHead(context: PageHeadContext, content: Localized<MediaServiceContent>, photo: AssetKey) {
+    const { metaTitle, description } = localize(content);
+    return pageHead(context, { title: metaTitle, description, photo });
 }

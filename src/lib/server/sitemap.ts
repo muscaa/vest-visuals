@@ -65,12 +65,16 @@ export function sitemapResponse(request: Request, division: IndexedDivision): Re
     );
 }
 
-/** Lets crawlers in and points them to the sitemap. Without a division (the account site), keeps them out. */
-export function robotsResponse(request: Request, division?: IndexedDivision): Response {
+/**
+ * Lets crawlers in, and points them to the sitemap of a site with public pages. The account site has none, its pages
+ * say `noindex` themselves, but crawlers still have to read them: shared albums' previews come from there. The admin
+ * keeps them out.
+ */
+export function robotsResponse(request: Request, site: IndexedDivision | "account" | "admin"): Response {
     const origin = new URL(request.url).origin;
-    const rules = division
-        ? ["User-agent: *", "Allow: /", "", `Sitemap: ${origin}/sitemap.xml`]
-        : ["User-agent: *", "Disallow: /"];
+    const rules = site === "admin"
+        ? ["User-agent: *", "Disallow: /"]
+        : ["User-agent: *", "Allow: /", ...(site === "account" ? [] : ["", `Sitemap: ${origin}/sitemap.xml`])];
 
     return xml(`${rules.join("\n")}\n`, "text/plain");
 }

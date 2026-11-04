@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-success">Outdoor</i> photo <br /> sessions in Timișoara
     </>
     ),
+    metaTitle: "Outdoor photo sessions in Timișoara",
     description: "Individual, couple or family portraits, at a location of your choice. Natural retouching, so you still look like yourself.",
     imageAlt: "Photo session",
     packages: [

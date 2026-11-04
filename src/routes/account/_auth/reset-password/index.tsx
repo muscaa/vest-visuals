@@ -1,5 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { m } from "@shared/paraglide/messages";
 import { z } from "zod";
+import { accountHead } from "@/components/account/layouts";
 import { ResetPasswordForm } from "@/components/forms/reset-password";
 
 const searchSchema = z.object({
@@ -17,5 +19,6 @@ export const Route = createFileRoute("/account/_auth/reset-password/")({
             throw redirect({ to: "/account/status/$status", params: { status: "reset-expired" } });
         }
     },
+    head: (context) => accountHead(context, m.reset_title()),
     component: ResetPasswordForm,
 });

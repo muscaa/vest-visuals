@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-chart-1">Wedding</i> photographer <br /> and videographer in Timișoara
     </>
     ),
+    metaTitle: "Wedding photography and video in Timișoara",
     description: "Wedding photography and video, from getting ready to the last dance. We work in Timișoara, Arad, Lugoj and anywhere else in Romania or abroad.",
     imageAlt: "Wedding",
     packages: [

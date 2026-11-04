@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-chart-1">Christening</i> photographer <br /> and videographer in Timișoara
     </>
     ),
+    metaTitle: "Christening photography and video in Timișoara",
     description: "The ceremony, the party and your little one's first big moments, captured with care. Every package includes a photo session with the baby and the family.",
     imageAlt: "Christening",
     packages: [

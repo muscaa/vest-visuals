@@ -49,7 +49,7 @@ export function EmailLayout(props: { locale: Locale; preview: string; children: 
                     </Section>
                     <Text style={{ margin: "24px 8px 0", fontSize: "12px", lineHeight: "18px", color: colors.muted }}>
                         {m.mail_footer({}, { locale })}
-                        {" · "}
+                        <br />
                         <Link href={homeUrl()} style={{ color: colors.muted, textDecoration: "underline" }}>vestvisuals.ro</Link>
                     </Text>
                 </Container>

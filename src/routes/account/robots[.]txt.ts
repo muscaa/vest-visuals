@@ -5,7 +5,7 @@ import { robotsResponse } from "@server/sitemap";
 export const Route = createFileRoute("/account/robots.txt")({
     server: {
         handlers: {
-            GET: ({ request }: { request: Request }) => robotsResponse(request),
+            GET: ({ request }: { request: Request }) => robotsResponse(request, "account"),
         },
     },
 });

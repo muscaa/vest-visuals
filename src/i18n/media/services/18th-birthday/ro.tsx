@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Fotograf și videograf <br /> de <i className="text-chart-1">majorat</i> în Timișoara
     </>
     ),
+    metaTitle: "Fotograf și videograf de majorat în Timișoara",
     description: "Petrecerea, prietenii și toate momentele pe care le-ai rata altfel, surprinse foto și video. La cerere venim și cu platformă 360, dronă și accesorii pentru invitați.",
     imageAlt: "de majorat",
     packages: [

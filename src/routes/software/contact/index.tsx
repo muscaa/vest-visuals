@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { m } from "@shared/paraglide/messages";
+import { pageHead } from "@shared/seo";
 import { Main } from "@/components/main";
 import { ContactForm } from "@/components/forms/contact";
 
 export const Route = createFileRoute("/software/contact/")({
+    head: (context) => pageHead(context, { title: m.meta_contact_title(), description: m.meta_software_contact_description() }),
     component: RouteComponent,
 });
 

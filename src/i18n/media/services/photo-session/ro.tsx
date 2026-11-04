@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Ședințe foto <br /> în <i className="text-success">aer liber</i> în Timișoara
     </>
     ),
+    metaTitle: "Ședințe foto în aer liber în Timișoara",
     description: "Portrete individuale, de cuplu sau de familie, în locația pe care o alegi tu. Retușare naturală, ca să arăți tot ca tine.",
     imageAlt: "dintr-o ședință foto",
     packages: [

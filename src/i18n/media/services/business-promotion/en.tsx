@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Photo and video <br /> for <i className="text-chart-1">businesses</i> in Timișoara
     </>
     ),
+    metaTitle: "Photo and video for businesses in Timișoara",
     description: "Photo and video content for your website, social media and ads: products, spaces, team and everything that makes your business stand out.",
     imageAlt: "Business promotion",
     packages: [

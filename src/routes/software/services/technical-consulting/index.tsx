@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ServicePage } from "@/components/software/service";
+import { ServicePage, softwareServiceHead } from "@/components/software/service";
 import { technicalConsulting } from "@/i18n/software/services/technical-consulting";
 
 // topics rather than product names, so they're translated
@@ -9,6 +9,7 @@ const technologies = {
 };
 
 export const Route = createFileRoute("/software/services/technical-consulting/")({
+    head: (context) => softwareServiceHead(context, technicalConsulting),
     component: RouteComponent,
 });
 

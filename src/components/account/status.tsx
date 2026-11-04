@@ -143,3 +143,8 @@ export function AccountStatus(props: AccountStatusProps) {
         </SplitCard>
     );
 }
+
+/** The status's title, for the page's head. */
+export function statusTitle(name: StatusName) {
+    return statuses[name].title();
+}

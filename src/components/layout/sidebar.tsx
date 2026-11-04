@@ -1,6 +1,7 @@
 import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
 import { avatarUrl, isAdmin } from "@shared/auth";
+import { pageHead } from "@shared/seo";
 import { Link, Outlet, useMatchRoute, useMatches } from "@tanstack/react-router";
 import { Fragment, useState  } from "react";
 import { IconChevronRight, IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
@@ -375,4 +376,22 @@ export function DashboardPage(props: DashboardPageProps) {
             {props.children}
         </main>
     );
+}
+
+/** What a dashboard page's head needs of the router's matches, the current page last. */
+interface DashboardMatch {
+    pathname: string;
+    staticData: { breadcrumbs?: (loaderData: any) => DashboardCrumb[] };
+    loaderData?: unknown;
+}
+
+/**
+ * The head of every page of a dashboard (the account, the admin), kept out of search results, titled by the page's
+ * last breadcrumb, or `home` on its first page. In the dashboard's layout route, once for all its pages.
+ */
+export function dashboardHead(matches: DashboardMatch[], home: string) {
+    const match = [...matches].reverse().find((value) => value.staticData.breadcrumbs);
+    const page = match?.staticData.breadcrumbs?.(match.loaderData).at(-1)?.label;
+
+    return pageHead({ match: matches.at(-1)! }, { title: page ?? home, noindex: true });
 }

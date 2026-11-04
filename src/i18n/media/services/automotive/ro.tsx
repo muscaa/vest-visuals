@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Fotografie <i className="text-chart-1">auto</i> <br /> în Timișoara
     </>
     ),
+    metaTitle: "Fotografie auto în Timișoara",
     description: "Fotografii și video pentru dealeri, showroom-uri și pasionați, ca mașina să arate exact cum merită, în anunț sau pe social media.",
     imageAlt: "automotive",
     packages: [

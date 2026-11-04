@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Fotograf și videograf <br /> de <i className="text-chart-1">nuntă</i> în Timișoara
     </>
     ),
+    metaTitle: "Fotograf și videograf de nuntă în Timișoara",
     description: "Fotografie și filmare de nuntă, de la pregătiri până la ultimul dans. Lucrăm în Timișoara, Arad, Lugoj și oriunde în țară sau în străinătate.",
     imageAlt: "de nuntă",
     packages: [

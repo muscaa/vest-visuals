@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-chart-1">18th birthday</i> photographer <br /> and videographer in Timișoara
     </>
     ),
+    metaTitle: "18th birthday photos and video in Timișoara",
     description: "The party, your friends and all the moments you'd otherwise miss, captured in photo and video. On request, we also bring a 360 platform, a drone and accessories for guests.",
     imageAlt: "18th birthday",
     packages: [

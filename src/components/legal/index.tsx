@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { createContext, useContext } from "react";
 import { m } from "@shared/paraglide/messages";
+import { pageHead } from "@shared/seo";
 import { Main } from "../main";
 import { Rich } from "../rich";
 import { TextH1, TextH2, TextP, TextSpan } from "../typography";
 import type { LinkOptions } from "@tanstack/react-router";
+import type { PageHeadContext } from "@shared/seo";
 import type { Localized } from "@/i18n";
 import { formatDate, localize } from "@/i18n";
 
@@ -184,4 +186,15 @@ export function LegalPage({ division, id, document }: LegalPageProps) {
             </Main>
         </LegalDivisionContext>
     );
+}
+
+const descriptions: Record<LegalDocumentId, () => string> = {
+    terms: m.meta_legal_terms_description,
+    privacy: m.meta_legal_privacy_description,
+    cookies: m.meta_legal_cookies_description,
+};
+
+/** A legal page's head. The documents are the same on every site, so search engines are sent to the home site's. */
+export function legalHead(context: PageHeadContext, id: LegalDocumentId) {
+    return pageHead(context, { title: names[id](), description: descriptions[id](), canonical: `/home/legal/${id}` });
 }

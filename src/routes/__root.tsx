@@ -11,10 +11,10 @@ import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import * as React from "react";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { envPublic } from "@server/env";
+import { business } from "@shared/business";
 import type { QueryClient } from "@tanstack/react-query";
 import { CatchBoundary, NotFound } from "@/components/errors";
 import mainCss from "@/styles/main.css?url";
-import { seo } from "@/utils/seo";
 import { ThemeProvider } from "@/components/theme/provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
@@ -36,41 +36,23 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             document.documentElement.setAttribute("lang", getLocale());
         }
     },
+    // what every page has; each page adds its own title, description and card (see pageHead in @shared/seo)
     head: () => ({
         meta: [
-            {
-                charSet: "utf-8",
-            },
-            {
-                name: "viewport",
-                content: "width=device-width, initial-scale=1",
-            },
-            ...seo({
-                title: "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-                description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
-            }),
+            { charSet: "utf-8" },
+            { name: "viewport", content: "width=device-width, initial-scale=1" },
+            // pages without a head of their own, like "not found"
+            { title: business.name },
+            { name: "application-name", content: business.name },
+            { name: "apple-mobile-web-app-title", content: business.name },
         ],
         links: [
             { rel: "stylesheet", href: mainCss },
-            {
-                rel: "apple-touch-icon",
-                sizes: "180x180",
-                href: "/apple-touch-icon.png",
-            },
-            {
-                rel: "icon",
-                type: "image/png",
-                sizes: "32x32",
-                href: "/favicon-32x32.png",
-            },
-            {
-                rel: "icon",
-                type: "image/png",
-                sizes: "16x16",
-                href: "/favicon-16x16.png",
-            },
-            { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
-            { rel: "icon", href: "/favicon.ico" },
+            // the .ico for older browsers, the svg for the rest; Android's are in the manifest
+            { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+            { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+            { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+            { rel: "manifest", href: "/site.webmanifest" },
         ],
         scripts: [
             {

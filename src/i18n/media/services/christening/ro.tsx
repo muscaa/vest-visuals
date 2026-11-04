@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         Fotograf și videograf <br /> de <i className="text-chart-1">botez</i> în Timișoara
     </>
     ),
+    metaTitle: "Fotograf și videograf de botez în Timișoara",
     description: "Ceremonia, petrecerea și primele momente importante ale celui mic, surprinse cu grijă. Fiecare pachet include o ședință foto cu bebelușul și familia.",
     imageAlt: "de botez",
     packages: [

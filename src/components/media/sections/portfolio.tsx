@@ -121,6 +121,11 @@ const items: PortfolioItem[] = [
     },
 ];
 
+/** The home page's entry for a portfolio category, by its tag; undefined for a category that isn't on it. */
+export function findPortfolioItem(category: string) {
+    return items.find((item) => item.category === category);
+}
+
 interface PortfolioSectionProps { }
 
 export function PortfolioSection(props: PortfolioSectionProps) {

@@ -7,6 +7,7 @@ const content: MediaServiceContent = {
         <i className="text-chart-1">Automotive</i> photography <br /> in Timișoara
     </>
     ),
+    metaTitle: "Automotive photography in Timișoara",
     description: "Photos and video for dealers, showrooms and enthusiasts, so the car looks exactly as it deserves, in a listing or on social media.",
     imageAlt: "Automotive",
     packages: [

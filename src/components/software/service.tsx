@@ -1,10 +1,12 @@
 import { m } from "@shared/paraglide/messages";
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
+import { pageHead } from "@shared/seo";
 import { CTASection } from "./sections/cta";
 import { findService, serviceGroups } from "./sections/services";
 import type { SoftwareServiceId } from "./sections/services";
 import type { Icon } from "@tabler/icons-react";
+import type { PageHeadContext } from "@shared/seo";
 import type { Localized } from "@/i18n";
 import { PageBreadcrumbs } from "@/components/breadcrumbs";
 import { HoverCard } from "@/components/cards/hover";
@@ -282,4 +284,10 @@ export function ServicePage(props: ServicePageProps) {
             <CTASection />
         </Main>
     );
+}
+
+/** A service page's head: its h1 is already the title people search for. */
+export function softwareServiceHead(context: PageHeadContext, content: Localized<SoftwareServiceContent>) {
+    const { title, description } = localize(content);
+    return pageHead(context, { title, description });
 }

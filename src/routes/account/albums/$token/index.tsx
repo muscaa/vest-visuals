@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AlbumPage } from "@/components/account/album";
+import { AlbumPage, albumHead } from "@/components/account/album";
 import { albumMediaQuery, albumQuery } from "@/functions/albums";
 
 /**
@@ -11,6 +11,7 @@ export const Route = createFileRoute("/account/albums/$token/")({
         context.queryClient.query(albumQuery(params.token, [])),
         context.queryClient.infiniteQuery(albumMediaQuery(params.token, [])),
     ]),
+    head: (context) => albumHead(context, context.params.token, context.loaderData?.[0]),
     component: RouteComponent,
 });
 

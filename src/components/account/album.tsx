@@ -6,6 +6,8 @@ import { Fragment, useRef } from "react";
 import { IconArrowDown, IconCopy, IconDownload, IconShare2 } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { gallerySrcSet } from "@shared/gallery";
+import { getLocale } from "@shared/paraglide/runtime";
+import { cardUrl, pageHead } from "@shared/seo";
 import { cn } from "@shared/shadcn/utils";
 import { Fan } from "../gallery/fan";
 import { Gallery } from "../gallery/gallery";
@@ -25,6 +27,7 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 import type { PublicAlbum } from "@shared/albums";
+import type { PageHeadContext } from "@shared/seo";
 import { formatDate } from "@/i18n";
 import { albumMediaQuery, albumQuery } from "@/functions/albums";
 import { useGalleryQuery } from "@/hooks/gallery";
@@ -249,4 +252,17 @@ export function AlbumPage(props: { token: string; path: string[] }) {
             {album.draft && <Badge variant="secondary" className="fixed bottom-4 left-4 z-50 shadow-md">{m.album_draft()}</Badge>}
         </div>
     );
+}
+
+/**
+ * An album page's head: its title and description, kept out of search results. Its card, with the cover, is made
+ * from the album itself, so it's there for the link's preview in messages.
+ */
+export function albumHead(context: PageHeadContext, token: string, album: PublicAlbum | undefined) {
+    return pageHead(context, {
+        title: album?.title ?? m.meta_album_title(),
+        description: album?.description ?? m.meta_album_description(),
+        card: cardUrl({ album: token, locale: getLocale() }),
+        noindex: true,
+    });
 }

@@ -1,7 +1,8 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import { redirectParam } from "@shared/auth";
-import { AccountStatus, statusNames } from "@/components/account/status";
+import { accountHead } from "@/components/account/layouts";
+import { AccountStatus, statusNames, statusTitle } from "@/components/account/status";
 import { redirectTarget, sessionQuery } from "@/functions/auth";
 
 const searchSchema = z.object({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/account/_auth/status/$status/")({
             throw redirect({ to: "/account/status/$status", params: { status: "email-change-confirmed" }, search: { email: search.email } });
         }
     },
+    head: (context) => accountHead(context, statusTitle(context.params.status)),
     component: RouteComponent,
 });
 

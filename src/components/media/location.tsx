@@ -7,10 +7,12 @@ import {
     IconMapPin,
 } from "@tabler/icons-react";
 import { asset } from "@shared/assets";
+import { pageHead } from "@shared/seo";
 import { cn } from "@shared/shadcn/utils";
 import { FAQSection, mediaServices } from "./service";
 import type { ServiceQuestion } from "./service";
 import type { AssetKey } from "@shared/assets";
+import type { PageHeadContext } from "@shared/seo";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { Localized } from "@/i18n";
 import { HoverCard } from "@/components/cards/hover";
@@ -462,4 +464,10 @@ export function LocationPage(props: LocationPageProps) {
             <CTASection inCity={content.inCity} />
         </Main>
     );
+}
+
+/** A city page's head, with the city's photo on the card. */
+export function locationHead(context: PageHeadContext, location: MediaLocationId, content: Localized<LocationContent>) {
+    const { inCity, description } = localize(content);
+    return pageHead(context, { title: m.meta_media_location_title({ inCity }), description, photo: findLocation(location).image });
 }

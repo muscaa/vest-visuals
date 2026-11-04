@@ -1,5 +1,8 @@
 import { deLocalizeUrl, localizeUrl } from "@shared/paraglide/runtime";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequestUrl } from "@tanstack/react-start/server";
 import { envClient } from "@client/env";
+import type { Locale } from "@shared/paraglide/runtime";
 import type { LocationRewrite } from "@tanstack/react-router";
 
 //
@@ -53,3 +56,24 @@ export const rewriteBridges: LocationRewrite = {
         return url;
     },
 };
+
+//
+// full urls
+//
+
+/** "https:" or "http:", as the page was opened, behind the proxy too (see src/server.ts). */
+const currentProtocol = createIsomorphicFn()
+    .server(() => getRequestUrl().protocol)
+    .client(() => window.location.protocol);
+
+/**
+ * A page's full url as visitors see it: `/media/services/wedding` is `https://media.…/ro/servicii/nunta` in romanian.
+ * Without a locale, the url that sends visitors to their own language, as in the sitemap's `x-default`.
+ */
+export function publicPageUrl(path: string, locale?: Locale): URL {
+    const [, first = "", ...rest] = path.replace(/(.)\/$/, "$1").split("/");
+    const bridge = bridgeKeys.includes(first as Bridge) ? (first as Bridge) : "home";
+
+    const url = new URL(`${currentProtocol()}//${bridges[bridge]}/${rest.join("/")}`);
+    return locale ? localizeUrl(url, { locale }) : url;
+}
