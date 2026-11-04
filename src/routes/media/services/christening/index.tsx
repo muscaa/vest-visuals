@@ -1,10 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { AssetKey } from "@shared/assets";
 import { ServicePage } from "@/components/media/service";
 import { christening } from "@/i18n/media/services/christening";
 
-const images = [
-    // TODO: add photos from this category, the old page had none
-    "https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/large",
+const images: AssetKey[] = [
+    "media-service-christening-1",
+    "media-service-christening-2",
+    "media-service-christening-3",
+    "media-service-christening-4",
+    "media-service-christening-5",
 ];
 
 export const Route = createFileRoute("/media/services/christening/")({

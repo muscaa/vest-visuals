@@ -9,6 +9,8 @@ export const buckets = {
     portfolio: "portfolio",
     albums: "albums",
     assets: "assets",
+    /** profile photos, one folder per user */
+    avatars: "avatars",
     /** private: files on their way in, until `processUpload` moves them where they belong */
     uploads: "uploads",
 } as const;

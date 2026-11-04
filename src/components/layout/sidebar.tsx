@@ -1,6 +1,6 @@
 import { cn } from "@shared/shadcn/utils";
 import { m } from "@shared/paraglide/messages";
-import { isAdmin } from "@shared/auth";
+import { avatarUrl, isAdmin } from "@shared/auth";
 import { Link, Outlet, useMatchRoute, useMatches } from "@tanstack/react-router";
 import { Fragment, useState  } from "react";
 import { IconChevronRight, IconLogout, IconSelector, IconSettings, IconWorld } from "@tabler/icons-react";
@@ -167,12 +167,12 @@ function UserDetails() {
     return (
         <>
             <Avatar>
-                <AvatarImage src={user.image ?? undefined} alt={user.name} />
+                <AvatarImage src={avatarUrl(user.image)} alt={user.name} />
                 <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0 text-left">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                <span className="truncate text-sm-2 text-muted-foreground">{user.email}</span>
             </div>
         </>
     );
@@ -299,7 +299,7 @@ export function SidebarLayout(props: SidebarLayoutProps) {
                                 <LogoSmall className="size-8 shrink-0" />
                                 <div className="flex flex-col min-w-0">
                                     <span className="truncate font-medium">Vest Visuals</span>
-                                    <span className="truncate text-xs text-muted-foreground">{title}</span>
+                                    <span className="truncate text-sm-2 text-muted-foreground">{title}</span>
                                 </div>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

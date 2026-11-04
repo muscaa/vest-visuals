@@ -1,4 +1,5 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight } from "@tabler/icons-react";
 import { cn } from "@shared/shadcn/utils";
@@ -42,7 +43,7 @@ function MediaTile() {
     return (
         <Link to="/media" className={cn(tile, "theme-dark")}>
             <Img
-                src="https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/large"
+                src={asset("home-media-tile", "large")}
                 alt={m.home_media_tile_alt()}
                 className="absolute -z-10 inset-0 size-full object-cover transition-all duration-500 group-hover/tile:scale-105"
             />

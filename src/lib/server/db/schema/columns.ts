@@ -5,10 +5,16 @@ import { v7 as uuidv7 } from "uuid";
 /** A UUID v7 primary key: ordered by time, so new rows go at the end of the index instead of anywhere in it. */
 export const id = () => uuid("id").primaryKey().$defaultFn(() => uuidv7());
 
+/**
+ * A moment in time, stored with its time zone (as UTC), so it's the same moment whatever the database's or the
+ * server's zone. The generated auth tables keep plain timestamps, which is fine while the database runs in UTC.
+ */
+export const instant = (name: string) => timestamp(name, { withTimezone: true });
+
 /** When the row was created, and last changed. */
 export const timestamps = () => ({
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+    createdAt: instant("created_at").defaultNow().notNull(),
+    updatedAt: instant("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 
 /** Crockford's base32: no i, l, o or u, so a link read aloud or typed can't be mistaken */

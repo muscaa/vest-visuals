@@ -3,8 +3,8 @@
  * (a photo's original and sizes, a video's file for downloading) and, for a video, its YouTube link.
  */
 import { relations, sql } from "drizzle-orm";
-import { check, date, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
-import { id, randomToken, timestamps } from "./columns";
+import { check, date, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { id, instant, randomToken, timestamps } from "./columns";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 import type { AlbumArchive } from "@shared/albums";
 
@@ -27,11 +27,11 @@ export const albums = pgTable("albums", {
     /** the album's first photo when not set */
     coverEntryId: uuid("cover_entry_id").references((): AnyPgColumn => albumEntries.id, { onDelete: "set null" }),
     status: albumStatus("status").default("draft").notNull(),
-    publishedAt: timestamp("published_at"),
+    publishedAt: instant("published_at"),
     /** from then, nobody opens it, as if deleted, while the client can still pay; set when it's published */
-    lockAt: timestamp("lock_at"),
+    lockAt: instant("lock_at"),
     /** when it's deleted for good, with its files */
-    deleteAt: timestamp("delete_at"),
+    deleteAt: instant("delete_at"),
     /** the last zip of the whole album and what's in it */
     archive: jsonb("archive").$type<AlbumArchive>(),
     archiveStatus: albumArchiveStatus("archive_status").default("idle").notNull(),

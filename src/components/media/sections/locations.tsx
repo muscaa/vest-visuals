@@ -1,4 +1,5 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { cn } from "@shared/shadcn/utils";
 import { Link } from "@tanstack/react-router";
 import type { LinkOptions } from "@tanstack/react-router";
@@ -31,7 +32,7 @@ function LocationsEntry({
             {...props}
             className={cn(
                 "group/locations-entry relative flex flex-col min-h-32 gap-1 p-6",
-                "rounded-2xl overflow-hidden transition-all bg-card hover:bg-muted",
+                "rounded-4xl overflow-hidden transition-all bg-card hover:bg-muted",
                 className,
             )}
         >
@@ -79,7 +80,7 @@ export function LocationsSection(props: LocationsSectionProps) {
         >
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow>{m.media_locations_eyebrow()}</Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         <Rich message={m.media_locations_title} />
                     </TextH1>
@@ -95,7 +96,8 @@ export function LocationsSection(props: LocationsSectionProps) {
                                 {...link}
                                 name={name()}
                                 county={county()}
-                                image={image}
+                                // the first spans the whole row
+                                image={asset(image, index === 0 ? "large" : "medium")}
                                 className={index === 0 ? "sm:col-span-2 lg:col-span-3" : undefined}
                             />
                         ))

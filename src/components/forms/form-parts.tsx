@@ -13,7 +13,7 @@ export function FormMessage(props: { variant?: "error" | "success"; children: Re
         <div
             role={error ? "alert" : "status"}
             className={cn(
-                "rounded-lg px-4 py-3 text-sm text-center text-balance",
+                "rounded-lg px-4 py-3 text-sm-2 text-center text-balance",
                 error ? "bg-destructive/10 text-destructive" : "bg-primary/10 text-primary",
                 props.className,
             )}

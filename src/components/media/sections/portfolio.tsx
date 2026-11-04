@@ -1,7 +1,9 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { cn } from "@shared/shadcn/utils";
 import { Link } from "@tanstack/react-router";
 import { findMediaService } from "../service";
+import type { AssetKey } from "@shared/assets";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { RichProps } from "@/components/rich";
 import type { MediaServiceId } from "../service";
@@ -31,7 +33,7 @@ function PortfolioEntry({
             {...props}
             className={cn(
                 "group/portfolio-entry relative flex flex-col justify-end gap-1 p-6 theme-dark",
-                "rounded-2xl overflow-hidden transition-all bg-linear-to-b from-30% from-transparent to-black/80",
+                "rounded-4xl overflow-hidden transition-all bg-linear-to-b from-30% from-transparent to-black/80",
                 className,
             )}
         >
@@ -55,7 +57,7 @@ interface PortfolioItem {
     /** the name with its accent word, from the messages */
     title: RichProps["message"];
     description: () => string;
-    image: string;
+    image: AssetKey;
     className: string;
 }
 
@@ -66,7 +68,7 @@ const items: PortfolioItem[] = [
         category: "nunta",
         title: m.media_portfolio_wedding,
         description: m.media_portfolio_event_description,
-        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        image: "media-portfolio-wedding",
         className: "order-1 sm:col-span-2",
     },
     {
@@ -74,7 +76,7 @@ const items: PortfolioItem[] = [
         category: "botez",
         title: m.media_portfolio_christening,
         description: m.media_portfolio_event_description,
-        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        image: "media-portfolio-christening",
         className: "order-2",
     },
     {
@@ -82,7 +84,7 @@ const items: PortfolioItem[] = [
         category: "majorat",
         title: m.media_portfolio_18th_birthday,
         description: m.media_portfolio_event_description,
-        image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium",
+        image: "media-portfolio-18th-birthday",
         className: "order-3",
     },
     {
@@ -90,7 +92,7 @@ const items: PortfolioItem[] = [
         category: "sedinta-foto",
         title: m.media_portfolio_photo_session,
         description: m.media_portfolio_photo_session_description,
-        image: "https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium",
+        image: "media-portfolio-photo-session",
         className: "order-4",
     },
     {
@@ -98,7 +100,7 @@ const items: PortfolioItem[] = [
         category: "auto",
         title: m.media_portfolio_automotive,
         description: m.media_portfolio_automotive_description,
-        image: "https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium",
+        image: "media-portfolio-automotive",
         className: "order-5",
     },
     {
@@ -106,7 +108,7 @@ const items: PortfolioItem[] = [
         category: "imobiliare",
         title: m.media_portfolio_real_estate,
         description: m.media_portfolio_real_estate_description,
-        image: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium",
+        image: "media-portfolio-real-estate",
         className: "order-6",
     },
     {
@@ -114,7 +116,7 @@ const items: PortfolioItem[] = [
         category: "promovare-afaceri",
         title: m.media_portfolio_business_promotion,
         description: m.media_portfolio_business_promotion_description,
-        image: "https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium",
+        image: "media-portfolio-business-promotion",
         className: "order-7 lg:col-span-2",
     },
 ];
@@ -129,7 +131,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
         >
             <div className="flex flex-col max-w-7xl w-full @container">
                 <Eyebrow>{m.media_portfolio_eyebrow()}</Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         <Rich message={m.media_portfolio_title} />
                     </TextH1>
@@ -156,7 +158,7 @@ export function PortfolioSection(props: PortfolioSectionProps) {
                                     params={{ category: item.category }}
                                     name={<Rich message={item.title} />}
                                     description={item.description()}
-                                    image={item.image}
+                                    image={asset(item.image, "medium")}
                                     alt={m.media_portfolio_alt({ service: name() })}
                                     className={item.className}
                                 />

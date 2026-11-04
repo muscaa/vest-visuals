@@ -1,6 +1,6 @@
 import { m } from "@shared/paraglide/messages";
 import { Outlet } from "@tanstack/react-router";
-import { IconCode, IconHome, IconLibraryPhoto, IconShield } from "@tabler/icons-react";
+import { IconHome, IconLibraryPhoto, IconShield } from "@tabler/icons-react";
 import { ScreenLayout } from "../layout/screen";
 import { Main } from "../main";
 import { SidebarLayout } from "../layout/sidebar";
@@ -29,13 +29,6 @@ const groups: SidebarEntryGroup[] = [
         entries: [
             // the client's digital albums
             { text: m.account_albums, icon: IconLibraryPhoto, link: { to: "/account/albums" } },
-        ],
-    },
-    {
-        title: () => "Software",
-        entries: [
-            // TODO: demo, the client's software projects and how they're going
-            { text: m.dashboard_projects, icon: IconCode },
         ],
     },
 ];

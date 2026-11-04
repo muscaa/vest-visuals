@@ -6,9 +6,11 @@ import {
     IconCar,
     IconMapPin,
 } from "@tabler/icons-react";
+import { asset } from "@shared/assets";
 import { cn } from "@shared/shadcn/utils";
 import { FAQSection, mediaServices } from "./service";
 import type { ServiceQuestion } from "./service";
+import type { AssetKey } from "@shared/assets";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { Localized } from "@/i18n";
 import { HoverCard } from "@/components/cards/hover";
@@ -37,7 +39,7 @@ export type MediaLocation = LinkOptions & {
     id: MediaLocationId;
     name: () => string;
     county: () => string;
-    image: string;
+    image: AssetKey;
 };
 
 /** Every city with its own page, used for the home page section and the "other cities" links. */
@@ -47,42 +49,42 @@ export const mediaLocations: MediaLocation[] = [
         name: m.location_timisoara,
         county: m.county_timis,
         to: "/media/locations/timisoara",
-        image: "https://images.unsplash.com/photo-1687696162729-a75f9ddc004d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-timisoara",
     },
     {
         id: "arad",
         name: m.location_arad,
         county: m.county_arad,
         to: "/media/locations/arad",
-        image: "https://images.unsplash.com/photo-1632207857925-a4d52c54d683?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-arad",
     },
     {
         id: "oradea",
         name: m.location_oradea,
         county: m.county_bihor,
         to: "/media/locations/oradea",
-        image: "https://images.unsplash.com/photo-1654172054677-9a8cd7a8c04a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-oradea",
     },
     {
         id: "drobeta-turnu-severin",
         name: m.location_drobeta,
         county: m.county_mehedinti,
         to: "/media/locations/drobeta-turnu-severin",
-        image: "https://images.unsplash.com/photo-1592335234454-1454bd449a2c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-drobeta-turnu-severin",
     },
     {
         id: "cluj-napoca",
         name: m.location_cluj,
         county: m.county_cluj,
         to: "/media/locations/cluj-napoca",
-        image: "https://images.unsplash.com/photo-1678736680989-195226823176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-cluj-napoca",
     },
     {
         id: "bucuresti",
         name: m.location_bucuresti,
         county: m.county_bucuresti,
         to: "/media/locations/bucuresti",
-        image: "https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "media-location-bucuresti",
     },
 ];
 
@@ -125,7 +127,7 @@ function HeroSection(props: SectionProps) {
     return (
         <section id="hero" className="relative isolate flex w-full theme-dark">
             <Img
-                src={props.location.image}
+                src={asset(props.location.image, "large")}
                 alt={m.media_location_alt({ city: props.location.name(), county: props.location.county() })}
                 loading="eager"
                 fetchPriority="high"
@@ -181,19 +183,19 @@ function HeroSection(props: SectionProps) {
 // tiles
 //
 /** A photo card with a name on top, like the city cards on the media home page. */
-function PhotoTile(props: LinkOptions & { name: string; label: string; image: string; alt: string; className?: string }) {
+function PhotoTile(props: LinkOptions & { name: string; label: string; image: AssetKey; alt: string; className?: string }) {
     const { name, label, image, alt, className, ...link } = props;
 
     return (
         <Link
             {...link}
             className={cn(
-                "group/tile relative isolate flex flex-col justify-end gap-1 p-5 rounded-2xl overflow-hidden theme-dark",
+                "group/tile relative isolate flex flex-col justify-end gap-1 p-5 rounded-4xl overflow-hidden theme-dark",
                 className,
             )}
         >
             <Img
-                src={image}
+                src={asset(image, "medium")}
                 alt={alt}
                 className="absolute -z-10 inset-0 size-full object-cover transition-all duration-300 group-hover/tile:scale-105"
             />
@@ -217,7 +219,7 @@ function ContactTile(props: { title: string; description: string; accent: string
         <Link
             to="/media/contact"
             className={cn(
-                "flex flex-col justify-end gap-1 p-5 rounded-2xl bg-card transition-all hover:bg-[color-mix(in_oklab,var(--color2)_20%,var(--muted))]",
+                "flex flex-col justify-end gap-1 p-5 rounded-4xl bg-card transition-all hover:bg-[color-mix(in_oklab,var(--color2)_20%,var(--muted))]",
                 props.className,
             )}
         >
@@ -293,7 +295,7 @@ function SpotsSection(props: Pick<SectionProps, "inCity" | "spots">) {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {
                         props.spots.map((spot) => (
-                            <li key={spot.name} className="flex gap-4 p-6 rounded-3xl bg-card ring-1 ring-foreground/5 shadow-md">
+                            <li key={spot.name} className="flex gap-4 p-6 rounded-4xl bg-card ring-1 ring-foreground/5 shadow-md">
                                 <div className="flex justify-center items-center size-11 shrink-0 rounded-2xl bg-success/15 text-success">
                                     <IconMapPin className="size-5" />
                                 </div>
@@ -341,7 +343,7 @@ function TravelSection(props: Pick<SectionProps, "location" | "freeTravel">) {
                         <div
                             key={title}
                             className={cn(
-                                "flex gap-5 p-8 rounded-3xl",
+                                "flex gap-5 p-8 rounded-4xl",
                                 index === 0 && props.freeTravel ? "bg-success/15" : "bg-muted",
                             )}
                         >

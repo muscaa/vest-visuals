@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { cn } from "@shared/shadcn/utils";
+import { asset } from "@shared/assets";
 import { CTASection } from "./sections/cta";
+import type { AssetKey } from "@shared/assets";
 import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 import type { Localized } from "@/i18n";
@@ -57,19 +59,19 @@ export type MediaService = LinkOptions & {
     id: MediaServiceId;
     /** a message function, called while rendering so it's in the visitor's locale */
     name: () => string;
-    /** cover photo for cards linking to the service */
-    image: string;
+    /** cover photo for cards linking to the service, the first of its page's hero */
+    image: AssetKey;
 };
 
 /** Every media service page, used for related links, the home page and anywhere else they're listed. */
 export const mediaServices: MediaService[] = [
-    { id: "wedding", name: m.media_service_wedding, to: "/media/services/wedding", image: "https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium" },
-    { id: "christening", name: m.media_service_christening, to: "/media/services/christening", image: "https://cdn0.vestvisuals.ro/portfolio/yu9eomg0ef4f66u2gpbqws4t/medium" },
-    { id: "18th-birthday", name: m.media_service_18th_birthday, to: "/media/services/18th-birthday", image: "https://cdn0.vestvisuals.ro/portfolio/qyko3rjjfg14yjhvs2l45wck/medium" },
-    { id: "photo-session", name: m.media_service_photo_session, to: "/media/services/photo-session", image: "https://s3.vestvisuals.ro/portfolio/tp2e4xpmgdo71mx3q8ixtt0f/medium" },
-    { id: "real-estate", name: m.media_service_real_estate, to: "/media/services/real-estate", image: "https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium" },
-    { id: "automotive", name: m.media_service_automotive, to: "/media/services/automotive", image: "https://s3.vestvisuals.ro/portfolio/ok1f6eurgum0dnwollokpqzv/medium" },
-    { id: "business-promotion", name: m.media_service_business_promotion, to: "/media/services/business-promotion", image: "https://s3.vestvisuals.ro/portfolio/xrja8xss5xpgf6ytj14rvcr0/medium" },
+    { id: "wedding", name: m.media_service_wedding, to: "/media/services/wedding", image: "media-service-wedding-1" },
+    { id: "christening", name: m.media_service_christening, to: "/media/services/christening", image: "media-service-christening-1" },
+    { id: "18th-birthday", name: m.media_service_18th_birthday, to: "/media/services/18th-birthday", image: "media-service-18th-birthday-1" },
+    { id: "photo-session", name: m.media_service_photo_session, to: "/media/services/photo-session", image: "media-service-photo-session-1" },
+    { id: "real-estate", name: m.media_service_real_estate, to: "/media/services/real-estate", image: "media-service-real-estate-1" },
+    { id: "automotive", name: m.media_service_automotive, to: "/media/services/automotive", image: "media-service-automotive-1" },
+    { id: "business-promotion", name: m.media_service_business_promotion, to: "/media/services/business-promotion", image: "media-service-business-promotion-1" },
 ];
 
 /** Finds a media service by id. */
@@ -117,12 +119,12 @@ export interface MediaServiceContent {
 
 export interface ServicePageProps {
     service: MediaServiceId;
-    /** the same in every locale */
-    images: string[];
+    /** the hero's photos, the same in every locale */
+    images: AssetKey[];
     content: Localized<MediaServiceContent>;
 }
 
-type SectionProps = MediaServiceContent & { service: MediaServiceId; images: string[] };
+type SectionProps = MediaServiceContent & { service: MediaServiceId; images: AssetKey[] };
 
 //
 // hero
@@ -146,29 +148,32 @@ function HeroOverlay(props: Pick<SectionProps, "title" | "description">) {
                     <TextP size="md-3" className="max-w-[60ch] text-pretty">
                         {props.description}
                     </TextP>
-                    <div className="flex not-xs:flex-col gap-4 pointer-events-auto">
-                        <Button
-                            variant="white"
-                            size="xl"
-                            nativeButton={false}
-                            render={<Link to="." hash="packages" />}
-                        >
-                            {m.media_service_see_packages()}
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="xl"
-                            nativeButton={false}
-                            render={<Link to="/media/contact" />}
-                        >
-                            {m.common_request_quote()}
-                        </Button>
+                    {/* the carousel's controls on the buttons' row, like the media home page */}
+                    <div className="flex flex-wrap justify-between items-end gap-4">
+                        <div className="flex not-xs:flex-col not-xs:w-full gap-4 pointer-events-auto">
+                            <Button
+                                variant="white"
+                                size="xl"
+                                nativeButton={false}
+                                render={<Link to="." hash="packages" />}
+                            >
+                                {m.media_service_see_packages()}
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="xl"
+                                nativeButton={false}
+                                render={<Link to="/media/contact" />}
+                            >
+                                {m.common_request_quote()}
+                            </Button>
+                        </div>
+                        <div className="flex not-sm:w-full justify-center items-center gap-2 pointer-events-auto">
+                            <CarouselPrevious className="relative inset-0 translate-y-0" />
+                            <CarouselCounter />
+                            <CarouselNext className="relative inset-0 translate-y-0" />
+                        </div>
                     </div>
-                </div>
-                <div className="flex justify-center sm:justify-end items-center gap-2 pointer-events-auto">
-                    <CarouselPrevious className="relative inset-0 translate-y-0" />
-                    <CarouselCounter />
-                    <CarouselNext className="relative inset-0 translate-y-0" />
                 </div>
             </div>
         </div>
@@ -187,7 +192,7 @@ function HeroSection(props: Pick<SectionProps, "title" | "description" | "images
                     {props.images.map((image, index) => (
                         <CarouselItem key={image} className="p-0">
                             <Img
-                                src={image}
+                                src={asset(image, "large")}
                                 alt={m.media_service_photo_alt({ kind: props.imageAlt, number: index + 1 })}
                                 loading={index === 0 ? "eager" : "lazy"}
                                 fetchPriority={index === 0 ? "high" : "low"}
@@ -405,7 +410,7 @@ export function FAQSection(props: Pick<SectionProps, "faq">) {
                             <Rich message={m.common_faq_more} />
                         </TextP>
                     </div>
-                    <Accordion className="rounded-3xl bg-card">
+                    <Accordion className="rounded-4xl bg-card">
                         {props.faq.map(({ question, answer }) => (
                             <AccordionItem key={question} value={question}>
                                 <AccordionTrigger className="p-6 text-md-4 hover:no-underline">

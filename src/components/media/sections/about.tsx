@@ -1,4 +1,5 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { MemberCard } from "@/components/cards/member";
 import { Eyebrow } from "@/components/eyebrow";
 import { TextH1, TextP } from "@/components/typography";
@@ -14,7 +15,7 @@ export function AboutSection(props: AboutSectionProps) {
         >
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow>{m.media_about_eyebrow()}</Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         <Rich message={m.media_about_title} />
                     </TextH1>
@@ -24,7 +25,7 @@ export function AboutSection(props: AboutSectionProps) {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <MemberCard
-                        image="https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/medium"
+                        image={asset("media-team-mihail", "medium")}
                         firstName="Mihail"
                         lastName="Musca"
                         role={m.media_member_photographer()}
@@ -32,7 +33,7 @@ export function AboutSection(props: AboutSectionProps) {
                         instagram="musca.mihail"
                     />
                     <MemberCard
-                        image="https://cdn0.vestvisuals.ro/assets/mw9i6zen7sd4tlxyl6d34c8o/medium"
+                        image={asset("media-team-david", "medium")}
                         firstName="David"
                         lastName="Boștină"
                         role={m.media_member_videographer()}

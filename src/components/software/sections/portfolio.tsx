@@ -1,5 +1,7 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { IconArrowUpRight } from "@tabler/icons-react";
+import type { AssetKey } from "@shared/assets";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
 import { TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
@@ -9,7 +11,7 @@ import { Button } from "@/components/ui/button";
 interface Project {
     name: string;
     description: () => string;
-    image: string;
+    image: AssetKey;
     url: string;
 }
 
@@ -17,7 +19,7 @@ const projects: Project[] = [
     {
         name: "Aerionic",
         description: m.software_project_aerionic,
-        image: "/portfolio/aerionic.webp",
+        image: "software-portfolio-aerionic",
         url: "https://aerionic.co.uk",
     },
 ];
@@ -32,7 +34,7 @@ function ProjectEntry({ project }: { project: Project }) {
                 className="overflow-hidden rounded-lg border shadow-sm"
             >
                 <Img
-                    src={project.image}
+                    src={asset(project.image, "large")}
                     alt={m.software_portfolio_screenshot({ name: project.name })}
                     className="w-full aspect-16/10 object-cover object-top transition-all duration-300 group-hover/project:scale-102"
                 />

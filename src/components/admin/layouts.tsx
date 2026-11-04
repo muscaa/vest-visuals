@@ -1,5 +1,5 @@
 import { m } from "@shared/paraglide/messages";
-import { IconCode, IconFiles, IconHome, IconLibraryPhoto, IconPhoto, IconUser, IconUsers } from "@tabler/icons-react";
+import { IconFiles, IconHome, IconLibraryPhoto, IconPhoto, IconUser, IconUsers } from "@tabler/icons-react";
 import { SidebarLayout } from "../layout/sidebar";
 import type { SidebarEntryGroup } from "../layout/sidebar";
 
@@ -25,13 +25,6 @@ const groups: SidebarEntryGroup[] = [
                 ],
             },
             { text: m.account_albums, icon: IconLibraryPhoto, link: { to: "/admin/albums" } },
-        ],
-    },
-    {
-        title: () => "Software",
-        entries: [
-            // TODO: demo, every client's software projects, the other side of "Proiecte" in the account
-            { text: m.dashboard_projects, icon: IconCode },
         ],
     },
 ];

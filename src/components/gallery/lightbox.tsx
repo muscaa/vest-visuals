@@ -99,7 +99,7 @@ function LightboxSlides(props: Omit<LightboxProps, "open" | "onOpenChange" | "st
                 }
             </CarouselContent>
             <div className="absolute top-0 inset-x-0 flex justify-between items-center gap-4 px-4 py-3 bg-linear-to-b from-black/60 to-transparent pointer-events-none">
-                <CarouselCounter className="text-sm text-white/80" />
+                <CarouselCounter className="text-sm-1 text-white/80" />
                 <div className="flex items-center gap-1 pointer-events-auto">
                     {
                         props.downloadable && download && (

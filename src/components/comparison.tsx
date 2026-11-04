@@ -36,7 +36,7 @@ export function Comparison(props: Props) {
     return (
         <div
             className={cn(
-                "relative size-full overflow-hidden rounded-2xl select-none",
+                "relative size-full overflow-hidden rounded-4xl select-none",
                 props.className,
             )}
             onPointerMove={onPointerMove}

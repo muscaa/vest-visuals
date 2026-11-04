@@ -1,8 +1,9 @@
 import { m } from "@shared/paraglide/messages";
-import { useState } from "react";
-import { IconCamera } from "@tabler/icons-react";
+import { useRef, useState } from "react";
+import { IconCamera, IconLoader, IconTrash } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { authClient, authErrorMessage } from "@client/auth";
+import { avatarMaxSize, avatarTypes, avatarUrl } from "@shared/auth";
 import { FormMessage, SubmitButton } from "../forms/form-parts";
 import { LanguageToggle } from "../language-toggle";
 import { ThemeToggle } from "../theme";
@@ -20,12 +21,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "../ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Field, FieldDescription, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import { usePublicUrl, useRefreshUser, useUser } from "@/hooks/auth";
 import { useFormSubmit } from "@/hooks/form";
+import { changeAvatar, deleteAvatar } from "@/functions/avatar";
 
 /** One settings section. With `form`, it's a form with a single save button in its footer. */
 function SettingsSection(props: { title: string; children: React.ReactNode; form?: ReturnType<typeof useFormSubmit> }) {
@@ -38,7 +41,7 @@ function SettingsSection(props: { title: string; children: React.ReactNode; form
             {
                 props.form && (
                     <div className="flex justify-end items-center gap-4 px-6 py-4 border-t">
-                        {props.form.error && <span role="alert" className="text-sm text-destructive">{props.form.error}</span>}
+                        {props.form.error && <span role="alert" className="text-sm-2 text-destructive">{props.form.error}</span>}
                         <SubmitButton pending={props.form.pending} size="default">{m.dashboard_save()}</SubmitButton>
                     </div>
                 )
@@ -66,7 +69,92 @@ function SettingsRow(props: { label: React.ReactNode; description?: string; chil
     );
 }
 
-// TODO: change the photo once uploads are there
+/** The profile photo, changed by clicking it; once there's one, a menu also offers to remove it. Saved right away. */
+function AvatarPicker() {
+    const user = useUser();
+    const refreshUser = useRefreshUser();
+    const input = useRef<HTMLInputElement>(null);
+    const [pending, setPending] = useState(false);
+
+    const run = async (action: () => Promise<unknown>, done: string) => {
+        setPending(true);
+        try {
+            await action();
+            await refreshUser();
+            toast.success(done);
+        } catch (error) {
+            console.error(error);
+            toast.error(m.account_settings_avatar_failed());
+        } finally {
+            setPending(false);
+        }
+    };
+
+    const onPick = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        // so picking the same file again still counts
+        event.target.value = "";
+        if (!file) return;
+
+        if (!avatarTypes.includes(file.type) || file.size > avatarMaxSize) {
+            toast.error(m.account_settings_avatar_invalid());
+            return;
+        }
+        const data = new FormData();
+        data.set("photo", file);
+        void run(() => changeAvatar({ data }), m.account_settings_avatar_saved());
+    };
+
+    const image = avatarUrl(user.image);
+    const avatar = (
+        <>
+            <Avatar className="size-20">
+                <AvatarImage src={image} alt={m.account_settings_avatar()} />
+                <AvatarFallback className="text-md-2">{user.name[0].toUpperCase()}</AvatarFallback>
+            </Avatar>
+            <span
+                data-pending={pending || undefined}
+                className="absolute inset-0 flex justify-center items-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100 data-pending:opacity-100"
+            >
+                {pending ? <IconLoader className="size-6 animate-spin" /> : <IconCamera className="size-6" />}
+            </span>
+        </>
+    );
+    const trigger = {
+        type: "button" as const,
+        disabled: pending,
+        "aria-label": m.account_settings_avatar_change(),
+        title: m.account_settings_avatar_change(),
+        className: "group/avatar relative shrink-0 rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+    };
+
+    return (
+        <>
+            <input ref={input} type="file" accept={avatarTypes.join(",")} onChange={onPick} hidden />
+            {
+                image ? (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger render={<button {...trigger} />}>{avatar}</DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" className="w-max">
+                            <DropdownMenuItem onClick={() => input.current?.click()}>
+                                <IconCamera />
+                                {m.account_settings_avatar_change()}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem variant="destructive" onClick={() => run(() => deleteAvatar(), m.account_settings_avatar_removed())}>
+                                <IconTrash />
+                                {m.account_settings_avatar_remove()}
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                ) : (
+                    <button {...trigger} onClick={() => input.current?.click()}>{avatar}</button>
+                )
+            }
+        </>
+    );
+}
+
+/** The name and the photo. */
 export function ProfileSettings() {
     const user = useUser();
     const refreshUser = useRefreshUser();
@@ -88,20 +176,7 @@ export function ProfileSettings() {
         // keyed by the saved name, so the field starts over from it once saved
         <SettingsSection key={user.name} title={m.account_settings_profile()} form={form}>
             <div className="flex items-center gap-5">
-                <button
-                    type="button"
-                    aria-label={m.account_settings_avatar_change()}
-                    title={m.account_settings_avatar_change()}
-                    className="group/avatar relative rounded-full"
-                >
-                    <Avatar className="size-20">
-                        <AvatarImage src={user.image ?? undefined} alt={m.account_settings_avatar()} />
-                        <AvatarFallback className="text-md-2">{user.name[0].toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <span className="absolute inset-0 flex justify-center items-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100">
-                        <IconCamera className="size-6" />
-                    </span>
-                </button>
+                <AvatarPicker />
                 <Field className="flex-1">
                     <FieldLabel htmlFor="name">{m.common_name()}</FieldLabel>
                     <Input id="name" name="name" autoComplete="name" defaultValue={user.name} maxLength={100} required />

@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { AssetKey } from "@shared/assets";
 import { ServicePage } from "@/components/media/service";
 import { businessPromotion } from "@/i18n/media/services/business-promotion";
 
-const images = [
-    "https://s3.vestvisuals.ro/portfolio/xrja8xss5xpgf6ytj14rvcr0/large",
-    "https://s3.vestvisuals.ro/portfolio/h0mbepdrz7ezs0eu7jy2mao1/large",
-    "https://s3.vestvisuals.ro/portfolio/ap4odtdq7pcy2o02g8l9mvmg/large",
-    "https://s3.vestvisuals.ro/portfolio/kci4tsjlnm3l5kywact8srbd/large",
-    "https://s3.vestvisuals.ro/portfolio/lccacqbntvcqc1laix9cpa8g/large",
+const images: AssetKey[] = [
+    "media-service-business-promotion-1",
+    "media-service-business-promotion-2",
+    "media-service-business-promotion-3",
+    "media-service-business-promotion-4",
+    "media-service-business-promotion-5",
 ];
 
 export const Route = createFileRoute("/media/services/business-promotion/")({

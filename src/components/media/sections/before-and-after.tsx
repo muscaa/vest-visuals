@@ -1,4 +1,5 @@
 import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
 import { Comparison } from "@/components/comparison";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
@@ -15,7 +16,7 @@ export function BeforeAndAfterSection(props: BeforeAndAfterSectionProps) {
         >
             <div className="flex flex-col max-w-7xl w-full">
                 <Eyebrow>{m.media_editing_eyebrow()}</Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
                     <TextH1 size="lg-2">
                         <Rich message={m.media_editing_title} />
                     </TextH1>
@@ -26,14 +27,14 @@ export function BeforeAndAfterSection(props: BeforeAndAfterSectionProps) {
                 <Comparison
                     before={
                         <Img
-                            src="https://cdn0.vestvisuals.ro/assets/yneoo6rvga4s61g1wilygf77/large"
+                            src={asset("media-editing-before", "large")}
                             alt={m.media_editing_before()}
                             className="size-full object-cover"
                         />
                     }
                     after={
                         <Img
-                            src="https://cdn0.vestvisuals.ro/assets/xsxzhzldm3y0px8t1md9xc2w/large"
+                            src={asset("media-editing-after", "large")}
                             alt={m.media_editing_after()}
                             className="size-full object-cover"
                         />

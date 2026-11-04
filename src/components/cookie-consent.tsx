@@ -26,6 +26,8 @@ export function CookieConsent() {
     // nothing on the server, nor once they've chosen
     if (consent === undefined || (consent && !reopened)) return null;
 
+    // the toasts go above it while it's there, see the Toaster
+
     const choose = (choice: "all" | "necessary") => {
         writeConsent(choice);
         setReopened(false);
@@ -33,6 +35,7 @@ export function CookieConsent() {
 
     return (
         <Card
+            ref={reserveSpace}
             role="region"
             aria-label={m.cookies_title()}
             className="fixed z-50 bottom-3 right-3 sm:bottom-6 sm:right-6 w-full max-w-[min(50ch,calc(100vw-1.5rem))] bg-popover text-popover-foreground shadow-lg duration-700 animate-in fade-in slide-in-from-bottom-full"
@@ -58,4 +61,28 @@ export function CookieConsent() {
             </CardContent>
         </Card>
     );
+}
+
+/**
+ * Keeps `--cookie-consent-space` on the page at the room the banner takes from the bottom of the screen, its height
+ * and its distance from the edge, until it's gone.
+ */
+function reserveSpace(banner: HTMLElement | null) {
+    if (!banner) return;
+
+    const root = document.documentElement;
+    const measure = () => {
+        const space = banner.offsetHeight + parseFloat(getComputedStyle(banner).bottom);
+        root.style.setProperty("--cookie-consent-space", `${space}px`);
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(banner);
+    // its distance from the edge changes with the screen's size
+    window.addEventListener("resize", measure);
+
+    return () => {
+        observer.disconnect();
+        window.removeEventListener("resize", measure);
+        root.style.removeProperty("--cookie-consent-space");
+    };
 }

@@ -79,7 +79,7 @@ export function LoginForm() {
                             <FieldLabel htmlFor="password">{m.common_password()}</FieldLabel>
                             <Link
                                 to="/account/forgot-password"
-                                className="ml-auto text-sm text-muted-foreground underline-offset-4 hover:underline"
+                                className="ml-auto text-sm-2 text-muted-foreground underline-offset-4 hover:underline"
                             >
                                 {m.login_forgot()}
                             </Link>

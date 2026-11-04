@@ -53,7 +53,8 @@ function FooterContainer(props: {
     className?: string;
 }) {
     return (
-        <div className={cn("max-w-7xl w-full mx-auto px-6", props.className)}>
+        // the 7xl width plus the padding, as the sections have it, so the edges line up with theirs
+        <div className={cn("w-full max-w-[calc(var(--container-7xl)+--spacing(12))] mx-auto px-6", props.className)}>
             {props.children}
         </div>
     );
@@ -105,7 +106,7 @@ function FooterBrand(props: {
 
 function FooterLinks(props: { sections: FooterSection[] }) {
     return (
-        <FooterContainer className="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-8 py-10">
+        <FooterContainer className="grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-8 py-10">
             {
                 props.sections.map((section) => (
                     <div key={section.title} className="flex flex-col gap-4">

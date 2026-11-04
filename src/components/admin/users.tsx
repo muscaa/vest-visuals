@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IconBan, IconDots, IconKey, IconLockOpen, IconPencil, IconTrash, IconUserPlus } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { authClient, authErrorMessage } from "@client/auth";
+import { avatarUrl } from "@shared/auth";
 import { SortableHeader, createDataColumns } from "../data-table";
 import { FormDialog } from "../form-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -290,7 +291,7 @@ function UserName(props: { user: AdminUser }) {
     return (
         <div className="flex items-center gap-3">
             <Avatar size="sm">
-                <AvatarImage src={user.image ?? undefined} alt={user.name} />
+                <AvatarImage src={avatarUrl(user.image)} alt={user.name} />
                 <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <span className="font-medium">{user.name}</span>

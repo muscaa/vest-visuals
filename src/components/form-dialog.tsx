@@ -1,5 +1,5 @@
 import { m } from "@shared/paraglide/messages";
-import { IconDots, IconLink, IconPencil, IconTrash } from "@tabler/icons-react";
+import { IconLink } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { Button, buttonVariants } from "./ui/button";
 import {
@@ -12,13 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { FieldGroup } from "./ui/field";
 import { FormMessage, SubmitButton } from "./forms/form-parts";
 import type { LinkOptions, RegisteredRouter } from "@tanstack/react-router";
@@ -35,8 +28,8 @@ export interface FormDialogProps {
     submit?: string;
     /** a red submit button, for deleting */
     destructive?: boolean;
-    /** from {@link useFormSubmit}; without it the form isn't sent yet */
-    form?: ReturnType<typeof useFormSubmit>;
+    /** from {@link useFormSubmit} */
+    form: ReturnType<typeof useFormSubmit>;
     /** the form fields */
     children?: React.ReactNode;
 }
@@ -45,7 +38,7 @@ export interface FormDialogProps {
 export function FormDialog(props: FormDialogProps) {
     const onOpenChange = (open: boolean) => {
         // a new start each time it opens
-        props.form?.setError(undefined);
+        props.form.setError(undefined);
         props.onOpenChange?.(open);
     };
 
@@ -53,48 +46,24 @@ export function FormDialog(props: FormDialogProps) {
         <Dialog open={props.open} onOpenChange={onOpenChange}>
             {props.trigger && <DialogTrigger render={<Button />}>{props.trigger}</DialogTrigger>}
             <DialogContent className="sm:max-w-lg">
-                {/* TODO: the demo pages pass no `form` until their backend is there */}
-                <form method="post" onSubmit={props.form?.onSubmit ?? ((event) => event.preventDefault())} className="flex flex-col gap-6">
+                <form method="post" onSubmit={props.form.onSubmit} className="flex flex-col gap-6">
                     <DialogHeader>
                         <DialogTitle>{props.title}</DialogTitle>
                         {props.description && <DialogDescription>{props.description}</DialogDescription>}
                     </DialogHeader>
                     {props.children && <FieldGroup>{props.children}</FieldGroup>}
-                    {props.form?.error && <FormMessage>{props.form.error}</FormMessage>}
+                    {props.form.error && <FormMessage>{props.form.error}</FormMessage>}
                     <DialogFooter>
                         <DialogClose render={<Button type="button" variant="outline" />}>
                             {m.dialog_cancel()}
                         </DialogClose>
-                        <SubmitButton pending={props.form?.pending ?? false} size="default" variant={props.destructive ? "destructive" : "default"}>
+                        <SubmitButton pending={props.form.pending} size="default" variant={props.destructive ? "destructive" : "default"}>
                             {props.submit ?? m.dialog_create()}
                         </SubmitButton>
                     </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>
-    );
-}
-
-/** The "…" menu at the end of a table row. */
-export function RowActions() {
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" aria-label={m.table_actions()} />}>
-                <IconDots />
-            </DropdownMenuTrigger>
-            {/* TODO: edit and delete once the backend is there */}
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem>
-                    <IconPencil />
-                    {m.table_edit()}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">
-                    <IconTrash />
-                    {m.table_delete()}
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
     );
 }
 

@@ -2,6 +2,7 @@ import { and, eq } from "drizzle-orm";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, captcha, twoFactor } from "better-auth/plugins";
+import { removeAvatar } from "@server/avatars";
 import { db } from "@server/db";
 import * as schema from "@server/db/schema/auth";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
@@ -114,6 +115,12 @@ export const auth = betterAuth({
                 before: async (user) => {
                     const { locale } = user as { locale?: string };
                     return { data: locale === undefined ? user : { ...user, locale: mailLocale(locale) } };
+                },
+            },
+            delete: {
+                // their profile photo goes with them
+                after: async (user) => {
+                    await removeAvatar(user.id);
                 },
             },
         },
