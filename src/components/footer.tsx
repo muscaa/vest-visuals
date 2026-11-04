@@ -40,9 +40,9 @@ export const footerSocials: FooterSocial[] = [
 ];
 
 const business = {
-    name: "VEST VISUALS S.R.L.",
+    name: "VEST VISUALS SRL",
     cui: "54191210",
-    address: "Str. Matei Millo 44, Timișoara, Timiș",
+    address: "Timișoara, Timiș",
 };
 
 //

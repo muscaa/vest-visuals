@@ -37,7 +37,7 @@
     "footer_follow_title": "Follow us",
     "footer_follow_description": "Behind the scenes, new projects and shots that don't make it into the portfolio.",
     "footer_social_label": "Vest Visuals on {network}",
-    "footer_company_details": "Tax ID {cui} · {address}",
+    "footer_company_details": "Tax ID {cui}, {address}",
     "footer_copyright": "© {year} Vest Visuals. All rights reserved.",
     "footer_anpc_sal": "ANPC SAL - Alternative Dispute Resolution",
     "footer_anpc_sol": "ANPC SOL - Online Dispute Resolution",
