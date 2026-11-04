@@ -19,9 +19,9 @@ import {
     withDescendants,
 } from "@server/albums";
 import { db } from "@server/db";
-import { albumEntries, albumEntryVariants, albums } from "@server/db/schema";
+import { albumEntries, albumEntryVariants, albums, user } from "@server/db/schema";
 import { envServer } from "@server/env";
-import { sendMail } from "@server/mail";
+import { mailLocale, sendMail } from "@server/mail";
 import { albumPublished } from "@server/mail/templates";
 import { reorder } from "@server/order";
 import { compareArchive } from "@shared/albums";
@@ -171,9 +171,11 @@ export const publishAlbumById = createServerFn({ method: "POST" })
         if (!album) throw notFound();
 
         if (album.email) {
-            // the account site, where albums open; in romanian until clients can choose
-            const link = localizeUrl(new URL(`/albums/${album.token}`, envServer.BETTER_AUTH_URL), { locale: "ro" });
-            await sendMail(album.email, albumPublished(album.title, link.href));
+            // in the client's language when they have an account, else the site's default; the link opens in it too
+            const [client] = await db.select({ locale: user.locale }).from(user).where(eq(user.email, album.email));
+            const locale = mailLocale(client?.locale);
+            const link = localizeUrl(new URL(`/albums/${album.token}`, envServer.BETTER_AUTH_URL), { locale });
+            await sendMail(album.email, albumPublished(album.title, link.href, locale));
         }
         await publishAlbum(album.id);
     });

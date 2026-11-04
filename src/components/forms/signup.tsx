@@ -1,4 +1,5 @@
 import { m } from "@shared/paraglide/messages";
+import { getLocale } from "@shared/paraglide/runtime";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { nameFromEmail } from "@shared/auth";
 import { authClient, authErrorMessage } from "@client/auth";
@@ -6,7 +7,6 @@ import { SplitCard, SplitCardHeader } from "../cards/split";
 import CreateAccount1 from "../illustrations/create-account-1.svg?react";
 import { LegalAgreement } from "../legal";
 import { Rich } from "../rich";
-import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import {
     Field,
@@ -19,10 +19,12 @@ import { Input } from "../ui/input";
 import { FormMessage, NewPasswordFields, SubmitButton, passwordsMatch } from "./form-parts";
 import { usePublicUrl } from "@/hooks/auth";
 import { useFormSubmit } from "@/hooks/form";
+import { captchaHeaders, useCaptcha } from "@/hooks/captcha";
 
 export function SignupForm() {
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
+    const captcha = useCaptcha();
 
     const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         if (!passwordsMatch(field)) {
@@ -31,13 +33,16 @@ export function SignupForm() {
 
         const email = field("email").trim();
         // an address that already has an account gets the same answer, so nobody can find out who has one
-        const { error: failed } = await authClient.signUp.email({
+        const { error: failed } = await captcha.withToken((token) => authClient.signUp.email({
             email,
             password: field("password"),
             // the server sets it too, the client just needs one
             name: nameFromEmail(email),
+            // the language their emails come in, starting with the verification
+            locale: getLocale(),
             callbackURL: publicUrl({ to: "/account/status/$status", params: { status: "email-verified" } }),
-        });
+            fetchOptions: { headers: captchaHeaders(token) },
+        }));
 
         if (failed) {
             return authErrorMessage(failed);
@@ -71,8 +76,8 @@ export function SignupForm() {
                     <NewPasswordFields />
                     <Field>
                         {error && <FormMessage>{error}</FormMessage>}
+                        {captcha.widget}
                         <SubmitButton pending={pending}>{m.signup_submit()}</SubmitButton>
-                        <RecaptchaNotice />
                     </Field>
                     <FieldDescription className="text-center">
                         <Rich message={m.signup_has_account} tags={{ login: ({ children }) => <Link to="/account/login">{children}</Link> }} />

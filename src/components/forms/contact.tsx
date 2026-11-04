@@ -1,10 +1,11 @@
 import { m } from "@shared/paraglide/messages";
+import { useRef } from "react";
 import { IconMail, IconPhone } from "@tabler/icons-react";
+import { toast } from "sonner";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { SplitCard, SplitCardHeader } from "../cards/split";
 import Contact3 from "../illustrations/contact-3.svg?react";
 import { LegalAgreement } from "../legal";
-import { RecaptchaNotice } from "../recaptcha-notice";
 import { Button } from "../ui/button";
 import {
     Field,
@@ -19,7 +20,11 @@ import {
     InputGroupText,
     InputGroupTextarea,
 } from "../ui/input-group";
+import { FormMessage, SubmitButton } from "./form-parts";
 import type { LegalDivision } from "../legal";
+import { useFormSubmit } from "@/hooks/form";
+import { useCaptcha } from "@/hooks/captcha";
+import { sendContactMessage } from "@/functions/contact";
 
 const email = "contact@vestvisuals.ro";
 const phone = "+40723971618";
@@ -35,13 +40,41 @@ export interface ContactFormProps {
     division?: LegalDivision;
 }
 
+/** The site the message is sent from, for the team to know which one it came from. */
+const sites = {
+    home: "vestvisuals.ro",
+    media: "media.vestvisuals.ro",
+    software: "software.vestvisuals.ro",
+} as const;
+
 export function ContactForm(props: ContactFormProps) {
+    const formRef = useRef<HTMLFormElement>(null);
+    const captcha = useCaptcha();
+
+    const { onSubmit, pending, error } = useFormSubmit(async (field) => {
+        const { captcha: passed } = await captcha.withToken((token) => sendContactMessage({
+            data: {
+                name: field("name").trim(),
+                email: field("email").trim(),
+                message: field("message").trim(),
+                site: sites[props.division ?? "home"],
+                token,
+            },
+        }));
+        if (!passed) {
+            return m.auth_error_captcha();
+        }
+
+        formRef.current?.reset();
+        toast.success(m.contact_sent());
+    });
+
     return (
         <SplitCard
             aside={<Contact3 aria-hidden className="w-full max-w-xs h-auto" />}
             footer={<LegalAgreement message={m.legal_agree_contact} division={props.division} />}
         >
-            <form>
+            <form ref={formRef} method="post" onSubmit={onSubmit}>
                 <FieldGroup>
                     <SplitCardHeader title={m.contact_title()} description={m.contact_description()} />
                     <div className="grid grid-cols-1 xs:grid-cols-3 gap-3">
@@ -101,11 +134,10 @@ export function ContactForm(props: ContactFormProps) {
                             </InputGroupAddon>
                         </InputGroup>
                     </Field>
+                    {error && <FormMessage>{error}</FormMessage>}
                     <Field>
-                        <Button type="submit" size="lg">
-                            {m.contact_send()}
-                        </Button>
-                        <RecaptchaNotice />
+                        {captcha.widget}
+                        <SubmitButton pending={pending}>{m.contact_send()}</SubmitButton>
                     </Field>
                 </FieldGroup>
             </form>

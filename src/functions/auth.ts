@@ -3,13 +3,27 @@ import { isAdmin } from "@shared/auth";
 import { queryOptions } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
 import { createMiddleware, createServerFn } from "@tanstack/react-start";
-import { getRequestHeaders } from "@tanstack/react-start/server";
+import { getCookie, getRequestHeaders } from "@tanstack/react-start/server";
+import { eq } from "drizzle-orm";
+import { db } from "@server/db";
+import { user } from "@server/db/schema";
+import { cookieName, locales } from "@shared/paraglide/runtime";
+import type { Locale } from "@shared/paraglide/runtime";
 import type { QueryClient } from "@tanstack/react-query";
 import type { ParsedLocation } from "@tanstack/react-router";
 
-/** The signed in user's session, or null. */
+/**
+ * The signed in user's session, or null. Their language is kept up to date on the way, from the one they browse in,
+ * for the emails they get: every page asks for the session, picking a language reloads the page.
+ */
 export const getSession = createServerFn({ method: "GET" }).handler(async () => {
-    return await auth.api.getSession({ headers: getRequestHeaders() });
+    const session = await auth.api.getSession({ headers: getRequestHeaders() });
+
+    const locale = getCookie(cookieName) as Locale | undefined;
+    if (session && locale && locales.includes(locale) && session.user.locale !== locale) {
+        await db.update(user).set({ locale }).where(eq(user.id, session.user.id));
+    }
+    return session;
 });
 
 /**

@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { Toaster as Sonner } from "sonner";
 import {
     IconAlertOctagon,
@@ -10,13 +9,18 @@ import {
     IconLoader,
 } from "@tabler/icons-react";
 import type { ToasterProps } from "sonner";
+import { useTheme } from "@/components/theme/provider";
 
+/**
+ * The toasts, in the site's theme: all on the popover's background, success, warning and error ones with the border and
+ * text in the theme's colors (with `richColors`), following the site's light or dark choice rather than the system's.
+ */
 const Toaster = ({ ...props }: ToasterProps) => {
-    const { theme = "system" } = useTheme();
+    const { theme } = useTheme();
 
     return (
         <Sonner
-            theme={theme as ToasterProps["theme"]}
+            theme={theme}
             className="toaster group"
             icons={{
                 success: <IconCircleCheck className="size-4" />,
@@ -27,10 +31,29 @@ const Toaster = ({ ...props }: ToasterProps) => {
             }}
             style={
                 {
-                    "--normal-bg": "var(--popover)",
-                    "--normal-text": "var(--popover-foreground)",
-                    "--normal-border": "var(--border)",
                     "--border-radius": "var(--radius)",
+
+                    "--normal-bg": "var(--popover)",
+                    "--normal-bg-hover": "var(--popover)",
+                    "--normal-border": "var(--border)",
+                    "--normal-border-hover": "var(--border)",
+                    "--normal-text": "var(--popover-foreground)",
+
+                    "--info-bg": "var(--popover)",
+                    "--info-border": "var(--border)",
+                    "--info-text": "var(--popover-foreground)",
+
+                    "--success-bg": "var(--popover)",
+                    "--success-border": "color-mix(in oklab, var(--color-success) 50%, var(--popover))",
+                    "--success-text": "var(--color-success)",
+
+                    "--warning-bg": "var(--popover)",
+                    "--warning-border": "color-mix(in oklab, var(--color-warning) 50%, var(--popover))",
+                    "--warning-text": "var(--color-warning)",
+
+                    "--error-bg": "var(--popover)",
+                    "--error-border": "color-mix(in oklab, var(--color-destructive) 50%, var(--popover))",
+                    "--error-text": "var(--color-destructive)",
                 } as React.CSSProperties
             }
             toastOptions={{

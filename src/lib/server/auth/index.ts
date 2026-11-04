@@ -1,14 +1,15 @@
 import { and, eq } from "drizzle-orm";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin, twoFactor } from "better-auth/plugins";
+import { admin, captcha, twoFactor } from "better-auth/plugins";
 import { db } from "@server/db";
 import * as schema from "@server/db/schema/auth";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { envServer } from "@server/env";
-import { sendMail } from "@server/mail";
+import { mailLocale, sendMail } from "@server/mail";
 import * as templates from "@server/mail/templates";
 import { nameFromEmail } from "@shared/auth";
+import { cookieName } from "@shared/paraglide/runtime";
 
 /** Whether a user can sign in with a password; accounts created by an admin start without one. */
 async function hasPassword(userId: string) {
@@ -18,6 +19,17 @@ async function hasPassword(userId: string) {
         .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")))
         .limit(1);
     return credentials.length > 0;
+}
+
+/** The language a request was made in, from Paraglide's cookie; set whenever someone picks a language. */
+function requestLocale(headers: Headers | undefined) {
+    const cookie = headers?.get("cookie")?.match(new RegExp(`(?:^|; )${cookieName}=([^;]*)`))?.[1];
+    return mailLocale(cookie);
+}
+
+/** A user's language, for their emails; Better Auth's callbacks don't type the `locale` field, so it's read here. */
+function userLocale(user: object) {
+    return mailLocale((user as { locale?: string | null }).locale);
 }
 
 export const auth = betterAuth({
@@ -47,7 +59,8 @@ export const auth = betterAuth({
         requireEmailVerification: true,
         // the same link sets the first password of accounts created by an admin
         sendResetPassword: async ({ user, url }) => {
-            const mail = (await hasPassword(user.id)) ? templates.resetPassword(url) : templates.choosePassword(url);
+            const locale = userLocale(user);
+            const mail = (await hasPassword(user.id)) ? templates.resetPassword(url, locale) : templates.choosePassword(url, locale);
             await sendMail(user.email, mail);
         },
     },
@@ -57,37 +70,51 @@ export const auth = betterAuth({
         sendOnSignIn: true,
         autoSignInAfterVerification: false,
         sendVerificationEmail: async ({ user, url }) => {
-            await sendMail(user.email, templates.verifyEmail(url));
+            await sendMail(user.email, templates.verifyEmail(url, userLocale(user)));
         },
     },
     user: {
+        additionalFields: {
+            /** the language emails are sent in: the one they browse in, saved when they sign up and pick a language */
+            locale: {
+                type: "string",
+                required: false,
+                input: true,
+            },
+        },
         // the old address confirms the change, then the new one gets a verification email
         changeEmail: {
             enabled: true,
             sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
-                await sendMail(
-                    user.email,
-                    templates.confirmEmailChange(newEmail, url),
-                );
+                await sendMail(user.email, templates.confirmEmailChange(newEmail, url, userLocale(user)));
             },
         },
         deleteUser: {
             enabled: true,
             sendDeleteAccountVerification: async ({ user, url }) => {
-                await sendMail(
-                    user.email,
-                    templates.confirmAccountDeletion(url),
-                );
+                await sendMail(user.email, templates.confirmAccountDeletion(url, userLocale(user)));
             },
         },
     },
     databaseHooks: {
         user: {
             create: {
-                // names aren't asked for at sign up, they come from the email; admins can set one
-                before: async (user) => ({
-                    data: { ...user, name: user.name.trim() || nameFromEmail(user.email) },
+                // names aren't asked for at sign up, they come from the email; admins can set one. The language is the
+                // one they signed up in, else the one they were browsing in (social sign ups)
+                before: async (user, context) => ({
+                    data: {
+                        ...user,
+                        name: user.name.trim() || nameFromEmail(user.email),
+                        locale: mailLocale((user as { locale?: string }).locale ?? requestLocale(context?.headers)),
+                    },
                 }),
+            },
+            update: {
+                // only a language the site has
+                before: async (user) => {
+                    const { locale } = user as { locale?: string };
+                    return { data: locale === undefined ? user : { ...user, locale: mailLocale(locale) } };
+                },
             },
         },
     },
@@ -100,7 +127,7 @@ export const auth = betterAuth({
             },
             otpOptions: {
                 sendOTP: async ({ user, otp }) => {
-                    await sendMail(user.email, templates.signInCode(otp));
+                    await sendMail(user.email, templates.signInCode(otp, userLocale(user)));
                 },
             },
         }),
@@ -109,6 +136,10 @@ export const auth = betterAuth({
             defaultRole: "user",
             adminRoles: ["admin"],
         }),
+        // Turnstile on sign up, sign in and password reset: the forms send its token in the x-captcha-response header
+        ...(envServer.TURNSTILE_SECRET_KEY
+            ? [captcha({ provider: "cloudflare-turnstile", secretKey: envServer.TURNSTILE_SECRET_KEY })]
+            : []),
         // keep last, it handles the cookies of every other plugin
         tanstackStartCookies(),
     ],

@@ -18,6 +18,7 @@ import { seo } from "@/utils/seo";
 import { ThemeProvider } from "@/components/theme/provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieConsent } from "@/components/cookie-consent";
 
 interface RouterContext {
     queryClient: QueryClient;
@@ -93,6 +94,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 <ThemeProvider>
                     <TooltipProvider>
                         {children}
+                        <CookieConsent />
                         <Toaster position="bottom-right" richColors />
                     </TooltipProvider>
                 </ThemeProvider>

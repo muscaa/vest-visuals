@@ -4,7 +4,6 @@ import { authClient, authErrorMessage } from "@client/auth";
 import { SplitCard, SplitCardHeader } from "../cards/split";
 import ResetPassword6 from "../illustrations/reset-password-6.svg?react";
 import { Rich } from "../rich";
-import { RecaptchaNotice } from "../recaptcha-notice";
 import {
     Field,
     FieldDescription,
@@ -15,18 +14,21 @@ import { Input } from "../ui/input";
 import { FormMessage, SubmitButton } from "./form-parts";
 import { usePublicUrl } from "@/hooks/auth";
 import { useFormSubmit } from "@/hooks/form";
+import { captchaHeaders, useCaptcha } from "@/hooks/captcha";
 
 export function ForgotPasswordForm() {
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
+    const captcha = useCaptcha();
 
     const { onSubmit, pending, error } = useFormSubmit(async (field) => {
         const email = field("email").trim();
         // same answer whether the account exists or not
-        const { error: failed } = await authClient.requestPasswordReset({
+        const { error: failed } = await captcha.withToken((token) => authClient.requestPasswordReset({
             email,
             redirectTo: publicUrl({ to: "/account/reset-password" }),
-        });
+            fetchOptions: { headers: captchaHeaders(token) },
+        }));
 
         if (failed) {
             return authErrorMessage(failed);
@@ -54,8 +56,8 @@ export function ForgotPasswordForm() {
                     </Field>
                     <Field>
                         {error && <FormMessage>{error}</FormMessage>}
+                        {captcha.widget}
                         <SubmitButton pending={pending}>{m.forgot_submit()}</SubmitButton>
-                        <RecaptchaNotice />
                     </Field>
                     <FieldDescription className="text-center">
                         <Rich message={m.forgot_remembered} tags={{ login: ({ children }) => <Link to="/account/login">{children}</Link> }} />

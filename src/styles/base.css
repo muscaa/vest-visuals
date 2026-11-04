@@ -14,8 +14,4 @@
     div {
         @apply scroll-smooth;
     }
-
-    .grecaptcha-badge {
-        visibility: hidden;
-    }
 }

@@ -1,6 +1,7 @@
 import { m } from "@shared/paraglide/messages";
 import { createAuthClient } from "better-auth/react";
-import { adminClient, twoFactorClient } from "better-auth/client/plugins";
+import { adminClient, inferAdditionalFields, twoFactorClient } from "better-auth/client/plugins";
+import type { auth } from "@server/auth";
 
 /**
  * Sign in, sign up and account changes go through Better Auth's own endpoints, not server functions:
@@ -10,6 +11,8 @@ export const authClient = createAuthClient({
     plugins: [
         twoFactorClient(),
         adminClient(),
+        // the user's `locale`, which sign up sends
+        inferAdditionalFields<typeof auth>(),
     ],
 });
 
@@ -32,6 +35,9 @@ const errorMessages: Record<string, () => string> = {
     INVALID_TWO_FACTOR_COOKIE: m.auth_error_sign_in_expired,
     // admin plugin
     BANNED_USER: m.auth_error_banned,
+    // captcha plugin: the check failed or didn't come
+    VERIFICATION_FAILED: m.auth_error_captcha,
+    MISSING_RESPONSE: m.auth_error_captcha,
 };
 
 /** A message for an error from the auth client. */

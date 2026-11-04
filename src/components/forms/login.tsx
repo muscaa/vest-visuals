@@ -5,7 +5,6 @@ import { SplitCard, SplitCardHeader } from "../cards/split";
 import EnterPassword5 from "../illustrations/enter-password-5.svg?react";
 import { LegalAgreement } from "../legal";
 import { Rich } from "../rich";
-import { RecaptchaNotice } from "../recaptcha-notice";
 import { SocialLogin } from "../social-login";
 import {
     Field,
@@ -19,6 +18,7 @@ import { Switch } from "../ui/switch";
 import { FormMessage, SubmitButton } from "./form-parts";
 import { usePublicUrl } from "@/hooks/auth";
 import { useFormSubmit } from "@/hooks/form";
+import { captchaHeaders, useCaptcha } from "@/hooks/captcha";
 
 const route = getRouteApi("/account/_auth/login");
 
@@ -26,16 +26,18 @@ export function LoginForm() {
     const { redirect } = route.useSearch();
     const navigate = useNavigate();
     const publicUrl = usePublicUrl();
+    const captcha = useCaptcha();
 
     const { onSubmit, pending, error } = useFormSubmit(async (field) => {
-        const { data, error: failed } = await authClient.signIn.email({
+        const { data, error: failed } = await captcha.withToken((token) => authClient.signIn.email({
             email: field("email").trim(),
             password: field("password"),
             rememberMe: field("rememberMe") === "on",
             // where the new confirmation link leads when the email isn't confirmed yet; Better Auth also opens it
             // right after signing in, and the page sends signed in visitors on to `redirect`
             callbackURL: publicUrl({ to: "/account/status/$status", params: { status: "email-verified" }, search: { redirect } }),
-        });
+            fetchOptions: { headers: captchaHeaders(token) },
+        }));
 
         if (failed) {
             return authErrorMessage(failed);
@@ -98,8 +100,8 @@ export function LoginForm() {
                     </Field>
                     <Field>
                         {error && <FormMessage>{error}</FormMessage>}
+                        {captcha.widget}
                         <SubmitButton pending={pending}>{m.login_submit()}</SubmitButton>
-                        <RecaptchaNotice />
                     </Field>
                     <FieldDescription className="text-center">
                         <Rich message={m.login_no_account} tags={{ signup: ({ children }) => <Link to="/account/signup">{children}</Link> }} />
