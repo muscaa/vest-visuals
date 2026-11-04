@@ -3,6 +3,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { routeTree } from "./routeTree.gen";
 import { CatchBoundary, NotFound } from "./components/errors";
+import { pageScrollSelector } from "./components/layout/scroll";
 import { rewriteBridges, rewriteParaglide } from "./rewrites";
 
 export function getRouter() {
@@ -12,6 +13,8 @@ export function getRouter() {
         routeTree,
         defaultPreload: "intent",
         scrollRestoration: true,
+        // the pages scroll in the layouts' div, not the window
+        scrollToTopSelectors: [pageScrollSelector],
         defaultErrorComponent: CatchBoundary,
         defaultNotFoundComponent: () => <NotFound />,
         context: {

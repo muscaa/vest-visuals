@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { LogoLarge, LogoSmall } from "../logo";
 import { ThemeToggle } from "../theme";
 import { LanguageToggle } from "../language-toggle";
+import { pageScroll } from "./scroll";
 
 export interface ScreenLayoutProps {
     children: React.ReactNode;
@@ -13,6 +14,7 @@ export function ScreenLayout(props: ScreenLayoutProps) {
     return (
         <>
             <div
+                {...pageScroll}
                 className={cn(
                     "flex flex-col flex-1 max-h-full overflow-y-auto",
                     props.className,

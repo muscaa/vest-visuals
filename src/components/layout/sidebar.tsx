@@ -47,6 +47,7 @@ import {
     useSidebar,
 } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
+import { pageScroll } from "./scroll";
 import type { Icon } from "@tabler/icons-react";
 import type { LinkOptions } from "@tanstack/react-router";
 import { useSignOut, useUser } from "@/hooks/auth";
@@ -336,7 +337,7 @@ export function SidebarLayout(props: SidebarLayoutProps) {
                         <ThemeToggle />
                     </div>
                 </header>
-                <div className="flex flex-col grow overflow-y-auto">
+                <div {...pageScroll} className="flex flex-col grow overflow-y-auto">
                     <Outlet />
                 </div>
             </SidebarInset>

@@ -1,6 +1,7 @@
 import { cn } from "@shared/shadcn/utils";
 import { Navbar } from "../navbar";
 import { Footer } from "../footer";
+import { pageScroll } from "./scroll";
 import type { LinkOptions } from "@tanstack/react-router";
 
 export interface NavbarLayoutProps {
@@ -17,6 +18,7 @@ export function NavbarLayout(props: NavbarLayoutProps) {
         <>
             <Navbar home={props.home}>{props.navigation}</Navbar>
             <div
+                {...pageScroll}
                 className={cn(
                     "flex flex-col max-h-full overflow-y-auto",
                     props.className,
