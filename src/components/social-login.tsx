@@ -1,3 +1,4 @@
+// TODO: not used until social sign-in is set up in Better Auth (src/lib/server/auth); see the login and signup forms
 import {
     SiApple,
     SiFacebook,

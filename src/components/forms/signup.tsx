@@ -7,7 +7,8 @@ import { SplitCard, SplitCardHeader } from "../cards/split";
 import CreateAccount1 from "../illustrations/create-account-1.svg?react";
 import { LegalAgreement } from "../legal";
 import { Rich } from "../rich";
-import { SocialLogin } from "../social-login";
+// TODO: social sign-in, see the form below
+// import { SocialLogin } from "../social-login";
 import {
     Field,
     FieldDescription,
@@ -58,10 +59,12 @@ export function SignupForm() {
             <form method="post" onSubmit={onSubmit}>
                 <FieldGroup>
                     <SplitCardHeader title={m.signup_title()} description={m.signup_description()} />
+                    {/* TODO: social sign-in, once the providers are set up in Better Auth (src/lib/server/auth)
                     <SocialLogin />
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                         {m.auth_or_email()}
                     </FieldSeparator>
+                    */}
                     <Field>
                         <FieldLabel htmlFor="email">{m.common_email()}</FieldLabel>
                         <Input
