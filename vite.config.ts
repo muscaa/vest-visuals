@@ -1,4 +1,3 @@
-import { fileURLToPath } from "node:url";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig } from "vite";
@@ -29,10 +28,10 @@ export default defineConfig({
         viteReact(),
         svgr(),
         nitro({
+            // Nitro's own folder: it registers server/plugins, server/middleware and server/tasks by itself
+            serverDir: "./server",
             experimental: { tasks: true, vite: {} },
-            // an absolute path: a relative one is taken for a package's name
-            tasks: { daily: { handler: fileURLToPath(new URL("./src/tasks/daily.ts", import.meta.url)) } },
-            // every night at 3:00, the server's time
+            // every night at 3:00, the server's time; the task is server/tasks/daily.ts
             scheduledTasks: { "0 3 * * *": "daily" },
         }),
         paraglideVitePlugin({

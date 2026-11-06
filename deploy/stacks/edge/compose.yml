@@ -1,0 +1,29 @@
+# How visitors reach the app: Nginx Proxy Manager takes the sites' requests on 80 and 443 and hands them to the app,
+# with HTTPS certificates from Let's Encrypt. Its proxy hosts and certificates are set in its UI (see deploy/README.md),
+# reachable over WireGuard. Deployed from Portainer (Repository, deploy/stacks/edge/compose.yml); no variables.
+name: edge
+
+services:
+    nginx-proxy-manager:
+        image: jc21/nginx-proxy-manager:2
+        restart: unless-stopped
+        environment:
+            DISABLE_IPV6: "true"
+        ports:
+            - "80:80"
+            - "443:443"
+            # its admin UI (81) isn't published: it's reached over WireGuard, at the address below
+        volumes:
+            - data:/data
+            - letsencrypt:/etc/letsencrypt
+        networks:
+            vest:
+                ipv4_address: 172.30.0.7
+
+volumes:
+    data:
+    letsencrypt:
+
+networks:
+    vest:
+        external: true

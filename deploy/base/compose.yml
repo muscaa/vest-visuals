@@ -1,0 +1,63 @@
+# The two things Portainer can't manage itself: WireGuard, the only way into the admin tools, and Portainer.
+# Started by bootstrap.sh with `docker compose`; every other stack is deployed from Portainer.
+name: base
+
+services:
+    wg-easy:
+        image: ghcr.io/wg-easy/wg-easy:15
+        restart: unless-stopped
+        environment:
+            # plain http: the UI is only reachable through the VPN, or an SSH tunnel for the first client
+            INSECURE: "true"
+            DISABLE_IPV6: "true"
+            # first start only; later changes are made in its UI
+            INIT_ENABLED: "true"
+            INIT_USERNAME: admin
+            INIT_PASSWORD: ${WG_PASSWORD:?set WG_PASSWORD in deploy/base/.env}
+            INIT_HOST: ${WG_HOST:?set WG_HOST in deploy/base/.env}
+            INIT_PORT: "51820"
+            # clients only route the VPS's internal network through the tunnel, the rest of their traffic stays as is
+            INIT_ALLOWED_IPS: 172.30.0.0/24
+        volumes:
+            - wireguard:/etc/wireguard
+            - /lib/modules:/lib/modules:ro
+        ports:
+            - "51820:51820/udp"
+            # the UI, for an SSH tunnel until the first client is set up: ssh -L 51821:127.0.0.1:51821 vps
+            - "127.0.0.1:51821:51821/tcp"
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        sysctls:
+            - net.ipv4.ip_forward=1
+            - net.ipv4.conf.all.src_valid_mark=1
+        networks:
+            vest:
+                ipv4_address: 172.30.0.2
+
+    portainer:
+        image: portainer/portainer-ce:lts
+        restart: unless-stopped
+        # the admin account is created from the password, so it doesn't lock itself waiting for a first visit
+        command: --admin-password-file /run/secrets/portainer_password
+        secrets:
+            - portainer_password
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer:/data
+        networks:
+            vest:
+                ipv4_address: 172.30.0.3
+
+secrets:
+    portainer_password:
+        environment: PORTAINER_PASSWORD
+
+volumes:
+    wireguard:
+    portainer:
+
+networks:
+    # created by bootstrap.sh, shared by every stack
+    vest:
+        external: true

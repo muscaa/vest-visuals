@@ -1,0 +1,37 @@
+# Tools for running the server, reachable only over WireGuard at their fixed addresses (see deploy/README.md):
+# a database UI, uptime monitoring with alerts, and the containers' logs. Deployed from Portainer (Repository,
+# deploy/stacks/ops/compose.yml); no variables.
+name: ops
+
+services:
+    whodb:
+        image: clidey/whodb:latest
+        restart: unless-stopped
+        networks:
+            vest:
+                ipv4_address: 172.30.0.4
+
+    uptime-kuma:
+        image: louislam/uptime-kuma:2
+        restart: unless-stopped
+        volumes:
+            - uptime-kuma:/app/data
+        networks:
+            vest:
+                ipv4_address: 172.30.0.5
+
+    dozzle:
+        image: amir20/dozzle:latest
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            vest:
+                ipv4_address: 172.30.0.6
+
+volumes:
+    uptime-kuma:
+
+networks:
+    vest:
+        external: true
