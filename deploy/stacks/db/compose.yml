@@ -1,12 +1,21 @@
 # The database, the only state on the VPS, and its nightly backup to R2. Deployed from Portainer (Repository,
 # deploy/stacks/db/compose.yml), its variables pasted in from stack.env.example.
+#
+# Those variables reach the containers through the `environment:` blocks below, each one naming a variable Portainer
+# substitutes. Portainer only makes a stack's variables available for substitution; it writes no file beside this
+# one, so `env_file:` has nothing to read and every variable a container needs has to be listed here.
 name: db
+
+x-postgres-env: &postgres-env
+    POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    POSTGRES_DB: ${POSTGRES_DB:?set POSTGRES_DB}
 
 services:
     postgres:
         image: postgres:18-alpine
         restart: unless-stopped
-        env_file: stack.env
+        environment: *postgres-env
         shm_size: 256mb
         volumes:
             - postgres:/var/lib/postgresql
@@ -24,9 +33,23 @@ services:
         # built from docker/backup by the "images" GitHub workflow
         image: ghcr.io/${GITHUB_OWNER:?set GITHUB_OWNER}/vest-visuals-backup:latest
         restart: unless-stopped
-        env_file: stack.env
         environment:
+            <<: *postgres-env
             POSTGRES_HOST: postgres
+            # entrypoint.sh insists on these four
+            S3_ENDPOINT: ${S3_ENDPOINT:?set S3_ENDPOINT}
+            S3_BUCKET: ${S3_BUCKET:?set S3_BUCKET}
+            S3_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+            S3_SECRET_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+            # all optional: backup.sh and entrypoint.sh have defaults for them
+            S3_PROVIDER: ${S3_PROVIDER:-}
+            BACKUP_PREFIX: ${BACKUP_PREFIX:-}
+            BACKUP_SCHEDULE: ${BACKUP_SCHEDULE:-}
+            BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-}
+            # empty leaves the dumps unencrypted
+            BACKUP_PASSPHRASE: ${BACKUP_PASSPHRASE:-}
+            # filled in once the ops stack's Uptime Kuma has a push monitor for it
+            BACKUP_HEARTBEAT_URL: ${BACKUP_HEARTBEAT_URL:-}
         depends_on:
             postgres:
                 condition: service_healthy
