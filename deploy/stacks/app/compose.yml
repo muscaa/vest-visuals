@@ -1,12 +1,50 @@
 # The sites, one container serving every subdomain. `migrate` brings the database up to date first, then the app
 # starts. Deployed from Portainer (Repository, deploy/stacks/app/compose.yml); a release is changing APP_VERSION.
+#
+# The stack's variables reach the containers through `environment:` below, each one naming a variable Portainer
+# substitutes. Portainer only makes a stack's variables available for substitution; it writes no file beside this
+# one, so `env_file:` has nothing to read and every variable the app needs has to be listed here. `:?` marks the
+# ones src/lib/server/env.ts requires, so a missing one fails the deploy instead of crash-looping the container.
 name: app
+
+x-app-env: &app-env
+    # each site's host
+    PUBLIC_REWRITE_BRIDGE_HOME: ${PUBLIC_REWRITE_BRIDGE_HOME:?set PUBLIC_REWRITE_BRIDGE_HOME}
+    PUBLIC_REWRITE_BRIDGE_ACCOUNT: ${PUBLIC_REWRITE_BRIDGE_ACCOUNT:?set PUBLIC_REWRITE_BRIDGE_ACCOUNT}
+    PUBLIC_REWRITE_BRIDGE_MEDIA: ${PUBLIC_REWRITE_BRIDGE_MEDIA:?set PUBLIC_REWRITE_BRIDGE_MEDIA}
+    PUBLIC_REWRITE_BRIDGE_SOFTWARE: ${PUBLIC_REWRITE_BRIDGE_SOFTWARE:?set PUBLIC_REWRITE_BRIDGE_SOFTWARE}
+    PUBLIC_REWRITE_BRIDGE_ADMIN: ${PUBLIC_REWRITE_BRIDGE_ADMIN:?set PUBLIC_REWRITE_BRIDGE_ADMIN}
+    # shared by every subdomain, so one session covers them all
+    PUBLIC_COOKIE_DOMAIN: ${PUBLIC_COOKIE_DOMAIN:?set PUBLIC_COOKIE_DOMAIN}
+    # keep the {bucket} placeholder: the app puts each bucket's name in it
+    PUBLIC_S3_URL: ${PUBLIC_S3_URL:?set PUBLIC_S3_URL, with its {bucket} placeholder}
+    DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
+    BETTER_AUTH_URL: ${BETTER_AUTH_URL:?set BETTER_AUTH_URL}
+    BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?set BETTER_AUTH_SECRET, at least 32 characters}
+    S3_ENDPOINT: ${S3_ENDPOINT:?set S3_ENDPOINT, without a bucket in it}
+    S3_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+    S3_SECRET_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+    # emails come from here, its domain verified in Resend
+    MAIL_SENDER_ADDRESS: ${MAIL_SENDER_ADDRESS:?set MAIL_SENDER_ADDRESS}
+    # the rest are optional; empty means the schema's default, or the feature is off
+    S3_REGION: ${S3_REGION:-}
+    S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE:-}
+    # sign-up needs verification mail, so without this the links only reach the container's log
+    RESEND_API_KEY: ${RESEND_API_KEY:-}
+    PUBLIC_TURNSTILE_SITE_KEY: ${PUBLIC_TURNSTILE_SITE_KEY:-}
+    TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
+    PUBLIC_GA_MEASUREMENT_ID: ${PUBLIC_GA_MEASUREMENT_ID:-}
+    DISCORD_CONTACT_WEBHOOK_URL: ${DISCORD_CONTACT_WEBHOOK_URL:-}
+    CLOUDFLARE_ZONE_ID: ${CLOUDFLARE_ZONE_ID:-}
+    CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN:-}
 
 services:
     migrate:
         image: ghcr.io/${GITHUB_OWNER:?set GITHUB_OWNER}/vest-visuals:${APP_VERSION:?set APP_VERSION}
         command: ["node", ".output/migrate.cjs"]
-        env_file: stack.env
+        # server/migrate.ts reads nothing else
+        environment:
+            DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
         restart: "no"
         networks:
             - vest
@@ -14,8 +52,8 @@ services:
     vest-visuals:
         image: ghcr.io/${GITHUB_OWNER}/vest-visuals:${APP_VERSION}
         restart: unless-stopped
-        env_file: stack.env
         environment:
+            <<: *app-env
             # workflow runs are kept in Postgres, so they survive restarts and redeploys
             WORKFLOW_TARGET_WORLD: "@workflow/world-postgres"
         depends_on:
