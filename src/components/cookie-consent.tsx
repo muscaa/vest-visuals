@@ -1,53 +1,88 @@
-"use client";
-
-import { useTranslations } from "next-intl";
-import { TextLink } from "./typography";
+import { m } from "@shared/paraglide/messages";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { onCookieSettings, writeConsent } from "@client/consent";
+import { startAnalytics, stopAnalytics } from "@client/analytics";
+import { Rich } from "./rich";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { useCookies } from "@/hooks/useCookies";
+import { useConsent } from "@/hooks/consent";
 
-interface Props {
+/**
+ * The cookie banner, on every site: in the bottom right corner, sliding in until visitors choose. Their choice counts
+ * on every subdomain; Analytics starts only with "accept all".
+ */
+export function CookieConsent() {
+    const consent = useConsent();
+    const [reopened, setReopened] = useState(false);
 
-}
+    useEffect(() => onCookieSettings(() => setReopened(true)), []);
 
-export function CookieConsent(props: Props) {
-    const t = useTranslations("Shared.Components.cookie-consent");
-    const { useConsent, consent } = useCookies();
-    const { data } = useConsent();
+    useEffect(() => {
+        if (consent === "all") startAnalytics();
+        if (consent === "necessary") stopAnalytics();
+    }, [consent]);
+
+    // nothing on the server, nor once they've chosen
+    if (consent === undefined || (consent && !reopened)) return null;
+
+    // the toasts go above it while it's there, see the Toaster
+
+    const choose = (choice: "all" | "necessary") => {
+        writeConsent(choice);
+        setReopened(false);
+    };
 
     return (
         <Card
-            data-is-set={data !== null}
-            className="
-                fixed z-50 bottom-3 right-3 sm:bottom-6 sm:right-6 max-w-[min(50ch,calc(100vw-1.5rem))] w-full
-                bg-background ring-primary hidden duration-1000
-                data-[is-set='false']:flex data-[is-set='false']:animate-in data-[is-set='false']:slide-in-from-bottom-100
-            "
+            ref={reserveSpace}
+            role="region"
+            aria-label={m.cookies_title()}
+            className="fixed z-50 bottom-3 right-3 sm:bottom-6 sm:right-6 w-full max-w-[min(50ch,calc(100vw-1.5rem))] bg-popover text-popover-foreground shadow-lg duration-700 animate-in fade-in slide-in-from-bottom-full"
         >
             <CardHeader>
-                <CardTitle>
-                    {t("title")}
-                </CardTitle>
-                <CardDescription className="text-sm text-pretty">
-                    {
-                        t.rich("description", {
-                            link: (chunks) => (
-                                <TextLink to="/cookie-policy">
-                                    {chunks}
-                                </TextLink>
-                            )
-                        })
-                    }
+                <CardTitle>{m.cookies_title()}</CardTitle>
+                <CardDescription className="text-pretty">
+                    <Rich
+                        message={m.cookies_text}
+                        tags={{
+                            link: ({ children }) => (
+                                <Link to="/home/legal/cookies" className="underline underline-offset-4 hover:text-foreground">
+                                    {children}
+                                </Link>
+                            ),
+                        }}
+                    />
                 </CardDescription>
             </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-4">
-                <Button variant="outline" onClick={() => consent.mutate("essential")}>
-                    {t("button-1")}
-                </Button>
-                <Button onClick={() => consent.mutate("all")}>
-                    {t("button-2")}
-                </Button>
+            <CardContent className="grid grid-cols-2 gap-3">
+                <Button variant="outline" onClick={() => choose("necessary")}>{m.cookies_necessary()}</Button>
+                <Button onClick={() => choose("all")}>{m.cookies_accept()}</Button>
             </CardContent>
         </Card>
     );
+}
+
+/**
+ * Keeps `--cookie-consent-space` on the page at the room the banner takes from the bottom of the screen, its height
+ * and its distance from the edge, until it's gone.
+ */
+function reserveSpace(banner: HTMLElement | null) {
+    if (!banner) return;
+
+    const root = document.documentElement;
+    const measure = () => {
+        const space = banner.offsetHeight + parseFloat(getComputedStyle(banner).bottom);
+        root.style.setProperty("--cookie-consent-space", `${space}px`);
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(banner);
+    // its distance from the edge changes with the screen's size
+    window.addEventListener("resize", measure);
+
+    return () => {
+        observer.disconnect();
+        window.removeEventListener("resize", measure);
+        root.style.removeProperty("--cookie-consent-space");
+    };
 }

@@ -1,13 +1,13 @@
-import { cn } from "@shared/shadcn/lib/utils"
+import { cn } from "@shared/shadcn/utils";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="skeleton"
-            className={cn("bg-muted rounded-xl animate-pulse", className)}
+            className={cn("animate-pulse rounded-2xl bg-muted", className)}
             {...props}
         />
-    )
+    );
 }
 
-export { Skeleton }
+export { Skeleton };

@@ -1,11 +1,13 @@
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
+import { envServer } from "@server/env";
 
 export default defineConfig({
-    out: "./.data/drizzle",
+    // committed: the image applies them on deploy (server/migrate.ts)
+    out: "./drizzle",
     schema: "./src/lib/server/db/schema",
-    dialect: "turso",
+    dialect: "postgresql",
     dbCredentials: {
-        url: process.env.LIBSQL_URL!,
-        authToken: process.env.LIBSQL_AUTH!,
+        url: envServer.DATABASE_URL,
     },
 });

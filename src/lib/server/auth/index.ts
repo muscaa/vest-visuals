@@ -1,94 +1,167 @@
+import { and, eq } from "drizzle-orm";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { admin, captcha, twoFactor } from "better-auth/plugins";
+import { removeAvatar } from "@server/avatars";
 import { db } from "@server/db";
 import * as schema from "@server/db/schema/auth";
-import {
-    openAPI,
-    twoFactor,
-    captcha,
-    admin,
-} from "better-auth/plugins";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
+import { envServer } from "@server/env";
+import { mailLocale, sendMail } from "@server/mail";
 import * as templates from "@server/mail/templates";
-import { sendMail } from "@server/mail";
-import { serverConfig } from "@server/config";
-import { createAuthMiddleware } from "better-auth/api";
-import {
-    beforeHook,
-    afterHook,
-} from "./hooks";
+import { nameFromEmail } from "@shared/auth";
+import { cookieName } from "@shared/paraglide/runtime";
+
+/** Whether a user can sign in with a password; accounts created by an admin start without one. */
+async function hasPassword(userId: string) {
+    const credentials = await db
+        .select({ id: schema.account.id })
+        .from(schema.account)
+        .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")))
+        .limit(1);
+    return credentials.length > 0;
+}
+
+/** The language a request was made in, from Paraglide's cookie; set whenever someone picks a language. */
+function requestLocale(headers: Headers | undefined) {
+    const cookie = headers?.get("cookie")?.match(new RegExp(`(?:^|; )${cookieName}=([^;]*)`))?.[1];
+    return mailLocale(cookie);
+}
+
+/** A user's language, for their emails; Better Auth's callbacks don't type the `locale` field, so it's read here. */
+function userLocale(user: object) {
+    return mailLocale((user as { locale?: string | null }).locale);
+}
 
 export const auth = betterAuth({
+    appName: "Vest Visuals",
     database: drizzleAdapter(db, {
-        provider: "sqlite",
+        provider: "pg",
         schema,
     }),
-    appName: "Vest Visuals",
+    baseURL: envServer.BETTER_AUTH_URL,
+    trustedOrigins: [
+        envServer.PUBLIC_REWRITE_BRIDGE_HOME,
+        envServer.PUBLIC_REWRITE_BRIDGE_ACCOUNT,
+        envServer.PUBLIC_REWRITE_BRIDGE_MEDIA,
+        envServer.PUBLIC_REWRITE_BRIDGE_SOFTWARE,
+        envServer.PUBLIC_REWRITE_BRIDGE_ADMIN,
+    ].map((value) => `https://${value}`),
+    advanced: {
+        crossSubDomainCookies: {
+            enabled: true,
+            domain: envServer.PUBLIC_COOKIE_DOMAIN,
+        },
+    },
+    // anyone can sign up with an email and password, but has to verify the email before signing in
     emailAndPassword: {
         enabled: true,
         autoSignIn: false,
         requireEmailVerification: true,
-        sendResetPassword: async (data) => {
-            sendMail(data.user.email, templates.resetPassword(data.url));
+        // the same link sets the first password of accounts created by an admin
+        sendResetPassword: async ({ user, url }) => {
+            const locale = userLocale(user);
+            const mail = (await hasPassword(user.id)) ? templates.resetPassword(url, locale) : templates.choosePassword(url, locale);
+            await sendMail(user.email, mail);
         },
     },
     emailVerification: {
         sendOnSignUp: true,
+        // signing in while unverified sends a new link
         sendOnSignIn: true,
         autoSignInAfterVerification: false,
-        sendVerificationEmail: async (data) => {
-            sendMail(data.user.email, templates.emailVerification(data.url));
+        sendVerificationEmail: async ({ user, url }) => {
+            await sendMail(user.email, templates.verifyEmail(url, userLocale(user)));
         },
     },
     user: {
+        additionalFields: {
+            /** the language emails are sent in: the one they browse in, saved when they sign up and pick a language */
+            locale: {
+                type: "string",
+                required: false,
+                input: true,
+            },
+        },
+        // the old address confirms the change, then the new one gets a verification email
         changeEmail: {
-            enabled: false,
-            sendChangeEmailConfirmation: async (data) => {
-                sendMail(data.user.email, templates.changeEmail(data.url));
+            enabled: true,
+            sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
+                await sendMail(user.email, templates.confirmEmailChange(newEmail, url, userLocale(user)));
             },
         },
         deleteUser: {
-            enabled: false,
-            sendDeleteAccountVerification: async (data) => {
-                sendMail(data.user.email, templates.deleteAccount(data.url));
+            enabled: true,
+            sendDeleteAccountVerification: async ({ user, url }) => {
+                await sendMail(user.email, templates.confirmAccountDeletion(url, userLocale(user)));
+            },
+        },
+    },
+    databaseHooks: {
+        user: {
+            create: {
+                // names aren't asked for at sign up, they come from the email; admins can set one. The language is the
+                // one they signed up in, else the one they were browsing in (social sign ups)
+                before: async (user, context) => ({
+                    data: {
+                        ...user,
+                        name: user.name.trim() || nameFromEmail(user.email),
+                        locale: mailLocale((user as { locale?: string }).locale ?? requestLocale(context?.headers)),
+                    },
+                }),
+            },
+            update: {
+                // only a language the site has
+                before: async (user) => {
+                    const { locale } = user as { locale?: string };
+                    return { data: locale === undefined ? user : { ...user, locale: mailLocale(locale) } };
+                },
+            },
+            delete: {
+                // their profile photo goes with them
+                after: async (user) => {
+                    await removeAvatar(user.id);
+                },
             },
         },
     },
     plugins: [
-        openAPI(),
+        // email codes only, enabled with `method: "otp"` which skips the verification step;
+        // devices are trusted when the code is verified with trustDevice
         twoFactor({
-            skipVerificationOnEnable: true,
             totpOptions: {
                 disable: true,
             },
             otpOptions: {
-                sendOTP: async (data) => {
-                    sendMail(data.user.email, templates.signInOTP(data.otp));
+                sendOTP: async ({ user, otp }) => {
+                    await sendMail(user.email, templates.signInCode(otp, userLocale(user)));
                 },
             },
         }),
-        captcha({
-            provider: "google-recaptcha",
-            secretKey: serverConfig.env.RECAPTCHA_KEY_SECRET,
+        // roles: "user" for everyone, "admin" for the admin site
+        admin({
+            defaultRole: "user",
+            adminRoles: ["admin"],
         }),
-        admin(),
-    ],
-    hooks: {
-        before: createAuthMiddleware(async (ctx) => await beforeHook(ctx, ctx.context)),
-        after: createAuthMiddleware(async (ctx) => await afterHook(ctx, ctx.context as any)),
-    },
-    advanced: {
-        ipAddress: {
-            ipAddressHeaders: ["x-forwarded-for"],
-            disableIpTracking: false,
-        },
-    },
-    trustedOrigins: () => [
-        serverConfig.env.ACCOUNT_URL,
-        serverConfig.env.MEDIA_URL,
-        serverConfig.env.SOFTWARE_URL,
+        // Turnstile on sign up, sign in and password reset: the forms send its token in the x-captcha-response header
+        ...(envServer.TURNSTILE_SECRET_KEY
+            ? [captcha({ provider: "cloudflare-turnstile", secretKey: envServer.TURNSTILE_SECRET_KEY })]
+            : []),
+        // keep last, it handles the cookies of every other plugin
+        tanstackStartCookies(),
     ],
     telemetry: {
         enabled: false,
-        disableNotice: true,
     },
 });
+
+export type Session = typeof auth.$Infer.Session;
+
+/**
+ * Better Auth's endpoints as route handlers, served at `/api/auth` on every site whose pages use the auth client
+ * (it calls the site it's on): see `routes/account/api/auth/$.ts` and `routes/admin/api/auth/$.ts`.
+ */
+export const authHandlers = {
+    GET: ({ request }: { request: Request }) => auth.handler(request),
+    POST: ({ request }: { request: Request }) => auth.handler(request),
+};

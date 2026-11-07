@@ -1,13 +1,10 @@
-"use client";
-
-import {
-    cva,
-    VariantProps,
-} from "class-variance-authority";
-import { cn } from "@shared/shadcn/lib/utils";
+import { cva } from "class-variance-authority";
+import { cn } from "@shared/shadcn/utils";
 import { useRender } from "@base-ui/react/use-render";
 import { mergeProps } from "@base-ui/react/merge-props";
-import { Link, LinkProps } from "./link";
+import { Link } from "@tanstack/react-router";
+import type { LinkProps } from "@tanstack/react-router";
+import type { VariantProps } from "class-variance-authority";
 
 export const textVariants = cva(
     "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 border-transparent bg-clip-padding focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 items-center transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none outline-none group/text",
@@ -22,25 +19,25 @@ export const textVariants = cva(
             },
             size: {
                 default: "",
-                mark: "text-mark text-balance",
-                hero: "text-hero text-balance",
-                title: "text-title text-balance",
-                display: "text-display text-balance",
-                stat: "text-stat text-balance",
-                h1: "text-h1 text-balance",
-                h2: "text-h2 text-balance",
-                h3: "text-h3 text-balance",
-                h4: "text-h4 text-balance",
-                lead: "text-lead text-pretty",
-                body: "text-body",
-                sm: "text-sm",
-                label: "text-label",
-                xs: "text-xs",
+                "lg-1": "text-lg-1 text-balance", // hero
+                "lg-2": "text-lg-2 text-balance", // title
+                "lg-3": "text-lg-3 text-balance", // display
+                "lg-4": "text-lg-4 text-balance", // stat
+                "md-1": "text-md-1 text-balance", // h1
+                "md-2": "text-md-2 text-balance", // h2
+                "md-3": "text-md-3 text-pretty", // h3 / lead
+                "md-4": "text-md-4 text-pretty", // h4
+                "sm-1": "text-sm-1", // body
+                "sm-2": "text-sm-2", // sm
+                "sm-3": "text-sm-3", // label
+                "sm-4": "text-sm-4", // xs
             },
             font: {
                 default: "",
-                mono1: "font-mono uppercase",
-                mono2: "font-mono",
+                "sans-1": "font-sans uppercase",
+                "sans-2": "font-sans",
+                "mono-1": "font-mono uppercase",
+                "mono-2": "font-mono",
             },
         },
         defaultVariants: {
@@ -48,10 +45,11 @@ export const textVariants = cva(
             size: "default",
             font: "default",
         },
-    }
+    },
 );
 
-type Props = useRender.ComponentProps<"div"> & VariantProps<typeof textVariants>;
+type Props = useRender.ComponentProps<"div"> &
+    VariantProps<typeof textVariants>;
 
 export function Text({
     variant = "default",
@@ -64,7 +62,10 @@ export function Text({
     const element = useRender({
         defaultTagName: "div",
         render,
-        props: mergeProps<"div">({ className: cn(textVariants({ variant, size, font, className })) }, props),
+        props: mergeProps<"div">(
+            { className: cn(textVariants({ variant, size, font, className })) },
+            props,
+        ),
     });
 
     return element;
@@ -106,7 +107,8 @@ export function TextP({
 
 export function TextLink({
     to,
-    href,
+    params,
+    search,
     variant = "link",
     size = "default",
     font = "default",
@@ -118,14 +120,15 @@ export function TextLink({
             variant={variant}
             size={size}
             font={font}
-            render={<Link href={to ?? href} />}
+            // external links like mailto: skip the router, which would resolve them against the current page
+            render={props.href ? <a /> : <Link to={to} params={params} search={search} />}
         />
     );
 }
 
 export function TextH1({
     variant = "default",
-    size = "h1",
+    size = "md-1",
     font = "default",
     ...props
 }: Props) {
@@ -142,7 +145,7 @@ export function TextH1({
 
 export function TextH2({
     variant = "default",
-    size = "h2",
+    size = "md-2",
     font = "default",
     ...props
 }: Props) {
@@ -159,7 +162,7 @@ export function TextH2({
 
 export function TextH3({
     variant = "default",
-    size = "h3",
+    size = "md-3",
     font = "default",
     ...props
 }: Props) {
@@ -176,7 +179,7 @@ export function TextH3({
 
 export function TextH4({
     variant = "default",
-    size = "h4",
+    size = "md-4",
     font = "default",
     ...props
 }: Props) {
@@ -193,8 +196,8 @@ export function TextH4({
 
 export function TextH5({
     variant = "default",
-    size = "label",
-    font = "mono1",
+    size = "sm-3",
+    font = "mono-1",
     ...props
 }: Props) {
     return (
@@ -210,8 +213,8 @@ export function TextH5({
 
 export function TextH6({
     variant = "default",
-    size = "label",
-    font = "mono2",
+    size = "sm-3",
+    font = "mono-2",
     ...props
 }: Props) {
     return (

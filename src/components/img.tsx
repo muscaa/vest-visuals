@@ -1,19 +1,14 @@
-import { ImgHTMLAttributes } from "react";
+import type { ImgHTMLAttributes } from "react";
 
 export interface Image {
     src: string;
     alt: string;
 }
 
-export type ImgProps = Image & Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "alt">;
-
-export function Img(props: ImgProps) {
+export function Img(
+    props: Image & Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "alt">,
+) {
     return (
-        <img
-            fetchPriority="low"
-            loading="lazy"
-            decoding="async"
-            {...props}
-        />
+        <img fetchPriority="low" loading="lazy" decoding="async" {...props} />
     );
 }

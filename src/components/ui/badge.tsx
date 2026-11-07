@@ -1,40 +1,35 @@
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@shared/shadcn/lib/utils"
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
+import { cva } from "class-variance-authority";
+import { cn } from "@shared/shadcn/utils";
+import type { VariantProps } from "class-variance-authority";
 
 const badgeVariants = cva(
-    "shadow-sm gap-1 rounded-full border border-transparent px-2 py-0.5 transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! inline-flex items-center justify-center w-fit whitespace-nowrap shrink-0 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden group/badge",
+    "group/badge inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-3xl border border-transparent px-2.5 py-0.5 text-sm-2 font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!",
     {
         variants: {
             variant: {
-                default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
-                secondary: "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
-                destructive: "bg-destructive/10 [a]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 text-destructive dark:bg-destructive/20",
-                outline: "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground bg-input/30",
+                default:
+                    "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+                secondary:
+                    "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
+                destructive:
+                    "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
+                outline:
+                    "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
                 ghost: "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
                 link: "text-primary underline-offset-4 hover:underline",
-                dot: "text-muted-foreground shadow-none uppercase font-mono tracking-widest before:content-[''] before:inline-block before:size-1.5 before:rounded-full before:bg-primary before:mr-1",
-            },
-            size: {
-                default: "text-label h-5",
-                sm: "text-sm h-5",
-                md: "text-body h-6",
-                lg: "text-lead h-7",
             },
         },
         defaultVariants: {
             variant: "default",
-            size: "default",
         },
-    }
-)
+    },
+);
 
 function Badge({
     className,
     variant = "default",
-    size = "default",
     render,
     ...props
 }: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
@@ -42,17 +37,16 @@ function Badge({
         defaultTagName: "span",
         props: mergeProps<"span">(
             {
-                className: cn(badgeVariants({ className, variant, size })),
+                className: cn(badgeVariants({ variant }), className),
             },
-            props
+            props,
         ),
         render,
         state: {
             slot: "badge",
             variant,
-            size,
         },
-    })
+    });
 }
 
-export { Badge, badgeVariants }
+export { Badge, badgeVariants };

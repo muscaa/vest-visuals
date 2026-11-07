@@ -1,4 +1,4 @@
-import { Link } from "./link";
+import { m } from "@shared/paraglide/messages";
 import { Img } from "./img";
 
 interface Props {
@@ -7,34 +7,34 @@ interface Props {
 
 export function SALLink(props: Props) {
     return (
-        <Link
+        <a
             href="https://anpc.ro/ce-este-sal/"
             target="_blank"
-            rel="nofollow"
-            {...props}
+            rel="noopener noreferrer nofollow"
+            className={props.className}
         >
             <Img
                 src="/anpc-sal.svg"
-                alt="Solutionarea Alternativa a Litigiilor"
-                className="w-50"
+                alt={m.footer_anpc_sal()}
+                className="h-10 w-auto"
             />
-        </Link>
+        </a>
     );
 }
 
 export function SOLLink(props: Props) {
     return (
-        <Link
-            href="https://ec.europa.eu/consumers/odr"
+        <a
+            href="https://consumer-redress.ec.europa.eu/index_ro"
             target="_blank"
-            rel="nofollow"
-            {...props}
+            rel="noopener noreferrer nofollow"
+            className={props.className}
         >
             <Img
                 src="/anpc-sol.svg"
-                alt="Solutionarea Online a Litigiilor"
-                className="w-50"
+                alt={m.footer_anpc_sol()}
+                className="h-10 w-auto"
             />
-        </Link>
+        </a>
     );
 }

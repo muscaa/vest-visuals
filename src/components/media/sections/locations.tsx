@@ -1,137 +1,113 @@
-"use client";
-
+import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
+import { cn } from "@shared/shadcn/utils";
+import { Link } from "@tanstack/react-router";
+import type { LinkOptions } from "@tanstack/react-router";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
-import { Link } from "@/components/link";
+import { mediaLocations } from "@/components/media/location";
 import { TextH1, TextH2, TextP } from "@/components/typography";
-import { Pathname } from "@shared/i18n";
-import { cn } from "@shared/shadcn/lib/utils";
-import { useTranslations } from "next-intl";
+import { Rich } from "@/components/rich";
 
-interface LocationProps {
+type LocationsEntryProps = LinkOptions & {
     name: string;
-    to: Pathname;
     county?: string;
     image?: string;
     description?: string;
     accent?: string;
     className?: string;
-}
+};
 
-function Location(props: LocationProps) {
+function LocationsEntry({
+    name,
+    county,
+    image,
+    description,
+    accent,
+    className,
+    ...props
+}: LocationsEntryProps) {
     return (
         <Link
-            to={props.to}
-            className={cn("relative flex flex-col gap-2 px-4 py-6 transition-all bg-background hover:bg-muted", props.className)}
+            {...props}
+            className={cn(
+                "group/locations-entry relative flex flex-col min-h-32 gap-1 p-6",
+                "rounded-4xl overflow-hidden transition-all bg-card hover:bg-muted",
+                className,
+            )}
         >
-            {
-                props.image && (
-                    <Img
-                        src={props.image}
-                        alt=""
-                        className="absolute pointer-events-none inset-0 size-full object-cover brightness-75 mask-l-from-0% mask-l-to-100%"
-                    />
-                )
-            }
-            <TextH2 className={`z-10 ${props.accent ? "text-success" : ""}`}>
-                {props.name}
+            {image && (
+                <Img
+                    src={image}
+                    alt="" // decorative, the city name is the link text
+                    className="absolute pointer-events-none inset-0 size-full object-cover brightness-75 mask-l-from-0% mask-l-to-100%"
+                />
+            )}
+            <TextH2 className={`z-10 ${accent ? "text-success" : ""}`}>
+                {name}
             </TextH2>
-            {
-                props.county && (
-                    <TextP variant="muted" size="label" font="mono1" className="z-10">
-                        {props.county}
-                    </TextP>
-                )
-            }
-            {
-                props.description && (
-                    <TextP size="label" className="z-10">
-                        {props.description}
-                    </TextP>
-                )
-            }
-            {
-                props.accent && (
-                    <TextP size="body" className="z-10 text-success">
-                        {props.accent}
-                    </TextP>
-                )
-            }
+            {county && (
+                <TextP
+                    variant="muted"
+                    size="sm-3"
+                    font="mono-1"
+                    className="z-10"
+                >
+                    {county}
+                </TextP>
+            )}
+            {description && (
+                <TextP size="md-3" className="z-10">
+                    {description}
+                </TextP>
+            )}
+            {accent && (
+                <TextP size="sm-1" className="z-10 text-success">
+                    {accent}
+                </TextP>
+            )}
         </Link>
     );
 }
 
-interface Props {
+interface LocationsSectionProps {}
 
-}
-
-export function MediaLocationsSection(props: Props) {
-    const t = useTranslations("Media.Page.home.locations");
-
+export function LocationsSection(props: LocationsSectionProps) {
     return (
-        <section id="locations" className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20">
+        <section
+            id="locations"
+            className="flex flex-col justify-center items-center px-6 py-16 bg-linear-to-b from-transparent to-success/20"
+        >
             <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="05">
-                    {t("eyebrow")}
-                </Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
-                    <TextH1 size="title">
-                        {
-                            t.rich("title", {
-                                accent: (chunks) => (
-                                    <i className="text-success">{chunks}</i>
-                                )
-                            })
-                        }
+                <Eyebrow>{m.media_locations_eyebrow()}</Eyebrow>
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
+                    <TextH1 size="lg-2">
+                        <Rich message={m.media_locations_title} />
                     </TextH1>
-                    <TextP variant="muted" size="lead">
-                        {t("description")}
+                    <TextP variant="muted" size="md-3">
+                        {m.media_locations_description()}
                     </TextP>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border bg-clip-padding border-b border-t">
-                    <Location
-                        name="Timișoara"
-                        to="/locations/timisoara"
-                        county="Timiș"
-                        image="https://images.unsplash.com/photo-1687696162729-a75f9ddc004d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        className="bg-muted sm:col-span-2 lg:col-span-3"
-                    />
-                    <Location
-                        name="Arad"
-                        to="/locations/arad"
-                        county="Arad"
-                        image="https://images.unsplash.com/photo-1632207857925-a4d52c54d683?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <Location
-                        name="Oradea"
-                        to="/locations/oradea"
-                        county="Bihor"
-                        image="https://images.unsplash.com/photo-1654172054677-9a8cd7a8c04a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <Location
-                        name="Drobeta-Turnu Severin"
-                        to="/locations/drobeta-turnu-severin"
-                        county="Mehedinți"
-                        image="https://images.unsplash.com/photo-1592335234454-1454bd449a2c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <Location
-                        name="Cluj-Napoca"
-                        to="/locations/cluj-napoca"
-                        county="Cluj"
-                        image="https://images.unsplash.com/photo-1678736680989-195226823176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <Location
-                        name="București"
-                        to="/locations/bucuresti"
-                        county="București"
-                        image="https://images.unsplash.com/photo-1695314620864-b551fd6574ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                    <Location
-                        name={t("other.name")}
-                        to="/contact"
-                        description={t("other.description")}
-                        accent={t("other.link")}
-                        className="hover:bg-[color-mix(in_oklab,_var(--color2)_20%,_var(--muted))]"
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {
+                        mediaLocations.map(({ id, name, county, image, ...link }, index) => (
+                            <LocationsEntry
+                                key={id}
+                                {...link}
+                                name={name()}
+                                county={county()}
+                                // the first spans the whole row
+                                image={asset(image, index === 0 ? "large" : "medium")}
+                                className={index === 0 ? "sm:col-span-2 lg:col-span-3" : undefined}
+                            />
+                        ))
+                    }
+                    <LocationsEntry
+                        to="/media/contact"
+                        name={m.media_locations_elsewhere()}
+                        description={m.media_locations_elsewhere_description()}
+                        accent={m.media_locations_elsewhere_accent()}
+                        className="hover:bg-[color-mix(in_oklab,var(--color2)_20%,var(--muted))]"
                     />
                 </div>
             </div>

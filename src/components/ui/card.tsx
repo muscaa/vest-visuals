@@ -1,6 +1,5 @@
-import * as React from "react"
-
-import { cn } from "@shared/shadcn/lib/utils"
+import * as React from "react";
+import { cn } from "@shared/shadcn/utils";
 
 function Card({
     className,
@@ -11,10 +10,13 @@ function Card({
         <div
             data-slot="card"
             data-size={size}
-            className={cn("text-body shadow-lg ring-border bg-card text-card-foreground gap-6 overflow-hidden rounded-2xl py-6 ring-1 has-data-[slot=card-footer]:pb-0 data-[size=sm]:has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 group/card flex flex-col", className)}
+            className={cn(
+                "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-4xl bg-card py-(--card-spacing) text-sm-1 text-card-foreground shadow-md ring-1 ring-foreground/5 [--card-spacing:--spacing(6)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(4)] dark:ring-foreground/10", // *:[img:first-child]:rounded-t-4xl *:[img:last-child]:rounded-b-4xl
+                className,
+            )}
             {...props}
         />
-    )
+    );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -22,32 +24,32 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
         <div
             data-slot="card-header"
             className={cn(
-                "gap-2 rounded-t-xl px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4 group/card-header @container/card-header grid auto-rows-min items-start has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto]",
-                className
+                "group/card-header @container/card-header grid auto-rows-min items-start gap-1.5 rounded-t-4xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
+                className,
             )}
             {...props}
         />
-    )
+    );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-title"
-            className={cn("text-h3", className)}
+            className={cn("text-md-3 font-medium", className)}
             {...props}
         />
-    )
+    );
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-description"
-            className={cn("text-body text-muted-foreground", className)}
+            className={cn("text-sm-2 text-muted-foreground", className)}
             {...props}
         />
-    )
+    );
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
@@ -56,31 +58,34 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
             data-slot="card-action"
             className={cn(
                 "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-                className
+                className,
             )}
             {...props}
         />
-    )
+    );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-content"
-            className={cn("px-6 group-data-[size=sm]/card:px-4", className)}
+            className={cn("px-(--card-spacing)", className)}
             {...props}
         />
-    )
+    );
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-footer"
-            className={cn("bg-muted/50 border-t rounded-b-xl p-6 group-data-[size=sm]/card:p-4 flex items-center", className)}
+            className={cn(
+                "flex items-center rounded-b-4xl px-(--card-spacing) [.border-t]:pt-(--card-spacing)",
+                className,
+            )}
             {...props}
         />
-    )
+    );
 }
 
 export {
@@ -91,4 +96,4 @@ export {
     CardAction,
     CardDescription,
     CardContent,
-}
+};

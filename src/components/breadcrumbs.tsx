@@ -1,5 +1,6 @@
-"use client";
-
+import { Fragment } from "react";
+import { Link } from "@tanstack/react-router";
+import type { LinkOptions } from "@tanstack/react-router";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -8,38 +9,37 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link } from "./link";
-import { Fragment } from "react";
 
-export type BreadcrumbsPage = [name: string, href: string];
-export type BreadcrumbsList = [...pages: BreadcrumbsPage[], name: string];
+export type BreadcrumbsItem = LinkOptions & { name: string };
 
-interface BreadcrumbsProps {
-    list: BreadcrumbsList;
+interface PageBreadcrumbsProps {
+    /** the pages above the current one, from the root down, e.g. Media, Servicii */
+    items: BreadcrumbsItem[];
+    /** the current page */
+    page: string;
 }
 
-export function Breadcrumbs(props: BreadcrumbsProps) {
+/** Breadcrumbs bar shown above a page's hero, on the card background. */
+export function PageBreadcrumbs(props: PageBreadcrumbsProps) {
     return (
-        <Breadcrumb>
-            <BreadcrumbList>
-                {
-                    props.list.slice(0, -1).map(([name, href], index) => (
-                        <Fragment key={index}>
-                            <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink render={
-                                    <Link href={href}>
-                                        {name}
-                                    </Link>
-                                }/>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator className="hidden md:block" />
-                        </Fragment>
-                    ))
-                }
-                <BreadcrumbItem>
-                    <BreadcrumbPage>{props.list.at(-1)}</BreadcrumbPage>
-                </BreadcrumbItem>
-            </BreadcrumbList>
-        </Breadcrumb>
+        <div className="flex justify-center px-6 py-3 bg-card">
+            <Breadcrumb className="max-w-7xl w-full">
+                <BreadcrumbList>
+                    {
+                        props.items.map(({ name, ...link }) => (
+                            <Fragment key={name}>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink render={<Link {...link} />}>{name}</BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                            </Fragment>
+                        ))
+                    }
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>{props.page}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+        </div>
     );
 }

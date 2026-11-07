@@ -1,0 +1,36 @@
+# The sites, one container serving every subdomain. `migrate` brings the database up to date first, then the app
+# starts. Deployed from Portainer (Repository, deploy/stacks/app/compose.yml); a release is changing APP_VERSION.
+name: app
+
+services:
+    migrate:
+        image: ghcr.io/${GITHUB_OWNER:?set GITHUB_OWNER}/vest-visuals:${APP_VERSION:?set APP_VERSION}
+        command: ["node", ".output/migrate.cjs"]
+        env_file: stack.env
+        restart: "no"
+        networks:
+            - vest
+
+    vest-visuals:
+        image: ghcr.io/${GITHUB_OWNER}/vest-visuals:${APP_VERSION}
+        restart: unless-stopped
+        env_file: stack.env
+        environment:
+            # workflow runs are kept in Postgres, so they survive restarts and redeploys
+            WORKFLOW_TARGET_WORLD: "@workflow/world-postgres"
+        depends_on:
+            migrate:
+                condition: service_completed_successfully
+        healthcheck:
+            test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/health"]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 30s
+        # only one: the nightly task, live updates and the workflow worker all expect a single instance
+        networks:
+            - vest
+
+networks:
+    vest:
+        external: true
