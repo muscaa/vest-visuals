@@ -60,20 +60,29 @@ Once, outside the VPS:
 
 ## Building the VPS (about an hour)
 
-Any Ubuntu 24.04 or Debian 12 VPS, with your SSH key added when it's created.
+A netcup VPS running Ubuntu 24.04 or Debian 12, Generation 12 or newer so it has the SCP firewall, logged into as
+root with the password from netcup's welcome email.
 
-1. **Bootstrap.**
+1. **Firewall.** In netcup's Server Control Panel, the server → Firewall → Configure, then allow inbound `22/tcp`,
+   `51820/udp` (WireGuard), `80/tcp` and `443/tcp`, and nothing else. This is the only firewall: there's none on the
+   VPS, which is the better arrangement anyway, because the SCP's rules sit in front of the host and so also cover
+   the ports Docker publishes — a firewall on the VPS doesn't. While `22/tcp` is open to everything and root logs in
+   with a password, narrow that one rule to your own address if you can; step 9 closes it for good.
+2. **Bootstrap.** The clone takes only `deploy/`, and only the file contents it needs: see "The VPS's clone" below.
    ```sh
    ssh root@<vps>
-   git clone https://github.com/<owner>/vest-visuals /opt/vest-visuals
+   git clone --filter=blob:none --no-checkout --single-branch --branch main \
+       https://github.com/<owner>/vest-visuals /opt/vest-visuals
    cd /opt/vest-visuals
+   git sparse-checkout set --no-cone '/deploy/'
+   git checkout main
    cp deploy/base/.env.example deploy/base/.env && nano deploy/base/.env  # from the password manager
    ./deploy/bootstrap.sh
    ```
-2. **WireGuard.** From your computer, `ssh -L 51821:127.0.0.1:51821 root@<vps>`, open http://localhost:51821, sign in
+3. **WireGuard.** From your computer, `ssh -L 51821:127.0.0.1:51821 root@<vps>`, open http://localhost:51821, sign in
    as `admin`, add a client and import it in the WireGuard app. Connected, the addresses above work.
-3. **Portainer**, https://172.30.0.3:9443.
-4. **Stacks**, in this order: Stacks → Add stack → Repository, this repository, branch `main`, compose path
+4. **Portainer**, https://172.30.0.3:9443.
+5. **Stacks**, in this order: Stacks → Add stack → Repository, this repository, branch `main`, compose path
    `deploy/stacks/<name>/compose.yml`, then the stack's variables from the password manager (Advanced mode lets you
    paste them all at once). Turn on GitOps updates if you want a push to `main` to redeploy them.
    1. `db`, then restore the database, if there's one to restore (below).
@@ -81,15 +90,18 @@ Any Ubuntu 24.04 or Debian 12 VPS, with your SSH key added when it's created.
    3. `edge`, then set it up (next step).
    4. `ops`, then in Uptime Kuma: monitors for `http://vest-visuals:3000/api/health` and each public host, a "Push"
       monitor for the backups (its url is the db stack's `BACKUP_HEARTBEAT_URL`), and Discord as notification.
-5. **Nginx Proxy Manager**, http://172.30.0.7:81. On the first visit it asks for an admin account (older versions
+6. **Nginx Proxy Manager**, http://172.30.0.7:81. On the first visit it asks for an admin account (older versions
    start with `admin@example.com` / `changeme` instead: change it).
    - SSL Certificates → Add → Let's Encrypt: domains `vestvisuals.ro` and `*.vestvisuals.ro`, "Use a DNS Challenge",
      provider Cloudflare, with the token. One certificate for every site, renewed by NPM.
    - Hosts → Proxy Hosts → Add, one per site: `vestvisuals.ro`, `a.vestvisuals.ro`, `media.vestvisuals.ro`,
      `software.vestvisuals.ro`, `admin.vestvisuals.ro`. Each: scheme `http`, host `vest-visuals`, port `3000`;
      SSL tab: that certificate, "Force SSL" and "HTTP/2" on.
-6. **DNS.** In Cloudflare, `A` records for the five names to the VPS's IP, proxied (orange cloud).
-7. **Check.** The sites open, signing in works, Uptime Kuma is green.
+7. **DNS.** In Cloudflare, `A` records for the five names to the VPS's IP, proxied (orange cloud).
+8. **Check.** The sites open, signing in works, Uptime Kuma is green.
+9. **Close SSH.** Connected to WireGuard, check `ssh root@172.30.0.1` works, then delete the `22/tcp` rule in the
+   SCP firewall. Root's password login is now reachable only through the tunnel. Re-add the rule in the SCP, or use
+   netcup's VNC console, if you ever need the way back in.
 
 ## Releasing
 
@@ -133,11 +145,21 @@ to set up again.
 
 - **One app container.** The nightly task, the live updates and the workflow worker expect a single instance; don't
   scale the app service.
-- **Ports.** SSH, WireGuard (51820/udp) and the web (80, 443) are open. The admin tools, Nginx Proxy Manager's UI
-  included, are only reachable over WireGuard.
-- **SSH.** Once WireGuard works, SSH can be closed to the internet too, and reached over WireGuard instead at
-  172.30.0.1 (the host, from the VPN). Allow it from there before removing the open rule, or you're locked out:
-  `ufw allow from 172.30.0.0/24 to any port 22 proto tcp && ufw delete allow OpenSSH`.
+- **Ports.** The firewall is netcup's, in the SCP: `22/tcp`, `51820/udp`, `80/tcp`, `443/tcp`. Nothing on the VPS
+  filters anything, so a rule you forget there is a port genuinely open to the internet. Only wg-easy and Nginx
+  Proxy Manager publish ports at all; Portainer, Postgres, the backup container and the ops tools publish none, so
+  they're reachable only from the `vest` network and over WireGuard no matter what the firewall says — including
+  Nginx Proxy Manager's own admin UI on 81.
+- **SSH.** Root logs in with a password and `bootstrap.sh` doesn't touch sshd, so once WireGuard works, delete the
+  `22/tcp` rule in the SCP firewall: SSH then answers only at 172.30.0.1 (the host, from the VPN), which takes
+  password login off the internet entirely and is the main thing keeping it sane. Connect over WireGuard and check
+  `ssh root@172.30.0.1` works *before* deleting the rule. If the tunnel ever breaks you re-add the rule in the SCP,
+  or use netcup's VNC console — losing WireGuard is not a lockout.
+- **The VPS's clone.** `/opt/vest-visuals` is a blobless, single-branch, sparse clone: the working tree holds
+  `deploy/` and nothing else, and no other file's contents are ever downloaded (a couple of megabytes instead of
+  eighty). `git pull` keeps it that way — sparse-checkout is saved in the clone, so every other path stays out of
+  the working tree, newly added ones included. It's only what `bootstrap.sh` runs from; Portainer clones the
+  repository itself for the stacks.
 - **A new VPS has a new IP.** Update the five `A` records in Cloudflare, and `WG_HOST` if it was the IP.
 - **Updates.** `bootstrap.sh` turns on Ubuntu's automatic security updates. Images: `postgres:18-alpine` gets patch
   releases on re-pull; bump the major version deliberately, with a dump and restore.
