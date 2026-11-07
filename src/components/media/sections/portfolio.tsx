@@ -1,146 +1,175 @@
-"use client";
-
+import { m } from "@shared/paraglide/messages";
+import { asset } from "@shared/assets";
+import { cn } from "@shared/shadcn/utils";
+import { Link } from "@tanstack/react-router";
+import { findMediaService } from "../service";
+import type { AssetKey } from "@shared/assets";
+import type { LinkOptions } from "@tanstack/react-router";
+import type { RichProps } from "@/components/rich";
+import type { MediaServiceId } from "../service";
 import { Eyebrow } from "@/components/eyebrow";
 import { Img } from "@/components/img";
-import { Link } from "@/components/link";
-import { TextH1, TextH2, TextP, TextSpan } from "@/components/typography";
-import { Pathname } from "@shared/i18n";
-import { cn } from "@shared/shadcn/lib/utils";
-import { useTranslations } from "next-intl";
+import { TextH1, TextH2, TextP } from "@/components/typography";
+import { Rich } from "@/components/rich";
 
-interface PortfolioProps {
+type PortfolioEntryProps = LinkOptions & {
     name: React.ReactNode;
-    to: Pathname;
     description: string;
-    label: string;
     image: string;
+    alt: string;
     className?: string;
-}
+};
 
-function Portfolio(props: PortfolioProps) {
+function PortfolioEntry({
+    name,
+    description,
+    image,
+    alt,
+    className,
+    ...props
+}: PortfolioEntryProps) {
     return (
         <Link
-            to={props.to}
-            className={
-                cn(
-                    "relative flex flex-col justify-end gap-1 p-6 aspect-square theme-dark group/portfolio",
-                    "rounded-2xl overflow-hidden transition-all bg-linear-to-b from-50% from-transparent to-black/50",
-                    props.className
-                )
-            }
+            {...props}
+            className={cn(
+                "group/portfolio-entry relative flex flex-col justify-end gap-1 p-6 theme-dark",
+                "rounded-4xl overflow-hidden transition-all bg-linear-to-b from-30% from-transparent to-black/80",
+                className,
+            )}
         >
             <Img
-                src={props.image}
-                alt=""
-                className="absolute pointer-events-none -z-10 inset-0 size-full object-cover transition-all group-hover/portfolio:scale-105 group-hover/portfolio:brightness-75"
+                src={image}
+                alt={alt}
+                className="absolute pointer-events-none -z-10 inset-0 size-full object-cover transition-all group-hover/portfolio-entry:scale-105 group-hover/portfolio-entry:brightness-75"
             />
-            <TextH2 variant="foreground">
-                {props.name}
+            <TextH2 variant="foreground" size="lg-4">
+                {name}
             </TextH2>
-            <TextP className="mb-4">
-                {props.description}
-            </TextP>
-            {/* <TextSpan variant="muted" size="label" font="mono1">
-                {props.label}
-            </TextSpan> */}
+            <TextP className="mb-4">{description}</TextP>
         </Link>
     );
 }
 
-interface Props {
-
+interface PortfolioItem {
+    service: MediaServiceId;
+    /** the portfolio category's tag, as set in the admin */
+    category: string;
+    /** the name with its accent word, from the messages */
+    title: RichProps["message"];
+    description: () => string;
+    image: AssetKey;
+    className: string;
 }
 
-export function MediaPortfolioSection(props: Props) {
-    const t = useTranslations("Media.Page.home.portfolio");
+// text is stored as message functions, called while rendering
+const items: PortfolioItem[] = [
+    {
+        service: "wedding",
+        category: "nunta",
+        title: m.media_portfolio_wedding,
+        description: m.media_portfolio_event_description,
+        image: "media-portfolio-wedding",
+        className: "order-1 sm:col-span-2",
+    },
+    {
+        service: "christening",
+        category: "botez",
+        title: m.media_portfolio_christening,
+        description: m.media_portfolio_event_description,
+        image: "media-portfolio-christening",
+        className: "order-2",
+    },
+    {
+        service: "18th-birthday",
+        category: "majorat",
+        title: m.media_portfolio_18th_birthday,
+        description: m.media_portfolio_event_description,
+        image: "media-portfolio-18th-birthday",
+        className: "order-3",
+    },
+    {
+        service: "photo-session",
+        category: "sedinta-foto",
+        title: m.media_portfolio_photo_session,
+        description: m.media_portfolio_photo_session_description,
+        image: "media-portfolio-photo-session",
+        className: "order-4",
+    },
+    {
+        service: "automotive",
+        category: "auto",
+        title: m.media_portfolio_automotive,
+        description: m.media_portfolio_automotive_description,
+        image: "media-portfolio-automotive",
+        className: "order-5",
+    },
+    {
+        service: "real-estate",
+        category: "imobiliare",
+        title: m.media_portfolio_real_estate,
+        description: m.media_portfolio_real_estate_description,
+        image: "media-portfolio-real-estate",
+        className: "order-6",
+    },
+    {
+        service: "business-promotion",
+        category: "promovare-afaceri",
+        title: m.media_portfolio_business_promotion,
+        description: m.media_portfolio_business_promotion_description,
+        image: "media-portfolio-business-promotion",
+        className: "order-7 lg:col-span-2",
+    },
+];
 
+/** The home page's entry for a portfolio category, by its tag; undefined for a category that isn't on it. */
+export function findPortfolioItem(category: string) {
+    return items.find((item) => item.category === category);
+}
+
+interface PortfolioSectionProps { }
+
+export function PortfolioSection(props: PortfolioSectionProps) {
     return (
-        <section id="portfolio" className="flex flex-col justify-center items-center px-6 py-16">
-            <div className="flex flex-col max-w-7xl w-full">
-                <Eyebrow num="02">
-                    {t("eyebrow")}
-                </Eyebrow>
-                <div className="grid grid-cols-2 items-end gap-8 mb-16">
-                    <TextH1 size="title">
-                        {
-                            t.rich("title", {
-                                accent: (chunks) => (
-                                    <i className="text-success">{chunks}</i>
-                                )
-                            })
-                        }
+        <section
+            id="portfolio"
+            className="flex flex-col justify-center items-center px-6 py-16"
+        >
+            <div className="flex flex-col max-w-7xl w-full @container">
+                <Eyebrow>{m.media_portfolio_eyebrow()}</Eyebrow>
+                <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-8 mb-16">
+                    <TextH1 size="lg-2">
+                        <Rich message={m.media_portfolio_title} />
                     </TextH1>
-                    <TextP variant="muted" size="lead">
-                        {t("description")}
+                    <TextP variant="muted" size="md-3">
+                        {m.media_portfolio_description()}
                     </TextP>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Portfolio
-                        name={
-                            t.rich("18th-birthday.name", {
-                                accent: (chunks) => (
-                                    <i className="text-chart-1">{chunks}</i>
-                                )
-                            })
-                        }
-                        to="/portfolio/18th-birthday"
-                        description={t("18th-birthday.description")}
-                        label="24 sesiuni"
-                        image="https://s3.vestvisuals.ro/portfolio/b4dwo04rs8ta7na0zzbflpuv/medium"
-                        className="sm:aspect-auto sm:col-span-2"
-                    />
-                    <Portfolio
-                        name={
-                            t.rich("outdoor.name", {
-                                accent: (chunks) => (
-                                    <i className="text-success">{chunks}</i>
-                                )
-                            })
-                        }
-                        to="/portfolio/outdoor"
-                        description={t("outdoor.description")}
-                        label="38 sesiuni"
-                        image="https://s3.vestvisuals.ro/portfolio/l1xhekvxbakado1gh18v7ged/medium"
-                    />
-                    <Portfolio
-                        name={
-                            t.rich("automotive.name", {
-                                accent: (chunks) => (
-                                    <i className="text-chart-1">{chunks}</i>
-                                )
-                            })
-                        }
-                        to="/portfolio/automotive"
-                        description={t("automotive.description")}
-                        label="17 proiecte"
-                        image="https://s3.vestvisuals.ro/portfolio/z34362mh88we0urk97td85ax/medium"
-                    />
-                    <Portfolio
-                        name={
-                            t.rich("real-estate.name", {
-                                accent: (chunks) => (
-                                    <i className="text-success">{chunks}</i>
-                                )
-                            })
-                        }
-                        to="/portfolio/real-estate"
-                        description={t("real-estate.description")}
-                        label="52 proprietati"
-                        image="https://s3.vestvisuals.ro/portfolio/f64uxutmybs9iuc08j1cp73y/medium"
-                    />
-                    <Portfolio
-                        name={
-                            t.rich("marketing.name", {
-                                accent: (chunks) => (
-                                    <i className="text-chart-1">{chunks}</i>
-                                )
-                            })
-                        }
-                        to="/portfolio/marketing"
-                        description={t("marketing.description")}
-                        label="29 campanii"
-                        image="https://s3.vestvisuals.ro/portfolio/vznmbjtg6w9lltk0uyr5ex2e/medium"
-                    />
+                <div
+                    className="
+                        grid gap-4
+                        [--cols:1] sm:[--cols:2] lg:[--cols:3]
+                        grid-cols-[repeat(var(--cols),minmax(0,1fr))]
+                        auto-rows-[calc((100cqw-(var(--cols)-1)*1rem)/var(--cols)*3/4)]
+                    "
+                >
+                    {
+                        items.map((item) => {
+                            const { name } = findMediaService(item.service);
+
+                            return (
+                                <PortfolioEntry
+                                    key={item.category}
+                                    to="/media/portfolio/$category"
+                                    params={{ category: item.category }}
+                                    name={<Rich message={item.title} />}
+                                    description={item.description()}
+                                    image={asset(item.image, "medium")}
+                                    alt={m.media_portfolio_alt({ service: name() })}
+                                    className={item.className}
+                                />
+                            );
+                        })
+                    }
                 </div>
             </div>
         </section>

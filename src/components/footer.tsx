@@ -1,300 +1,189 @@
-"use client";
-
-import { useMain } from "@/hooks/useMain";
-import { Button } from "./ui/button";
-import { ChevronsUp } from "lucide-react";
-import { IconLink } from "./snippets";
+import { cn } from "@shared/shadcn/utils";
 import {
     SiFacebook,
-    SiGithub,
     SiInstagram,
     SiTiktok,
     SiX,
     SiYoutube,
 } from "@icons-pack/react-simple-icons";
-import { TextH4, TextLink } from "./typography";
-import { LogoLargeLink } from "./logo";
+import { m } from "@shared/paraglide/messages";
+import { business, socialLinks } from "@shared/business";
+import { TextH5, TextLink, TextP } from "./typography";
+import { Separator } from "./ui/separator";
+import { LogoLarge } from "./logo";
 import { SALLink, SOLLink } from "./anpc";
-import { Pathname } from "@shared/i18n";
+import type { LinkOptions } from "@tanstack/react-router";
 
-// import {
-//     SiYoutube,
-//     SiFacebook,
-//     SiInstagram,
-//     SiTiktok,
-//     SiX,
-//     SiGithub,
-// } from "@icons-pack/react-simple-icons";
-// import {
-//     IconLink,
-//     ButtonLink
-// } from "@/components/snippets";
-// import {
-//     ChevronsUp
-// } from "lucide-react";
-// import {
-//     CONTACT,
-//     COOKIE_POLICY,
-//     LOCATIONS_ARAD,
-//     LOCATIONS_CLUJ_NAPOCA,
-//     LOCATIONS_ORADEA,
-//     LOCATIONS_TIMISOARA,
-//     LOCATIONS_DROBETA_TURNU_SEVERIN,
-//     PRIVACY_POLICY,
-//     TERMS_OF_SERVICE,
-//     LOCATIONS_BUCURESTI,
-// } from "@shared/i18n";
-// import { Button } from "./ui/button";
-// import { useMain } from "@/hooks/useMain";
-// import { LogoLargeLink } from "./logo";
-// import { cn } from "@shared/shadcn/lib/utils";
-// import { SALLink, SOLLink } from "./anpc";
-// import { TextLink } from "./typography";
+//
+// config
+//
+export type FooterLink = LinkOptions & {
+    name: string;
+};
 
-// export function FooterBase() {
-//     return (
-//         <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-5xl w-full px-4 py-8 gap-6">
-//             <div className="flex items-center justify-center sm:justify-start gap-4">
-//                 <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
-//                 <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
-//                 <IconLink href="https://instagram.com/vest.visuals" icon={SiInstagram} />
-//                 <IconLink href="https://tiktok.com/@vest_visuals" icon={SiTiktok} />
-//                 <IconLink href="https://x.com/VestVisual" icon={SiX} />
-//             </div>
-//             <div className="flex flex-col items-center sm:items-end text-center sm:text-end">
-//                 <p>Copyright © {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
-//                 <p>
-//                     Made by <TextLink href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
-//                         <SiGithub size={16} className="size-4 translate-y-1" />
-//                         muscaa
-//                     </TextLink> ❤️
-//                 </p>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export function FooterSmall() {
-//     const { ref } = useMain();
-
-//     return (
-//         <footer className="relative flex flex-col mt-4.5">
-//             <div className="flex justify-center items-center bg-background2">
-//                 <FooterBase />
-//             </div>
-//             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-//                 <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
-//                     <ChevronsUp className="size-8" />
-//                 </Button>
-//             </div>
-//         </footer>
-//     );
-// }
-
-// interface FooterSectionProps {
-//     header?: React.ReactNode;
-//     title?: string;
-//     className?: string;
-//     extraClassName?: string;
-//     children?: React.ReactNode;
-// }
-
-// function FooterSection(props: FooterSectionProps) {
-//     return (
-//         <div className={cn("flex flex-col gap-6 max-w-48 w-full", props.className)}>
-//             {
-//                 props.header ?? (
-//                     <h4 className="font-mono">{props.title}</h4>
-//                 )
-//             }
-//             <div className={cn("flex flex-col items-start gap-1", props.extraClassName)}>
-//                 {props.children}
-//             </div>
-//         </div>
-//     );
-// }
-
-// export function FooterLarge() {
-//     const { ref } = useMain();
-
-//     const pj = [
-//         "VEST VISUALS S.R.L.",
-//         "CUI 54191210",
-//         "TIMIS, TIMISOARA",
-//         "Str. Matei Millo 44",
-//     ];
-
-//     const locations = [
-//         { name: "Timisoara", href: LOCATIONS_TIMISOARA() },
-//         { name: "Arad", href: LOCATIONS_ARAD() },
-//         { name: "Oradea", href: LOCATIONS_ORADEA() },
-//         { name: "Drobeta-Turnu Severin", href: LOCATIONS_DROBETA_TURNU_SEVERIN() },
-//         { name: "Cluj-Napoca", href: LOCATIONS_CLUJ_NAPOCA() },
-//         { name: "Bucuresti", href: LOCATIONS_BUCURESTI() },
-//     ];
-
-//     const pages = [
-//         { name: "Termeni si conditii", href: TERMS_OF_SERVICE() },
-//         { name: "Politica de confidentialitate", href: PRIVACY_POLICY() },
-//         { name: "Politica de cookie-uri", href: COOKIE_POLICY() },
-//     ];
-
-//     return (
-//         <footer className="relative flex flex-col mt-4.5">
-//             <div className="flex justify-center items-center bg-background2">
-//                 <div className="flex flex-wrap-reverse justify-evenly max-w-6xl w-full px-4 py-16 gap-12">
-//                     <div
-//                         className="
-//                             flex flex-wrap gap-6
-//                             not-lg:w-full not-lg:justify-center not-lg:items-center
-//                             lg:flex-col lg:mr-auto
-//                         "
-//                     >
-//                         <LogoLargeLink />
-//                         <div className="flex flex-col">
-//                             {
-//                                 pj.map((info, index) => (
-//                                     <p key={index}>{info}</p>
-//                                 ))
-//                             }
-//                         </div>
-//                         <div className="flex flex-col gap-1">
-//                             <SALLink />
-//                             <SOLLink />
-//                         </div>
-//                     </div>
-//                     <FooterSection
-//                         title="PAGINI UTILE"
-//                     >
-//                         {
-//                             pages.map((page, index) => (
-//                                 <TextLink key={index} href={page.href} variant="ghost">
-//                                     {page.name}
-//                                 </TextLink>
-//                             ))
-//                         }
-//                     </FooterSection>
-//                     <FooterSection
-//                         title="LOCATII"
-//                     >
-//                         {
-//                             locations.map((location, index) => (
-//                                 <TextLink key={index} href={location.href} variant="ghost">
-//                                     {location.name}
-//                                 </TextLink>
-//                             ))
-//                         }
-//                     </FooterSection>
-//                     <FooterSection
-//                         title="CONTACTEAZA-NE"
-//                         className="xs:max-md:max-w-full xs:max-md:w-auto"
-//                     >
-//                         <p>
-//                             Iti raspundem intrebarilor legate de serviciile oferite de noi.
-//                         </p>
-//                         <ButtonLink href={CONTACT()} className="mt-4">CONTACT</ButtonLink>
-//                     </FooterSection>
-//                 </div>
-//             </div>
-//             <div className="flex justify-center items-center bg-background3">
-//                 <FooterBase />
-//             </div>
-//             <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-//                 <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
-//                     <ChevronsUp className="size-8" />
-//                 </Button>
-//             </div>
-//         </footer>
-//     );
-// }
-
-interface Props {
-    sections: {
-        title: string;
-        links: {
-            name: string;
-            to: Pathname;
-        }[];
-    }[];
+export interface FooterSection {
+    title: string;
+    links: FooterLink[];
 }
 
-export function Footer(props: Props) {
-    const { ref } = useMain();
+export interface FooterSocial {
+    name: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+}
 
-    const pj = [
-        "VEST VISUALS S.R.L.",
-        "CUI 54191210",
-        "TIMIS, TIMISOARA",
-        "Str. Matei Millo 44",
-    ];
+export const footerSocials: FooterSocial[] = [
+    { name: "Instagram", href: socialLinks.instagram, icon: SiInstagram },
+    { name: "TikTok", href: socialLinks.tiktok, icon: SiTiktok },
+    { name: "YouTube", href: socialLinks.youtube, icon: SiYoutube },
+    { name: "Facebook", href: socialLinks.facebook, icon: SiFacebook },
+    { name: "X", href: socialLinks.x, icon: SiX },
+];
 
+//
+// parts
+//
+function FooterContainer(props: {
+    children?: React.ReactNode;
+    className?: string;
+}) {
     return (
-        <footer className="relative flex flex-col mt-4.5">
-            <div className="flex justify-center items-center bg-muted">
-                <div className="flex flex-wrap-reverse justify-evenly max-w-7xl w-full px-4 py-16 gap-12">
-                    <div
-                        className="
-                            flex flex-wrap gap-6
-                            not-lg:w-full not-lg:justify-center not-lg:items-center
-                            lg:flex-col lg:mr-auto
-                        "
-                    >
-                        <LogoLargeLink />
-                        <div className="flex flex-col">
+        // the 7xl width plus the padding, as the sections have it, so the edges line up with theirs
+        <div className={cn("w-full max-w-[calc(var(--container-7xl)+--spacing(12))] mx-auto px-6", props.className)}>
+            {props.children}
+        </div>
+    );
+}
+
+function FooterBrand(props: {
+    description: React.ReactNode;
+    socials: FooterSocial[];
+}) {
+    return (
+        <FooterContainer className="grid grid-cols-1 md:grid-cols-2 items-end gap-10 lg:gap-16 pt-14 pb-10">
+            <div className="flex flex-col items-start gap-6">
+                <LogoLarge />
+                <TextP variant="muted" className="max-w-sm">
+                    {props.description}
+                </TextP>
+            </div>
+            {
+                props.socials.length > 0 && (
+                    <div className="flex flex-col items-start md:items-end gap-4 md:text-right">
+                        <div className="flex flex-col gap-2">
+                            <TextH5>{m.footer_follow_title()}</TextH5>
+                            <TextP variant="muted" className="max-w-sm">
+                                {m.footer_follow_description()}
+                            </TextP>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4">
                             {
-                                pj.map((info, index) => (
-                                    <p key={index}>{info}</p>
+                                props.socials.map(({ name, href, icon: Icon }) => (
+                                    <a
+                                        key={name}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={m.footer_social_label({ network: name })}
+                                        className="hover:text-primary transition-all"
+                                    >
+                                        <Icon className="size-6" />
+                                    </a>
                                 ))
                             }
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <SALLink />
-                            <SOLLink />
-                        </div>
                     </div>
-                    {
-                        props.sections.map((section, index) => (
-                            <div key={index} className="flex flex-col gap-6 max-w-48 w-full">
-                                <TextH4 font="mono1">{section.title}</TextH4>
-                                <div className="flex flex-col items-start gap-1">
-                                    {
-                                        section.links.map((link, index) => (
-                                            <TextLink key={index} to={link.to} variant="ghost">
-                                                {link.name}
-                                            </TextLink>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-            <div className="flex justify-center items-center bg-secondary">
-                <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center max-w-7xl w-full px-4 py-8 gap-6">
-                    <div className="flex items-center justify-center sm:justify-start gap-4">
-                        <IconLink href="https://youtube.com/@VestVisuals" icon={SiYoutube} />
-                        <IconLink href="https://facebook.com/VestVisuals" icon={SiFacebook} />
-                        <IconLink href="https://instagram.com/vest.visuals" icon={SiInstagram} />
-                        <IconLink href="https://tiktok.com/@vest_visuals" icon={SiTiktok} />
-                        <IconLink href="https://x.com/VestVisual" icon={SiX} />
+                )
+            }
+        </FooterContainer>
+    );
+}
+
+function FooterLinks(props: { sections: FooterSection[] }) {
+    return (
+        <FooterContainer className="grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-8 py-10">
+            {
+                props.sections.map((section) => (
+                    <div key={section.title} className="flex flex-col gap-4">
+                        <TextH5>{section.title}</TextH5>
+                        <ul className="flex flex-col items-start gap-2">
+                            {
+                                section.links.map(({ name, ...link }) => (
+                                    <li key={name}>
+                                        <TextLink variant="ghost" {...link}>
+                                            {name}
+                                        </TextLink>
+                                    </li>
+                                ))
+                            }
+                        </ul>
                     </div>
-                    <div className="flex flex-col items-center sm:items-end text-center sm:text-end">
-                        <p>Copyright © {new Date().getFullYear()} Vest Visuals | All rights reserved</p>
-                        <p>
-                            Made by <TextLink href="https://github.com/muscaa" target="_blank" className="inline-flex items-baseline gap-1">
-                                <SiGithub size={16} className="size-4 translate-y-1" />
-                                muscaa
-                            </TextLink> ❤️
-                        </p>
-                    </div>
-                </div>
+                ))
+            }
+        </FooterContainer>
+    );
+}
+
+function FooterLegal() {
+    return (
+        <FooterContainer className="flex flex-col md:flex-row justify-between items-center gap-8 py-8">
+            <div className="flex flex-col items-center md:items-start gap-1 text-center md:text-left">
+                <TextP size="md-4" className="font-medium">
+                    {business.legalName}
+                </TextP>
+                <TextP variant="muted" size="sm-2">
+                    {m.footer_company_details({ cui: business.taxId, address: `${business.city}, ${business.county}` })}
+                </TextP>
+                <TextP variant="muted" size="sm-2" className="mt-3">
+                    {m.footer_copyright({ year: new Date().getFullYear() })}
+                </TextP>
             </div>
-            <div className="absolute flex justify-center items-center w-full -translate-y-4.5">
-                <Button variant="default" size="icon" onClick={() => ref?.current?.scrollTo(0, 0)}>
-                    <ChevronsUp className="size-8" />
-                </Button>
+            <div className="flex flex-wrap md:flex-col lg:flex-row justify-center items-center md:items-end gap-4">
+                <SALLink />
+                <SOLLink />
             </div>
+        </FooterContainer>
+    );
+}
+
+//
+// footer
+//
+export interface FooterProps {
+    /** Link columns. When empty or missing, the links part is not rendered. */
+    sections?: FooterSection[];
+    /** Text under the logo. */
+    description?: React.ReactNode;
+    /** Social icons next to the logo & description. Pass `[]` to hide them. */
+    socials?: FooterSocial[];
+    className?: string;
+}
+
+export function Footer({
+    sections = [],
+    description,
+    socials = footerSocials,
+    className,
+}: FooterProps) {
+    const hasLinks = sections.some((section) => section.links.length > 0);
+
+    return (
+        <footer className={cn("flex flex-col bg-muted", className)}>
+            <FooterBrand description={description ?? m.footer_default_description()} socials={socials} />
+            {
+                hasLinks && (
+                    <>
+                        <Separator />
+                        <FooterLinks
+                            sections={sections.filter(
+                                (section) => section.links.length > 0,
+                            )}
+                        />
+                    </>
+                )
+            }
+            <Separator />
+            <FooterLegal />
         </footer>
     );
 }

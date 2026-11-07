@@ -1,0 +1,41 @@
+# The database, the only state on the VPS, and its nightly backup to R2. Deployed from Portainer (Repository,
+# deploy/stacks/db/compose.yml), its variables pasted in from stack.env.example.
+name: db
+
+services:
+    postgres:
+        image: postgres:18-alpine
+        restart: unless-stopped
+        env_file: stack.env
+        shm_size: 256mb
+        volumes:
+            - postgres:/var/lib/postgresql
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            vest:
+                # fixed, to reach it over the VPN with a local client
+                ipv4_address: 172.30.0.10
+
+    backup:
+        # built from docker/backup by the "images" GitHub workflow
+        image: ghcr.io/${GITHUB_OWNER:?set GITHUB_OWNER}/vest-visuals-backup:latest
+        restart: unless-stopped
+        env_file: stack.env
+        environment:
+            POSTGRES_HOST: postgres
+        depends_on:
+            postgres:
+                condition: service_healthy
+        networks:
+            - vest
+
+volumes:
+    postgres:
+
+networks:
+    vest:
+        external: true

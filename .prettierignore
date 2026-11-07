@@ -1,0 +1,11 @@
+# dependencies
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
+
+# auto generated
+/src/lib/shared/paraglide/
+/src/routeTree.gen.ts
+
+# other
+/.github/

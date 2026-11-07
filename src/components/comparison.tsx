@@ -1,13 +1,11 @@
-"use client";
-
 import { useState } from "react";
+import { cn } from "@shared/shadcn/utils";
+import { IconGripVertical } from "@tabler/icons-react";
 import { Button } from "./ui/button";
-import { GripVertical } from "lucide-react";
-import { cn } from "@shared/shadcn/lib/utils";
 
 interface Props {
-    c1: React.ReactNode;
-    c2: React.ReactNode;
+    before: React.ReactNode;
+    after: React.ReactNode;
     mode?: "drag" | "hover";
     className?: string;
 }
@@ -37,7 +35,10 @@ export function Comparison(props: Props) {
 
     return (
         <div
-            className={cn("relative size-full overflow-hidden rounded-2xl select-none", props.className)}
+            className={cn(
+                "relative size-full overflow-hidden rounded-4xl select-none",
+                props.className,
+            )}
             onPointerMove={onPointerMove}
             onPointerUp={() => setActive(false)}
             onPointerEnter={() => setActive(false)}
@@ -46,10 +47,10 @@ export function Comparison(props: Props) {
             <div
                 className="absolute left-0 top-0 size-full"
                 style={{
-                    clipPath: `inset(0 ${100 - inset}% 0 0)`
+                    clipPath: `inset(0 ${100 - inset}% 0 0)`,
                 }}
             >
-                {props.c1}
+                {props.before}
             </div>
             <div
                 className="absolute left-0 top-0 size-full"
@@ -57,7 +58,7 @@ export function Comparison(props: Props) {
                     clipPath: `inset(0 0 0 ${inset}%)`,
                 }}
             >
-                {props.c2}
+                {props.after}
             </div>
             <div
                 className="absolute w-1 h-full top-0 -translate-x-1/2 select-none bg-secondary"
@@ -67,17 +68,18 @@ export function Comparison(props: Props) {
             >
                 <Button
                     variant="secondary"
-                    size="none"
+                    size="icon"
                     className="absolute w-6 h-12 left-1/2 top-1/2 -translate-1/2 cursor-ew-resize touch-none"
+                    aria-haspopup
                     onPointerDown={(e) => {
                         setActive(true);
                         onPointerMove(e);
                     }}
                     onPointerUp={() => setActive(false)}
                 >
-                    <GripVertical className="size-6 select-none" />
+                    <IconGripVertical className="size-6 select-none" />
                 </Button>
             </div>
         </div>
     );
-};
+}

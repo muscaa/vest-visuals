@@ -1,36 +1,43 @@
-"use client"
+"use client";
 
-import { useTheme } from "next-themes"
-import { Toaster as Sonner, type ToasterProps } from "sonner"
-import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
+import { Toaster as Sonner } from "sonner";
+import {
+    IconAlertOctagon,
+    IconAlertTriangle,
+    IconCircleCheck,
+    IconInfoCircle,
+    IconLoader,
+} from "@tabler/icons-react";
+import type { ToasterProps } from "sonner";
+import { useTheme } from "@/components/theme/provider";
 
+/**
+ * The toasts, in the site's theme: all on the popover's background, success, warning and error ones with the border and
+ * text in the theme's colors (with `richColors`), following the site's light or dark choice rather than the system's.
+ * While the cookie banner is in the same corner, they go above it (`--cookie-consent-space`, set by the banner).
+ */
 const Toaster = ({ ...props }: ToasterProps) => {
-    const { theme = "system" } = useTheme()
+    const { theme } = useTheme();
 
     return (
         <Sonner
-            theme={theme as ToasterProps["theme"]}
+            theme={theme}
             className="toaster group"
+            // sonner's own distances from the edge, 24px and 16px on phones, or a gap above the banner
+            offset={{ bottom: "max(24px, calc(var(--cookie-consent-space, 0px) + 12px))" }}
+            mobileOffset={{ bottom: "max(16px, calc(var(--cookie-consent-space, 0px) + 12px))" }}
             icons={{
-                success: (
-                    <CircleCheckIcon className="size-4" />
-                ),
-                info: (
-                    <InfoIcon className="size-4" />
-                ),
-                warning: (
-                    <TriangleAlertIcon className="size-4" />
-                ),
-                error: (
-                    <OctagonXIcon className="size-4" />
-                ),
-                loading: (
-                    <Loader2Icon className="size-4 animate-spin" />
-                ),
+                success: <IconCircleCheck className="size-4" />,
+                info: <IconInfoCircle className="size-4" />,
+                warning: <IconAlertTriangle className="size-4" />,
+                error: <IconAlertOctagon className="size-4" />,
+                loading: <IconLoader className="size-4 animate-spin" />,
             }}
             style={
                 {
                     "--border-radius": "var(--radius)",
+                    // sonner's own transition, and one for moving back down once the banner is gone
+                    transition: "transform 400ms ease, bottom 300ms ease",
 
                     "--normal-bg": "var(--popover)",
                     "--normal-bg-hover": "var(--popover)",
@@ -42,27 +49,28 @@ const Toaster = ({ ...props }: ToasterProps) => {
                     "--info-border": "var(--border)",
                     "--info-text": "var(--popover-foreground)",
 
-                    "--success-bg": "color-mix(in oklab, var(--success) 20%, var(--background))",
-                    "--success-border": "color-mix(in oklab, var(--success) 40%, var(--background))",
-                    "--success-text": "var(--success)",
+                    "--success-bg": "var(--popover)",
+                    "--success-border": "color-mix(in oklab, var(--color-success) 50%, var(--popover))",
+                    "--success-text": "var(--color-success)",
 
-                    "--warning-bg": "color-mix(in oklab, var(--warning) 20%, var(--background))",
-                    "--warning-border": "color-mix(in oklab, var(--warning) 40%, var(--background))",
-                    "--warning-text": "var(--warning)",
+                    "--warning-bg": "var(--popover)",
+                    "--warning-border": "color-mix(in oklab, var(--color-warning) 50%, var(--popover))",
+                    "--warning-text": "var(--color-warning)",
 
-                    "--error-bg": "color-mix(in oklab, var(--destructive) 20%, var(--background))",
-                    "--error-border": "color-mix(in oklab, var(--destructive) 40%, var(--background))",
-                    "--error-text": "var(--destructive)",
+                    "--error-bg": "var(--popover)",
+                    "--error-border": "color-mix(in oklab, var(--color-destructive) 50%, var(--popover))",
+                    "--error-text": "var(--color-destructive)",
                 } as React.CSSProperties
             }
             toastOptions={{
                 classNames: {
-                    toast: "cn-toast",
+                    // sonner sets its own system font and 13px, these win over it
+                    toast: "cn-toast font-sans text-sm-2!",
                 },
             }}
             {...props}
         />
-    )
-}
+    );
+};
 
-export { Toaster }
+export { Toaster };

@@ -1,38 +1,44 @@
-import { createTransport } from "nodemailer";
-import { serverConfig } from "../config";
+/**
+ * Sending emails, through Resend. Without `RESEND_API_KEY`, as in development, they're printed to the server's console
+ * instead, as plain text.
+ */
+import { render } from "@react-email/components";
+import { Resend } from "resend";
+import { envServer } from "@server/env";
+import { baseLocale, locales } from "@shared/paraglide/runtime";
+import type { Locale } from "@shared/paraglide/runtime";
 
-export interface MailTemplate {
+export interface Mail {
     subject: string;
-    body: string;
+    /** the message, a React Email component; see `templates.tsx` */
+    react: React.ReactElement;
 }
 
-const transporter = createTransport({
-    host: serverConfig.env.SMTP_HOST,
-    port: parseInt(serverConfig.env.SMTP_PORT),
-    requireTLS: true,
-    auth: {
-        type: "login",
-        user: serverConfig.env.SMTP_USERNAME,
-        pass: serverConfig.env.SMTP_PASSWORD,
-    },
-});
+const senderName = "Vest Visuals";
+const resend = envServer.RESEND_API_KEY ? new Resend(envServer.RESEND_API_KEY) : null;
 
-export async function sendMail(to: string | string[], content: MailTemplate) {
-    if (!serverConfig.env.SMTP_ENABLED) {
-        console.log(`--------------------
-            to: ${Array.isArray(to) ? to.join(", ") : to}
-            subject: ${content.subject}
-            body: ${content.body}
-            --------------------
-            `);
-        return true;
+/** The language to email someone in: theirs when it's known (a user's `locale`), else the site's default. */
+export function mailLocale(locale: string | null | undefined): Locale {
+    return locales.includes(locale as Locale) ? (locale as Locale) : baseLocale;
+}
+
+/** Sends an email; it throws when Resend refuses it, so the caller's request fails visibly instead of silently. */
+export async function sendMail(to: string, mail: Mail) {
+    const [html, text] = await Promise.all([render(mail.react), render(mail.react, { plainText: true })]);
+
+    if (!resend) {
+        console.info(`\n[mail] to: ${to}\n[mail] subject: ${mail.subject}\n${text}\n`);
+        return;
     }
 
-    const response = await transporter.sendMail({
-        from: `"${serverConfig.env.SMTP_SENDER_NAME}" <${serverConfig.env.SMTP_SENDER_ADDRESS}>`,
-        to: Array.isArray(to) ? to.join(", ") : to,
-        subject: content.subject,
-        html: content.body,
+    const { error } = await resend.emails.send({
+        from: `${senderName} <${envServer.MAIL_SENDER_ADDRESS}>`,
+        to,
+        subject: mail.subject,
+        html,
+        text,
     });
-    return response !== undefined;
+    if (error) {
+        throw new Error(`Resend didn't send "${mail.subject}" to ${to}: ${error.message}`);
+    }
 }
