@@ -21,7 +21,7 @@ services:
                 ipv4_address: 172.30.0.10
 
     backup:
-        # built from deploy/backup by the "images" GitHub workflow
+        # built from docker/backup by the "images" GitHub workflow
         image: ghcr.io/${GITHUB_OWNER:?set GITHUB_OWNER}/vest-visuals-backup:latest
         restart: unless-stopped
         env_file: stack.env

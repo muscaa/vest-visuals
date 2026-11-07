@@ -22,7 +22,7 @@ jobs:
                     - image: vest-visuals
                       context: .
                     - image: vest-visuals-backup
-                      context: deploy/backup
+                      context: docker/backup
         steps:
             - uses: actions/checkout@v7
 

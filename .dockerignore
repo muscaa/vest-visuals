@@ -2,8 +2,9 @@ node_modules
 .output
 .git
 .env*
-# local only: the workflow engine's dev runs, tool caches, the deploy files
+# local only: the workflow engine's dev runs, tool caches, the deploy files and the other images' sources
 .workflow-data
 .tanstack
 .swc
 deploy
+docker

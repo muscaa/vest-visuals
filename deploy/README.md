@@ -24,7 +24,9 @@ proxy hosts, point DNS at the new VPS.
 | `stacks/app/` | the app, its migrations before it | Portainer |
 | `stacks/edge/` | Nginx Proxy Manager, the sites' HTTPS | Portainer |
 | `stacks/ops/` | WhoDB, Uptime Kuma, Dozzle | Portainer |
-| `backup/` | the backup image's source, built by `.github/workflows/images.yml` | |
+
+The images the stacks pull aren't built here: the app's from the `Dockerfile` at the repository's root, the backup's
+from `docker/backup/`, both by `.github/workflows/images.yml`.
 
 Every stack is on the `vest` network (`172.30.0.0/24`), so they reach each other by service name (`postgres`,
 `vest-visuals`). The admin tools have fixed addresses, reachable once connected to WireGuard:
