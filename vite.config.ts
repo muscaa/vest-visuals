@@ -30,7 +30,7 @@ export default defineConfig({
         nitro({
             // Nitro's own folder: it registers server/plugins, server/middleware and server/tasks by itself
             serverDir: "./server",
-            experimental: { tasks: true, vite: {} },
+            experimental: { tasks: true },
             // every night at 3:00, the server's time; the task is server/tasks/daily.ts
             scheduledTasks: { "0 3 * * *": "daily" },
         }),
