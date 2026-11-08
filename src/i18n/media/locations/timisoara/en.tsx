@@ -32,7 +32,7 @@ const content: LocationContent = {
     faq: [
         {
             question: "How much does a photographer in Timișoara cost?",
-            answer: "It depends on the service: photo sessions start at €50, 18th birthdays at €250 and weddings at €800. Every client gets a personalised offer, and in Timișoara we don't add travel costs.",
+            answer: "It depends on the service: photo sessions start at €50, 18th birthdays at €300 and weddings at €1200. Every client gets a personalised offer, and in Timișoara we don't add travel costs.",
         },
         {
             question: "Which locations do you recommend for photo sessions in Timișoara?",

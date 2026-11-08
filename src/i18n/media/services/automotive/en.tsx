@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Photographer",
             description: "For listings and catalogues.",
-            from: 100,
+            from: 150,
             unit: "€/car",
             features: [
                 "Session of about one hour",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videographer",
             description: "For presentations and social media.",
-            from: 100,
+            from: 150,
             unit: "€/car",
             features: [
                 "Session of about one hour",
@@ -41,7 +41,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Photographer + videographer",
             description: "Photos and video from the same session.",
-            from: 190,
+            from: 200,
             unit: "€/car",
             recommended: true,
             features: [
@@ -64,7 +64,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "How much does a car photo shoot cost?",
-            answer: "Photos start at €100 per car, and photos and video together at €190 per car. For several cars we make a personalised offer.",
+            answer: "Photos start at €150 per car, and photos and video together at €200 per car. For several cars we make a personalised offer.",
         },
         {
             question: "How many photos do we get, and how soon?",

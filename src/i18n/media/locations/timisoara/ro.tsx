@@ -32,7 +32,7 @@ const content: LocationContent = {
     faq: [
         {
             question: "Cât costă un fotograf în Timișoara?",
-            answer: "Depinde de serviciu: ședințele foto pornesc de la 50 €, majoratele de la 250 €, iar nunțile de la 800 €. Fiecare client primește o ofertă personalizată, iar în Timișoara nu adăugăm costuri de deplasare.",
+            answer: "Depinde de serviciu: ședințele foto pornesc de la 50 €, majoratele de la 300 €, iar nunțile de la 1200 €. Fiecare client primește o ofertă personalizată, iar în Timișoara nu adăugăm costuri de deplasare.",
         },
         {
             question: "Ce locații recomandați pentru ședințe foto în Timișoara?",

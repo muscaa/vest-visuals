@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Fotograf",
             description: "Pentru cine vrea doar fotografii.",
-            from: 250,
+            from: 300,
             unit: "€",
             features: [
                 "Fotograf pe toată durata petrecerii, până la 5 ore",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videograf",
             description: "Pentru o seară pe care s-o retrăiești.",
-            from: 250,
+            from: 300,
             unit: "€",
             features: [
                 "Videograf pe toată durata petrecerii, până la 5 ore",
@@ -41,7 +41,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Fotograf + videograf",
             description: "Toată petrecerea, foto și video, de la aceeași echipă.",
-            from: 450,
+            from: 500,
             unit: "€",
             recommended: true,
             features: [
@@ -65,7 +65,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "Cât costă un fotograf de majorat?",
-            answer: "Pachetul cu fotograf sau cu videograf pornește de la 250 €, iar cel cu fotograf și videograf de la 450 €. Prețul final depinde de durata petrecerii, de locație și de ce vrei să includă, așa că fiecare primește o ofertă personalizată.",
+            answer: "Pachetul cu fotograf sau cu videograf pornește de la 300 €, iar cel cu fotograf și videograf de la 500 €. Prețul final depinde de durata petrecerii, de locație și de ce vrei să includă, așa că fiecare primește o ofertă personalizată.",
         },
         {
             question: "Când primim fotografiile?",

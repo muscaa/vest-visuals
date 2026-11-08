@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Fotografie",
             description: "Pentru anunțuri care atrag atenția.",
-            from: 100,
+            from: 200,
             unit: "€",
             features: [
                 "Apartamente, case, vile și spații comerciale",
@@ -29,7 +29,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Video",
             description: "Pentru tururi video și social media.",
-            from: 100,
+            from: 200,
             unit: "€",
             features: [
                 "Apartamente, case, vile și spații comerciale",
@@ -51,7 +51,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "Cât costă fotografia imobiliară?",
-            answer: "Fotografiile pentru un apartament pornesc de la 100 €. Pentru case, vile și spații comerciale prețul crește în funcție de suprafață, iar pentru mai multe proprietăți oferim reduceri.",
+            answer: "Fotografiile pentru un apartament pornesc de la 200 €. Pentru case, vile și spații comerciale prețul crește în funcție de suprafață, iar pentru mai multe proprietăți oferim reduceri.",
         },
         {
             question: "Câte fotografii primim și în cât timp?",

@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Fotograf",
             description: "Pentru cuplurile care vor doar fotografii.",
-            from: 800,
+            from: 1200,
             unit: "€",
             features: [
                 "Fotograf pe toată durata nunții, până la 15 ore",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videograf",
             description: "Pentru cuplurile care vor să-și retrăiască ziua.",
-            from: 800,
+            from: 1200,
             unit: "€",
             features: [
                 "Videograf pe toată durata nunții, până la 15 ore",
@@ -42,7 +42,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Fotograf + videograf",
             description: "Toată ziua, foto și video, de la aceeași echipă.",
-            from: 1450,
+            from: 2000,
             unit: "€",
             recommended: true,
             features: [
@@ -67,7 +67,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "Cât costă un fotograf de nuntă?",
-            answer: "Pachetul cu fotograf pornește de la 800 €, iar cel cu fotograf și videograf de la 1450 €. Prețul final depinde de durata nunții, de locație și de ce vrei să includă, așa că fiecare cuplu primește o ofertă personalizată.",
+            answer: "Pachetul cu fotograf pornește de la 1200 €, iar cel cu fotograf și videograf de la 2000 €. Prețul final depinde de durata nunții, de locație și de ce vrei să includă, așa că fiecare cuplu primește o ofertă personalizată.",
         },
         {
             question: "Câte fotografii primim și în cât timp?",

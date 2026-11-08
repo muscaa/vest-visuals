@@ -28,7 +28,7 @@ const content: LocationContent = {
     faq: [
         {
             question: "Cât costă un fotograf în Arad?",
-            answer: "La fel ca în Timișoara: ședințele foto pornesc de la 50 €, majoratele de la 250 €, iar nunțile de la 800 €. Pentru Arad nu adăugăm costuri de deplasare.",
+            answer: "La fel ca în Timișoara: ședințele foto pornesc de la 50 €, majoratele de la 300 €, iar nunțile de la 1200 €. Pentru Arad nu adăugăm costuri de deplasare.",
         },
         {
             question: "Vă deplasați la nunți în Arad?",

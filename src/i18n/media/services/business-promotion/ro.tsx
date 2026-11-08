@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Fotograf",
             description: "Pentru site, cataloage și social media.",
-            from: 150,
+            from: 250,
             unit: "€",
             features: [
                 "Ședință de aproximativ 2 ore",
@@ -29,7 +29,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videograf",
             description: "Pentru reclame și social media.",
-            from: 200,
+            from: 250,
             unit: "€",
             features: [
                 "Filmare de aproximativ 2 ore",
@@ -50,7 +50,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "Cât costă o ședință foto pentru afaceri?",
-            answer: "Fotografiile pornesc de la 150 €, iar filmarea de la 200 €. Prețul final depinde de durată, de locație și de cât conținut ai nevoie.",
+            answer: "Fotografiile pornesc de la 250 €, iar filmarea de la 250 €. Prețul final depinde de durată, de locație și de cât conținut ai nevoie.",
         },
         {
             question: "Ce tipuri de afaceri fotografiați?",
