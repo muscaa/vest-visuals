@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Photographer",
             description: "For couples who only want photos.",
-            from: 800,
+            from: 1200,
             unit: "€",
             features: [
                 "A photographer for the whole wedding, up to 15 hours",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videographer",
             description: "For couples who want to relive their day.",
-            from: 800,
+            from: 1200,
             unit: "€",
             features: [
                 "A videographer for the whole wedding, up to 15 hours",
@@ -42,7 +42,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Photographer + videographer",
             description: "The whole day, photo and video, from the same team.",
-            from: 1450,
+            from: 2000,
             unit: "€",
             recommended: true,
             features: [
@@ -67,7 +67,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "How much does a wedding photographer cost?",
-            answer: "The photographer package starts at €800, and the photographer and videographer package at €1450. The final price depends on the length of the wedding, the venue and what you want included, so every couple gets a personalised offer.",
+            answer: "The photographer package starts at €1200, and the photographer and videographer package at €2000. The final price depends on the length of the wedding, the venue and what you want included, so every couple gets a personalised offer.",
         },
         {
             question: "How many photos do we get, and how soon?",

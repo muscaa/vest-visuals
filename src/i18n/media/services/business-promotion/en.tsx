@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Photographer",
             description: "For your website, catalogues and social media.",
-            from: 150,
+            from: 250,
             unit: "€",
             features: [
                 "Session of about 2 hours",
@@ -29,7 +29,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videographer",
             description: "For ads and social media.",
-            from: 200,
+            from: 250,
             unit: "€",
             features: [
                 "Filming of about 2 hours",
@@ -50,7 +50,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "How much does a business photo shoot cost?",
-            answer: "Photos start at €150, and filming at €200. The final price depends on the length, the location and how much content you need.",
+            answer: "Photos start at €250, and filming at €250. The final price depends on the length, the location and how much content you need.",
         },
         {
             question: "What kinds of businesses do you photograph?",

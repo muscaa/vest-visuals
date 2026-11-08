@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Photographer",
             description: "For those who only want photos.",
-            from: 250,
+            from: 300,
             unit: "€",
             features: [
                 "A photographer for the whole party, up to 5 hours",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videographer",
             description: "For a night you'll want to relive.",
-            from: 250,
+            from: 300,
             unit: "€",
             features: [
                 "A videographer for the whole party, up to 5 hours",
@@ -41,7 +41,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Photographer + videographer",
             description: "The whole party, photo and video, from the same team.",
-            from: 450,
+            from: 500,
             unit: "€",
             recommended: true,
             features: [
@@ -65,7 +65,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "How much does an 18th birthday photographer cost?",
-            answer: "The photographer or videographer package starts at €250, and the photographer and videographer package at €450. The final price depends on the length of the party, the venue and what you want included, so everyone gets a personalised offer.",
+            answer: "The photographer or videographer package starts at €300, and the photographer and videographer package at €500. The final price depends on the length of the party, the venue and what you want included, so everyone gets a personalised offer.",
         },
         {
             question: "When do we get the photos?",

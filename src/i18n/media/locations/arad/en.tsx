@@ -28,7 +28,7 @@ const content: LocationContent = {
     faq: [
         {
             question: "How much does a photographer in Arad cost?",
-            answer: "The same as in Timișoara: photo sessions start at €50, 18th birthdays at €250 and weddings at €800. For Arad we don't add travel costs.",
+            answer: "The same as in Timișoara: photo sessions start at €50, 18th birthdays at €300 and weddings at €1200. For Arad we don't add travel costs.",
         },
         {
             question: "Do you travel to weddings in Arad?",

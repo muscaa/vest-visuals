@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Photography",
             description: "For listings that grab attention.",
-            from: 100,
+            from: 200,
             unit: "€",
             features: [
                 "Apartments, houses, villas and commercial spaces",
@@ -29,7 +29,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Video",
             description: "For video tours and social media.",
-            from: 100,
+            from: 200,
             unit: "€",
             features: [
                 "Apartments, houses, villas and commercial spaces",
@@ -51,7 +51,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "How much does real estate photography cost?",
-            answer: "Photos for an apartment start at €100. For houses, villas and commercial spaces the price goes up with the floor area, and we offer discounts for multiple properties.",
+            answer: "Photos for an apartment start at €200. For houses, villas and commercial spaces the price goes up with the floor area, and we offer discounts for multiple properties.",
         },
         {
             question: "How many photos do we get, and how soon?",

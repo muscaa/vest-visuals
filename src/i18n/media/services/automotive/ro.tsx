@@ -15,7 +15,7 @@ const content: MediaServiceContent = {
             icon: IconCamera,
             title: "Fotograf",
             description: "Pentru anunțuri și cataloage.",
-            from: 100,
+            from: 150,
             unit: "€/mașină",
             features: [
                 "Ședință de aproximativ o oră",
@@ -28,7 +28,7 @@ const content: MediaServiceContent = {
             icon: IconVideo,
             title: "Videograf",
             description: "Pentru prezentări și social media.",
-            from: 100,
+            from: 150,
             unit: "€/mașină",
             features: [
                 "Ședință de aproximativ o oră",
@@ -41,7 +41,7 @@ const content: MediaServiceContent = {
             icon: IconCameraRotate,
             title: "Fotograf + videograf",
             description: "Fotografii și video din aceeași ședință.",
-            from: 190,
+            from: 200,
             unit: "€/mașină",
             recommended: true,
             features: [
@@ -64,7 +64,7 @@ const content: MediaServiceContent = {
     faq: [
         {
             question: "Cât costă o ședință foto auto?",
-            answer: "Fotografiile pornesc de la 100 € pe mașină, iar fotografiile și video-ul împreună de la 190 € pe mașină. Pentru mai multe mașini facem o ofertă personalizată.",
+            answer: "Fotografiile pornesc de la 150 € pe mașină, iar fotografiile și video-ul împreună de la 200 € pe mașină. Pentru mai multe mașini facem o ofertă personalizată.",
         },
         {
             question: "Câte fotografii primim și în cât timp?",
